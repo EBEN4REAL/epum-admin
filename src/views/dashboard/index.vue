@@ -1,7 +1,7 @@
 <template>
     <masterLayout>
         <div style="margin-top: 100px">
-            Index
+            Dashboard
         </div>
     </masterLayout>
 </template>
