@@ -2,112 +2,199 @@
 @import "side_nav";
 
 html {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 // LOGIN
 body {
-    height: 100vh;
-    overflow-x: hidden;
-    font-family: 'Nunito', sans-serif;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: "Nunito", sans-serif;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .page_container {
-    height: 100vh;
+  height: 100vh;
 }
 
 .image_section {
-    padding-top: 23px;
-    padding-left: 81px;
-    padding-bottom: 20px;
-    background-color: $whiteColor;
+  padding-top: 23px;
+  padding-left: 81px;
+  padding-bottom: 20px;
+  background-color: $whiteColor;
 }
 
 .image_section_text {
-    margin: 0 auto;
-    width: 80%;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .people_image_holder {
-    margin: 0 auto;
-    width: 55%;
-    margin-bottom: 50px;
+  margin: 0 auto;
+  width: 55%;
+  margin-bottom: 50px;
 }
 
 .manage_text {
-    color: $primaryColor;
-    font-size: 25px;
-    font-weight: bold;
+  color: $primaryColor;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .automating_text {
-    font-size: 15px;
-    color: black;
-    text-align: center;
+  font-size: 15px;
+  color: black;
+  text-align: center;
 }
 
 .people_image {
-    width: 100%
+  width: 100%;
 }
 
 .login_container {
-    
-    padding-top: 102px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding-top: 102px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login_header_text {
-    color: white; 
-    font-size: 25px;
-    font-weight: bold;;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .form_holder {
-    width: 70%;
-    flex-direction: column;
-    align-items: center;
+  width: 70%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form_input {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .form_label {
-    color: white;
-    font-size: 18px;
+  color: white;
+  font-size: 18px;
 }
 
 .login_text {
-    border: 1px solid $primaryColor;
-    border-radius: 5px;
-    height: 55px;
-    width: 100%;
-    padding: 15px;
-    color: #2E384D;
-    font-size: 15px;
+  border: 1px solid $primaryColor;
+  border-radius: 5px;
+  height: 55px;
+  width: 100%;
+  padding: 15px;
+  color: #2e384d;
+  font-size: 15px;
 }
 
 .forgot_password {
-    color: #8C98A9;
-    font-size: 18px;
+  color: #8c98a9;
+  font-size: 18px;
 }
 
 .login_button {
-    width: 100%;
-    border-radius: 5px;
-    background-color: #FFBB00;
-    height: 55px;
-    color: $primaryColor;
-    font-size: 18px;
-    font-weight: bold;;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #ffbb00;
+  height: 55px;
+  color: $primaryColor;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+//Dashboard
+
+.full__row_section {
+  margin: 0 auto;
+  width: 98%;
+}
+
+.dashboard__cards__wrapper {
+  display: flex;
+}
+
+.dashboard__card .small_card .align-center {
+  margin-top: 14px !important;
+  margin-left: 8px;
+}
+
+.small_card {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 22.8%;
+  flex: 0 0 32.4%;
+  -webkit-box-shadow: 0px 3px 6px #0000000d;
+  box-shadow: 0px 3px 6px #0000000d;
+  border-radius: 20px;
+  opacity: 1;
+  background: white;
+  width: 100%;
+  height: 200px;
+  margin-right: 15px;
+}
+.small__card_content_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+}
+.dashboard__card__header {
+  letter-spacing: 0px;
+  color: #111111;
+  opacity: 1;
+  font-size: 22px;
+  padding-top: 10px;
+}
+.dashboard__card__header_bottom {
+  letter-spacing: 0px;
+  color: #111111;
+  opacity: 1;
+  font-size: 31px;
+  font-weight: 300;
+}
+
+.fg-success {
+  color: $greenColor;
+}
+
+.fg-blue {
+  color: $blueColor;
+}
+
+.fg-danger {
+  color: $redColor;
+}
+
+// Mobile Responsiveness
+@media screen and (max-width: 575px) {
+  .full__row_section {
+    width: 92%;
+  }
+  .dashboard__cards__wrapper {
+    flex-flow: column wrap !important;
+  }
+  .small_card:first-child {
+    margin-top: 0px !important;
+  }
+  .small_card {
+    margin-left: 0px;
+    margin-top: 15px !important;
+  }
+  .active__tab__link {
+    font-size: 14px !important;
+  }
+  .small__card_content_wrapper_cus {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-flow: column wrap;
+  }
 }

@@ -250,7 +250,7 @@
                         <div>
                             <ul class="treeview-menu">
                                 <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <router-link :to="{ name: 'adminDashboard' }" class="vue_router_link" :class="activeRoute === 'adminDashboard' ? 'active' : ''">
                                         Sales Transactions
                                     </router-link>
                                 </li>
