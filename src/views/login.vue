@@ -59,6 +59,8 @@
 <script>
 import cardBg from '@/assets/img/bg__card.png';
 import configObject from "@/config";
+import Jquery from 'jquery';
+let $ = Jquery;
 
 export default {
     name: 'Login',
@@ -78,6 +80,7 @@ export default {
             return false;
         },
         signIn($event) {
+            alert();
             $event.preventDefault();
             if(!this.email) {
                 // this.$toast.open({
@@ -113,11 +116,12 @@ export default {
                 .post(
                 `${configObject.apiBaseUrl}/Account/login`, data)
                     .then(res => {
-                    // this.$toast.open({
-                    //     message: "Sign Successful",
-                    //     type: "success",
-                    //     duration: 3000
-                    // });
+                        console.log(res.data);
+                    this.$toast.open({
+                        message: "Sign Successful",
+                        type: "success",
+                        duration: 3000
+                    });
                     $('.loader').hide();
                     this.isButtonDisabled = false;
                     localStorage.setItem("userDetails", JSON.stringify(res.data));
