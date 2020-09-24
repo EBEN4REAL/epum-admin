@@ -74,6 +74,48 @@
                 .list-group {
                     .list-group-item {
                         max-height: 90px;
+                        &.treeview {
+                            position: relative;
+                            margin: 0;
+                            transition: all 1s ease-in-out;
+                            >a {
+                                position: relative;
+                                text-decoration: none;
+                                i {
+                                    float: right;
+                                    font-size: 25px;
+                                    color: white;
+                                }
+                            }
+                            &.open {
+                                a {
+                                    i {
+                                        transform: rotate(-90deg);
+                                        transition: all .3s;
+                                    }
+                                }
+                                .treeview-menu {
+                                    display: block;
+                                }
+                            }
+                            .treeview-menu {
+                                display: none;
+                                list-style: none;
+                                padding: 0;
+                                margin: 0 -20px;
+                                li {
+                                    a {
+                                        padding: 10px 0 8px 55px;
+                                        display: block;
+                                        font-size: 14px;
+                                        color: #c2c2c2;
+                                        &.active {
+                                            background-color: $primaryColor !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         &.navbar_item_active {
                             a {
