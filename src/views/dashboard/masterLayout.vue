@@ -10,7 +10,7 @@
             </b-navbar-brand>
 
             <b-collapse id="nav-collapse" is-nav>
-                <b-nav-item href="#" class="entity_name">Branch</b-nav-item>
+                <b-nav-item href="#" class="list-style-type-none">Branch</b-nav-item>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item href="#">
