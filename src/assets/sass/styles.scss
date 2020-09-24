@@ -1,5 +1,5 @@
-$primaryColor:#370f70;
-$whiteColor: white;
+@import "colors";
+@import "side_nav";
 
 html {
     overflow-x: hidden;
@@ -60,10 +60,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    // background-position:center;
-    /* background-position-x: center; */
-    // background-repeat: no-repeat;
-    // background-size:120 150;
 }
 
 .login_header_text {
