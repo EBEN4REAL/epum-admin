@@ -10,7 +10,7 @@
             </b-navbar-brand>
 
             <b-collapse id="nav-collapse" is-nav>
-                <b-nav-item href="#" class="list-style-type-none">Branch</b-nav-item>
+                <b-nav-item href="#" class="list-style-type-none">Fuelmetrics Limited</b-nav-item>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item href="#">
@@ -229,7 +229,7 @@
                         </g>
                     </g>
                 </svg>
-                <!-- <img src="@/assets/img/Group13.png" class="sm" width="35px" /> -->
+                <img src="@/assets/img/Group13.png" class="sm" width="35px" />
             </div>
             <div class="dasboard_type_button_section mt-3">
                 <button class="dasboard_type_button">Branch Name</button>
@@ -244,14 +244,119 @@
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Report
+                           Voucher
                             <i class="fa fa-angle-right"></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
                                 <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Sales Transactions
+                                        My Vouchers
+                                    </router-link>
+                                </li>
+                                  <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Generate Voucher
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Wallet Bank Transactions
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li class="list-group-item treeview">
+                        <a href="#" class="vue_router_link has-submenu">
+                           Registered Companies
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                        <div>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Companies
+                                    </router-link>
+                                </li>
+                                  <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Dealers
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Branches
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li class="list-group-item treeview">
+                        <a href="#" class="vue_router_link has-submenu">
+                           Devices
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                        <div>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Gateway
+                                    </router-link>
+                                </li>
+                                  <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        POS
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Offline Pumps
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="list-group-item treeview">
+                        <a href="#" class="vue_router_link has-submenu">
+                           Admin
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                        <div>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Resolse Payment
+                                    </router-link>
+                                </li>
+                                  <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        USSD Voucher
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Voucher Report
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="list-group-item treeview">
+                        <a href="#" class="vue_router_link has-submenu">
+                           Tech Admin
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                        <div>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Dasboard
+                                    </router-link>
+                                </li>
+                                  <li>
+                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                        Branch Account Balance
                                     </router-link>
                                 </li>
                             </ul>
@@ -264,9 +369,6 @@
 </template>
 
 <script>
-    // import LogoUrl from "@/assets/img/logo.svg";
-    // import backgroundUrl from "@/assets/img/img_2.jpg";
-    // import masterbackgroundUrl from "@/assets/img/retain.jpg";
     import configObject from "@/config";
     import JQuery from "jquery";
     let $ = JQuery;
