@@ -8,8 +8,8 @@
                     <img src="@/assets/img/1.png" alt="" class="img-responsive people_image">
                 </div>
                 <div>
-                    <p class="manage_text">Manage Users</p>
-                    <p>Sign in and get access to all users'wallet and all  transactions made.</p>
+                    <p class="manage_text">Welcome Admin</p>
+                    <p>Sign in to manage all company users and assets.</p>
                 </div>
             </div>
         </section>

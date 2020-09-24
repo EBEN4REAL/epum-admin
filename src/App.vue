@@ -9,10 +9,10 @@
 export default {
   name: 'App',
   components: {
-    
+
   }
 }
 </script>
 <style lang="scss">
-@import "@/assets/sass/styles.scss";
+  @import "@/assets/sass/styles.scss";
 </style>
