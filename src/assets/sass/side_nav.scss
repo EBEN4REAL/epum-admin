@@ -71,6 +71,12 @@
             }
 
             .menu-wrapper {
+                .sidenav_arrow {
+                    display: none;
+                }
+                .sidenav_list_title{
+                    display: none;
+                }
                 .list-group {
                     .list-group-item {
                         max-height: 90px;
@@ -164,7 +170,6 @@
 
             &:hover {
                 width: 260px;
-
                 .menu-wrapper {
                     .list-group {
                         .list-group-item {
@@ -177,7 +182,7 @@
                             }
 
                             a {
-                                border-left: 3px solid #fff !important;
+                                // border-left: 3px solid #fff !important;
                                 padding: 1.25rem 0.75rem 0.75rem 0.75rem;
                                 text-align: left;
                                 font-size: 16px;
@@ -239,7 +244,7 @@
                         &:hover,
                         //&.navbar_item_active,
                         &.open {
-                            border-left: 3px solid #fff !important;
+                            // border-left: 3px solid #fff !important;
                             background: rgba(13,4,29,.59) !important;
                         }
 
@@ -305,7 +310,7 @@
                                     transition: all .2s ease-in-out;
 
                                     &.active {
-                                        background-color: #005b03 !important;
+                                        background-color: $primaryColor !important;
                                     }
 
                                     &:hover {

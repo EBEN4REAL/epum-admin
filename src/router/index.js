@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Login from '../views/login'
-import MasterLayout from '../views/dashboard/masterLayout'
 import AdminDashboard from '../views/dashboard/index'
 import ResolvePayment from '../views/dashboard/admin/resolvePayment';
 import ResolveUssd from '../views/dashboard/admin/resolveUssd';
@@ -23,15 +22,6 @@ let routes = [
         path: "/admin",
         name: "adminDashboard",
         component: AdminDashboard,
-        meta: { 
-            authorize: true,
-            authRoles: ['admin']
-        }
-    },
-    {
-        path: "/masterLayout",
-        name: "masterLayout",
-        component: MasterLayout,
         meta: { 
             authorize: true,
             authRoles: ['admin']

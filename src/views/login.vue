@@ -80,30 +80,27 @@ export default {
             return false;
         },
         signIn($event) {
-            alert();
             $event.preventDefault();
             if(!this.email) {
-                // this.$toast.open({
-                //     message: "Email Required",
-                //     type: "error",
-                //     duration: 3000
-                // });
+                 this.$toast("Email Required", {
+                    type: "error",
+                    timeout: 3000
+                });
                 return;
             }else {
                 if(!this.validEmail(this.email)) {
-                    // this.$toast.open({
-                    //     message: "Inavlid Email Format",
-                    //     type: "error",
-                    //     duration: 3000
-                    // });
+                    this.$toast("Invalid Email Format", {
+                        type: "error",
+                        timeout: 3000
+                    });
+                    return
                 }
             }
              if(!this.password) {
-                // this.$toast.open({
-                //     message: "Password Required",
-                //     type: "error",
-                //     duration: 3000
-                // });
+                this.$toast("Password Field cannot be blank", {
+                    type: "error", // or "success", "error", "default", "info" and "warning",
+                    timeout: 3000
+                });
                 return;
             }
             const data = {
@@ -117,29 +114,25 @@ export default {
                 `${configObject.apiBaseUrl}/Account/login`, data)
                     .then(res => {
                         console.log(res.data);
-                    this.$toast.open({
-                        message: "Sign Successful",
-                        type: "success",
-                        duration: 3000
-                    });
-                    $('.loader').hide();
-                    this.isButtonDisabled = false;
-                    localStorage.setItem("userDetails", JSON.stringify(res.data));
-                    configObject.authConfig = {
-                        headers: { Authorization: "bearer " + res.data.token }
-                    };
-                    if (res.data.role === "RemisAdmin") {
-                        this.$router.push({ name: "remisAdminDashboard" });
-                    }
+                         this.$toast("Login Successful", {
+                            type: "success",
+                            timeout: 3000
+                        });
+                        $('.loader').hide();
+                        this.isButtonDisabled = false;
+                        localStorage.setItem("adminUserDetails", JSON.stringify(res.data));
+                        configObject.authConfig = {
+                            headers: { Authorization: "bearer " + res.data.token }
+                        };
+                        this.$router.push({ name: "adminDashboard" });
                 })
                 .catch(error => {
                     this.isButtonDisabled = false;
                     $('.loader').hide();
-                    // this.$toast.open({
-                    //     message: error.response.data.message,
-                    //     type: "error",
-                    //     duration: 3000
-                    // });
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000
+                    });
                 });
             
         },

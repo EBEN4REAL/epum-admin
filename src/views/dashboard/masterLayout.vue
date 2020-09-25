@@ -10,18 +10,14 @@
             </b-navbar-brand>
 
             <b-collapse id="nav-collapse" is-nav>
-                <b-nav-item href="#" class="list-style-type-none">Fuelmetrics Limited</b-nav-item>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item href="#">
-                        <!-- <img v-if="branchIcon" :src="branchIcon" height="20px" /> -->
-                    </b-nav-item>
                     <b-nav-item-dropdown>
                         <template v-slot:button-content>
-                            <b class="user_profile_span"><span>Eben</span> &#x25bc;</b>
+                            <b class="user_profile_span"><span>{{userName}}</span> &#x25bc;</b>
                         </template>
                         <b-dropdown-item href="#" >Profile</b-dropdown-item>
-                        <b-dropdown-item href="#" >Sign Out</b-dropdown-item>
+                        <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-collapse>
@@ -38,7 +34,7 @@
             </section>
         </div>
 
-        <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''">
+        <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''" @mouseover="toggleSidenavText" @mouseleave="hideTitles">
             <div class="logo_section text-content mt-3">
                 <svg class="lg"
                      version="1.1" height="50px" id="Layer_1"
@@ -232,21 +228,29 @@
                 <img src="@/assets/img/Group13.png" class="sm" width="35px" />
             </div>
             <div class="dasboard_type_button_section mt-3">
-                <button class="dasboard_type_button">Branch Name</button>
+                <!-- <button class="dasboard_type_button">Branch Name</button> -->
             </div>
 
-            <div class="menu-wrapper mt-4 mb-4 ">
+            <div class="menu-wrapper mt-4 mb-4 " >
                 <ul class="list-group" style="">
-                    <li class="list-group-item " :class="activeRoute === 'branchDashboard' ? 'navbar_item_active' : ''">
-                        <router-link :to="{ name: 'branchDashboard' }" class="vue_router_link">
+                    <li class="list-group-item " :class="activeRoute === 'adminDashboard' ? 'navbar_item_active' : ''">
+                        <router-link :to="{ name: 'adminDashboard' }" class="vue_router_link">
                             <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
-                            Dashboard
+                            <span class="sidenav_list_title">
+                                Dashboard
+                            </span>
+                            
                         </router-link>
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Voucher
-                            <i class="fa fa-angle-right"></i>
+                            <span class="mr-2 icon">
+                                <img src="@/assets/img/voucher.png" />
+                            </span>
+                             <span class="sidenav_list_title">
+                                Voucher
+                            </span>
+                            <i class="fa fa-angle-right sidenav_arrow"></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
@@ -270,8 +274,13 @@
                     </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Registered Companies
-                            <i class="fa fa-angle-right"></i>
+                            <span class="mr-2 icon">
+                                <img src="@/assets/img/pin.png" width="20"/>
+                            </span>
+                             <span class="sidenav_list_title">
+                                Registered Companies
+                            </span>
+                            <i class="fa fa-angle-right sidenav_arrow" ></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
@@ -296,7 +305,7 @@
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                            Devices
-                            <i class="fa fa-angle-right"></i>
+                            <i class="fa fa-angle-right sidenav_arrow"></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
@@ -320,18 +329,20 @@
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Admin
-                            <i class="fa fa-angle-right"></i>
+                             <span class="sidenav_list_title">
+                                Admin
+                            </span>
+                            <i class="fa fa-angle-right sidenav_arrow"></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
                                 <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <router-link :to="{ name: 'resolvePayment' }" class="vue_router_link" :class="activeRoute === 'resolvePayment' ? 'active' : ''">
                                         Resolve Payment
                                     </router-link>
                                 </li>
                                   <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <router-link :to="{ name: 'resolveUssd' }" class="vue_router_link" :class="activeRoute === 'resolveUssd' ? 'active' : ''">
                                         USSD Voucher
                                     </router-link>
                                 </li>
@@ -345,8 +356,10 @@
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Tech Admin
-                            <i class="fa fa-angle-right"></i>
+                             <span class="sidenav_list_title">
+                                Tech Admin
+                            </span>
+                            <i class="fa fa-angle-right sidenav_arrow"></i>
                         </a>
                         <div>
                             <ul class="treeview-menu">
@@ -381,10 +394,29 @@
         },
         data() {
             return {
-                collapseNavbar: true
+                collapseNavbar: true,
+                userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null
             };
         },
-        computed: {},
+        watch: {
+            collapseNavbar(value) {
+                const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
+                const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
+                if(value){
+                    allListTitles.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "none"
+                    })
+                }
+            }
+        },
+        computed: {
+            userName() {
+                return `${this.userDetails.firstName}  ${this.userDetails.lastName }`
+            }
+        },
         created() {
 
         },
@@ -392,21 +424,17 @@
             this.activeRoute = this.$route.name;
         },
         mounted() {
-            $('a.has-submenu').on('click', function (e) {
+             $('.treeview > a').on('click', function(e){
                 e.preventDefault();
                 var me = $(this);
-
-                if (me.hasClass('open')) {
+                
+                if(me.parent('li').hasClass('open')){
                     //close me
-                    me.removeClass('open').find('.more').removeClass('downArrow').addClass('upArrow');
-                    me.siblings('div').find('ul.treeview-menu').removeClass('open');
                     me.parent('li').removeClass('open');
                 }
-                else {
-                    // Open me  X & close others X
-                    //$('.treeview').removeClass('open');
-                    me.addClass('open').find('.more').addClass('downArrow').removeClass('upArrow');
-                    me.siblings('div').find('ul.treeview-menu').addClass('open');
+                else{
+                    // Open me & close others
+                    $('.treeview').removeClass('open');
                     me.parent('li').addClass('open');
                 }
             });
@@ -414,7 +442,87 @@
         methods: {
            toggleCollapsibleNavBar() {
                 this.collapseNavbar = !this.collapseNavbar;
+                const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
+                const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
+                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+                
+                if(!this.collapseNavbar){
+                    const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
+                    allListTitles.forEach(el => {
+                        el.style.display = "inline"
+                        console.log(el)
+                    })
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "inline"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "block"
+                    // })
+                }else {
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    allListTitles.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "none"
+                    // })
+                }
+                console.log(this.collapseNavbar);
             },
+            toggleSidenavText() {
+                const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
+                const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
+                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+
+                if(this.collapseNavbar){
+                    allListTitles.forEach(el => {
+                        el.style.display = "inline"
+                    })
+                     sideNav_arrows.forEach(el => {
+                        el.style.display = "inline"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "block"
+                    // })
+                }else {
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "none"
+                    // })
+                }
+            },
+            hideTitles() {
+                const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
+                const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
+                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+
+                if(this.collapseNavbar) {
+                    allListTitles.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "none"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "block"
+                    // })
+                }else{
+                    sideNav_arrows.forEach(el => {
+                        el.style.display = "inline"
+                    })
+                    // treeMenus.forEach(el => {
+                    //     el.style.display = "none"
+                    // })
+                }
+            },
+            logout() {
+                localStorage.clear();
+                this.$router.push({name: 'login'})
+            }
         }
     };
 </script>
