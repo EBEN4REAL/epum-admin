@@ -326,6 +326,11 @@
                                         Voucher Monitor
                                     </router-link>
                                 </li>
+                                <li>
+                                    <router-link :to="{ name: 'pefDashboard' }" class="vue_router_link" :class="activeRoute === 'pefDashboard' ? 'active' : ''">
+                                        PEF Dashboard
+                                    </router-link>
+                                </li>
                             </ul>
                         </div>
                     </li>
