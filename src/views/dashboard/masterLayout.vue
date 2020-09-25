@@ -242,36 +242,6 @@
                             
                         </router-link>
                     </li>
-                    <li class="list-group-item treeview">
-                        <a href="#" class="vue_router_link has-submenu">
-                            <span class="mr-2 icon">
-                                <img src="@/assets/img/voucher.png" />
-                            </span>
-                             <span class="sidenav_list_title">
-                                Voucher
-                            </span>
-                            <i class="fa fa-angle-right sidenav_arrow"></i>
-                        </a>
-                        <div>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        My Vouchers
-                                    </router-link>
-                                </li>
-                                  <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Generate Voucher
-                                    </router-link>
-                                </li>
-                                 <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Wallet Bank Transactions
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                             <span class="mr-2 icon">
@@ -450,7 +420,6 @@
                     const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
                     allListTitles.forEach(el => {
                         el.style.display = "inline"
-                        console.log(el)
                     })
                     sideNav_arrows.forEach(el => {
                         el.style.display = "inline"
@@ -521,7 +490,11 @@
             },
             logout() {
                 localStorage.clear();
-                this.$router.push({name: 'login'})
+                this.$router.push({name: 'login'});
+                this.$toast("Logout Successful", {
+                    type: "success",
+                    timeout: 3000
+                });
             }
         }
     };
