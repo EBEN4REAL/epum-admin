@@ -71,7 +71,7 @@ body {
 }
 
 .login_header_text {
-  color: white;
+  color:$whiteColor;
   font-size: 25px;
   font-weight: bold;
 }
@@ -91,7 +91,7 @@ body {
 }
 
 .form_label {
-  color: white;
+  color: $whiteColor;
   font-size: 18px;
 }
 
@@ -105,15 +105,10 @@ body {
   font-size: 15px;
 }
 
-.forgot_password {
-  color: #8c98a9;
-  font-size: 18px;
-}
-
 .login_button {
   width: 100%;
   border-radius: 5px;
-  background-color: #ffbb00;
+  background-color: $goldColor;
   height: 55px;
   color: $primaryColor;
   font-size: 18px;
@@ -144,7 +139,7 @@ body {
   box-shadow: 0px 3px 6px #0000000d;
   border-radius: 20px;
   opacity: 1;
-  background: white;
+  background: $whiteColor;
   width: 100%;
   height: 200px;
   margin-right: 15px;
@@ -157,17 +152,28 @@ body {
 }
 .dashboard__card__header {
   letter-spacing: 0px;
-  color: #111111;
+  color: $darkGreyColor;
   opacity: 1;
   font-size: 22px;
   padding-top: 10px;
 }
 .dashboard__card__header_bottom {
   letter-spacing: 0px;
-  color: #111111;
+  color: $darkGreyColor;
   opacity: 1;
   font-size: 31px;
   font-weight: 300;
+}
+
+.dasboard_row {
+  margin: 25px;
+}
+
+.page_title {
+  font-size: 19px;
+  color: $darkGreyColor;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 20px;
 }
 
 .fg-success {
@@ -250,6 +256,11 @@ body {
 .form_content {
   margin-right: 56px;
     margin-left: 50px;
+}
+
+//VOUCHER MONITOR
+.voucher_container {
+  height: 413px;
 }
 
 // Mobile Responsiveness

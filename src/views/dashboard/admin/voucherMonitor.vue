@@ -1,27 +1,21 @@
 <template>
     <masterLayout>
-        <div class="center_div margin-top-center-div">
+        <div class="center_div voucher_container margin-top-center-div">
           <div class="pad_div">
             <div class="mt-3 tabs__lists">
-                <h3>Resolve Online Payment</h3>
+                <h3>VOUCHER MONITOR</h3>
             </div>
           </div>
           <div class="form_content">
           <form action="">
                 <div class="form-group row">
-                  <label for="name" class="col-sm-4 col-form-label">Transaction Reference</label>
+                  <label for="amount" class="col-sm-4 col-form-label">VOUCHER PIN TO VERIFY</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form__input" id="transactionRef" placeholder="Transaction Reference">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="amount" class="col-sm-4 col-form-label">Amount</label>
-                  <div class="col-sm-8">
-                    <input type="number" class="form-control form__input" id="inputAmount" placeholder="Amount">
-                    <div class="mt-4 mx-auto">
-                      <button class="btn btn_theme">Resolve Payment</button>
+                    <input type="number" class="form-control form__input" id="inputVoucher" placeholder="e.g. 1234567890">
                     </div>
-                  </div>
+                    <div class="mt-4 mx-auto">
+                      <button class="btn btn_theme">Verify Voucher</button>
+                    </div>
                 </div>
             </form>
           </div>

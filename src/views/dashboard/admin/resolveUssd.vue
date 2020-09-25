@@ -11,7 +11,7 @@
               <div class="form-group row">
                 <label for="name" class="col-sm-4 col-form-label">Transaction Reference</label>
                 <div class="col-sm-8">
-                  <input type="name" class="form-control form__input" id="transactionRef" placeholder="Transaction Reference">
+                  <input type="text" class="form-control form__input" id="transactionRef" placeholder="Transaction Reference">
                 </div>
               </div>
               <div class="form-group row">
@@ -24,7 +24,7 @@
                 <label for="amount" class="col-sm-4 col-form-label">Amount</label>
                 <div class="col-sm-8">
                   <input type="number" class="form-control form__input" id="inputAmount" placeholder="Amount">
-                   <div class="mt-4 text-center">
+                   <div class="mt-4 mx-auto">
                     <button class="btn btn_theme">Resolve</button>
                   </div>
                 </div>
