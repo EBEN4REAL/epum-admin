@@ -239,6 +239,7 @@
                 <ul class="list-group" style="">
                     <li class="list-group-item " :class="activeRoute === 'branchDashboard' ? 'navbar_item_active' : ''">
                         <router-link :to="{ name: 'branchDashboard' }" class="vue_router_link">
+                            <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
                             Dashboard
                         </router-link>
                     </li>
