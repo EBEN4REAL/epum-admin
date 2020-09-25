@@ -242,36 +242,6 @@
                             
                         </router-link>
                     </li>
-                    <li class="list-group-item treeview">
-                        <a href="#" class="vue_router_link has-submenu">
-                            <span class="mr-2 icon">
-                                <img src="@/assets/img/voucher.png" />
-                            </span>
-                             <span class="sidenav_list_title">
-                                Voucher
-                            </span>
-                            <i class="fa fa-angle-right sidenav_arrow"></i>
-                        </a>
-                        <div>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        My Vouchers
-                                    </router-link>
-                                </li>
-                                  <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Generate Voucher
-                                    </router-link>
-                                </li>
-                                 <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Wallet Bank Transactions
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                             <span class="mr-2 icon">
@@ -349,6 +319,11 @@
                                  <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Voucher Report
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{ name: 'voucherMonitor' }" class="vue_router_link" :class="activeRoute === 'voucherMonitor' ? 'active' : ''">
+                                        Voucher Monitor
                                     </router-link>
                                 </li>
                             </ul>
