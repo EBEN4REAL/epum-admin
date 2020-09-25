@@ -174,6 +174,74 @@ body {
   color: $redColor;
 }
 
+//Resolve Payment and USSD
+.center_div {
+    background: $whiteColor;
+    margin: 0 auto;
+    position: relative;
+    width: 50%;
+    height: 500px;
+    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,.16);
+    box-shadow: 2px 3px 6px rgba(0,0,0,.16);
+}
+
+.pattern_sec {
+  position: absolute;
+  bottom:0;
+  left:0;
+  width: 100%;
+  height:150px;
+}
+
+.pad_div {
+    padding: 10px;
+}
+
+.tabs__lists {
+    list-style-type: none;
+    display: inline;
+    padding: 15px;
+    text-align: center;
+    color: $primaryColor;
+}
+
+.pay_header {
+    color: $primaryColor;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 30px;
+}
+
+.input_holder {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.form__input {
+  background: $whiteColor 0 0 no-repeat padding-box;
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.16);
+  box-shadow: 0 3px 6px rgba(0,0,0,.16);
+  border: 1px solid $primaryColor!important;
+  width: 80%;
+  height: 50px!important;
+}
+
+.btn_theme {
+    background: $primaryColor 0 0 no-repeat padding-box!important;
+    color: $whiteColor!important;
+    font-size: 13px!important;
+    padding: 10px 20px 10px 20px!important;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,.16);
+    box-shadow: 2px 3px 6px rgba(0,0,0,.16);
+    width: 150px;
+}
+
+.form_content {
+  margin-right: 56px;
+    margin-left: 50px;
+}
+
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .full__row_section {

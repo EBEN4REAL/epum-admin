@@ -4,8 +4,8 @@ import VueRouter from "vue-router";
 import Login from '../views/login'
 import MasterLayout from '../views/dashboard/masterLayout'
 import AdminDashboard from '../views/dashboard/index'
-
-
+import ResolvePayment from '../views/dashboard/admin/resolvePayment';
+import ResolveUssd from '../views/dashboard/admin/resolveUssd';
 
 Vue.use(VueRouter);
 
@@ -32,6 +32,24 @@ let routes = [
         path: "/masterLayout",
         name: "masterLayout",
         component: MasterLayout,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/resolvePayment",
+        name: "resolvePayment",
+        component: ResolvePayment,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/resolveUssd",
+        name: "resolveUssd",
+        component: ResolveUssd,
         meta: { 
             authorize: true,
             authRoles: ['admin']

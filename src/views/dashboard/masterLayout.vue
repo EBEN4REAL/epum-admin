@@ -326,7 +326,7 @@
                             <ul class="treeview-menu">
                                 <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Resolse Payment
+                                        Resolve Payment
                                     </router-link>
                                 </li>
                                   <li>
