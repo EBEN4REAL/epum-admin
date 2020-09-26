@@ -1,7 +1,9 @@
 <template>
   <div class="button">
-    <!-- <ejs-button  :content="`${data.ShipCountry}`"></ejs-button> -->
-    <button class="btn_theme">Edit</button>
+    <button class="btn btn-warning mr-2">View</button>
+    <button class="btn btn-primary m-2">Edit</button>
+    <button class="btn btn-info mr-2">Map</button>
+    <button class="btn btn-danger">Delete</button>
   </div>
 </template>
 
@@ -12,6 +14,9 @@ export default {
     return {
         data: {}
     }
-  }
+  },
+  mounted() {
+    console.log(e)
+  },
 }
 </script>

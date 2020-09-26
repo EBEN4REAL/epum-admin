@@ -253,37 +253,45 @@ export default {
                         field: "index", 
                         headerText: "#", 
                         width: 120, 
+                        textAlign: "center"
                     }, 
 
                     { 
                         field: "amount", 
                         headerText: "Amount", 
                         width: 120, 
+                        textAlign: "center"
                     }, 
                     { 
                         field: "pin", 
                         headerText: "PIN", 
                         width: 200, 
+                        textAlign: "center"
                     }, 
                     { 
                         field: "recipient", 
                         headerText: "Recipient", 
                         width: 200, 
+                        textAlign: "center"
                     }, 
                     { 
                         field: "extraMessage", 
                         headerText: "Extra Message", 
                         width: 200, 
+                        textAlign: "center"
                     }, 
                     { 
                         field: "channel", 
                         headerText: "Channel", 
                         width: 200, 
+                        textAlign: "center"
                     },
                      { 
                         headerText: "Action", 
-                        width: 200, 
+                        width: 400, 
+                        textAlign: "center",
                         template:   function(e) {
+                            console.log(e)
                             return {
                                 template: Temp
                             }
