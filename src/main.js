@@ -10,6 +10,7 @@ import "vue-toastification/dist/index.css";
 
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import { GridPlugin } from "@syncfusion/ej2-vue-grids";
 
 Vue.config.productionTip = false
 
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, axios);
 Vue.use(Toast);
 Vue.use(BootstrapVue);
+Vue.use(GridPlugin);
 
 
 new Vue({

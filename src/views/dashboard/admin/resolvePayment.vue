@@ -3,7 +3,7 @@
         <div class="center_div margin-top-center-div">
           <div class="pad_div">
             <div class="mt-3 tabs__lists">
-                <h3>Resolve Online Payment</h3>
+                <h5>Resolve Online Payment</h5>
             </div>
           </div>
           <div class="form_content">
@@ -18,7 +18,7 @@
                   <label for="amount" class="col-sm-4 col-form-label">Amount</label>
                   <div class="col-sm-8">
                     <input type="number" class="form-control form__input" id="inputAmount" placeholder="Amount">
-                    <div class="mt-4 mx-auto">
+                    <div class="mt-4 mx-auto text-center">
                       <button class="btn btn_theme">Resolve Payment</button>
                     </div>
                   </div>
