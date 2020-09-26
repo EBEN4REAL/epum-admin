@@ -278,8 +278,30 @@ export default {
                         field: "channel", 
                         headerText: "Channel", 
                         width: 200, 
+                    },
+                     { 
+                        headerText: "Action", 
+                        width: 200, 
+                        template: function() {
+                            return {
+                                template: Vue.component("actionTemplate", {
+                                    template:
+                                    `<div>
+                                        <button>Edit</button>
+                                    </div>`,
+                                    data: function() {
+                                    return {
+                                        data: {}
+                                    };
+                                    },
+                                    methods: { }
+
+                                })
+                            };
+                        },
                     }, 
-                ] 
+                ] ,
+              
             }
             
         }
