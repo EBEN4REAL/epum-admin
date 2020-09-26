@@ -70,11 +70,12 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
+import Temp from '@/components/template.vue';
 
 export default {
     components: {
         masterLayout,
-        EjsTable
+        EjsTable,
     },
     mounted(){
        
@@ -282,26 +283,15 @@ export default {
                      { 
                         headerText: "Action", 
                         width: 200, 
-                        template:  this.actionTemp
+                        template:   function(e) {
+                            return {
+                                template: Temp
+                            }
+                        }
                     }, 
                 ] ,
               
             },
-            actionTemp: function() {
-                return {
-                    template: Vue.component("actionTemp", {
-                        template: `<div><input type="checkbox"/></div>`,
-                        data: function() {
-                            return {
-                                data: {}
-                            };
-                        },
-                        methods: {
-
-                        }
-                    })
-                };
-             }
         }
     }
 }

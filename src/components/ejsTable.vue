@@ -1,6 +1,5 @@
 <template>
   <div class="ejs-grid-table-wrapper">
-      
     <ejs-grid
         ref="dataGrid"
         :created="refreshGrid"
