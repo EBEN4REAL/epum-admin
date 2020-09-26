@@ -282,28 +282,26 @@ export default {
                      { 
                         headerText: "Action", 
                         width: 200, 
-                        template: function() {
-                            return {
-                                template: Vue.component("actionTemplate", {
-                                    template:
-                                    `<div>
-                                        <button>Edit</button>
-                                    </div>`,
-                                    data: function() {
-                                    return {
-                                        data: {}
-                                    };
-                                    },
-                                    methods: { }
-
-                                })
-                            };
-                        },
+                        template:  this.actionTemp
                     }, 
                 ] ,
               
-            }
-            
+            },
+            actionTemp: function() {
+                return {
+                    template: Vue.component("actionTemp", {
+                        template: `<div><input type="checkbox"/></div>`,
+                        data: function() {
+                            return {
+                                data: {}
+                            };
+                        },
+                        methods: {
+
+                        }
+                    })
+                };
+             }
         }
     }
 }
