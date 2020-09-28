@@ -21,7 +21,7 @@ let routes = [
         }
     },
     {
-        path: "/admin",
+        path: "/Admin",
         name: "adminDashboard",
         component: AdminDashboard,
         meta: { 
@@ -30,7 +30,7 @@ let routes = [
         }
     },
     {
-        path: "/resolvePayment",
+        path: "/Admin/resolvePayment",
         name: "resolvePayment",
         component: ResolvePayment,
         meta: { 
@@ -39,7 +39,7 @@ let routes = [
         }
     },
     {
-        path: "/resolveUssd",
+        path: "/Admin/resolveUssd",
         name: "resolveUssd",
         component: ResolveUssd,
         meta: { 

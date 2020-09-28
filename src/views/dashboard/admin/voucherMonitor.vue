@@ -3,7 +3,7 @@
         <div class="center_div voucher_container margin-top-center-div">
           <div class="pad_div">
             <div class="mt-3 tabs__lists">
-                <h3>VOUCHER MONITOR</h3>
+                <h5>VOUCHER MONITOR</h5>
             </div>
           </div>
           <div class="form_content">
@@ -12,10 +12,10 @@
                   <label for="amount" class="col-sm-4 col-form-label">VOUCHER PIN TO VERIFY</label>
                   <div class="col-sm-8">
                     <input type="number" class="form-control form__input" id="inputVoucher" placeholder="e.g. 1234567890">
-                    </div>
-                    <div class="mt-4 mx-auto">
+                    <div class="mt-4 mx-auto text-center">
                       <button class="btn btn_theme">Verify Voucher</button>
                     </div>
+                  </div>
                 </div>
             </form>
           </div>

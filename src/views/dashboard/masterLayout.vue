@@ -274,7 +274,10 @@
                     </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
-                           Devices
+                            <span class="sidenav_list_title">
+                                Devices
+                            </span>
+                           
                             <i class="fa fa-angle-right sidenav_arrow"></i>
                         </a>
                         <div>
@@ -424,20 +427,22 @@
                 this.collapseNavbar = !this.collapseNavbar;
                 const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
-                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+                const treeviews = Array.from(document.querySelectorAll(".treeview"));
                 
                 if(!this.collapseNavbar){
                     const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
                     allListTitles.forEach(el => {
                         el.style.display = "inline"
-                        console.log(el)
                     })
                     sideNav_arrows.forEach(el => {
                         el.style.display = "inline"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "block"
-                    // })
+                    treeviews.forEach(el => {
+                        if(Array.from(el.classList).includes("list_open")) {
+                            el.classList.remove("list_open")
+                            el.classList.add("open")
+                        }
+                    })
                 }else {
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
@@ -445,16 +450,21 @@
                     allListTitles.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "none"
-                    // })
+                    treeviews.forEach(el => {
+                        if(Array.from(el.classList).includes("open")) {
+                            el.classList.add("list_open")
+                            el.classList.remove("open")
+                        }
+                    })
                 }
                 console.log(this.collapseNavbar);
             },
             toggleSidenavText() {
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
                 const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
-                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+                const treeviews = Array.from(document.querySelectorAll(".treeview"));
+                const treeMwenus = Array.from(document.querySelectorAll(".treeview-menu"));
+                
 
                 if(this.collapseNavbar){
                     allListTitles.forEach(el => {
@@ -463,22 +473,31 @@
                      sideNav_arrows.forEach(el => {
                         el.style.display = "inline"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "block"
-                    // })
+                     treeviews.forEach(el => {
+                        const classList = Array.from(el.classList);
+                        if(classList.includes("open")) {
+                            el.classList.add("open")
+                            el.classList.remove("list_open")
+                        }
+                    })
                 }else {
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "none"
+                    // treeviews.forEach(el => {
+                    //     const classList = Array.from(el.classList);
+                    //     if(classList.includes("open")) {
+                    //         el.classList.remove("open")
+                    //         el.classList.add("list_open")
+                    //     }
                     // })
+                  
                 }
             },
             hideTitles() {
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
                 const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
-                const treeMenus = Array.from(document.querySelectorAll(".treeview-menu"));
+                const treeviews = Array.from(document.querySelectorAll(".treeview"));
 
                 if(this.collapseNavbar) {
                     allListTitles.forEach(el => {
@@ -487,21 +506,25 @@
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "block"
+                    // treeviews.forEach(el => {
+                    //     const classList = Array.from(el.classList);
+                    //     if(classList.includes("open")) {
+                    //         el.classList.remove("open")
+                    //     }
                     // })
                 }else{
                     sideNav_arrows.forEach(el => {
                         el.style.display = "inline"
                     })
-                    // treeMenus.forEach(el => {
-                    //     el.style.display = "none"
-                    // })
                 }
             },
             logout() {
                 localStorage.clear();
-                this.$router.push({name: 'login'})
+                this.$router.push({name: 'login'});
+                this.$toast("Logout Successful", {
+                    type: "success",
+                    timeout: 3000
+                });
             }
         }
     };

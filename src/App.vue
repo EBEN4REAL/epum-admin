@@ -8,11 +8,9 @@
 
 export default {
   name: 'App',
-  components: {
-
-  }
 }
 </script>
 <style lang="scss">
   @import "@/assets/sass/styles.scss";
+  @import url("https://cdn.syncfusion.com/ej2/material.css");
 </style>

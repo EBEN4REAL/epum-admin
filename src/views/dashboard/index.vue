@@ -1,7 +1,7 @@
 <template>
     <masterLayout>
         <section class=" mt-3 full__row_section">
-            <div class="page_title">
+            <div clas   s="page_title">
                 <p>DASHBOARD</p>
             </div>
             <div class="dashboard__cards__wrapper">
