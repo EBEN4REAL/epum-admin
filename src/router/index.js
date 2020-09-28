@@ -7,6 +7,8 @@ import ResolvePayment from '../views/dashboard/admin/resolvePayment';
 import ResolveUssd from '../views/dashboard/admin/resolveUssd';
 import VoucherMonitor from '../views/dashboard/admin/voucherMonitor';
 import PEFDashboard from '../views/dashboard/admin/pefDashboard';
+import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
+import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,24 @@ let routes = [
         path: "/",
         name: "login",
         component: Login,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/Companies",
+        name: "list_of_companies",
+        component: ListOfCompanies,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/edit_companies",
+        name: "edit_companies",
+        component: EditCompanies,
         meta: { 
             authorize: true,
             authRoles: ['admin']

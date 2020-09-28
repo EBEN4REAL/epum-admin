@@ -1,5 +1,6 @@
 <template>
   <div class="ejs-grid-table-wrapper">
+      
     <ejs-grid
         ref="dataGrid"
         :created="refreshGrid"
@@ -47,6 +48,7 @@ export default {
       var value = event.target.value;
       grid.search(value);
     }
+    document.querySelector(".e-headercontent").classList.remove('e-headercontent')
   },
   components: {
 
@@ -63,7 +65,7 @@ export default {
         case "PDF Export":
           let pdfExportProperties = {
             pageOrientation: 'Landscape',
-            fileName: 'Drivers.pdf'
+            fileName: this.tableProps.fileName
           }
           this.$refs.dataGrid.pdfExport();
           break;
