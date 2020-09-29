@@ -9,6 +9,8 @@ import VoucherMonitor from '../views/dashboard/admin/voucherMonitor';
 import PEFDashboard from '../views/dashboard/admin/pefDashboard';
 import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
+import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
+
 
 Vue.use(VueRouter);
 
@@ -26,6 +28,15 @@ let routes = [
         path: "/Companies",
         name: "list_of_companies",
         component: ListOfCompanies,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/company_details",
+        name: "company_details",
+        component: CompanyDetails,
         meta: { 
             authorize: true,
             authRoles: ['admin']
