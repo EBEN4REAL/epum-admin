@@ -1,6 +1,7 @@
 @import "colors";
 @import "side_nav";
 @import "scroll";
+@import "ejstable.scss";
 
 html {
   overflow-x: hidden;
@@ -252,6 +253,7 @@ body {
     -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,.16);
     box-shadow: 2px 3px 6px rgba(0,0,0,.16);
     width: 150px;
+    padding: 11px;
 }
 
 .form_content {
