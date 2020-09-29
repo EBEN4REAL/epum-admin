@@ -255,20 +255,20 @@
                         <div>
                             <ul class="treeview-menu">
                                 <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <router-link :to="{ name: 'list_of_companies' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Companies
                                     </router-link>
                                 </li>
-                                  <li>
+                                <!-- <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Dealers
                                     </router-link>
                                 </li>
-                                 <li>
+                                <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Branches
                                     </router-link>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
@@ -282,7 +282,7 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
-                                <li>
+                                <!-- <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Gateway
                                     </router-link>
@@ -296,7 +296,7 @@
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Offline Pumps
                                     </router-link>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
@@ -320,9 +320,9 @@
                                     </router-link>
                                 </li>
                                  <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <!-- <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Voucher Report
-                                    </router-link>
+                                    </router-link> -->
                                 </li>
                                 <li>
                                     <router-link :to="{ name: 'voucherMonitor' }" class="vue_router_link" :class="activeRoute === 'voucherMonitor' ? 'active' : ''">
@@ -346,7 +346,7 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
-                                <li>
+                                <!-- <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Dasboard
                                     </router-link>
@@ -355,7 +355,7 @@
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Branch Account Balance
                                     </router-link>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
