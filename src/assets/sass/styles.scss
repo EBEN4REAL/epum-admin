@@ -1,6 +1,7 @@
 @import "colors";
 @import "side_nav";
 @import "scroll";
+@import "ejstable.scss";
 
 html {
   overflow-x: hidden;
@@ -171,9 +172,10 @@ body {
 }
 .page_title {
   font-size: 19px;
-  color: $darkGreyColor;
+  color: #666666;
   border-bottom: 1px solid #eaeaea;
   margin-bottom: 20px;
+  font-weight: 100;
 }
 
 .fg-success {
@@ -251,6 +253,7 @@ body {
     -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,.16);
     box-shadow: 2px 3px 6px rgba(0,0,0,.16);
     width: 150px;
+    padding: 11px;
 }
 
 .form_content {

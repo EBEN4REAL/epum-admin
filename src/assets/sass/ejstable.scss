@@ -1,0 +1,71 @@
+//Table
+.e-grid {
+    border: none !important;
+}
+
+.e-control {
+    border: none !important;
+}
+
+.e-row {
+    height: 74px;
+    box-shadow: 1px 1px darkred;
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+}
+
+.e-grid.e-responsive .e-rowcell,
+.e-grid.e-responsive .e-headercelldiv {
+    text-overflow: inherit !important;
+    white-space: nowrap;
+}
+
+.e-tbar-btn {
+    background: $primaryColor !important;
+    color: $whiteColor !important;
+    padding: 10px 24px 10px 24px !important;
+    .e-tbar-btn-text {
+        color: $whiteColor !important;
+    }
+}
+
+.e-toolbar {
+    min-height: 61px !important
+}
+
+.e-btn-icon {
+    color: $whiteColor !important;
+}
+
+.e-headercelldiv {
+    text-align: center !important;
+    color: $primaryColor;
+    font-size: 15px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+.e-rowcell {
+    text-align: center !important;
+}
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 1em !important;
+}
+
+td {
+    font-size: 16px !important;
+}
+
+#grid_1318721639_0_searchbutton {
+    color: $primaryColor !important;
+}
+
+.e-alldrop {
+    margin-top: -10px !important;
+}
+
+#ej2_dropdownlist_0 {
+    font-size: 16px !important;
+}
