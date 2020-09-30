@@ -9,12 +9,9 @@ import VoucherMonitor from '../views/dashboard/admin/voucherMonitor';
 import PEFDashboard from '../views/dashboard/admin/pefDashboard';
 import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
-<<<<<<< HEAD
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
-=======
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
 
->>>>>>> 9e808e39302b13fc9fc6184646e51af98c3e596b
 
 Vue.use(VueRouter);
 
