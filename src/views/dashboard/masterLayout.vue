@@ -320,9 +320,9 @@
                                     </router-link>
                                 </li>
                                  <li>
-                                    <!-- <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Voucher Report
-                                    </router-link> -->
+                                    <router-link :to="{ name: 'manage_users' }" class="vue_router_link" :class="activeRoute === 'manage_users' ? 'active' : ''">
+                                        Manage Users
+                                    </router-link>
                                 </li>
                                 <li>
                                     <router-link :to="{ name: 'voucherMonitor' }" class="vue_router_link" :class="activeRoute === 'voucherMonitor' ? 'active' : ''">

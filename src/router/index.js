@@ -11,6 +11,8 @@ import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
+import ManageUsers from '../views/dashboard/admin/ManageUsers/manageUsers';
+import EditUser from '../views/dashboard/admin/ManageUsers/editUser';
 
 
 Vue.use(VueRouter);
@@ -20,6 +22,24 @@ let routes = [
         path: "/",
         name: "login",
         component: Login,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/edit_user",
+        name: "edit_user",
+        component: EditUser,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/manage_users",
+        name: "manage_users",
+        component: ManageUsers,
         meta: { 
             authorize: true,
             authRoles: ['admin']
