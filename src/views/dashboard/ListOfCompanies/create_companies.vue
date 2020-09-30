@@ -1,22 +1,27 @@
 <template>
   <masterLayout>
-    <section class="mt-3 full__row_section">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="banner">
-            <h4>Create Company</h4>
+    <section class="mt-3 full__row_section banner-gradient"  :style="[
+            {
+              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover'
+            }
+          ]">
+      <div class="row align-items-center justify-content-center hundred-percent-height">
+        <div class="col-md-12 ">
+          <div class="text-center ">
+            <h5 class="title">Create Company</h5>
           </div>
         </div>
       </div>
     </section>
-    <div
-      class="full__row_section mt-3 center_div margin-top-center-div ep_card"
-    >
+    <div  class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
       <div class="">
         <form>
           <div class="text-center">
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label> Company Name</label>
               </div>
               <div class="col-md-8">
@@ -26,7 +31,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Phone</label>
               </div>
               <div class="col-md-8">
@@ -36,7 +41,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Email</label>
               </div>
               <div class="col-md-8">
@@ -46,7 +51,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Street</label>
               </div>
               <div class="col-md-8">
@@ -56,7 +61,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>City</label>
               </div>
               <div class="col-md-8">
@@ -66,7 +71,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Country</label>
               </div>
               <div class="col-md-8">
@@ -81,7 +86,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>State</label>
               </div>
               <div class="col-md-8">
@@ -91,7 +96,7 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Company Products</label>
               </div>
               <div class="col-md-8 text-left">
@@ -114,18 +119,19 @@
               </div>
             </div>
             <div class="row align-items-center mt-3">
-              <div class="col-md-4">
+              <div class="col-md-4 text-left">
                 <label>Upload Company Logo</label>
               </div>
               <div class="col-md-8">
                 <div class="text-left input__block">
                   <input type="file" />
                 </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn_theme">Save</button>
+                </div>
               </div>
             </div>
-            <div class="text-center mt-3">
-              <button class="btn btn_theme">Save</button>
-            </div>
+            
           </div>
         </form>
       </div>
@@ -136,6 +142,7 @@
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
+import backgroundUrl from "@/assets/img/bg__card.png";
 
 export default {
   components: {
@@ -144,7 +151,9 @@ export default {
 
   mounted() {},
   data() {
-    return {};
+    return {
+      backgroundUrl
+    };
   },
 };
 </script>

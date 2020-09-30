@@ -18,11 +18,12 @@
                   <label for="amount" class="col-sm-4 col-form-label">Amount</label>
                   <div class="col-sm-8">
                     <input type="number" class="form-control form__input" id="inputAmount" placeholder="Amount">
-                  </div>
-                  <div class="mt-4 mx-auto text-center">
+                     <div class="mt-4 mx-auto text-center">
                       <button class="btn btn_theme">Resolve Payment</button>
-                    </div>
-                </div>
+                        </div>
+                      </div>
+                  </div>
+                 
             </form>
           </div>
           <div
