@@ -11,6 +11,7 @@ import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
+import Branches from '../views/dashboard/ListOfCompanies/branches';
 
 
 Vue.use(VueRouter);
@@ -56,6 +57,15 @@ let routes = [
         path: "/create_companies",
         name: "create_companies",
         component: CreateCompanies,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/branches",
+        name: "branches",
+        component: Branches,
         meta: { 
             authorize: true,
             authRoles: ['admin']
