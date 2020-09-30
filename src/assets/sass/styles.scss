@@ -196,7 +196,7 @@ body {
   margin: 0 auto;
   position: relative;
   width: 60%;
-  height: 500px;
+  // height: 500px;
   -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
 }
@@ -362,8 +362,12 @@ body {
   margin: 0 auto;
  h3 {
   font-size: 20px;
+  text-align: center;
 }
 }
 .dashboard__card.small_card.align-center {
   height: 180px;
+}
+.create_btn {
+  margin-top: 62px !important;
 }

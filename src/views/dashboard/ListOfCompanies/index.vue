@@ -28,9 +28,14 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="card_inner_wrapper">
+                        <div class="row">
+                        <div class="col-md-9 card_inner_wrapper">
                             <h3>List of Registered Companies.</h3>
                         </div>
+                        <div class="col-md-3  mt-4">
+                           <a href="#" class="btn btn_theme"> Create Companies </a>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
