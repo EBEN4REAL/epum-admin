@@ -123,7 +123,7 @@
                 <label>Upload Company Logo</label>
               </div>
               <div class="col-md-8">
-                <div class="text-left input__block">
+                <div class="text-left ">
                   <input type="file" />
                 </div>
                 <div class="text-center mt-3">
