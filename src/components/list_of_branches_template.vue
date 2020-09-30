@@ -1,0 +1,23 @@
+<template>
+  <div class="button">
+    <router-link :to="{name: 'edit_companies', query: {id: data.index}}" class="btn btn-warning mr-2">Edit</router-link>
+    <router-link :to="{name: 'company_details'}" class="btn btn-primary mr-2">Fund Branch</router-link>
+    <router-link :to="{name: 'edit_companies'}" class="btn btn-info mr-2">Details</router-link>
+    <router-link :to="{name: 'edit_companies'}" class="btn btn-warning mr-2">Transactions</router-link>
+    <router-link :to="{name: 'edit_companies'}" class="btn btn-danger mr-2">Mail Recipient</router-link>
+
+  </div>
+</template>
+
+<script>
+
+export default {
+  data () {
+    return {
+        data: {}
+    }
+  },
+  mounted() {
+  },
+}
+</script>

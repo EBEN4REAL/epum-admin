@@ -1,9 +1,6 @@
 <template>
     <masterLayout>
         <section class=" mt-3 full__row_section">
-            <div clas   s="page_title">
-                <p>DASHBOARD</p>
-            </div>
             <div class="dashboard__cards__wrapper">
                 <div class="dashboard__card small_card">
                     <div class="small__card_content_wrapper" style="height: 100%">

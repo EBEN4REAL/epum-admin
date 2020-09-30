@@ -353,9 +353,11 @@
 
         .main_content {
             width: 100%;
-
+            background: #fafafa;
+            min-height: 100vh;
             .inner_main_content {
-                margin-top: 77px;
+                // margin-top: 77px;
+                padding-top: 55px;
                 margin-bottom: 30px;
             }
         }

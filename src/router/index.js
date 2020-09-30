@@ -13,7 +13,14 @@ import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
 import ManageUsers from '../views/dashboard/admin/ManageUsers/manageUsers';
 import EditUser from '../views/dashboard/admin/ManageUsers/editUser';
+import MapuserToBranch from '../views/dashboard/admin/ManageUsers/mapUserToBranch';
+import MapuserToDealer from '../views/dashboard/admin/ManageUsers/mapUserToDealer';
+import MapUserToSalesRep from '../views/dashboard/admin/ManageUsers/mapUserToSalesRep';
+import MapUserToCompany from '../views/dashboard/admin/ManageUsers/mapUserToCompany';
+import MapUserToRole from '../views/dashboard/admin/ManageUsers/MapUserToRole';
 
+import Branches from '../views/dashboard/ListOfCompanies/branches';
+import CreateBranch from '../views/dashboard/ListOfCompanies/create_branch';
 
 Vue.use(VueRouter);
 
@@ -22,6 +29,51 @@ let routes = [
         path: "/",
         name: "login",
         component: Login,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/map_user_to_role",
+        name: "map_user_to_role",
+        component: MapUserToRole,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/map_user_to_comapny",
+        name: "map_user_to_comapny",
+        component: MapUserToCompany,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/map_user_sales_rep",
+        name: "map_user_sales_rep",
+        component: MapUserToSalesRep,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/map_user_dealer",
+        name: "map_user_dealer",
+        component: MapuserToDealer,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/map_user_branch",
+        name: "map_user_branch",
+        component: MapuserToBranch,
         meta: { 
             authorize: true,
             authRoles: ['admin']
@@ -76,6 +128,24 @@ let routes = [
         path: "/create_companies",
         name: "create_companies",
         component: CreateCompanies,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/branches",
+        name: "branches",
+        component: Branches,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/create_branch",
+        name: "create_branch",
+        component: CreateBranch,
         meta: { 
             authorize: true,
             authRoles: ['admin']
