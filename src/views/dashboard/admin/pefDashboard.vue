@@ -1,9 +1,6 @@
 <template>
     <masterLayout>
         <div class="new_row_section">
-            <div class="page_title">
-                <p>PEF DASHBOARD</p>
-            </div>
             <div class="row mt-3">
                 <div class="col-lg-3 col-md-3 remove_padding-right ">
                    <div class="small__card_content_wrapper small_card" style="height: 100%">
