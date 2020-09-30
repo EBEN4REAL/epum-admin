@@ -12,7 +12,7 @@
                         <div class="row make-row-hundred-percent align-items-center justify-content-center" >
                             <div class="col-md-3">
                                  <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <img src="@/assets/img/company_icon.png"  width="40" />
+                                    <i class="fa fa-users" aria-hidden="true" style="font-size: 35px"></i>
                                 </div>
                             </div>
                             <div class="col-md-7 remove-padding-left">
