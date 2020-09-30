@@ -33,7 +33,7 @@
                             <h3>List of Registered Branches.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'branches'}" class="create_btn btn btn_theme">Create New Branch</router-link>
+                           <router-link :to="{name: 'create_branch'}" class="create_btn btn btn_theme">Create New Branch</router-link>
                         </div>
                     </div>
                     </div>

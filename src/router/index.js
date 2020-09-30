@@ -12,7 +12,7 @@ import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
 import Branches from '../views/dashboard/ListOfCompanies/branches';
-
+import CreateBranch from '../views/dashboard/ListOfCompanies/create_branch';
 
 Vue.use(VueRouter);
 
@@ -66,6 +66,15 @@ let routes = [
         path: "/branches",
         name: "branches",
         component: Branches,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/create_branch",
+        name: "create_branch",
+        component: CreateBranch,
         meta: { 
             authorize: true,
             authRoles: ['admin']

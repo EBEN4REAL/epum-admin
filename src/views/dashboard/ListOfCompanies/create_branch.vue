@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Create Company</h5>
+            <h5 class="title">Create New Branch</h5>
           </div>
         </div>
       </div>
@@ -22,11 +22,39 @@
           <div class="text-center">
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label> Company Name</label>
+                <label> Branch Name</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Company Name" class="" />
+                  <input type="text" placeholder="Branch Name" class="" />
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Group</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <select class="form-control" >
+                      <option disabled selected>Select Group</option>
+                      <option>Group 1</option>
+                      <option>Group 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+             <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Dealer</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <select class="form-control" >
+                      <option disabled selected>Select Dealer</option>
+                      <option>Dealer 1</option>
+                      <option>Dealer 2</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -76,9 +104,8 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <!-- <input type="text" placeholder="Country" class="" /> -->
                   <select class="form-control" >
-                      <option value="Select a Country" disabled>Select a Country</option>
+                      <option disabled selected>Select a Country</option>
                       <option value="Nigeria">Nigeria</option>
                       <option value="Kenya">Kenya</option>
                   </select>
@@ -95,43 +122,51 @@
                 </div>
               </div>
             </div>
-            <div class="row align-items-center mt-3">
+             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label>Company Products</label>
+                <label>Engagement Level</label>
               </div>
-              <div class="col-md-8 text-left">
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="LPG">
-                 <label class="form-check-label">LPG</label>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <select class="form-control" >
+                      <option disabled selected>Select Engagement Level</option>
+                      <option>Full Auto (Pumps & Tanks)</option>
+                      <option>Auto (Pumps Only)</option>
+                      <option>Tank Auto (Tanks Only)</option>
+                  </select>
                 </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="DPK">
-                 <label class="form-check-label">DPK</label>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="AGO">
-                 <label class="form-check-label">AGO</label>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <label class="form-check-label">PMS</label>
+              </div>
+            </div>
+             <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Service Type</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <select class="form-control" >
+                      <option disabled selected>Select Service Type</option>
+                      <option>Service Station</option>
+                      <option>Industrial Dump</option>
+                      <option>Industrial Generator</option>
+                  </select>
                 </div>
               </div>
             </div>
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label>Upload Company Logo</label>
+                <label>Online</label>
+              </div>
+              <div class="col-md-8 text-left">
+               <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="" value="LPG">
+                </div>
               </div>
               <div class="col-md-8">
-                <div class="text-left ">
-                  <input type="file" />
-                </div>
                 <div class="text-center mt-3">
                   <button class="btn btn_theme">Create</button>
                 </div>
               </div>
             </div>
-            
           </div>
         </form>
       </div>
