@@ -196,7 +196,7 @@ body {
   margin: 0 auto;
   position: relative;
   width: 60%;
-  // height: 500px;
+  height: 500px;
   -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
 }
@@ -369,5 +369,9 @@ body {
   height: 180px;
 }
 .create_btn {
-  margin-top: 62px !important;
+  margin-top: 36px !important;
+}
+
+.margin-top-center-div.ep_card {
+  height: auto;
 }

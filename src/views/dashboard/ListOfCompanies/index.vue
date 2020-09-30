@@ -32,8 +32,8 @@
                         <div class="col-md-9 card_inner_wrapper">
                             <h3>List of Registered Companies.</h3>
                         </div>
-                        <div class="col-md-3  mt-4">
-                           <a href="#" class="btn btn_theme"> Create Companies </a>
+                        <div class="col-md-3 mt-4">
+                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Companies</router-link>
                         </div>
                     </div>
                     </div>
