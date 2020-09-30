@@ -28,9 +28,14 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="card_inner_wrapper">
+                        <div class="row">
+                        <div class="col-md-9 card_inner_wrapper">
                             <h3>List of Registered Companies.</h3>
                         </div>
+                        <div class="col-md-3 mt-4">
+                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Companies</router-link>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
