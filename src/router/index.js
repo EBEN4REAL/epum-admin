@@ -22,6 +22,9 @@ import MapUserToRole from '../views/dashboard/admin/ManageUsers/MapUserToRole';
 import Branches from '../views/dashboard/ListOfCompanies/branches';
 import CreateBranch from '../views/dashboard/ListOfCompanies/create_branch';
 
+import Gateway from '../views/dashboard/devices/gateway';
+import POS from '../views/dashboard/devices/pos';
+
 Vue.use(VueRouter);
 
 let routes = [
@@ -191,6 +194,24 @@ let routes = [
         path: "/pefDashboard",
         name: "pefDashboard",
         component: PEFDashboard,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "Device/gateway",
+        name: "gateway",
+        component: Gateway,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/pos",
+        name: "pos",
+        component: POS,
         meta: { 
             authorize: true,
             authRoles: ['admin']

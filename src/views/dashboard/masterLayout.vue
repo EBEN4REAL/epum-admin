@@ -282,17 +282,17 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
-                                <!-- <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                <li>
+                                    <router-link :to="{ name: 'gateway' }" class="vue_router_link" :class="activeRoute === 'gateway' ? 'active' : ''">
                                         Gateway
                                     </router-link>
                                 </li>
                                   <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
+                                    <router-link :to="{ name: 'pos' }" class="vue_router_link" :class="activeRoute === 'pos' ? 'active' : ''">
                                         POS
                                     </router-link>
                                 </li>
-                                 <li>
+                                <!--  <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Offline Pumps
                                     </router-link>
