@@ -1,14 +1,21 @@
 <template>
     <masterLayout>
-        <section class=" mt-3 full__row_section">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="banner" >
-                        <h4>JIDSMA OIL & GAS'S DETAILS </h4>
-                    </div>
-                </div>
-            </div>
-        </section>
+         <section class="mt-3 full__row_section banner-gradient"  :style="[
+            {
+              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover'
+            }
+          ]">
+      <div class="row align-items-center justify-content-center hundred-percent-height">
+        <div class="col-md-12 ">
+          <div class="text-center ">
+            <h5 class="title">  Company Details</h5>
+          </div>
+        </div>
+      </div>
+    </section>
         <div class="full__row_section mt-3 ep_card">
             <div class="">
                 <form>
@@ -72,6 +79,7 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
+import backgroundUrl from "@/assets/img/bg__card.png";
 
 
 
@@ -85,7 +93,7 @@ export default {
     },
     data() {
         return {
-          
+          backgroundUrl
         }
     }
 }
