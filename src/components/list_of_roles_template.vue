@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group btn-group-sm" role="group">
-          <router-link v-b-tooltip.hover title="Edit" :to="{name:'edit_companies'}" class="btn btn-warning" >
+          <router-link v-b-tooltip.hover title="Edit" :to="{name:'edit_roles'}" class="btn btn-warning" >
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           </router-link> 
            <router-link v-b-tooltip.hover title="Details" :to="{name:'company_details'}" class="btn btn-primary" >
