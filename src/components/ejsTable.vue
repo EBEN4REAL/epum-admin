@@ -1,6 +1,4 @@
 <template>
-  <div class="ejs-grid-table-wrapper">
-      
     <ejs-grid
         ref="dataGrid"
         :created="refreshGrid"
@@ -20,7 +18,6 @@
             <e-column field="Eben"   :headerText="colHeader.name" v-for="(colHeader,i) in  tableProps.tableHeaders" :key="i"></e-column>
         </e-columns> -->
     </ejs-grid>
-  </div>
 </template>
 
 <script>
