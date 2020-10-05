@@ -7,7 +7,6 @@ import ResolvePayment from '../views/dashboard/admin/resolvePayment';
 import ResolveUssd from '../views/dashboard/admin/resolveUssd';
 import VoucherMonitor from '../views/dashboard/admin/voucherMonitor';
 import PEFDashboard from '../views/dashboard/admin/pefDashboard';
-import ManageRoles from '../views/dashboard/admin/manageRoles';
 import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
@@ -24,6 +23,11 @@ import MapUserToRole from '../views/dashboard/admin/ManageUsers/MapUserToRole';
 
 import Branches from '../views/dashboard/ListOfCompanies/branches';
 import CreateBranch from '../views/dashboard/ListOfCompanies/create_branch';
+
+
+import ManageRoles from '../views/dashboard/admin/manageRoles';
+import CreateRoles from '../views/dashboard/ListOfRoles/create_roles';
+import EditRoles from '../views/dashboard/ListOfRoles/edit_roles';
 
 import Gateway from '../views/dashboard/devices/gateway';
 import POS from '../views/dashboard/devices/pos';
@@ -205,6 +209,24 @@ let routes = [
         path: "/Admin/manageRoles",
         name: "manageRoles",
         component: ManageRoles,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/create_roles",
+        name: "create_roles",
+        component: CreateRoles,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/edit_roles",
+        name: "edit_roles",
+        component: EditRoles,
         meta: { 
             authorize: true,
             authRoles: ['admin']
