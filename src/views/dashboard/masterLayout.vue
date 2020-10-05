@@ -242,38 +242,20 @@
                             
                         </router-link>
                     </li>
-                     <li class="list-group-item treeview">
-                        <a href="#" class="vue_router_link has-submenu">
-                            <span class="mr-2 icon">
-                                <img src="@/assets/img/pin.png" width="20"/>
-                            </span>
-                             <span class="sidenav_list_title">
+                    <li class="list-group-item " :class="activeRoute === 'list_of_companies' ? 'navbar_item_active' : ''">
+                        <router-link :to="{ name: 'list_of_companies' }" class="vue_router_link">
+                            <span class="mr-2"><img src="@/assets/img/pin.png" width="20"/></span>
+                            <span class="sidenav_list_title">
                                 Registered Companies
                             </span>
-                            <i class="fa fa-angle-right sidenav_arrow" ></i>
-                        </a>
-                        <div>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <router-link :to="{ name: 'list_of_companies' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Companies
-                                    </router-link>
-                                </li>
-                                <!-- <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Dealers
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Branches
-                                    </router-link>
-                                </li> -->
-                            </ul>
-                        </div>
+                            
+                        </router-link>
                     </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
+                            <span class="mr-2 icon">
+                                <img src="@/assets/img/cpu.svg" width="20"/>
+                            </span>
                             <span class="sidenav_list_title">
                                 Devices
                             </span>
@@ -282,11 +264,6 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
-                                <li>
-                                    <router-link :to="{ name: 'gateway' }" class="vue_router_link" :class="activeRoute === 'gateway' ? 'active' : ''">
-                                        Gateway
-                                    </router-link>
-                                </li>
                                 <li>
                                     <router-link :to="{ name: 'pos' }" class="vue_router_link" :class="activeRoute === 'pos' ? 'active' : ''">
                                         POS
@@ -307,17 +284,14 @@
                                        Devices Not Pushing Ep2
                                     </router-link>
                                 </li>
-                                
-                                <!--  <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Offline Pumps
-                                    </router-link>
-                                </li> -->
                             </ul>
                         </div>
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
+                            <span class="mr-2 icon">
+                                <img src="@/assets/img/profile.svg" width="20"/>
+                            </span>
                              <span class="sidenav_list_title">
                                 Admin
                             </span>
@@ -328,11 +302,6 @@
                                 <li>
                                     <router-link :to="{ name: 'resolvePayment' }" class="vue_router_link" :class="activeRoute === 'resolvePayment' ? 'active' : ''">
                                         Resolve Payment
-                                    </router-link>
-                                </li>
-                                  <li>
-                                    <router-link :to="{ name: 'resolveUssd' }" class="vue_router_link" :class="activeRoute === 'resolveUssd' ? 'active' : ''">
-                                        USSD Voucher
                                     </router-link>
                                 </li>
                                  <li>
@@ -360,6 +329,9 @@
                     </li>
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
+                             <span class="mr-2 icon">
+                                <img src="@/assets/img/profile.svg" width="20"/>
+                            </span>
                              <span class="sidenav_list_title">
                                 Tech Admin
                             </span>
