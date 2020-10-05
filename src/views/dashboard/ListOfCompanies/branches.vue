@@ -138,7 +138,7 @@ export default {
                     }, 
                     { 
                         headerText: "Action", 
-                        width: 500, 
+                        width: 580, 
                         textAlign: "center",
                         template:   () => {
                             return {
