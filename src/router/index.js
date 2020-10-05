@@ -32,9 +32,8 @@ let routes = [
         path: "/",
         name: "login",
         component: Login,
-        meta: { 
-            authorize: true,
-            authRoles: ['admin']
+        meta: {
+            guest: true
         }
     },
     {
@@ -224,8 +223,50 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
-  });
+});
 
+
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(rec => rec.meta.authorize)){
+        // Authorized Pages will he handled here
+        if(localStorage.getItem("adminUserDetails") === null){
+            // There is no logged in user, go back to Login (and redirect to intended page after successfull login)
+            next({name: 'login', params: {nextUrl: to.fullPath}});
+        }
+        else{
+            let user = JSON.parse(localStorage.getItem("adminUserDetails"));
+  
+            // Company Admin
+            if(to.matched.some(rec => rec.meta.authRoles.includes('admin') )){
+                if(user.role === 'Customer')
+                {
+                    next()
+                }
+            }
+            else{
+                next();
+            }
+        }
+    }
+    else if(to.matched.some(rec => rec.meta.guest)){
+        //Guest Pages are Handled here e.g. Login
+        if(localStorage.getItem("adminUserDetails") === null){
+            next();
+          }
+          else{
+              let user = JSON.parse(localStorage.getItem("adminUserDetails"));
+              if(user.role === "Customer")
+              {
+                  next({ name: 'adminDashboard'});
+              }
+           }
+    }
+    else{
+        // Free pages are handled here
+        next();
+    }
+  });
+  
 
 
   

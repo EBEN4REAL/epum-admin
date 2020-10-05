@@ -33,7 +33,7 @@
                             <h3>List of Registered Companies.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Companies</router-link>
+                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Company</router-link>
                         </div>
                     </div>
                     </div>
@@ -42,7 +42,7 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <EjsTable :tableProps="tableProps"  />
+            <EjsTable :tableProps="tableProps" :key="count" />
         </div>
     </masterLayout>
 </template>
@@ -58,9 +58,13 @@ export default {
         masterLayout,
         EjsTable
     },
+    mounted() {
+        this.count = this.count + 1;
+    },
     data() {
         return {
-              tableProps: {
+            count: 0,
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },

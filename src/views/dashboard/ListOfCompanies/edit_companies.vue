@@ -3,7 +3,7 @@
          <section class="mt-3 full__row_section banner-gradient"  :style="[
                 {
                 backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-                
+                backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover'
                 }
