@@ -7,12 +7,15 @@ import ResolvePayment from '../views/dashboard/admin/resolvePayment';
 import ResolveUssd from '../views/dashboard/admin/resolveUssd';
 import VoucherMonitor from '../views/dashboard/admin/voucherMonitor';
 import PEFDashboard from '../views/dashboard/admin/pefDashboard';
+import ManageRoles from '../views/dashboard/admin/manageRoles';
 import ListOfCompanies from '../views/dashboard/ListOfCompanies/index';
 import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
 import ManageUsers from '../views/dashboard/admin/ManageUsers/manageUsers';
 import EditUser from '../views/dashboard/admin/ManageUsers/editUser';
+import SalesRep from '../views/dashboard/ListOfCompanies/sales_rep';
+import MailRecipient from '../views/dashboard/ListOfCompanies/mail_recipient'; 
 import MapuserToBranch from '../views/dashboard/admin/ManageUsers/mapUserToBranch';
 import MapuserToDealer from '../views/dashboard/admin/ManageUsers/mapUserToDealer';
 import MapUserToSalesRep from '../views/dashboard/admin/ManageUsers/mapUserToSalesRep';
@@ -136,6 +139,24 @@ let routes = [
         }
     },
     {
+        path: "/sales_rep",
+        name: "sales_rep",
+        component: SalesRep,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/mail_recipient",
+        name: "mail_recipient",
+        component: MailRecipient,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
         path: "/branches",
         name: "branches",
         component: Branches,
@@ -175,6 +196,15 @@ let routes = [
         path: "/Admin/resolveUssd",
         name: "resolveUssd",
         component: ResolveUssd,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/Admin/manageRoles",
+        name: "manageRoles",
+        component: ManageRoles,
         meta: { 
             authorize: true,
             authRoles: ['admin']
@@ -237,7 +267,7 @@ router.beforeEach((to, from, next) => {
             let user = JSON.parse(localStorage.getItem("adminUserDetails"));
   
             // Company Admin
-            if(to.matched.some(rec => rec.meta.authRoles.includes('admin') )){
+            if(to.matched.some(rec => rec.meta.authRoles.includes('admin') )){  
                 if(user.role === 'Customer')
                 {
                     next()

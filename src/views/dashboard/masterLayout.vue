@@ -334,6 +334,11 @@
                                         PEF Dashboard
                                     </router-link>
                                 </li>
+                                <li>
+                                    <router-link :to="{ name: 'manageRoles' }" class="vue_router_link" :class="activeRoute === 'manageRoles' ? 'active' : ''">
+                                        Manage Roles
+                                    </router-link>
+                                </li>
                             </ul>
                         </div>
                     </li>

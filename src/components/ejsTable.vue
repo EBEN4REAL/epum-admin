@@ -48,9 +48,6 @@ export default {
     document.querySelector(".e-toolbar-center").classList.remove('e-headercontent')
     // document.querySelector(".e-spinner-pane").classList.remove('e-spinner-pane')
     
-
-    
-
   },
   components: {
 
