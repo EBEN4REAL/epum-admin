@@ -12,15 +12,15 @@
                         <div class="row make-row-hundred-percent align-items-center justify-content-center" >
                             <div class="col-md-3">
                                  <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <i class="fa fa-users" aria-hidden="true" style="font-size: 35px"></i>
+                                    <i class="fa fa-laptop" aria-hidden="true" style="font-size: 35px"></i>
                                 </div>
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Users</h5>
+                                    <h5 class="text-white font-weight">Devices  Not Pushing Ep2</h5>
                                 </div>
                              <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">50</h5>
+                                    <h5 class="text-white mt-4 font-weight">10</h5>
                                 </div>
                            </div>
                             </div>
@@ -30,10 +30,10 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Users.</h3>
+                            <h3>Devices  Not Pushing Ep2</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <!-- <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Companies</router-link> -->
+                           <!-- <router-link :to="{name: ''}" class="create_btn btn btn_theme">Add Firmware</router-link> -->
                         </div>
                     </div>
                     </div>
@@ -59,11 +59,13 @@
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="userName" headerText="Username"></e-column>
-                    <e-column width="200" field="firstName" headerText="First Name"></e-column>
-                    <e-column width="200" field="lastName" headerText="Last Name"></e-column>
-                    <e-column width="200" field="phoneNumber" headerText="Phone"></e-column>
-                    <e-column :template="manageUsersTemplate" headerText="Action" width="300"></e-column>
+                    <e-column width="200" field="deviceId" headerText="Device ID"></e-column>
+                    <e-column width="200" field="fwVersion" headerText="Firmware Version"></e-column>
+                    <e-column width="200" field="fwDate" headerText="Firmware Date"></e-column>
+                    <e-column width="200" field="lastEp2" headerText="Last Ep2"></e-column>
+                    <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
+                    <e-column width="200" field="branchName" headerText="Branch Name"></e-column>
+                    <e-column width="350" field="address" headerText="Address"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
@@ -74,22 +76,23 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
-import Temp from '@/components/manageUsersTemplate.vue';
+import Temp from '@/components/devicePosTemplate.vue';
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
+
 
 export default {
     components: {
         masterLayout,
         EjsTable
     },
-     provide: {
+    provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
-        this.getUsers();
+        this.getPos();
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -109,38 +112,47 @@ export default {
                 tableData: [
                     {
                         index: 1,
-                        userName: "eben@g.com",
-                        firstName: "Ebenezer",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
+                        deviceId: "864626046222144",
+                        fwVersion: "20412",
+                        fwDate: "Sep 26 2019,10:18:28",
+                        lastEp2: "2 Hours ago",
+                        memoryUsage: "8.021749",
+                        lastSeen: "18 Hours ago",
+                        branchName: "Malok station - Malok Igbobo",
+                        address: "Meri Junction Ikorodu, Lagos"
                     },
                     {
                         index: 2,
-                        userName: "josh@g.com",
-                        firstName: "Josh",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
+                        deviceId: "864626046222144",
+                        fwVersion: "20412",
+                        fwDate: "Sep 26 2019,10:18:28",
+                        lastEp2: "5 Hours ago",
+                        memoryUsage: "8.021749",
+                        lastSeen: "18 Hours ago",
+                        branchName: "Malok station - Malok Igbobo",
+                        address: "Meri Junction Ikorodu, Lagos"
                     },
                     {
                         index: 3,
-                        userName: "john@die.com",
-                        firstName: "John",
-                        lastName: "Doe",
-                        phoneNumber: "080748464838"
+                        deviceId: "864626046222144",
+                        fwVersion: "20412",
+                        fwDate: "Sep 26 2019,10:18:28",
+                        lastEp2: "10 Hours ago",
+                        memoryUsage: "8.021749",
+                        lastSeen: "18 Hours ago",
+                        branchName: "Malok station - Malok Igbobo",
+                        address: "Meri Junction Ikorodu, Lagos"
                     },
                     {
                         index: 4,
-                        userName: "sarah@g.com",
-                        firstName: "Sarah",
-                        lastName: "Doe",
-                        phoneNumber: "080748464838"
-                    },
-                    {
-                        index: 5,
-                        userName: "eben@g.com",
-                        firstName: "Ebenezer",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
+                        deviceId: "864626046222144",
+                        fwVersion: "20412",
+                        fwDate: "Sep 26 2019,10:18:28",
+                        lastEp2: "19 Hours ago",
+                        memoryUsage: "8.021749",
+                        lastSeen: "18 Hours ago",
+                        branchName: "Malok station - Malok Igbobo",
+                        address: "Meri Junction Ikorodu, Lagos"
                     },
                 ],
                 columns: [ 
@@ -151,29 +163,47 @@ export default {
                         textAlign: "center"
                     }, 
                     { 
-                        field: "userName", 
-                        headerText: "User Name", 
-                        width: 300, 
+                        field: "devices", 
+                        headerText: "Devices", 
+                        width: 150, 
                         textAlign: "center"
                     }, 
                     { 
-                        field: "firstName", 
-                        headerText: "First Name", 
-                        width: 300, 
+                        field: "lastUpdate", 
+                        headerText: "Last Update", 
+                        width: 180, 
                         textAlign: "center"
                     }, 
                     { 
-                        field: "lastName", 
-                        headerText: "Last Name", 
-                        width: 300, 
+                        field: "fwVersion", 
+                        headerText: "FW Version", 
+                        width: 150, 
                         textAlign: "center"
                     }, 
                     { 
-                        field: "phoneNumber", 
-                        headerText: "phoneNumber", 
+                        field: "memoryUsage", 
+                        headerText: "Memory Usage", 
+                        width: 150, 
+                        textAlign: "center"
+                    },
+                    { 
+                        field: "name", 
+                        headerText: "Name", 
                         width: 300, 
                         textAlign: "center"
-                    }, 
+                    },
+                    { 
+                        field: "state", 
+                        headerText: "State", 
+                        width: 100, 
+                        textAlign: "center"
+                    },
+                    { 
+                        field: "firmware", 
+                        headerText: "Firmware Update", 
+                        width: 300, 
+                        textAlign: "center"
+                    },
                     { 
                         headerText: "Action", 
                         width: 500, 
@@ -183,15 +213,10 @@ export default {
                                 template: Temp
                             }
                         }
-                    }, 
+                    },  
                 ] ,
-                fileName: 'list_of_companies'
+                fileName: 'pos'
             },
-            manageUsersTemplate: function() {
-                return {
-                    template: Temp
-                };
-            }
         }
     },
     methods: {
@@ -212,7 +237,7 @@ export default {
                 break;
             }
         },
-        getUsers() {
+        getPos() {
             this.$refs.dataGrid.ej2Instances.setProperties({
                 dataSource: this.tableProps.tableData
             });

@@ -12,6 +12,7 @@ import EditCompanies from '../views/dashboard/ListOfCompanies/edit_companies';
 import CreateCompanies from '../views/dashboard/ListOfCompanies/create_companies';
 import CompanyDetails from '../views/dashboard/ListOfCompanies/companyDetails';
 import ManageUsers from '../views/dashboard/admin/ManageUsers/manageUsers';
+import UserDetails from '../views/dashboard/admin/ManageUsers/userDetails';
 import EditUser from '../views/dashboard/admin/ManageUsers/editUser';
 import SalesRep from '../views/dashboard/ListOfCompanies/sales_rep';
 import MailRecipient from '../views/dashboard/ListOfCompanies/mail_recipient'; 
@@ -31,6 +32,9 @@ import EditRoles from '../views/dashboard/ListOfRoles/edit_roles';
 
 import Gateway from '../views/dashboard/devices/gateway';
 import POS from '../views/dashboard/devices/pos';
+import DevicesOffline from '../views/dashboard/devices/devices_offline';
+import DevicesOutOfReach from '../views/dashboard/devices/devices_out_of_reach';
+import DevicesNotPushingEp2 from '../views/dashboard/devices/devices_not_pushing_ep2';
 
 Vue.use(VueRouter);
 
@@ -43,6 +47,44 @@ let routes = [
             guest: true
         }
     },
+    {
+        path: "/devices_not_pushing_ep2",
+        name: "devices_not_pushing_ep2",
+        component: DevicesNotPushingEp2,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/user_details",
+        name: "user_details",
+        component: UserDetails,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    
+    {
+        path: "/device_offline",
+        name: "devices_offline",
+        component: DevicesOffline,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/devices_out_of_reach",
+        name: "devices_out_of_reach",
+        component: DevicesOutOfReach,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    
     {
         path: "/map_user_to_role",
         name: "map_user_to_role",

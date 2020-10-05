@@ -1,9 +1,15 @@
 <template>
-  <div class="button">
-    <router-link :to="{name: 'edit_user', query: {id: data.index}}" class="btn btn-warning mr-2">Edit</router-link>
-    <router-link :to="{name: 'company_details'}" class="btn btn-primary mr-2">Details</router-link>
-    <router-link :to="{name: 'edit_companies'}" class="btn btn-danger mr-2">Delete</router-link>
-  </div>
+   <div class="btn-group btn-group-sm" role="group">
+          <router-link v-b-tooltip.hover title="Edit" :to="{name: 'edit_user', query: {id: data.index}}" class="btn btn-warning" >
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </router-link> 
+           <router-link v-b-tooltip.hover title="Details" :to="{name: 'user_details'}" class="btn btn-primary" >
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </router-link> 
+           <router-link v-b-tooltip.hover title="Delete" :to="{name: 'edit_companies'}" class="btn btn-danger" >
+                <i class="fa fa-building-o" aria-hidden="true"></i>
+          </router-link> 
+   </div>
 </template>
 
 <script>

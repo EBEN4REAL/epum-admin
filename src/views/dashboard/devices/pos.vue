@@ -42,7 +42,31 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <EjsTable :tableProps="tableProps"  />
+             <ejs-grid
+                ref="dataGrid"
+                :created="refreshGrid"
+                :allowPaging="true"
+                :allowSorting="true"
+                :pageSettings="tableProps.pageSettings"
+                :toolbar="tableProps.toolbar"
+                :searchSettings="tableProps.search"
+                :allowExcelExport="true"
+                :allowPdfExport="true"
+                :toolbarClick="toolbarClick"
+                :dataSource="tableProps.tableData"  v-cloak
+                :dataBound='dataBound'
+                :columns="tableProps.columns"
+                >
+                <e-columns>
+                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="devices" headerText="Devices"></e-column>
+                    <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
+                    <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>
+                    <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
+                    <e-column width="350" field="name" headerText="Name"></e-column>
+                    <e-column width="350" field="firmware" headerText="FirmWare"></e-column>
+                </e-columns>
+            </ejs-grid>
         </div>
     </masterLayout>
 </template>
@@ -53,10 +77,30 @@ import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
 import Temp from '@/components/devicePosTemplate.vue';
 
+import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import Jquery from 'jquery';
+let $ = Jquery;
+
+
 export default {
     components: {
         masterLayout,
         EjsTable
+    },
+    provide: {
+        grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+    },
+    mounted() {
+        this.getPos();
+        $(".e-input").keyup(function(e) {
+            searchFun(e);
+        });
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
+        }
+        
     },
     data() {
         return {
@@ -178,6 +222,31 @@ export default {
                 ] ,
                 fileName: 'pos'
             },
+        }
+    },
+    methods: {
+        refreshGrid() {
+            this.$refs.dataGrid.refresh();
+        },
+        toolbarClick(args) {
+            switch (args.item.text) {
+                case "PDF Export":
+                let pdfExportProperties = {
+                    pageOrientation: 'Landscape',
+                    fileName: "branches.pdf"
+                }
+                    this.$refs.dataGrid.pdfExport(pdfExportProperties);
+                break;
+                case "Excel Export":
+                    this.$refs.dataGrid.excelExport();
+                break;
+            }
+        },
+        getPos() {
+            this.$refs.dataGrid.ej2Instances.setProperties({
+                dataSource: this.tableProps.tableData
+            });
+            this.refreshGrid();
         }
     }
 }

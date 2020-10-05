@@ -16,16 +16,15 @@
             </div>
         </div>
         </section>
-        <div  class="full__row_section">
+        <div  class="full__row_section mt-3">
             <div class="row">
-                <div class="col-lg-8 mt-4">
+                <div class="col-lg-8">
                     <div class="pad_div">
                         <div class="text-left tabs__lists">
-                            <h5>LIST OF SALES REP.</h5>
                           <EjsTable :tableProps="tableProps"  />
-                            </div>
                          </div>
                     </div>
+                </div>
                 <div class="col-lg-4 col-md-4 mt-5 div ep_card card_height mb-5">
                     <div class="pad_div">
                         <div class="mb-3 tabs__lists">

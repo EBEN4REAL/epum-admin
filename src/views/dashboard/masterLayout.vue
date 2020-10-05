@@ -287,11 +287,27 @@
                                         Gateway
                                     </router-link>
                                 </li>
-                                  <li>
+                                <li>
                                     <router-link :to="{ name: 'pos' }" class="vue_router_link" :class="activeRoute === 'pos' ? 'active' : ''">
                                         POS
                                     </router-link>
                                 </li>
+                                <li>
+                                    <router-link :to="{ name: 'devices_offline' }" class="vue_router_link" :class="activeRoute === 'devices_offline' ? 'active' : ''">
+                                        Devices Offline
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{ name: 'devices_out_of_reach' }" class="vue_router_link" :class="activeRoute === 'devices_out_of_reach' ? 'active' : ''">
+                                       Devices Out Of Reach
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'devices_not_pushing_ep2' }" class="vue_router_link" :class="activeRoute === 'devices_not_pushing_ep2' ? 'active' : ''">
+                                       Devices Not Pushing Ep2
+                                    </router-link>
+                                </li>
+                                
                                 <!--  <li>
                                     <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
                                         Offline Pumps
