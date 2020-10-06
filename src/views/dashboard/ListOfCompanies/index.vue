@@ -42,7 +42,6 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps" :key="count" /> -->
              <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"

@@ -42,7 +42,6 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps"  /> -->
             <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"
@@ -55,8 +54,6 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
-                :dataBound='dataBound'
-                :columns="tableProps.columns"
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
@@ -133,55 +130,6 @@ export default {
                         country: "Nigeria",
                     },                   
                 ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "dealerName", 
-                        headerText: "Dealer Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "name", 
-                        headerText: "Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "city", 
-                        headerText: "City", 
-                        width: 100, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "state", 
-                        headerText: "State", 
-                        width: 80, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "country", 
-                        headerText: "Country", 
-                        width: 150, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        headerText: "Action", 
-                        width: 580, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    }, 
-                ] ,
-                fileName: 'list_of_branches'
             },
             dealersTemplate: function() {
                 return {

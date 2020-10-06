@@ -64,7 +64,7 @@
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="600"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="250"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>

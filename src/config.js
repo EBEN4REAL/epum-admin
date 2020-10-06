@@ -13,14 +13,16 @@ if (
 let configObject = null;
 if (token !== null) {
   configObject = {
-    apiBaseUrl: "https://api.epump.com.ng",
+    // apiBaseUrl: "https://api.epump.com.ng",
+    apiBaseUrl: "https://testapi.epump.com.ng",
     authConfig: {
       headers: { Authorization: "bearer " + token }
     },
   };
 } else {
   configObject = {
-    apiBaseUrl: "https://api.epump.com.ng",
+    // apiBaseUrl: "https://api.epump.com.ng",
+    apiBaseUrl: "https://testapi.epump.com.ng", 
     authConfig: null,
   };
 }
