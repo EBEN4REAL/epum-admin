@@ -54,7 +54,6 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
-                :dataBound='dataBound'
                 :columns="tableProps.columns"
                 >
                 <e-columns>

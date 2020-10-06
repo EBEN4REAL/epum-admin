@@ -14,7 +14,6 @@ let configObject = null;
 if (token !== null) {
   configObject = {
     apiBaseUrl: "https://api.epump.com.ng",
-    appURI: "https://alt.epump.com.ng",
     authConfig: {
       headers: { Authorization: "bearer " + token }
     },
@@ -22,7 +21,6 @@ if (token !== null) {
 } else {
   configObject = {
     apiBaseUrl: "https://api.epump.com.ng",
-    appURI: "https://alt.epump.com.ng",
     authConfig: null,
   };
 }

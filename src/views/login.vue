@@ -61,7 +61,6 @@ import cardBg from '@/assets/img/bg__card.png';
 import configObject from "@/config";
 import Jquery from 'jquery';
 let $ = Jquery;
-
 export default {
     name: 'Login',
     data() {
@@ -119,11 +118,15 @@ export default {
                         });
                         $('.loader').hide();
                         this.isButtonDisabled = false;
+                        const roles = res.data.role.split(",");
+                        res.data.roles = roles
                         localStorage.setItem("adminUserDetails", JSON.stringify(res.data));
                         configObject.authConfig = {
                             headers: { Authorization: "bearer " + res.data.token }
                         };
-                        this.$router.push({ name: "adminDashboard" });
+                        if(roles.includes("Super Admin") || roles.includes("Admin")) {
+                            this.$router.push({ name: "adminDashboard" });
+                        }
                 })
                 .catch(error => {
                     this.isButtonDisabled = false;

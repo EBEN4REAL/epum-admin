@@ -53,7 +53,7 @@ let routes = [
         component: DevicesNotPushingEp2,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -62,7 +62,7 @@ let routes = [
         component: UserDetails,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     
@@ -72,7 +72,7 @@ let routes = [
         component: DevicesOffline,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -81,7 +81,7 @@ let routes = [
         component: DevicesOutOfReach,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     
@@ -91,7 +91,7 @@ let routes = [
         component: MapUserToRole,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -100,7 +100,7 @@ let routes = [
         component: MapUserToCompany,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -109,7 +109,7 @@ let routes = [
         component: MapUserToSalesRep,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -118,7 +118,7 @@ let routes = [
         component: MapuserToDealer,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -127,7 +127,7 @@ let routes = [
         component: MapuserToBranch,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -136,7 +136,7 @@ let routes = [
         component: EditUser,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -145,7 +145,7 @@ let routes = [
         component: ManageUsers,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -154,7 +154,7 @@ let routes = [
         component: ListOfCompanies,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -163,7 +163,7 @@ let routes = [
         component: CompanyDetails,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -172,7 +172,7 @@ let routes = [
         component: EditCompanies,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -181,7 +181,7 @@ let routes = [
         component: CreateCompanies,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -190,7 +190,7 @@ let routes = [
         component: SalesRep,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -199,7 +199,7 @@ let routes = [
         component: MailRecipient,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -208,7 +208,7 @@ let routes = [
         component: Branches,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -217,7 +217,7 @@ let routes = [
         component: CreateBranch,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -226,7 +226,7 @@ let routes = [
         component: AdminDashboard,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -235,7 +235,7 @@ let routes = [
         component: ResolvePayment,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -244,7 +244,7 @@ let routes = [
         component: ResolveUssd,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -253,7 +253,7 @@ let routes = [
         component: ManageRoles,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -262,7 +262,7 @@ let routes = [
         component: CreateRoles,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -271,7 +271,7 @@ let routes = [
         component: EditRoles,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -280,7 +280,7 @@ let routes = [
         component: VoucherMonitor,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -289,7 +289,7 @@ let routes = [
         component: PEFDashboard,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -298,7 +298,7 @@ let routes = [
         component: Gateway,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
     {
@@ -307,7 +307,7 @@ let routes = [
         component: POS,
         meta: { 
             authorize: true,
-            authRoles: ['admin']
+            authRoles: ['Admin']
         }
     },
 ]
@@ -332,7 +332,7 @@ router.beforeEach((to, from, next) => {
   
             // Company Admin
             if(to.matched.some(rec => rec.meta.authRoles.includes('admin') )){  
-                if(user.role === 'Customer')
+                if(user.roles.includes("Super Admin") || user.roles.includes("Admin"))
                 {
                     next()
                 }
@@ -349,7 +349,7 @@ router.beforeEach((to, from, next) => {
           }
           else{
               let user = JSON.parse(localStorage.getItem("adminUserDetails"));
-              if(user.role === "Customer")
+              if(user.roles.includes("Super Admin") || user.roles.includes("Admin"))
               {
                   next({ name: 'adminDashboard'});
               }

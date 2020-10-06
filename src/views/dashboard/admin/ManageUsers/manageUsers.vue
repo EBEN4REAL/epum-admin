@@ -54,8 +54,6 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
-                :dataBound='dataBound'
-                :columns="tableProps.columns"
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
@@ -143,48 +141,6 @@ export default {
                         phoneNumber: "080748464838"
                     },
                 ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "userName", 
-                        headerText: "User Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "firstName", 
-                        headerText: "First Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "lastName", 
-                        headerText: "Last Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "phoneNumber", 
-                        headerText: "phoneNumber", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        headerText: "Action", 
-                        width: 500, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    }, 
-                ] ,
                 fileName: 'list_of_companies'
             },
             manageUsersTemplate: function() {
