@@ -1,11 +1,20 @@
 <template>
-  <div class="button">
-    <router-link :to="{name: 'edit_companies', query: {id: data.index}}" class="btn btn-warning mr-2">Edit</router-link>
-    <router-link :to="{name: 'company_details'}" class="btn btn-primary mr-2">Fund Branch</router-link>
-    <router-link :to="{name: 'edit_companies'}" class="btn btn-info mr-2">Details</router-link>
-    <router-link :to="{name: 'edit_companies'}" class="btn btn-warning mr-2">Transactions</router-link>
-    <router-link :to="{name: 'edit_companies'}" class="btn btn-danger mr-2">Mail Recipient</router-link>
-
+ <div class="btn-group btn-group-sm" role="group">
+          <router-link v-b-tooltip.hover title="Edit" :to="{name:'editBranch'}" class="btn btn-warning" >
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </router-link> 
+           <router-link v-b-tooltip.hover title="Details" :to="{name:'company_details'}" class="btn btn-primary" >
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </router-link> 
+          <router-link v-b-tooltip.hover title="Fund Branch" :to="{name:'dealers'}" class="btn btn-warning" >
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+          </router-link>
+            <router-link v-b-tooltip.hover title="Transactions" :to="{name:'sales_rep'}" class="btn btn-primary" >
+                <i class="fa fa-mars" aria-hidden="true"></i>
+          </router-link>
+           <router-link v-b-tooltip.hover title="Mail Recipient" :to="{name:'mail_recipient'}" class="btn btn-success" >
+                <i class="fa fa-reply" aria-hidden="true"></i>
+          </router-link>
   </div>
 </template>
 

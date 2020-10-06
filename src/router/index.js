@@ -24,11 +24,16 @@ import MapUserToRole from '../views/dashboard/admin/ManageUsers/MapUserToRole';
 
 import Branches from '../views/dashboard/ListOfCompanies/branches';
 import CreateBranch from '../views/dashboard/ListOfCompanies/create_branch';
+import EditBranch from '../views/dashboard/ListOfCompanies/editBranch';
 
 
 import ManageRoles from '../views/dashboard/admin/manageRoles';
 import CreateRoles from '../views/dashboard/ListOfRoles/create_roles';
 import EditRoles from '../views/dashboard/ListOfRoles/edit_roles';
+
+import Dealers from '../views/dashboard/Dealers/dealers';
+import EditDealers from '../views/dashboard/Dealers/editDealers';
+import DealerDetails from '../views/dashboard/Dealers/dealerDetails';
 
 import Gateway from '../views/dashboard/devices/gateway';
 import POS from '../views/dashboard/devices/pos';
@@ -161,7 +166,7 @@ let routes = [
         path: "/company_details",
         name: "company_details",
         component: CompanyDetails,
-        meta: { 
+        meta: {
             authorize: true,
             authRoles: ['admin']
         }
@@ -215,6 +220,15 @@ let routes = [
         path: "/create_branch",
         name: "create_branch",
         component: CreateBranch,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/editBranch",
+        name: "editBranch",
+        component: EditBranch,
         meta: { 
             authorize: true,
             authRoles: ['admin']
@@ -293,7 +307,7 @@ let routes = [
         }
     },
     {
-        path: "Device/gateway",
+        path: "/gateway",
         name: "gateway",
         component: Gateway,
         meta: { 
@@ -305,6 +319,33 @@ let routes = [
         path: "/pos",
         name: "pos",
         component: POS,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/dealers",
+        name: "dealers",
+        component: Dealers,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/dealers/editDealers",
+        name: "editDealers",
+        component: EditDealers,
+        meta: { 
+            authorize: true,
+            authRoles: ['admin']
+        }
+    },
+    {
+        path: "/dealers/dealerDetails",
+        name: "dealerDetails",
+        component: DealerDetails,
         meta: { 
             authorize: true,
             authRoles: ['admin']
