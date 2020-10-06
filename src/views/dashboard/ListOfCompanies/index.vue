@@ -55,8 +55,6 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
-                :dataBound='dataBound'
-                :columns="tableProps.columns"
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
@@ -133,30 +131,6 @@ export default {
                         companyName: "Rainoil",
                     },
                 ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "companyName", 
-                        headerText: "Company Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        headerText: "Action", 
-                        width: 500, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    }, 
-                ] ,
                 fileName: 'list_of_companies'
             },
             list_of_companies_templates: function() {

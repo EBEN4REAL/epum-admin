@@ -11,7 +11,6 @@
         :allowPdfExport="true"
         :toolbarClick="toolbarClick"
         :dataSource="tableProps.tableData" 
-        :dataBound='dataBound'
         :columns="tableProps.columns"
         >
         <!-- <e-columns>
@@ -53,9 +52,6 @@ export default {
 
   },
   methods: {
-    dataBound: function() {
-        this.$refs.dataGrid.ej2Instances.refreshColumns();
-    },
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
