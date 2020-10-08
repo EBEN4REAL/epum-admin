@@ -2,6 +2,7 @@
 @import "side_nav";
 @import "scroll";
 @import "ejstable.scss";
+@import "paginator.scss";
 
 html {
   overflow-x: hidden;
@@ -340,10 +341,6 @@ textarea {
   background: #fcd462;
   border-radius: 50%;
 }
-// .icon_div_big {
-//   width: 80px!important;
-//   height: 80px!important;
-// }
 .remove-padding-left {
   margin-top: 15px;
 }

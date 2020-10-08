@@ -52,7 +52,6 @@
                         </button>
                     </div>
                 </form>
-            <!-- </div> -->
         </section>
     </div>
 </template>
