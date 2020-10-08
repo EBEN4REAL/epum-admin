@@ -35,6 +35,13 @@
         </div>
 
         <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''" @mouseover="toggleSidenavText" @mouseleave="hideTitles">
+            <div class="logo_section text-right mt-3">
+          <img
+            src="@/assets/img/close_btn.png"
+            width="35px"
+            height="35px"
+          />
+            </div>
             <div class="logo_section text-content mt-3">
                 <svg class="lg"
                      version="1.1" height="50px" id="Layer_1"
@@ -332,31 +339,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="list-group-item treeview">
-                        <a href="#" class="vue_router_link has-submenu">
-                             <span class="mr-2 icon">
-                                <img src="@/assets/img/profile.svg" width="20"/>
-                            </span>
-                             <span class="sidenav_list_title">
-                                Tech Admin
-                            </span>
-                            <i class="fa fa-angle-right sidenav_arrow"></i>
-                        </a>
-                        <div>
-                            <ul class="treeview-menu">
-                                <!-- <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Dasboard
-                                    </router-link>
-                                </li>
-                                  <li>
-                                    <router-link :to="{ name: 'BranchSalesTransactions' }" class="vue_router_link" :class="activeRoute === 'BranchSalesTransactions' ? 'active' : ''">
-                                        Branch Account Balance
-                                    </router-link>
-                                </li> -->
-                            </ul>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </section>
@@ -375,6 +357,7 @@
         },
         data() {
             return {
+                 visible: true,
                 collapseNavbar: true,
                 userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null
             };
@@ -421,7 +404,7 @@
             });
         },
         methods: {
-           toggleCollapsibleNavBar() {
+            toggleCollapsibleNavBar() {
                 this.collapseNavbar = !this.collapseNavbar;
                 const allListTitles = Array.from(document.querySelectorAll(".sidenav_list_title"));
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));

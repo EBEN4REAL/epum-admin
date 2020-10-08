@@ -25,7 +25,7 @@
                             </div>
                          </div>
                     </div>
-                <div class="col-lg-4 col-md-4 div ep_card card_height mb-5">
+                <div class="col-lg-4 col-md-4 div ep_card card_height mail_card mb-5">
                     <div class="pad_div">
                         <div class="mb-3 tabs__lists">
                             <h5>Add to Mail Recipients</h5>
