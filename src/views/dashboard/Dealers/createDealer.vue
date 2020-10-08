@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">EDIT BRANCH INFORMATION</h5>
+            <h5 class="title">Create New Dealer</h5>
           </div>
         </div>
       </div>
@@ -22,25 +22,11 @@
           <div class="text-center">
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label> Branch Name</label>
+                <label> Your Dealer Name</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Branch Name" class="" />
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
-                <label>Group</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <select class="form-control" >
-                      <option disabled selected>Select Group</option>
-                      <option>Group 1</option>
-                      <option>Group 2</option>
-                  </select>
+                  <input type="text" placeholder="Your Dealer Name" class="" />
                 </div>
               </div>
             </div>
@@ -108,43 +94,16 @@
                 </div>
               </div>
             </div>
-             <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
-                <label>Engagement Level</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <select class="form-control" >
-                      <option disabled selected>Select Engagement Level</option>
-                      <option>Full Auto (Pumps & Tanks)</option>
-                      <option>Auto (Pumps Only)</option>
-                      <option>Tank Auto (Tanks Only)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
             <div class="row  mt-3">
               <div class="col-md-4 text-left">
-                <label>Online</label>
+                <label>Upload Logo</label>
               </div>
               <div class="col-md-8 text-left">
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="LPG">
-                </div>
-              </div>
-            </div>
-                <div class="row mt-3">
-              <div class="col-md-4 text-left">
-                <label>Day Sales Hour Starts</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <input type="text" class="" />
-                </div>
+                 <input class="" type="file">
+                  </div>
+              </div>  
                 <div class="text-center mt-3">
-                  <button class="btn btn-info">Save Changes</button>
-                </div>
-              </div>
+                  <button class="btn btn_theme">Create</button>  
             </div>
           </div>
         </form>

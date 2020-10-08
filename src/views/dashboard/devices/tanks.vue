@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of POS</h5>
+                                    <h5 class="text-white font-weight">Number of Tank</h5>
                                 </div>
                              <div class="text-center mt-4">
                                     <h5 class="text-white mt-4 font-weight">28</h5>
@@ -30,7 +30,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered POS</h3>
+                            <h3>List of Tank</h3>
                         </div>
                         <div class="col-md-3 mt-4">
                            <router-link :to="{name: ''}" class="create_btn btn btn_theme">Add Firmware</router-link>
@@ -62,8 +62,7 @@
                     <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
                     <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
-                    <e-column width="350" field="name" headerText="Name"></e-column>
-                    <e-column width="350" field="firmware" headerText="FirmWare"></e-column>
+                    <e-column width="600" field="name" headerText="Name"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
@@ -115,8 +114,6 @@ export default {
                         fwVersion: 20403,
                         memoryUsage: 0.00,
                         name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "Lagos",
-                        firmware: "Can Access Firmware Update: NO"
                     },
                     {
                         index: 2,
@@ -124,9 +121,7 @@ export default {
                         lastUpdate: "> 1 month ago",
                         fwVersion: 20403,
                         memoryUsage: 0.00,
-                        name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "Lagos",
-                        firmware: "Can Access Firmware Update: NO"
+                        name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE", 
                     },
                     {
                         index: 3,
@@ -135,8 +130,7 @@ export default {
                         fwVersion: 20403,
                         memoryUsage: 0.00,
                         name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "Lagos",
-                        firmware: "Can Access Firmware Update: NO"
+                        
                     },
                     {
                         index: 4,
@@ -145,8 +139,7 @@ export default {
                         fwVersion: 20403,
                         memoryUsage: 0.00,
                         name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "Lagos",
-                        firmware: "Can Access Firmware Update: NO"
+                        
                     },
                     {
                         index: 5,
@@ -155,8 +148,7 @@ export default {
                         fwVersion: 20403,
                         memoryUsage: 0.00,
                         name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "Lagos",
-                        firmware: "Can Access Firmware Update: NO"
+                        
                     },
                 ],
                 columns: [ 
@@ -196,30 +188,8 @@ export default {
                         width: 300, 
                         textAlign: "center"
                     },
-                    { 
-                        field: "state", 
-                        headerText: "State", 
-                        width: 100, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "firmware", 
-                        headerText: "Firmware Update", 
-                        width: 300, 
-                        textAlign: "center"
-                    },
-                    { 
-                        headerText: "Action", 
-                        width: 500, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    },  
                 ] ,
-                fileName: 'pos'
+                fileName: 'tanks'
             },
         }
     },

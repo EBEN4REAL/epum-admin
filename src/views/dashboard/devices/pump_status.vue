@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Branches</h5>
+                                    <h5 class="text-white font-weight">Number of Pump Status</h5>
                                 </div>
                              <div class="text-center mt-4">
                                     <h5 class="text-white mt-4 font-weight">66</h5>
@@ -30,10 +30,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Branches.</h3>
-                        </div>
-                        <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'create_branch'}" class="create_btn btn btn_theme">Create New Branch</router-link>
+                            <h3>List of Pump Status.</h3>
                         </div>
                     </div>
                     </div>
@@ -55,16 +52,22 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
+                :columns="tableProps.columns"
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="companyName" headerText="Company Name"></e-column>
-                    <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
-                    <e-column width="200" field="name" headerText="Name"></e-column>
-                    <e-column width="200" field="city" headerText="City"></e-column>
-                    <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
-                    <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
+                    <e-column width="200" field="stationName" headerText="Station Name"></e-column>
+                    <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
+                    <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
+                    <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
+                    <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
+                    <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
+                    <e-column width="200" field="difference" headerText="Difference"></e-column>
+                    <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
+                    <e-column width="200" field="volumeToday" headerText="Volume Today"></e-column>
+                    <e-column width="200" field="status" headerText="Status"></e-column>
+                    <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
+                    <e-column :template="pumpStatusTemplate" headerText="Action" width="100"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
@@ -75,7 +78,7 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
-import Temp from '@/components/list_of_branches_template.vue';
+import Temp from '@/components/pump_status_template.vue';
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -110,89 +113,51 @@ export default {
                 tableData: [
                     {
                         index: 1,
-                        companyName: "Jidsma oil & Gas",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
                      },
                     {
                         index: 2,
-                        companyName: "Al-Istijabah Oil & Gas",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
                     },
                     {
                         index: 3,
-                        companyName: "Dalsis Oil & Gas Limited",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
                     },                   
                 ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "companyName", 
-                        headerText: "Branch Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "dealerName", 
-                        headerText: "Dealer Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "name", 
-                        headerText: "Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "city", 
-                        headerText: "City", 
-                        width: 100, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "state", 
-                        headerText: "State", 
-                        width: 80, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "country", 
-                        headerText: "Country", 
-                        width: 150, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        headerText: "Action", 
-                        width: 580, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    }, 
-                ] ,
-                fileName: 'list_of_branches'
+                
+                fileName: 'pump_status'
             },
-            branchesTemplate: function() {
+            pumpStatusTemplate: function() {
                 return {
                     template: Temp
                 };
@@ -201,14 +166,14 @@ export default {
     },
     methods: {
         refreshGrid() {
-        this.$refs.dataGrid.refresh();
+            this.$refs.dataGrid.refresh();
         },
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
                 let pdfExportProperties = {
                     pageOrientation: 'Landscape',
-                    fileName: "branches.pdf"
+                    fileName: "dealers.pdf"
                 }
                 this.$refs.dataGrid.pdfExport();
                 break;
