@@ -2,12 +2,12 @@
 
 let token;
 if (
-  localStorage.getItem("userDetails") === null ||
-  localStorage.getItem("userDetails") === "null"
+  localStorage.getItem("adminUserDetails") === null ||
+  localStorage.getItem("adminUserDetails") === "null"
 ) {
   token = null;
 } else {
-  token = JSON.parse(localStorage.getItem("userDetails")).token;
+  token = JSON.parse(localStorage.getItem("adminUserDetails")).token;
 }
 
 let configObject = null;

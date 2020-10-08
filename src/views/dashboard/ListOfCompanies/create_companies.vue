@@ -178,7 +178,6 @@ export default {
     fileChange(event) {
       const fileList = event.target.files;
       this.file = fileList[0];
-      console.log(fileList[0]);
     },
     validateEmail(email) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -245,28 +244,29 @@ export default {
       //     });
       //     return;
       // }
-      
-      let data = {
-        Phone: this.phone,
-        Email: this.email,
-        Street: this.street,
-        City: this.city,
-        State: this.state,
-        Country: this.country,
-        Logo: this.file
+      const data = {
+        company: {
+          phone: this.phone,
+          email: this.email,
+          street: this.street,
+          city: this.city,
+          state: this.state,
+          country: this.country,
+          name: this.companyName
+        },
+        logo: this.file
       }
+
       console.log(data);
       $('.loader').show();
-       this.axios
-          .post(
-          `${configObject.apiBaseUrl}/Company/AddCompany`, data)
-              .then(res => {
-                  this.$toast("Company created successfully", {
-                      type: "success",
-                      timeout: 3000
-                  });
-                  $('.loader').hide();
-                  this.isButtonDisabled = false;
+       this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Company created successfully", {
+                    type: "success",
+                    timeout: 3000
+                });
+                $('.loader').hide();
+                this.isButtonDisabled = false;
           })
           .catch(error => {
               this.isButtonDisabled = false;
@@ -276,7 +276,6 @@ export default {
                   timeout: 3000
               });
           });
-     
     }
   }
 };
