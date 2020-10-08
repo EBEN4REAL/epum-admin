@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Companies</h5>
+                                    <h5 class="text-white font-weight">Number of Pump Status</h5>
                                 </div>
                              <div class="text-center mt-4">
                                     <h5 class="text-white mt-4 font-weight">66</h5>
@@ -30,10 +30,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Companies.</h3>
-                        </div>
-                        <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Company</router-link>
+                            <h3>List of Pump Status.</h3>
                         </div>
                     </div>
                     </div>
@@ -42,7 +39,8 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-             <ejs-grid
+            <!-- <EjsTable :tableProps="tableProps"  /> -->
+            <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="true"
@@ -54,11 +52,22 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
+                :columns="tableProps.columns"
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="companyName" headerText="Company Name"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="350"></e-column>
+                    <e-column width="200" field="stationName" headerText="Station Name"></e-column>
+                    <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
+                    <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
+                    <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
+                    <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
+                    <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
+                    <e-column width="200" field="difference" headerText="Difference"></e-column>
+                    <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
+                    <e-column width="200" field="volumeToday" headerText="Volume Today"></e-column>
+                    <e-column width="200" field="status" headerText="Status"></e-column>
+                    <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
+                    <e-column :template="pumpStatusTemplate" headerText="Action" width="100"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
@@ -69,7 +78,8 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
-import Temp from '@/components/list_of_companies_template.vue';
+import Temp from '@/components/pump_status_template.vue';
+
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
@@ -79,72 +89,75 @@ export default {
         masterLayout,
         EjsTable
     },
-    provide: {
+     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
+        this.getBranches();
         $(".e-input").keyup(function(e) {
-          if (e.keyCode === 13) {
-            searchFun(e, 13);
-          } else {
-            searchFun(e, 1)
-          }
+            searchFun(e);
         });
-        const searchFun = (event, number) => {
-          var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-          var value = event.target.value;
-          this.searchValue = value
-          if ((number !== 13) && value.length > 3) {
-            this.getAllWallets()
-          }
-          if (number == 13) {
-            this.getAllWallets()
-          }
-          if (!value.length) {
-            this.getAllWallets()
-          }
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
         }
+        
     },
     data() {
         return {
-            count: 0,
-            tableProps: {
+              tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
                 tableData: [
                     {
                         index: 1,
-                        companyName: "Jidsma oil & Gas",
-                    },
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
+                     },
                     {
                         index: 2,
-                        companyName: "Al-Istijabah Oil & Gas",
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
                     },
                     {
                         index: 3,
-                        companyName: "Dalsis Oil & Gas Limited",
-                    },
-                    {
-                        index: 4,
-                        companyName: "LADO OIL",
-                    },
-                    {
-                        index: 5,
-                        companyName: "Eshcol Petroleum",
-                    },
-                    {
-                        index: 6,
-                        companyName: "Eterna",
-                    },
-                    {
-                        index: 7,
-                        companyName: "Rainoil",
-                    },
+                        stationName: "Abijo",
+                        pumpName: "Nozzle 9",
+                        deviceId: "864626046213549",
+                        todayOpening: "3,353,160.75",
+                        yesterdayClosing: "3,353,160.75",
+                        todayClosing: "3,356,454.25",
+                        difference: "0.00",
+                        lastTransaction: "12 Hours ago",
+                        volumeToday: "1,743.57",
+                        status: "Unreacheable",
+                        lastHit: "1 Hour ago",
+                    },                   
                 ],
-                fileName: 'list_of_companies'
+                
+                fileName: 'pump_status'
             },
-            list_of_companies_templates: function() {
+            pumpStatusTemplate: function() {
                 return {
                     template: Temp
                 };
@@ -153,46 +166,23 @@ export default {
     },
     methods: {
         refreshGrid() {
-        this.$refs.dataGrid.refresh();
+            this.$refs.dataGrid.refresh();
         },
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
                 let pdfExportProperties = {
                     pageOrientation: 'Landscape',
-                    fileName: "List_of_companies"
+                    fileName: "dealers.pdf"
                 }
                 this.$refs.dataGrid.pdfExport();
                 break;
                 case "Excel Export":
-                this.$refs.dataGrid.excelExport();
+                    this.$refs.dataGrid.excelExport();
                 break;
             }
         },
-        actionHandler: function(args) {
-            if (args.requestType == 'sorting') {
-                if (args.direction) {
-                    this.sortType = args.direction
-                    this.sortColumn = args.columnName
-                } else {
-                    this.sortType = ''
-                    this.sortColumn = ''
-                }
-                
-                this.getAllWallets()
-            }
-        },
-        getPageSize(pageSize) {
-            this.pageSize = pageSize;
-            this.currentPage = 1
-            this.totalPages = Math.ceil(this.walletCountDetails.total / pageSize)
-            this.getAllWallets();
-        },
-        onPageChange(page) {
-            this.currentPage = page;
-            this.getAllWallets();
-        },
-        getListOfCompanies() {
+        getBranches() {
             this.$refs.dataGrid.ej2Instances.setProperties({
                 dataSource: this.tableProps.tableData
             });

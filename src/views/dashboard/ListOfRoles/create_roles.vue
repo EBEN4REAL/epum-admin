@@ -28,13 +28,13 @@
                 <div class="input__block">
                   <input type="text" class="" />
                 </div>
-              </div>
-            </div>
-          </div>
-                <div class="float-right mt-4">
+                <div class="text-center mt-4">
                   <button class="btn btn-primary">Back to List</button>
                   <button class="btn btn_theme" style="padding: 10px;">Create</button>
                 </div>
+            </div>
+           </div>
+          </div>    
         </form>
       </div>
     </div>

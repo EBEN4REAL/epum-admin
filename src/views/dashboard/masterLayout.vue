@@ -265,8 +265,13 @@
                         <div>
                             <ul class="treeview-menu">
                                 <li>
-                                    <router-link :to="{ name: 'pos' }" class="vue_router_link" :class="activeRoute === 'pos' ? 'active' : ''">
-                                        POS
+                                    <router-link :to="{ name: 'tanks' }" class="vue_router_link" :class="activeRoute === 'tanks' ? 'active' : ''">
+                                        Tanks
+                                    </router-link>
+                                </li>
+                                 <li>
+                                    <router-link :to="{ name: 'pump_status' }" class="vue_router_link" :class="activeRoute === 'pump_status' ? 'active' : ''">
+                                        Pump Status
                                     </router-link>
                                 </li>
                                 <li>

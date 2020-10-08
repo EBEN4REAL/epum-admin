@@ -42,7 +42,6 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps"  /> -->
             <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"
@@ -64,7 +63,7 @@
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="250"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
@@ -136,61 +135,7 @@ export default {
                         country: "Nigeria",
                     },                   
                 ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "companyName", 
-                        headerText: "Branch Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "dealerName", 
-                        headerText: "Dealer Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "name", 
-                        headerText: "Name", 
-                        width: 200, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "city", 
-                        headerText: "City", 
-                        width: 100, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "state", 
-                        headerText: "State", 
-                        width: 80, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "country", 
-                        headerText: "Country", 
-                        width: 150, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        headerText: "Action", 
-                        width: 580, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    }, 
-                ] ,
-                fileName: 'list_of_branches'
+                
             },
             branchesTemplate: function() {
                 return {
@@ -206,11 +151,11 @@ export default {
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
-                let pdfExportProperties = {
-                    pageOrientation: 'Landscape',
-                    fileName: "branches.pdf"
-                }
-                this.$refs.dataGrid.pdfExport();
+                    let pdfExportProperties = {
+                        pageOrientation: 'Landscape',
+                        fileName: "branches.pdf"
+                    }
+                    this.$refs.dataGrid.pdfExport();
                 break;
                 case "Excel Export":
                     this.$refs.dataGrid.excelExport();
