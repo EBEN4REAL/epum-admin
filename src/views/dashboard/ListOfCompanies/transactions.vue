@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Create New Dealer</h5>
+            <h5 class="title">Transactions</h5>
           </div>
         </div>
       </div>
