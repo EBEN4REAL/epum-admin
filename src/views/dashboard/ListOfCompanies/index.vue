@@ -20,7 +20,7 @@
                                     <h5 class="text-white font-weight">Number of Companies</h5>
                                 </div>
                              <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">66</h5>
+                                    <h5 class="text-white mt-4 font-weight">{{companiesCount}}</h5>
                                 </div>
                            </div>
                             </div>
@@ -53,7 +53,6 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
-                :actionBegin='actionHandler'
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
@@ -65,7 +64,6 @@
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
-
             <div class="mt-3" style="margin:  0 auto">
                 <Paginator 
                     v-show="!showLoader"
@@ -104,6 +102,7 @@ export default {
     },
     data() {
         return {
+            companiesCount: 0,
             searchLoader: false,
             sortingTable: false,
             sortType: '',
@@ -130,25 +129,12 @@ export default {
     mounted() {
         this.getCompanies();
         $(".e-input").keyup(function(e) {
-          if (e.keyCode === 13) {
-            searchFun(e, 13);
-          } else {
-            searchFun(e, 1)
-          }
+            searchFun(e);
         });
-        const searchFun = (event, number) => {
-          var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-          var value = event.target.value;
-          this.searchValue = value
-          if ((number !== 13) && value.length > 3) {
-            // this.getAllWallets()
-          }
-          if (number == 13) {
-            // this.getAllWallets()
-          }
-          if (!value.length) {
-            // this.getAllWallets()
-          }
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
         }
          this.$eventHub.$on("refreshCompaniesList", () => {
             this.getCompanies()
@@ -173,23 +159,10 @@ export default {
                 break;
             }
         },
-        actionHandler: function(args) {
-            if (args.requestType == 'sorting') {
-                if (args.direction) {
-                    this.sortType = args.direction
-                    this.sortColumn = args.columnName
-                } else {
-                    this.sortType = ''
-                    this.sortColumn = ''
-                }
-                
-                this.getCompanies()
-            }
-        },
         getPageSize(pageSize) {
             this.pageSize = pageSize;
             this.currentPage = 1
-            // this.totalPages = Math.ceil(this.getCompanies.total / pageSize)
+            this.totalPages = Math.ceil(this.getCompanies.totalNumber / pageSize)
             this.getCompanies();
         },
         onPageChange(page) {
@@ -197,32 +170,28 @@ export default {
             this.getCompanies();
         },
         getCompanies() {
-            if (!this.searchLoader) {
-                this.showLoader = true
-            }
             this.axios
-                .get(
-                    `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
-                    .then(res => {
-                    console.log(res.data);
-                    let index = 0 + ((this.currentPage - 1) * this.pageSize);
-                    
-                    res.data.data.forEach(el => {
-                        el.index = ++index;
-                    
-                    })
-                    this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data.data
-                    });
-                    this.refreshGrid();
-
-                    this.showLoader = false;
-                    this.searchLoader = true
+            .get(
+                `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
+                .then(res => {
+                console.log(res.data);
+                let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                
+                res.data.data.forEach(el => {
+                    el.index = ++index;
                 })
-                .catch(error => {
-                    this.showLoader = false
+                this.companiesCount = res.data.data.length
+                this.$refs.dataGrid.ej2Instances.setProperties({
+                    dataSource: res.data.data
                 });
-            },
+                this.refreshGrid();
+
+                this.showLoader = false;
+            })
+            .catch(error => {
+                this.showLoader = false
+            });
+        },
     }
 }
 </script>

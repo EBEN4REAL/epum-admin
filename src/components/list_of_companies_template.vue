@@ -21,12 +21,6 @@
       <button v-b-tooltip.hover title="Delete" class="btn btn-danger" @click="_deleteCompany($event)">
             <i class="fa fa-trash" aria-hidden="true"></i>
       </button>
-       <img
-            src="@/assets/img/git_loader.gif"
-            style="display:none"
-            width="15px"
-            class="ml-3 loader"
-      />
   </div>
 </template>
 
