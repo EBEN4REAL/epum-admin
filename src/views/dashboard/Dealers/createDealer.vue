@@ -95,9 +95,7 @@
                     <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
                   </select>
                 </div>
-              </div>
-            </div> 
-            <div class="text-center mt-3">
+                 <div class="text-center mt-3">
                   <button class="btn btn_theme" @click="createDealer">Create
                     <img
                       src="@/assets/img/git_loader.gif"
@@ -106,7 +104,9 @@
                       class="ml-3 loader"
                     />
                   </button>  
-            </div>
+                </div>
+              </div>
+            </div> 
           </div>
         </form>
       </div>
@@ -166,6 +166,14 @@ export default {
               timeout: 3000
           });
           return;
+      }else {
+          if (this.phone.length < 10 || this.phone.length > 13) {
+            this.$toast("Phone Number should be between 10 and 13 characters", {
+              type: "error", 
+              timeout: 3000
+            });
+            return
+          }
       }
       if(!this.email) {
           this.$toast("Email  Field cannot be blank", {
@@ -212,13 +220,14 @@ export default {
       }
       
       const data = {
-        dealerName: this.dealerName,
+        name: this.dealerName,
         phone: this.phone,
         email: this.email,
         street: this.street,
         city: this.city,
         state: this.state,
         country: this.country,
+        companyId: this.$route.query.companyId
       }
 
       console.log(data);
@@ -235,7 +244,7 @@ export default {
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable to create company", {
+              this.$toast("Unable To Create Dealer", {
                   type: "error",
                   timeout: 3000
               });
