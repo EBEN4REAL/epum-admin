@@ -43,6 +43,9 @@ import AddPump from "../views/dashboard/admin/Pumps/addPump";
 
 import AddTank from "../views/dashboard/Tank/addTank";
 import TankTransaction from "../views/dashboard/Tank/tankTransaction";
+import EditTank from "../views/dashboard/Tank/editTank";
+import TankDipping from "../views/dashboard/Tank/tankDipping";
+import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
 
 // import Gateway from '../views/dashboard/devices/gateway';
 import Tanks from "../views/dashboard/devices/tanks";
@@ -458,6 +461,33 @@ let routes = [
   path: "/tankTransaction",
   name: "tankTransaction",
   component: TankTransaction,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/editTank",
+  name: "editTank",
+  component: EditTank,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/tankDipping",
+  name: "tankDipping",
+  component: TankDipping,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/reFilledTanks",
+  name: "reFilledTanks",
+  component: ReFilledTanks,
   meta: {
       authorize: true,
       authRoles: ['Admin']
