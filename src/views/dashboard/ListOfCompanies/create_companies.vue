@@ -187,63 +187,63 @@ export default {
     },
     createCompany(event) {
       event.preventDefault();
-      // if(!this.companyName) {
-      //     this.$toast("Company Name Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
-      // if(!this.phone) {
-      //     this.$toast("Phone Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
-      // if(!this.email) {
-      //     this.$toast("Email Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }else {
-      //   if(!this.validateEmail(this.email)) {
-      //     this.$toast("Invalid Email Format", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      //   }
-      // }
-      // if(!this.street) {
-      //     this.$toast("Street Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
-      // if(!this.city) {
-      //     this.$toast("City Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
-      // if(this.country === "select a country") {
-      //     this.$toast("Select a valid country", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
-      // if(!this.state) {
-      //     this.$toast("State Field cannot be blank", {
-      //         type: "error", 
-      //         timeout: 3000
-      //     });
-      //     return;
-      // }
+      if(!this.companyName) {
+          this.$toast("Company Name Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.phone) {
+          this.$toast("Phone Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.email) {
+          this.$toast("Email Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }else {
+        if(!this.validateEmail(this.email)) {
+          this.$toast("Invalid Email Format", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+        }
+      }
+      if(!this.street) {
+          this.$toast("Street Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.city) {
+          this.$toast("City Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(this.country === "select a country") {
+          this.$toast("Select a valid country", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.state) {
+          this.$toast("State Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       const data = {
         company: {
           phone: this.phone,

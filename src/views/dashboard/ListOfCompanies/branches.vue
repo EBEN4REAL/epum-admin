@@ -20,7 +20,7 @@
                                     <h5 class="text-white font-weight">Number of Branches</h5>
                                 </div>
                              <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">66</h5>
+                                    <h5 class="text-white mt-4 font-weight">{{branchesCount}}</h5>
                                 </div>
                            </div>
                             </div>
@@ -53,7 +53,6 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
-                :dataSource="tableProps.tableData"  v-cloak
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
@@ -61,7 +60,6 @@
                     <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
-                    <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
                     <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
@@ -75,6 +73,8 @@ import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import EjsTable from '@/components/ejsTable.vue';
 import Temp from '@/components/list_of_branches_template.vue';
+import configObject from "@/config";
+
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -102,40 +102,11 @@ export default {
     },
     data() {
         return {
-              tableProps: {
+            branchesCount: 0,
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        companyName: "Jidsma oil & Gas",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
-                     },
-                    {
-                        index: 2,
-                        companyName: "Al-Istijabah Oil & Gas",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
-                    },
-                    {
-                        index: 3,
-                        companyName: "Dalsis Oil & Gas Limited",
-                        dealerName: "Jidsma",
-                        name: "Mushin",
-                        city: "Mushin",		
-                        state: "Lagos",
-                        country: "Nigeria",
-                    },                   
-                ],
-                
             },
             branchesTemplate: function() {
                 return {
@@ -146,7 +117,7 @@ export default {
     },
     methods: {
         refreshGrid() {
-        this.$refs.dataGrid.refresh();
+            this.$refs.dataGrid.refresh();
         },
         toolbarClick(args) {
             switch (args.item.text) {
@@ -163,11 +134,29 @@ export default {
             }
         },
         getBranches() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.id}`, configObject.authConfig)
+                .then(res => {
+                    console.log(res.data);
+                    let index = 0
+                    
+                    res.data.forEach(el => {
+                        el.index = ++index;
+                    })
+                    this.branchesCount = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
+        },
+       
     }
 }
 </script>
