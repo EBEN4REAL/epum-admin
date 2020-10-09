@@ -96,6 +96,7 @@ export default {
         masterLayout,
         TableLoader,
         Paginator,
+        
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]

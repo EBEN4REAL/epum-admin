@@ -21,30 +21,25 @@ import MapuserToDealer from "../views/dashboard/admin/ManageUsers/mapUserToDeale
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import MapUserToCompany from "../views/dashboard/admin/ManageUsers/mapUserToCompany";
 import MapUserToRole from "../views/dashboard/admin/ManageUsers/MapUserToRole";
-
 import Branches from "../views/dashboard/ListOfCompanies/branches";
+import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
+import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
 import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
 import Transactions from "../views/dashboard/ListOfCompanies/transactions";
 import BranchMailRecipent from "../views/dashboard/ListOfCompanies/branchMail_recipent";
-
 import ManageRoles from "../views/dashboard/admin/manageRoles";
 import CreateRoles from "../views/dashboard/ListOfRoles/create_roles";
 import EditRoles from "../views/dashboard/ListOfRoles/edit_roles";
-
 import Dealers from "../views/dashboard/Dealers/dealers";
 import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
-
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
-
 import AddTank from "../views/dashboard/Tank/addTank";
 import TankTransaction from "../views/dashboard/Tank/tankTransaction";
-
-// import Gateway from '../views/dashboard/devices/gateway';
 import Tanks from "../views/dashboard/devices/tanks";
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
@@ -233,6 +228,25 @@ let routes = [
     path: "/branches",
     name: "branches",
     component: Branches,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/create_dealer_branch",
+    name: "create_dealer_branch",
+    component: CreateDealerBranch,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  
+  {
+    path: "/dealer_branches",
+    name: "dealer_branches",
+    component: DealerBranches,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
