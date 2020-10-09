@@ -52,7 +52,6 @@
                         </button>
                     </div>
                 </form>
-            <!-- </div> -->
         </section>
     </div>
 </template>
@@ -61,6 +60,7 @@ import cardBg from '@/assets/img/bg__card.png';
 import configObject from "@/config";
 import Jquery from 'jquery';
 let $ = Jquery;
+
 export default {
     name: 'Login',
     data() {

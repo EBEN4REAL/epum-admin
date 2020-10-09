@@ -42,11 +42,10 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps" :key="count" /> -->
              <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"
-                :allowPaging="true"
+                :allowPaging="false"
                 :allowSorting="true"
                 :pageSettings="tableProps.pageSettings"
                 :toolbar="tableProps.toolbar"
@@ -54,14 +53,30 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
-                :dataSource="tableProps.tableData"  v-cloak
+                :actionBegin='actionHandler'
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="100" field="companyName" headerText="Company Name"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="150"></e-column>
+                    <e-column width="200" field="name" headerText="Company Name"></e-column>
+                    <e-column width="200" field="country" headerText="Country"></e-column>
+                    <e-column width="200" field="street" headerText="Street"></e-column>
+                    <e-column width="200" field="city" headerText="city"></e-column>
+                    <e-column :template="list_of_companies_templates" headerText="Action" width="350"></e-column>
                 </e-columns>
             </ejs-grid>
+            <TableLoader :showLoader="showLoader"/>
+
+            <div class="mt-3" style="margin:  0 auto">
+                <Paginator 
+                    v-show="!showLoader"
+                    :total-pages="totalPages"
+                    :per-page="pageSize"
+                    :current-page="currentPage"
+                    @pagechanged="onPageChange"
+                    @getPageSize="getPageSize"
+                    :pageSize="pageSize"
+                />
+            </div>  
         </div>
     </masterLayout>
 </template>
@@ -69,69 +84,41 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import EjsTable from '@/components/ejsTable.vue';
 import Temp from '@/components/list_of_companies_template.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import TableLoader from "@/components/tableLoader/index";
+import Paginator from '@/components/Paginator.vue';
+import configObject from "@/config";
+
 import Jquery from 'jquery';
 let $ = Jquery;
 
 export default {
     components: {
         masterLayout,
-        EjsTable
+        TableLoader,
+        Paginator,
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
-    mounted() {
-        $(".e-input").keyup(function(e) {
-        searchFun(e);
-        });
-        function searchFun(event) {
-        var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-        var value = event.target.value;
-        grid.search(value);
-        }
-        
-    },
     data() {
         return {
-            count: 0,
+            searchLoader: false,
+            sortingTable: false,
+            sortType: '',
+            sortColumn: '',
+            searchValue: '',
+            currentPage: 1,
+            pageSize: 10,
+            totalPages: 1,
+            searchTotalPages: 1,
+            showLoader: true,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        companyName: "Jidsma oil & Gas",
-                    },
-                    {
-                        index: 2,
-                        companyName: "Al-Istijabah Oil & Gas",
-                    },
-                    {
-                        index: 3,
-                        companyName: "Dalsis Oil & Gas Limited",
-                    },
-                    {
-                        index: 4,
-                        companyName: "LADO OIL",
-                    },
-                    {
-                        index: 5,
-                        companyName: "Eshcol Petroleum",
-                    },
-                    {
-                        index: 6,
-                        companyName: "Eterna",
-                    },
-                    {
-                        index: 7,
-                        companyName: "Rainoil",
-                    },
-                ],
-                fileName: 'list_of_companies'
+               
             },
             list_of_companies_templates: function() {
                 return {
@@ -140,9 +127,37 @@ export default {
             }
         }
     },
+    mounted() {
+        this.getCompanies();
+        $(".e-input").keyup(function(e) {
+          if (e.keyCode === 13) {
+            searchFun(e, 13);
+          } else {
+            searchFun(e, 1)
+          }
+        });
+        const searchFun = (event, number) => {
+          var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+          var value = event.target.value;
+          this.searchValue = value
+          if ((number !== 13) && value.length > 3) {
+            // this.getAllWallets()
+          }
+          if (number == 13) {
+            // this.getAllWallets()
+          }
+          if (!value.length) {
+            // this.getAllWallets()
+          }
+        }
+         this.$eventHub.$on("refreshCompaniesList", () => {
+            this.getCompanies()
+        });
+    },
+   
     methods: {
         refreshGrid() {
-        this.$refs.dataGrid.refresh();
+            this.$refs.dataGrid.refresh();
         },
         toolbarClick(args) {
             switch (args.item.text) {
@@ -158,12 +173,56 @@ export default {
                 break;
             }
         },
-        getListOfCompanies() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+        actionHandler: function(args) {
+            if (args.requestType == 'sorting') {
+                if (args.direction) {
+                    this.sortType = args.direction
+                    this.sortColumn = args.columnName
+                } else {
+                    this.sortType = ''
+                    this.sortColumn = ''
+                }
+                
+                this.getCompanies()
+            }
+        },
+        getPageSize(pageSize) {
+            this.pageSize = pageSize;
+            this.currentPage = 1
+            // this.totalPages = Math.ceil(this.getCompanies.total / pageSize)
+            this.getCompanies();
+        },
+        onPageChange(page) {
+            this.currentPage = page;
+            this.getCompanies();
+        },
+        getCompanies() {
+            if (!this.searchLoader) {
+                this.showLoader = true
+            }
+            this.axios
+                .get(
+                    `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
+                    .then(res => {
+                    console.log(res.data);
+                    let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                    
+                    res.data.data.forEach(el => {
+                        el.index = ++index;
+                    
+                    })
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data.data
+                    });
+                    this.refreshGrid();
+
+                    this.showLoader = false;
+                    this.searchLoader = true
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
+            },
     }
 }
 </script>

@@ -19,6 +19,7 @@ Vue.use(VueAxios, axios);
 Vue.use(Toast);
 Vue.use(BootstrapVue);
 Vue.use(GridPlugin);
+Vue.prototype.$eventHub = new Vue();
 
 
 new Vue({
