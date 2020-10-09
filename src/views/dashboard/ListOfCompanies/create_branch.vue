@@ -30,20 +30,6 @@
                 </div>
               </div>
             </div>
-            <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
-                <label>Group</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <select class="form-control" v-model="group">
-                      <option disabled selected value="select group">select group</option>
-                      <option>Group 1</option>
-                      <option>Group 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
              <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
                 <label>Dealer</label>
@@ -118,7 +104,10 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="State" class="" v-model="state" />
+                  <select v-model="state" class="form-control">
+                    <option disabled selected value="select state">select state</option>
+                    <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -130,24 +119,9 @@
                 <div class="input__block">
                   <select class="form-control" v-model="engagementLevel">
                       <option disabled selected value="select engagement level">Select Engagement Level</option>
-                      <option>Full Auto (Pumps & Tanks)</option>
-                      <option>Auto (Pumps Only)</option>
-                      <option>Tank Auto (Tanks Only)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-             <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
-                <label>Service Type</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <select class="form-control" v-model="serviceType">
-                      <option disabled selected value="select service type">Select Service Type</option>
-                      <option>Service Station</option>
-                      <option>Industrial Dump</option>
-                      <option>Industrial Generator</option>
+                      <option value="Full Auto (Pumps & Tanks) ">Full Auto (Pumps & Tanks)</option>
+                      <option value="Auto (Pumps Only)">Auto (Pumps Only)</option>
+                      <option value="Tank Auto (Tanks Only)">Tank Auto (Tanks Only)</option>
                   </select>
                 </div>
               </div>
@@ -185,6 +159,8 @@ import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
 import Jquery from 'jquery';
 let $ = Jquery;
+import configObject from "@/config";
+
 
 export default {
   components: {
@@ -206,8 +182,14 @@ export default {
       city: null,
       online: true,
       engagementLevel: "select engagement level",
-      serviceType: "select service type"
+      serviceType: "select service type",
+      states: [],
+      companyDealers: []
     };
+  },
+  mounted() {
+    this.getStates()
+    this.getCompanyDealers()
   },
   methods: {
     validateEmail(email) {
@@ -219,7 +201,34 @@ export default {
     checkIfOnline(event) {
       event.preventDefault();
       this.online = event.target.checked
-      console.log(event.target.checked)
+    },
+    getCompanyDealers() {
+      this.axios
+        .get(
+         `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.id}`, 
+          configObject.authConfig
+        )
+        .then(res => {
+          console.log(res.data)
+          this.companyDealers = res.data
+        })
+        .catch(error => {
+
+        });
+    },
+    getStates() {
+      this.axios
+        .get(
+         `https://api.epump.com.ng/Branch/States`, 
+          configObject.authConfig
+        )
+        .then(res => {
+          console.log(res.data)
+          this.states = res.data
+        })
+        .catch(error => {
+
+        });
     },
     createBranch(event) {
       event.preventDefault();
@@ -230,14 +239,8 @@ export default {
           });
           return;
       }
-      if(this.group === 'select group') {
-          this.$toast("Please select a group", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(this.dealer = "select dealer") {
+      
+      if(this.dealer === "select dealer") {
           this.$toast("Please select a dealer", {
               type: "error", 
               timeout: 3000
@@ -287,8 +290,8 @@ export default {
           });
           return;
       }
-      if(!this.state) {
-          this.$toast("State Field cannot be blank", {
+      if(this.state === 'select state') {
+          this.$toast("please select state", {
               type: "error", 
               timeout: 3000
           });
@@ -301,13 +304,7 @@ export default {
           });
           return;
       }
-      if(this.serviceType === "select service type") {
-          this.$toast("Please select service  type", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
+      
       const data = {
           phone: this.phone,
           email: this.email,

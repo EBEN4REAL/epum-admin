@@ -33,7 +33,7 @@
                             <h3>List of Registered Dealers.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'createDealer'}" class="create_btn btn btn_theme">Create New Dealer</router-link>
+                           <router-link :to="{name: 'createDealer', query: {companyId: this.$route.query.companyId}}" class="create_btn btn btn_theme">Create New Dealer</router-link>
                         </div>
                     </div>
                     </div>
