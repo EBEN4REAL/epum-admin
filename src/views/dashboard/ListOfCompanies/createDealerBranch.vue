@@ -11,22 +11,22 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Create Company</h5>
+            <h5 class="title">Create New Branch</h5>
           </div>
         </div>
       </div>
     </section>
     <div  class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
       <div class="">
-        <form method="post" enctype="multipart/form-data">
+        <form>
           <div class="text-center">
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label> Company Name</label>
+                <label> Branch Name</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Company Name" class="" v-model="companyName" />
+                  <input type="text" placeholder="Branch Name" class="" v-model="name" />
                 </div>
               </div>
             </div>
@@ -66,19 +66,39 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="City" class="" v-model="city" />
+                  <input type="text" placeholder="City" class=""  v-model="city"/>
                 </div>
               </div>
             </div>
+            <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Secret Code</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <input type="text" placeholder="City" class=""  v-model="secreteCode"/>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Send Report Mail</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <input type="text" placeholder="Send  Report Mail" class=""  v-model="sendReportMail"/>
+                </div>
+              </div>
+            </div>
+            
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
                 <label>Country</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <!-- <input type="text" placeholder="Country" class="" /> -->
                   <select class="form-control" v-model="country">
-                      <option value="select a country" disabled>select a country</option>
+                      <option disabled selected value="select country">select country</option>
                       <option value="Nigeria">Nigeria</option>
                       <option value="Kenya">Kenya</option>
                   </select>
@@ -91,43 +111,38 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="State" class="" v-model="state" />
+                  <select v-model="state" class="form-control">
+                    <option disabled selected value="select state">select state</option>
+                    <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
+                  </select>
                 </div>
               </div>
             </div>
-            <div class="row align-items-center mt-3">
+             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label>Company Products</label>
+                <label>Engagement Level</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <select class="form-control" v-model="engagementLevel">
+                      <option disabled selected value="select engagement level">Select Engagement Level</option>
+                      <option value="Full Auto (Pumps & Tanks) ">Full Auto (Pumps & Tanks)</option>
+                      <option value="Auto (Pumps Only)">Auto (Pumps Only)</option>
+                      <option value="Tank Auto (Tanks Only)">Tank Auto (Tanks Only)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-md-4 text-left">
+                <label>Online</label>
               </div>
               <div class="col-md-8 text-left">
                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="LPG">
-                 <label class="form-check-label">LPG</label>
+                  <input class="form-check-input" type="checkbox" id="" value="LPG" @change="checkIfOnline"> Status
                 </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="DPK">
-                 <label class="form-check-label">DPK</label>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="AGO">
-                 <label class="form-check-label">AGO</label>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <label class="form-check-label">PMS</label>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-4 text-left">
-                <label>Upload Company Logo</label>
-              </div>
-              <div class="col-md-8">
-                <div class="text-left ">
-                  <input type="file"  accept=".jpg, .jpeg, .png" name="file" id="file-selector" @change="fileChange" />
-                </div>
-                <div class="text-left mt-4">
-                  <button class="btn btn_theme" @click="createCompany">Create
+                <div class="text-center mt-3">
+                  <button class="btn btn_theme" @click="createBranch">Create
                      <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
@@ -138,7 +153,6 @@
                 </div>
               </div>
             </div>
-            
           </div>
         </form>
       </div>
@@ -150,10 +164,10 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
-import configObject from "@/config";
-
 import Jquery from 'jquery';
 let $ = Jquery;
+import configObject from "@/config";
+
 
 export default {
   components: {
@@ -164,45 +178,87 @@ export default {
   data() {
     return {
       backgroundUrl,
-      companyName: null,
+      name: null,
+      group: "select group",
+      dealer: "select dealer",
       phone: null,
       email: null,
-      city: null,
-      state: null,
       street: null,
-      country: "select a country",
-      file: null
+      country: "select country",
+      state: "select state",
+      city: null,
+      online: true,
+      engagementLevel: "select engagement level",
+      serviceType: "select service type",
+      states: [],
+      companyDealers: [],
+      branchUserId: "string",
+      secreteCode: null,
+      date: "2020-10-09T15:35:33.494Z",
+      sendReportMail: null,
     };
   },
+  mounted() {
+    this.getStates()
+    this.getCompanyDealers()
+  },
   methods: {
-    fileChange(event) {
-      const fileList = event.target.files;
-      this.file = fileList[0];
-    },
     validateEmail(email) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true;
       }
       return false;
     },
-    createCompany(event) {
+    checkIfOnline(event) {
       event.preventDefault();
-      if(!this.companyName) {
-          this.$toast("Company Name Field cannot be blank", {
+      this.online = event.target.checked
+    },
+    getCompanyDealers() {
+      this.axios
+        .get(
+         `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.id}`, 
+          configObject.authConfig
+        )
+        .then(res => {
+          console.log(res.data)
+          this.companyDealers = res.data
+        })
+        .catch(error => {
+
+        });
+    },
+    getStates() {
+      this.axios
+        .get(
+         `https://api.epump.com.ng/Branch/States`, 
+          configObject.authConfig
+        )
+        .then(res => {
+          console.log(res.data)
+          this.states = res.data
+        })
+        .catch(error => {
+
+        });
+    },
+    createBranch(event) {
+      event.preventDefault();
+      if(!this.name) {
+          this.$toast("Branch Name Field cannot be blank", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
       if(!this.phone) {
-          this.$toast("Phone Field cannot be blank", {
+          this.$toast("Phone Field Cannot be blank", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
       if(!this.email) {
-          this.$toast("Email Field cannot be blank", {
+          this.$toast("Email  Field cannot be blank", {
               type: "error", 
               timeout: 3000
           });
@@ -230,38 +286,50 @@ export default {
           });
           return;
       }
-      if(this.country === "select a country") {
-          this.$toast("Select a valid country", {
+      if(this.country === "select country") {
+          this.$toast("Please Select a country", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.state) {
-          this.$toast("State Field cannot be blank", {
+      if(this.state === 'select state') {
+          this.$toast("please select state", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
+      if(this.engagementLevel === "select engagement level") {
+          this.$toast("Please Select engagemeent level", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      
       const data = {
-        company: {
           phone: this.phone,
           email: this.email,
           street: this.street,
           city: this.city,
           state: this.state,
           country: this.country,
-          name: this.companyName
-        },
-        logo: this.file
+          name: this.name,
+          dealerId: this.$route.query.dealerId,
+          engagementLevel: this.engagementLevel,
+          online: this.online,
+          branchUserId: "string",
+          secreteCode: "string",
+          date: "2020-10-09T15:35:33.494Z",
+          sendReportMail: "string",
       }
 
       console.log(data);
       $('.loader').show();
-       this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
           .then(res => {
-                this.$toast("Company created successfully", {
+                this.$toast("Dealer created successfully", {
                     type: "success",
                     timeout: 3000
                 });
@@ -271,7 +339,7 @@ export default {
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable to create company", {
+              this.$toast("Unable to create dealer", {
                   type: "error",
                   timeout: 3000
               });

@@ -6,10 +6,10 @@
       <router-link v-b-tooltip.hover title="Details" :to="{name:'company_details'}" class="btn btn-primary" >
             <i class="fa fa-info-circle" aria-hidden="true"></i>
       </router-link> 
-      <router-link v-b-tooltip.hover title="Dealers" :to="{name:'dealers'}" class="btn btn-warning" >
+      <router-link v-b-tooltip.hover title="Dealers" :to="{name:'dealers',  query: {companyId: data.id}}" class="btn btn-warning" >
             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
       </router-link> 
-      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches'}" class="btn btn-info" >
+      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches', query: {id: data.id}}" class="btn btn-info" >
             <i class="fa fa-building-o" aria-hidden="true"></i>
       </router-link> 
       <router-link v-b-tooltip.hover title="Sales Rep" :to="{name:'sales_rep'}" class="btn btn-primary" >
@@ -21,12 +21,6 @@
       <button v-b-tooltip.hover title="Delete" class="btn btn-danger" @click="_deleteCompany($event)">
             <i class="fa fa-trash" aria-hidden="true"></i>
       </button>
-       <img
-            src="@/assets/img/git_loader.gif"
-            style="display:none"
-            width="15px"
-            class="ml-3 loader"
-      />
   </div>
 </template>
 

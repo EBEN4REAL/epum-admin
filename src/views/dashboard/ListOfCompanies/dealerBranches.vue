@@ -17,10 +17,10 @@
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Dealers</h5>
+                                    <h5 class="text-white font-weight">Number of Branches</h5>
                                 </div>
                              <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">{{dealersCount}}</h5>
+                                    <h5 class="text-white mt-4 font-weight">{{branchesCount}}</h5>
                                 </div>
                            </div>
                             </div>
@@ -30,10 +30,10 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Dealers.</h3>
+                            <h3>List of Registered Branches.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'createDealer', query: {companyId: this.$route.query.companyId}}" class="create_btn btn btn_theme">Create New Dealer</router-link>
+                           <router-link :to="{name: 'create_dealer_branch', query: {dealerId: this.$route.query.dealerId}}" class="create_btn btn btn_theme">Create New Branch</router-link>
                         </div>
                     </div>
                     </div>
@@ -57,10 +57,12 @@
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="300" field="name" headerText="Dealer Name"></e-column>
+                    <e-column width="200" field="companyName" headerText="Company Name"></e-column>
+                    <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
+                    <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="dealersTemplate" headerText="Action" width="100"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -71,11 +73,13 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import Temp from '@/components/list_of_dealers_template.vue';
-import TableLoader from "@/components/tableLoader/index";
-import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import Temp from '@/components/list_of_branches_template.vue';
 import configObject from "@/config";
+import TableLoader from "@/components/tableLoader/index";
 
+
+
+import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -88,7 +92,7 @@ export default {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
-        this.getDealers()
+        this.getBranches();
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -97,21 +101,18 @@ export default {
             var value = event.target.value;
             grid.search(value);
         }
-        this.$eventHub.$on("refreshDealersTable", () => {
-            this.getDealers()
-        });
+        
     },
     data() {
         return {
             showLoader: false,
-            dealersCount: 0, 
+            branchesCount: 0,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                
             },
-            dealersTemplate: function() {
+            branchesTemplate: function() {
                 return {
                     template: Temp
                 };
@@ -125,38 +126,40 @@ export default {
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
-                let pdfExportProperties = {
-                    pageOrientation: 'Landscape',
-                    fileName: "dealers.pdf"
-                }
-                this.$refs.dataGrid.pdfExport();
+                    let pdfExportProperties = {
+                        pageOrientation: 'Landscape',
+                        fileName: "branches.pdf"
+                    }
+                    this.$refs.dataGrid.pdfExport();
                 break;
                 case "Excel Export":
                     this.$refs.dataGrid.excelExport();
                 break;
             }
         },
-        getDealers() {
-            this.showLoader = true
+        getBranches() {
+            this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.id}`, configObject.authConfig)
                 .then(res => {
-                let index = 0
-                res.data.forEach(el => {
-                    el.index = ++index;
+                    console.log(res.data);
+                    let index = 0
+                    res.data.forEach(el => {
+                        el.index = ++index;
+                    })
+                    this.branchesCount = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
                 })
-                this.dealersCount = res.data.length
-                this.$refs.dataGrid.ej2Instances.setProperties({
-                    dataSource: res.data
+                .catch(error => {
+                    this.showLoader = false
                 });
-                this.refreshGrid();
-                this.showLoader = false;
-            })
-            .catch(error => {
-                this.showLoader = false
-            });
         },
+       
     }
 }
 </script>
