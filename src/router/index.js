@@ -37,6 +37,13 @@ import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
 
+import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
+import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
+import AddPump from "../views/dashboard/admin/Pumps/addPump";
+
+import AddTank from "../views/dashboard/Tank/addTank";
+import TankTransaction from "../views/dashboard/Tank/tankTransaction";
+
 // import Gateway from '../views/dashboard/devices/gateway';
 import Tanks from "../views/dashboard/devices/tanks";
 import PumpStatus from "../views/dashboard/devices/pump_status";
@@ -44,6 +51,8 @@ import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
+import AddDevice from "../views/dashboard/devices/addDevice";
+
 
 Vue.use(VueRouter);
 
@@ -60,6 +69,15 @@ let routes = [
     path: "/devices_not_pushing_ep2",
     name: "devices_not_pushing_ep2",
     component: DevicesNotPushingEp2,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/addDevice",
+    name: "addDevice",
+    component: AddDevice,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
@@ -400,6 +418,51 @@ let routes = [
       authRoles: ["admin"],
     },
   },
+  {
+      path: "/installedPumps",
+      name: "installedPumps",
+      component: InstalledPumps,
+      meta: {
+          authorize: true,
+          authRoles: ['Admin']
+      }
+  },
+  {
+    path: "/pumpDetails",
+    name: "pumpDetails",
+    component: PumpDetails,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+},
+{
+  path: "/addPump",
+  name: "addPump",
+  component: AddPump,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/addTank",
+  name: "addTank",
+  component: AddTank,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/tankTransaction",
+  name: "tankTransaction",
+  component: TankTransaction,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
 ];
 
 const router = new VueRouter({
