@@ -18,6 +18,9 @@ if (token !== null) {
     authConfig: {
       headers: { Authorization: "bearer " + token }
     },
+    authConfigForUpload: {
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: "bearer " + token, 'Accept': '*/*',  }
+    },
   };
 } else {
   configObject = {

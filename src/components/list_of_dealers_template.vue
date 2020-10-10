@@ -6,7 +6,7 @@
       <router-link  title="Details" :to="{name:'dealerDetails'}" class="btn btn-primary" >
         <i class="fa fa-info-circle" aria-hidden="true"></i>
       </router-link> 
-      <router-link  title="Branches" :to="{name:'dealer_branches'}" class="btn btn-info" >
+      <router-link  title="Branches" :to="{name:'dealer_branches', query: {dealerId: data.id}}" class="btn btn-info" >
         <i class="fa fa-building-o" aria-hidden="true"></i>
       </router-link> 
       <button  title="Delete" class="btn btn-danger" @click="_deleteDealer($event)">

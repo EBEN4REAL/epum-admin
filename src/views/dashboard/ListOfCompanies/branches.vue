@@ -86,6 +86,7 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
+        TableLoader
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]

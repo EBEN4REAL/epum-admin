@@ -141,7 +141,7 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.id}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/DealerBranches/${this.$route.query.dealerId}`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data);
                     let index = 0
