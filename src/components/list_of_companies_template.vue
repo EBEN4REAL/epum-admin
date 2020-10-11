@@ -9,7 +9,7 @@
       <router-link v-b-tooltip.hover title="Dealers" :to="{name:'dealers',  query: {companyId: data.id}}" class="btn btn-warning" >
             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
       </router-link> 
-      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches', query: {id: data.id}}" class="btn btn-info" >
+      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches', query: {companyId: data.id}}" class="btn btn-info" >
             <i class="fa fa-building-o" aria-hidden="true"></i>
       </router-link> 
       <router-link v-b-tooltip.hover title="Sales Rep" :to="{name:'sales_rep'}" class="btn btn-primary" >

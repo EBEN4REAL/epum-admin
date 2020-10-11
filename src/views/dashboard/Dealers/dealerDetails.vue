@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Company Name" class="" disabled v-model="this.$route.query.companyName" />
+                                        <input type="text" placeholder="Company Name" class="" disabled v-model="dealerObj.companyName" />
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Company Name" class="" disabled v-model="this.$route.query.name" />
+                                        <input type="text" placeholder="Company Name" class="" disabled v-model="dealerObj.name" />
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Street" class="" disabled v-model="this.$route.query.street"/>
+                                        <input type="text" placeholder="Street" class="" disabled v-model="dealerObj.street"/>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="City" class="" disabled v-model="this.$route.query.city" />
+                                        <input type="text" placeholder="City" class="" disabled v-model="dealerObj.city" />
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <select class="form-control" name="Country"  v-model="this.$route.query.country">
+                                        <select class="form-control" name="Country"  v-model="dealerObj.country">
                                             <option value="select a country" disabled>select a country</option>
                                             <option value="Nigeria">Nigeria</option>
                                             <option value="Kenya">Kenya</option>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input__block">
-                                        <select v-model="this.$route.query.state" class="form-control">
+                                        <select v-model="dealerObj.state" class="form-control">
                                             <option disabled selected value="select state">select state</option>
                                             <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
                                         </select>
@@ -119,9 +119,21 @@ export default {
   
     mounted(){
         this.getStates()
-        let dealersList = JSON.parse(localStorage.getItem("dealersList"));
-        this.dealerObj = dealersList.filter(el => el.id === this.$route.query.dealerId)[0]
-        console.log(this.dealerObj)
+        this.dealerId = this.$route.query.dealerId
+        let ml = sessionStorage.getItem(this.dealerId)
+        if (!ml){
+            let allData = localStorage.getItem("dealersList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.dealerId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.dealerId, ml)
+                }
+            })
+        }
+
+        let dealerDetails = JSON.parse(ml)
+        this.dealerObj = dealerDetails
     },
     data() {
         return {
@@ -134,7 +146,6 @@ export default {
         getStates() {
             this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     this.states = res.data
                 })
                 .catch(error => {

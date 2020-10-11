@@ -175,7 +175,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
                 .then(res => {
-                console.log(res.data);
                 let index = 0 + ((this.currentPage - 1) * this.pageSize);
                 res.data.data.forEach(el => {
                     el.index = ++index;

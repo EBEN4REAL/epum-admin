@@ -149,8 +149,21 @@ export default {
   
     mounted(){
         this.getStates()
-        let companyList = JSON.parse(localStorage.getItem("companiesList"));
-        this.companyObj = companyList.filter(el => el.id === this.$route.query.companyId)[0]
+        this.companyId = this.$route.query.companyId
+        let ml = sessionStorage.getItem(this.companyId)
+        if (!ml){
+            let allData = localStorage.getItem("companiesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.companyId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.companyId, ml)
+                }
+            })
+        }
+
+        let companyDetails = JSON.parse(ml)
+        this.companyObj = companyDetails
         console.log(this.companyObj)
     },
     data() {
@@ -172,7 +185,6 @@ export default {
         getStates() {
             this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     this.states = res.data
                 })
                 .catch(error => {

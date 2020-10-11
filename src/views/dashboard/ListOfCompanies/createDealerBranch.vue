@@ -76,7 +76,7 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="City" class=""  v-model="secreteCode"/>
+                  <input type="text" placeholder="Secret Code" class=""  v-model="secreteCode"/>
                 </div>
               </div>
             </div>
@@ -234,7 +234,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {
@@ -293,6 +292,20 @@ export default {
           });
           return;
       }
+      if(!this.secreteCode) {
+          this.$toast("Secret code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.sendReportMail) {
+          this.$toast("Send Report mail field code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       if(this.state === 'select state') {
           this.$toast("please select state", {
               type: "error", 
@@ -322,6 +335,7 @@ export default {
           secreteCode: this.secreteCode,
           date: new Date().toISOString(),
           sendReportMail: this.sendReportMail,
+          branchUserId: "string",
       }
 
       console.log(data);
@@ -338,7 +352,7 @@ export default {
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable to create dealer", {
+              this.$toast("Unable to create dealer branch", {
                   type: "error",
                   timeout: 3000
               });
