@@ -319,7 +319,6 @@ export default {
           dealerId: this.$route.query.dealerId,
           engagementLevel: this.engagementLevel,
           online: this.online,
-          branchUserId: "string",
           secreteCode: this.secreteCode,
           date: new Date().toISOString(),
           sendReportMail: this.sendReportMail,

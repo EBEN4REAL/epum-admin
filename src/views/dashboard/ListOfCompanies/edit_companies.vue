@@ -253,6 +253,7 @@ export default {
             formData.append('Company.Name', this.companyObj.name)
             formData.append('Company.Email', this.companyObj.email)
             formData.append('Company.Id', this.$route.query.companyId)
+            formData.append('Company.Street', this.companyObj.street)
             formData.append('Logo', this.Logo)
             $('.loader').show();
             this.axios.put(`${configObject.apiBaseUrl}/Company/EditCompany`,formData, configObject.authConfigForUpload)

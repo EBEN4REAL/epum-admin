@@ -22,7 +22,7 @@
                     <div class="row ">
                         <div class="col-md-4">
                             <div class="brand_logo_img">
-                                <img src="@/assets/img/epump-logo.png"  width="80" />
+                                <img :src="this.$route.query.url"  width="80" />
                             </div>
                         </div>
                         <div class="col-md-8 ">
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Company Name" class="" disabled v-model="dealerObj.companyName" />
+                                        <input type="text" placeholder="Company Name" class="" disabled v-model="this.$route.query.companyName" />
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Company Name" class="" disabled v-model="dealerObj.name" />
+                                        <input type="text" placeholder="Company Name" class="" disabled v-model="this.$route.query.name" />
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="Street" class="" disabled v-model="dealerObj.street"/>
+                                        <input type="text" placeholder="Street" class="" disabled v-model="this.$route.query.street"/>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="City" class="" disabled v-model="dealerObj.city" />
+                                        <input type="text" placeholder="City" class="" disabled v-model="this.$route.query.city" />
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <select class="form-control" name="Country"  v-model="dealerObj.country">
+                                        <select class="form-control" name="Country"  v-model="this.$route.query.country">
                                             <option value="select a country" disabled>select a country</option>
                                             <option value="Nigeria">Nigeria</option>
                                             <option value="Kenya">Kenya</option>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input__block">
-                                        <select v-model="dealerObj.state" class="form-control">
+                                        <select v-model="this.$route.query.state" class="form-control">
                                             <option disabled selected value="select state">select state</option>
                                             <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
                                         </select>
