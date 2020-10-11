@@ -142,21 +142,22 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
-                let index = 0
-                res.data.forEach(el => {
-                    el.index = ++index;
+                    console.log(res.data)
+                    let index = 0
+                    res.data.forEach(el => {
+                        el.index = ++index;
+                    })
+                    this.dealersCount = res.data.length
+                    localStorage.setItem("dealersList", JSON.stringify(res.data))
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
                 })
-                this.dealersCount = res.data.length
-                localStorage.setItem("dealersList", JSON.stringify(res.data))
-                this.$refs.dataGrid.ej2Instances.setProperties({
-                    dataSource: res.data
+                .catch(error => {
+                    this.showLoader = false
                 });
-                this.refreshGrid();
-                this.showLoader = false;
-            })
-            .catch(error => {
-                this.showLoader = false
-            });
         },
     }
 }
