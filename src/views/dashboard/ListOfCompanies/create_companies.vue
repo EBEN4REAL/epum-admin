@@ -76,7 +76,6 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <!-- <input type="text" placeholder="Country" class="" /> -->
                   <select class="form-control" name="Country" v-model="Country">
                       <option value="select a country" disabled>select a country</option>
                       <option value="Nigeria">Nigeria</option>
@@ -135,7 +134,7 @@
                   </b-form-file>
                 </div>
                 <div class="text-left mt-4">
-                  <button class="btn btn_theme" type=”submit” @click="sendForm">Create
+                  <button class="btn btn_theme"  @click="sendForm">Create
                      <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
@@ -187,10 +186,6 @@ export default {
     this.getStates()
   },
   methods: {
-    fileChange(event) {
-      const fileList = event.target.files;
-      this.file = fileList[0];
-    },
     validateEmail(email) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true;
@@ -199,25 +194,86 @@ export default {
     },
     sendForm(event){
       event.preventDefault()
-      let Company = {
-        State: this.State,
-        Country: this.Country,
-        State: this.State,
-        City: this.City,
-        Phone: this.Phone,
-        Country: this.Country,
-        Name: this.Name,
-        Email: this.Email,
+       if(!this.Name) {
+          this.$toast("Company Name Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.Phone) {
+          this.$toast("Phone Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.Email) {
+          this.$toast("Email Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }else {
+        if(!this.validateEmail(this.Email)) {
+          this.$toast("Invalid Email Format", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+        }
+      }
+      if(!this.Street) {
+          this.$toast("Street Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.City) {
+          this.$toast("City Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(this.Country === "select a country") {
+          this.$toast("Select a valid country", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.State) {
+          this.$toast("State Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.Logo) {
+          this.$toast("Please select a logo", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
       }
       let formData = new FormData()
-      formData.append('Company', Company)
+      formData.append('Company.State', this.State)
+      formData.append('Company.Country', this.Country)
+      formData.append('Company.Phone', this.Phone)
+      formData.append('Company.City', this.City)
+      formData.append('Company.Name', this.Name)
+      formData.append('Company.Email', this.Email)
       formData.append('Logo', this.Logo)
+      $('.loader').show();
       this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,formData, configObject.authConfigForUpload)
           .then(res => {
                 this.$toast("Company created successfully", {
                     type: "success",
                     timeout: 3000
                 });
+                this.$router.push({name: 'list_of_companies'})
                 $('.loader').hide();
                 this.isButtonDisabled = false;
           })
@@ -244,99 +300,6 @@ export default {
 
         });
     },
-    createCompany(event) {
-      event.preventDefault();
-      if(!this.name) {
-          this.$toast("Company Name Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(!this.phone) {
-          this.$toast("Phone Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(!this.email) {
-          this.$toast("Email Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }else {
-        if(!this.validateEmail(this.email)) {
-          this.$toast("Invalid Email Format", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-        }
-      }
-      if(!this.street) {
-          this.$toast("Street Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(!this.city) {
-          this.$toast("City Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(this.country === "select a country") {
-          this.$toast("Select a valid country", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      if(!this.state) {
-          this.$toast("State Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
-      const data = {
-        company: {
-          phone: this.phone,
-          email: this.email,
-          street: this.street,
-          city: this.city,
-          state: this.state,
-          country: this.country,
-          name: this.name
-        },
-        logo: this.file
-      }
-
-      console.log(data);
-      $('.loader').show();
-      const token = JSON.parse(localStorage.getItem("adminUserDetails")).token;
-      this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,data, { Authorization: "bearer " + token })
-          .then(res => {
-                this.$toast("Company created successfully", {
-                    type: "success",
-                    timeout: 3000
-                });
-                $('.loader').hide();
-                this.isButtonDisabled = false;
-          })
-          .catch(error => {
-              this.isButtonDisabled = false;
-              $('.loader').hide();
-              this.$toast("Unable to create company", {
-                  type: "error",
-                  timeout: 3000
-              });
-          });
-    }
   }
 };
 </script>

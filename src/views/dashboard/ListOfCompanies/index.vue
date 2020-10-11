@@ -96,7 +96,7 @@ export default {
         masterLayout,
         TableLoader,
         Paginator,
-        
+
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -177,16 +177,15 @@ export default {
                 .then(res => {
                 console.log(res.data);
                 let index = 0 + ((this.currentPage - 1) * this.pageSize);
-                
                 res.data.data.forEach(el => {
                     el.index = ++index;
                 })
+                localStorage.setItem("companiesList", JSON.stringify(res.data.data))
                 this.companiesCount = res.data.data.length
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: res.data.data
                 });
                 this.refreshGrid();
-
                 this.showLoader = false;
             })
             .catch(error => {

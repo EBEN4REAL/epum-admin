@@ -3,7 +3,7 @@
       <router-link  title="Edit" :to="{name:'editDealers'}" class="btn btn-warning" >
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </router-link> 
-      <router-link  title="Details" :to="{name:'dealerDetails'}" class="btn btn-primary" >
+      <router-link  title="Details" :to="{name:'dealerDetails', query: {dealerId: data.id}}" class="btn btn-primary" >
         <i class="fa fa-info-circle" aria-hidden="true"></i>
       </router-link> 
       <router-link  title="Branches" :to="{name:'dealer_branches', query: {dealerId: data.id}}" class="btn btn-info" >

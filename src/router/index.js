@@ -508,41 +508,41 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((rec) => rec.meta.authorize)) {
-//     // Authorized Pages will he handled here
-//     if (localStorage.getItem("adminUserDetails") === null) {
-//       // There is no logged in user, go back to Login (and redirect to intended page after successfull login)
-//       next({ name: "login", params: { nextUrl: to.fullPath } });
-//     } else {
-//       let user = JSON.parse(localStorage.getItem("adminUserDetails"));
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((rec) => rec.meta.authorize)) {
+    // Authorized Pages will he handled here
+    if (localStorage.getItem("adminUserDetails") === null) {
+      // There is no logged in user, go back to Login (and redirect to intended page after successfull login)
+      next({ name: "login", params: { nextUrl: to.fullPath } });
+    } else {
+      let user = JSON.parse(localStorage.getItem("adminUserDetails"));
 
-//       // Company Admin
-//       if (to.matched.some((rec) => rec.meta.authRoles.includes("admin"))) {
-//         if (
-//           user.roles.includes("Super Admin") ||
-//           user.roles.includes("Admin")
-//         ) {
-//           next();
-//         }
-//       } else {
-//         next();
-//       }
-//     }
-//   } else if (to.matched.some((rec) => rec.meta.guest)) {
-//     //Guest Pages are Handled here e.g. Login
-//     if (localStorage.getItem("adminUserDetails") === null) {
-//       next();
-//     } else {
-//       let user = JSON.parse(localStorage.getItem("adminUserDetails"));
-//       if (user.roles.includes("Super Admin") || user.roles.includes("Admin")) {
-//         next({ name: "adminDashboard" });
-//       }
-//     }
-//   } else {
-//     // Free pages are handled here
-//     next();
-//   }
-// });
+      // Company Admin
+      if (to.matched.some((rec) => rec.meta.authRoles.includes("admin"))) {
+        if (
+          user.roles.includes("Super Admin") ||
+          user.roles.includes("Admin")
+        ) {
+          next();
+        }
+      } else {
+        next();
+      }
+    }
+  } else if (to.matched.some((rec) => rec.meta.guest)) {
+    //Guest Pages are Handled here e.g. Login
+    if (localStorage.getItem("adminUserDetails") === null) {
+      next();
+    } else {
+      let user = JSON.parse(localStorage.getItem("adminUserDetails"));
+      if (user.roles.includes("Super Admin") || user.roles.includes("Admin")) {
+        next({ name: "adminDashboard" });
+      }
+    }
+  } else {
+    // Free pages are handled here
+    next();
+  }
+});
 
 export default router;
