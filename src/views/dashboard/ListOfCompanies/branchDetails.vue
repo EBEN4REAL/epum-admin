@@ -326,10 +326,12 @@
                   style="opacity: 0.6"
                 />
               </div>
-              <div class="mt-3">
-                <h3 class="dashboard__card__header_bottom font-weight-bold">
-                  90,000.00
-                </h3>
+              <div class="mt-4 mx-auto text-center">
+                <router-link
+                  :to="{ name: 'addDevice', query: {companyBranchId: this.$route.query.companyBranchId}}"
+                  class="create_btn btn btn_theme"
+                  >Add Device</router-link
+                >
               </div>
             </div>
             <div class="align-items-center mt-3">
