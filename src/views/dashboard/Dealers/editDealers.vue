@@ -225,8 +225,6 @@ export default {
                 country: this.dealerObj.country,
                 companyId: this.dealerObj.companyId,
                 id: this.$route.query.dealerId,
-                // phone: '0000000000',
-                // email: 'dealers@dealers.com',
             }
 
             console.log(data);

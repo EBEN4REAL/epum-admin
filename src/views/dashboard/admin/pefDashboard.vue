@@ -65,7 +65,7 @@
 <script>
 
 import Vue from 'vue';
-import masterLayout from '@/views/dashboard/masterLayout'
+import masterLayout from '@/views/dashboard/masterLayout';
 import EjsTable from '@/components/ejsTable.vue';
 import ProductDistTemplate from '@/components/ProductDistTemplate.vue';
 

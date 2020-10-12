@@ -1,11 +1,11 @@
 <template>
   <div class="btn-group btn-group-sm" role="group">
-    <router-link  title="Edit" :to="{ name: 'editBranch' }" class="btn btn-warning" >
+    <router-link  title="Edit" :to="{ name: 'editBranch', query: {companyBranchId: data.id}}" class="btn btn-warning" >
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </router-link>
     <router-link
       title="Details"
-      :to="{ name: 'company_details' }"
+      :to="{ name: 'branchDetails', query: {companyBranchId: data.id}}"
       class="btn btn-primary"
     >
       <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -27,9 +27,8 @@
       <i class="fa fa-mars" aria-hidden="true"></i>
     </router-link>
     <router-link
-      
       title="Mail Recipient"
-      :to="{ name: 'branchMail_recipent' }"
+      :to="{ name: 'branchMail_recipent', query: {companyBranchId: data.id} }"
       class="btn btn-success"
     >
       <i class="fa fa-reply" aria-hidden="true"></i>

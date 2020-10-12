@@ -7,19 +7,21 @@
             <i class="fa fa-info-circle" aria-hidden="true"></i>
       </router-link> 
       <router-link v-b-tooltip.hover title="Dealers" :to="{name:'dealers',  query: {companyId: data.id}}" class="btn btn-warning" >
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+            <i class="fa fa-user-circle-o " aria-hidden="true"></i>
+            {{data.numberOfDealers}}
       </router-link> 
-      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches', query: {id: data.id}}" class="btn btn-info" >
-            <i class="fa fa-building-o" aria-hidden="true"></i>
+      <router-link v-b-tooltip.hover title="Branches" :to="{name:'branches', query: {companyId: data.id}}" class="btn btn-info" >
+            <i class="fa fa-building-o " aria-hidden="true"></i>
+            {{data.numberOfBranches}}
       </router-link> 
       <router-link v-b-tooltip.hover title="Sales Rep" :to="{name:'sales_rep'}" class="btn btn-primary" >
-            <i class="fa fa-mars" aria-hidden="true"></i>
+            <i class="fa fa-mars " aria-hidden="true"></i>
       </router-link>
       <router-link v-b-tooltip.hover title="Mail Recipient" :to="{name:'mail_recipient'}" class="btn btn-success" >
-            <i class="fa fa-reply" aria-hidden="true"></i>
+            <i class="fa fa-reply " aria-hidden="true"></i>
       </router-link>
       <button v-b-tooltip.hover title="Delete" class="btn btn-danger" @click="_deleteCompany($event)">
-            <i class="fa fa-trash" aria-hidden="true"></i>
+            <i class="fa fa-trash " aria-hidden="true"></i>
       </button>
   </div>
 </template>

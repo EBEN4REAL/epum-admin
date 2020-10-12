@@ -115,8 +115,26 @@ export default {
   mounted() {},
   data() {
     return {
-      backgroundUrl
+      backgroundUrl,
+      comapanyBranchObj: {}
     };
   },
+  mounted() {
+    this.companyBranchId = this.$route.query.companyBranchId
+    let ml = sessionStorage.getItem(this.companyBranchId)
+    if (!ml){
+        let allData = localStorage.getItem("companyBranchesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === this.companyBranchId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(this.companyBranchId, ml)
+            }
+        })
+    }
+    let companyBranchDetails = JSON.parse(ml)
+    this.comapanyBranchObj = companyBranchDetails
+    console.log(this.comapanyBranchObj)
+  }
 };
 </script>
