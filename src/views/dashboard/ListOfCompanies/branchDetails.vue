@@ -9,7 +9,7 @@
                 class="small__card_content_wrapper small_card"
                 style="height: 100%"
               >
-                <p class="dashboard__card__header">Outlets</p>
+                <p class="dashboard__card__header">Installed Tanks</p>
                 <div
                   class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                 >
@@ -33,7 +33,7 @@
                 class="small__card_content_wrapper small_card"
                 style="height: 100%"
               >
-                <p class="dashboard__card__header">PMS Available</p>
+                <p class="dashboard__card__header">Installed Pumps</p>
                 <div
                   class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                 >
@@ -55,7 +55,7 @@
                 class="small__card_content_wrapper small_card"
                 style="height: 100%"
               >
-                <p class="dashboard__card__header">AGO Available</p>
+                <p class="dashboard__card__header">Trucks</p>
                 <div
                   class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                 >
@@ -326,7 +326,7 @@
               </div>
               <div class="mt-4 mx-auto text-center">
                 <router-link
-                  :to="{ name: 'addDevice' }"
+                  :to="{ name: 'addDevice', query: {companyBranchId: this.$route.query.companyBranchId}}"
                   class="create_btn btn btn_theme"
                   >Add Device</router-link
                 >
