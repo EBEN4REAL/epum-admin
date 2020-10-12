@@ -1,98 +1,121 @@
 <template>
- <masterLayout>
-  <div class="row">
+  <masterLayout>
+    <div class="row">
       <div class="col-lg-9 col-md-6">
         <div class="new_row_section">
           <div class="row mt-3">
             <div class="col-lg-3 col-md-3 remove_padding-right">
-              <div
-                class="small__card_content_wrapper small_card"
-                style="height: 100%"
+              <router-link
+                :to="{ name: 'installedTanks' }"
+                class="router_link__text"
               >
-                <p class="dashboard__card__header">Outlets</p>
                 <div
-                  class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
+                  class="small__card_content_wrapper small_card"
+                  style="height: 100%"
                 >
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
-                </div>
-                <div class="mt-3">
-                  <small
-                    class="dashboard__card__header_bottom font-weight-bold"
+                  <p class="dashboard__card__header">Installed Tanks</p>
+                  <div
+                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
-                    123
-                  </small>
+                    <img
+                      src="@/assets/img/branch_icon.png"
+                      width="60px"
+                      style="opacity: 0.6"
+                    />
+                  </div>
+                  <div class="mt-3">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold"
+                    >
+                      123
+                    </small>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
             <div class="col-lg-3 col-md-3 remove_padding-right">
-              <div
-                class="small__card_content_wrapper small_card"
-                style="height: 100%"
+              <router-link
+                :to="{ name: 'installedPumps' }"
+                class="router_link__text"
               >
-                <p class="dashboard__card__header">PMS Available</p>
                 <div
-                  class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
+                  class="small__card_content_wrapper small_card"
+                  style="height: 100%"
                 >
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
-                </div>
-                <div class="mt-3">
-                  <small class="dashboard__card__header_bottom font-weight-bold"
-                    >123</small
+                  <p class="dashboard__card__header">Installed Pumps</p>
+                  <div
+                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
+                    <img
+                      src="@/assets/img/branch_icon.png"
+                      width="60px"
+                      style="opacity: 0.6"
+                    />
+                  </div>
+                  <div class="mt-3">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold"
+                      >123</small
+                    >
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
             <div class="col-lg-3 col-md-3 remove_padding-right">
-              <div
-                class="small__card_content_wrapper small_card"
-                style="height: 100%"
+              <router-link
+                :to="{ name: 'installedPumps' }"
+                class="router_link__text"
               >
-                <p class="dashboard__card__header">AGO Available</p>
                 <div
-                  class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
+                  class="small__card_content_wrapper small_card"
+                  style="height: 100%"
                 >
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
-                </div>
-                <div class="mt-3">
-                  <small class="dashboard__card__header_bottom font-weight-bold"
-                    >123</small
+                  <p class="dashboard__card__header">Truck arrivals</p>
+                  <div
+                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
+                    <img
+                      src="@/assets/img/branch_icon.png"
+                      width="60px"
+                      style="opacity: 0.6"
+                    />
+                  </div>
+                  <div class="mt-3">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold"
+                      >123</small
+                    >
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
             <div class="col-lg-3 col-md-3 remove_padding-right">
-              <div
-                class="small__card_content_wrapper small_card"
-                style="height: 100%"
+              <router-link
+                :to="{ name: 'reFilledTanks' }"
+                class="router_link__text"
               >
-                <p class="dashboard__card__header">DPK Available</p>
                 <div
-                  class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
+                  class="small__card_content_wrapper small_card"
+                  style="height: 100%"
                 >
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
-                </div>
-                <div class="mt-3">
-                  <small class="dashboard__card__header_bottom font-weight-bold"
-                    >123</small
+                  <p class="dashboard__card__header">Tank re-fill</p>
+                  <div
+                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
+                    <img
+                      src="@/assets/img/branch_icon.png"
+                      width="60px"
+                      style="opacity: 0.6"
+                    />
+                  </div>
+                  <div class="mt-3">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold"
+                      >123</small
+                    >
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
 
@@ -279,62 +302,72 @@
         </div>
       </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="branch_card position-fixed">
-            <div class="">
-              <div class="row align-items-center mt-3">
-                <div class="col-md-6 mt-2 text-left">
-                  <p>Branch Name:</p>
-                </div>
-                <div class="col-md-6">
-                  <div class="">
-                    <h4 class="font-weight">{{comapanyBranchObj.name}}</h4>
-                  </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="branch_card position-fixed">
+          <div class="">
+            <div class="row align-items-center mt-3">
+              <div class="col-md-6 mt-2 text-left">
+                <p>Branch Name:</p>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <h4 class="font-weight">{{ comapanyBranchObj.name }}</h4>
                 </div>
               </div>
-              <div class="small__card_content_wrapper small_card">
-                <h4 class="dashboard__card__header">Wallet balance</h4>
-                <div
-                  class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
+            </div>
+            <div class="small__card_content_wrapper small_card">
+              <h4 class="dashboard__card__header">Wallet balance</h4>
+              <div
+                class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
+              >
+                <img
+                  src="@/assets/img/money (3).svg"
+                  width="60px"
+                  style="opacity: 0.6"
+                />
+              </div>
+              <div class="mt-3">
+                <h3 class="dashboard__card__header_bottom font-weight-bold">
+                  90,000.00
+                </h3>
+              </div>
+            </div>
+            <div class="align-items-center mt-3">
+              <p style="font-size: 13px">
+                Phone Number:<span
+                  class="font-weight-bold ml-2"
+                  style="font-size: 13px"
+                  >{{ comapanyBranchObj.phone }}</span
                 >
-                  <img
-                    src="@/assets/img/money (3).svg"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
-                </div>
-                <div class="mt-3">
-                  <h3 class="dashboard__card__header_bottom font-weight-bold">90,000.00</h3>
-                </div>
-              </div>
-              <div class="align-items-center mt-3">
-                <p style="font-size: 13px">
-                  Phone Number:<span class="font-weight-bold ml-2" style="font-size: 13px"
-                    >{{comapanyBranchObj.phone}}</span
-                  >
-                </p>
-                <p style="font-size: 13px">
-                  Branch Email:<span class="font-weight-bold text-left ml-2" style="font-size: 13px"
-                    >{{comapanyBranchObj.email}}</span
-                  >
-                </p>
-                <p style="font-size: 13px">
-                  Branch Address:<span class="font-weight-bold ml-2" style="font-size: 13px"
-                    >{{`${comapanyBranchObj.street},${comapanyBranchObj.city},${comapanyBranchObj.state}`}}</span
-                  >
-                </p>
-              </div>
-              <div class="mt-4 mx-auto text-center">
-                <router-link
-                  :to="{ name: 'addDevice' }"
-                  class="create_btn btn btn_theme"
-                  >Add Device</router-link
+              </p>
+              <p style="font-size: 13px">
+                Branch Email:<span
+                  class="font-weight-bold text-left ml-2"
+                  style="font-size: 13px"
+                  >{{ comapanyBranchObj.email }}</span
                 >
-              </div>
+              </p>
+              <p style="font-size: 13px">
+                Branch Address:<span
+                  class="font-weight-bold ml-2"
+                  style="font-size: 13px"
+                  >{{
+                    `${comapanyBranchObj.street},${comapanyBranchObj.city},${comapanyBranchObj.state}`
+                  }}</span
+                >
+              </p>
+            </div>
+            <div class="mt-4 mx-auto text-center">
+              <router-link
+                :to="{ name: 'addDevice' }"
+                class="create_btn btn btn_theme"
+                >Add Device</router-link
+              >
             </div>
           </div>
         </div>
       </div>
+    </div>
   </masterLayout>
 </template>
 
@@ -346,48 +379,52 @@ import configObject from "@/config";
 export default {
   components: {
     masterLayout,
-    
   },
   mounted() {
-    this.getWalletBalance()
-    this.companyBranchId = this.$route.query.companyBranchId
-    let ml = sessionStorage.getItem(this.companyBranchId)
-    if (!ml){
-        let allData = localStorage.getItem("companyBranchesList")
-        let dt = JSON.parse(allData)
-        dt.forEach((my, index) =>{
-            if(my.id === this.companyBranchId){
-                ml = JSON.stringify(my)
-                sessionStorage.setItem(this.companyBranchId, ml)
-            }
-        })
+    this.getWalletBalance();
+    this.companyBranchId = this.$route.query.companyBranchId;
+    let ml = sessionStorage.getItem(this.companyBranchId);
+    if (!ml) {
+      let allData = localStorage.getItem("companyBranchesList");
+      let dt = JSON.parse(allData);
+      dt.forEach((my, index) => {
+        if (my.id === this.companyBranchId) {
+          ml = JSON.stringify(my);
+          sessionStorage.setItem(this.companyBranchId, ml);
+        }
+      });
     }
-    let companyBranchDetails = JSON.parse(ml)
-    this.comapanyBranchObj = companyBranchDetails
-    console.log(this.comapanyBranchObj)
+    let companyBranchDetails = JSON.parse(ml);
+    this.comapanyBranchObj = companyBranchDetails;
+    console.log(this.comapanyBranchObj);
   },
   data() {
     return {
       lowTanks: [],
-      comapanyBranchObj: {}
+      comapanyBranchObj: {},
     };
   },
   methods: {
     convertThousand(request) {
       if (!isFinite(request)) {
-          return "0.00";
+        return "0.00";
       }
-      return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return request
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     getWalletBalance() {
-      this.axios.get(`${configObject.apiBaseUrl}/Branch/branchwallet/${this.$route.query.companyBranchId}`,configObject.authConfig)
-        .then(res => {
-            this.walletBalance =  this.convertThousand(res.data.balance);
+      this.axios
+        .get(
+          `${configObject.apiBaseUrl}/Branch/branchwallet/${this.$route.query.companyBranchId}`,
+          configObject.authConfig
+        )
+        .then((res) => {
+          this.walletBalance = this.convertThousand(res.data.balance);
         })
-        .catch(error => {
-            
-        });
+        .catch((error) => {});
     },
-  }
+  },
 };
 </script>

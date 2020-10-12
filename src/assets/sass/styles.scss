@@ -418,6 +418,13 @@ textarea {
   }
 }
 
+.router_link__text:hover {
+  text-decoration: none;
+}
+p.dashboard__card__header {
+  font-size: 17px;
+}
+
 .product_details_card {
   width: 102% !important;
 }
