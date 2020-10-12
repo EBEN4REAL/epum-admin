@@ -308,17 +308,17 @@
                 </div>
               </div>
               <div class="align-items-center mt-3">
-                <p>
+                <p style="font-size: 13px">
                   Phone Number:<span class="font-weight-bold ml-2" style="font-size: 13px"
                     >{{comapanyBranchObj.phone}}</span
                   >
                 </p>
-                <p>
+                <p style="font-size: 13px">
                   Branch Email:<span class="font-weight-bold text-left ml-2" style="font-size: 13px"
                     >{{comapanyBranchObj.email}}</span
                   >
                 </p>
-                <p>
+                <p style="font-size: 13px">
                   Branch Address:<span class="font-weight-bold ml-2" style="font-size: 13px"
                     >{{`${comapanyBranchObj.street},${comapanyBranchObj.city},${comapanyBranchObj.state}`}}</span
                   >
