@@ -401,15 +401,24 @@ textarea {
 
 .branch_card {
   .small_card {
+    background: #F4EDFF;
     height: 100%;
     text-align: center;
     width: 100% !important;
+  }
+  .dashboard__card__header_bottom, 
+  .dashboard__card__header {
+    font-size: 18px;
   }
   .btn_theme {
     width: 248px;
     padding: 11px !important;
     margin-top: 116px;
   }
+}
+
+.product_details_card {
+  width: 102% !important;
 }
 
 small.dashboard__card__header_bottom {

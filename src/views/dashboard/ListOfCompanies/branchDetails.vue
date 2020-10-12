@@ -96,7 +96,7 @@
             </div>
           </div>
 
-          <div class="small_card mt-3">
+          <div class="small_card product_details_card mt-3">
             <div class="title">
               <h4>Product Available in Stock</h4>
               <hr />
@@ -165,7 +165,7 @@
             </div>
           </div>
 
-          <div class="small_card mt-3">
+          <div class="small_card product_details_card mt-3">
             <div class="title">
               <h4>Product Available in Stock</h4>
               <hr />
@@ -295,7 +295,7 @@
                 </div>
               </div>
               <div class="small__card_content_wrapper small_card">
-                <h4 class="dashboard__card__header">Outlets</h4>
+                <h4 class="dashboard__card__header">Wallet balance</h4>
                 <div
                   class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
                 >
@@ -306,7 +306,7 @@
                   />
                 </div>
                 <div class="mt-3">
-                  <h3 class="dashboard__card__header_bottom">123</h3>
+                  <h3 class="dashboard__card__header_bottom font-weight-bold">90,000.00</h3>
                 </div>
               </div>
               <div class="align-items-center mt-3">
