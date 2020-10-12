@@ -5,7 +5,7 @@
     </router-link>
     <router-link
       title="Details"
-      :to="{ name: 'company_details' }"
+      :to="{ name: 'branchDetails' }"
       class="btn btn-primary"
     >
       <i class="fa fa-info-circle" aria-hidden="true"></i>
