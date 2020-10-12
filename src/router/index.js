@@ -7,6 +7,7 @@ import ResolvePayment from "../views/dashboard/admin/resolvePayment";
 import ResolveUssd from "../views/dashboard/admin/resolveUssd";
 import VoucherMonitor from "../views/dashboard/admin/voucherMonitor";
 import PEFDashboard from "../views/dashboard/admin/pefDashboard";
+import BranchDetails from "../views/dashboard/ListOfCompanies/branchDetails";
 import ListOfCompanies from "../views/dashboard/ListOfCompanies/index";
 import EditCompanies from "../views/dashboard/ListOfCompanies/edit_companies";
 import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies";
@@ -504,6 +505,15 @@ let routes = [
   path: "/reFilledTanks",
   name: "reFilledTanks",
   component: ReFilledTanks,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/branchDetails",
+  name: "branchDetails",
+  component: BranchDetails,
   meta: {
       authorize: true,
       authRoles: ['Admin']
