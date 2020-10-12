@@ -180,6 +180,7 @@ export default {
                     el.index = ++index;
                 })
                 localStorage.setItem("companiesList", JSON.stringify(res.data.data))
+                console.log(res.data.data)
                 this.companiesCount = res.data.data.length
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: res.data.data

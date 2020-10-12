@@ -138,9 +138,9 @@
                 <div class="input__block">
                   <select class="form-control" v-model="engagementLevel">
                       <option disabled selected value="select engagement level">Select Engagement Level</option>
-                      <option value="Full Auto (Pumps & Tanks) ">Full Auto (Pumps & Tanks)</option>
-                      <option value="Auto (Pumps Only)">Auto (Pumps Only)</option>
-                      <option value="Tank Auto (Tanks Only)">Tank Auto (Tanks Only)</option>
+                      <option value="Full Auto">Full Auto (Pumps & Tanks)</option>
+                      <option value="Auto">Auto (Pumps Only)</option>
+                      <option value="Tank Auto">Tank Auto (Tanks Only)</option>
                   </select>
                 </div>
               </div>

@@ -72,7 +72,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     this.companiesCount = res.data.data.length
                 })
                 .catch(error => {
@@ -84,7 +83,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Branch/GetStations`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     this.stationsCount = res.data.length
                 })
                 .catch(error => {
