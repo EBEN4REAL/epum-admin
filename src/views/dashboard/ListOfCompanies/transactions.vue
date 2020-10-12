@@ -17,7 +17,6 @@
       </div>
     </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps"  /> -->
             <ejs-grid
                 ref="dataGrid"
                 :created="refreshGrid"
@@ -68,7 +67,7 @@ export default {
             searchFun(e);
         });
         function searchFun(event) {
-            var grid = document.getElementsByClasswalletBalance("e-grid")[0].ej2_instances[0];
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
             grid.search(value);
         }
@@ -76,7 +75,8 @@ export default {
     },
     data() {
         return {
-              tableProps: {
+            backgroundUrl,
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },

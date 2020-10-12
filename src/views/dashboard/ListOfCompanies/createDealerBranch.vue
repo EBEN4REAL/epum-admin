@@ -76,7 +76,7 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="City" class=""  v-model="secreteCode"/>
+                  <input type="text" placeholder="Secret Code" class=""  v-model="secreteCode"/>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@ export default {
       country: "select country",
       state: "select state",
       city: null,
-      online: true,
+      online: false,
       engagementLevel: "select engagement level",
       serviceType: "select service type",
       states: [],
@@ -234,7 +234,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {
@@ -293,6 +292,20 @@ export default {
           });
           return;
       }
+      if(!this.secreteCode) {
+          this.$toast("Secret code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.sendReportMail) {
+          this.$toast("Send Report mail field code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       if(this.state === 'select state') {
           this.$toast("please select state", {
               type: "error", 
@@ -319,27 +332,27 @@ export default {
           dealerId: this.$route.query.dealerId,
           engagementLevel: this.engagementLevel,
           online: this.online,
+          secreteCode: this.secreteCode,
+          date: new Date().toISOString(),
+          sendReportMail: this.sendReportMail,
           branchUserId: "string",
-          secreteCode: "string",
-          date: "2020-10-09T15:35:33.494Z",
-          sendReportMail: "string",
       }
 
       console.log(data);
       $('.loader').show();
        this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
           .then(res => {
-                this.$toast("Dealer created successfully", {
+                this.$toast("Branch created successfully", {
                     type: "success",
                     timeout: 3000
                 });
                 $('.loader').hide();
-                this.isButtonDisabled = false;
+                this.$router.push({name: 'dealer_branches', query: {dealerId: this.$route.query.dealerId}})
           })
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable to create dealer", {
+              this.$toast("Unable to create dealer branch", {
                   type: "error",
                   timeout: 3000
               });

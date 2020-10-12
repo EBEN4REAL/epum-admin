@@ -366,15 +366,6 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
-  // {
-  //     path: "/gateway",
-  //     name: "gateway",
-  //     component: Gateway,
-  //     meta: {
-  //         authorize: true,
-  //         authRoles: ['Admin']
-  //     }
-  // },
   {
     path: "/tanks",
     name: "tanks",

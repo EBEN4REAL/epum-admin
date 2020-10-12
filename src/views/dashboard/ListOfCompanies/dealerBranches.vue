@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-md-7 remove-padding-left">
                                 <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Branches</h5>
+                                    <h5 class="text-white font-weight">Dealer Branches</h5>
                                 </div>
                              <div class="text-center mt-4">
                                     <h5 class="text-white mt-4 font-weight">{{branchesCount}}</h5>
@@ -30,7 +30,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Branches.</h3>
+                            <h3>List of Registered Dealer Branches.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
                            <router-link :to="{name: 'create_dealer_branch', query: {dealerId: this.$route.query.dealerId}}" class="create_btn btn btn_theme">Create New Branch</router-link>
@@ -141,7 +141,7 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.id}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/DealerBranches/${this.$route.query.dealerId}`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data);
                     let index = 0

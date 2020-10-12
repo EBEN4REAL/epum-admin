@@ -38,8 +38,7 @@
                 <div class="input__block">
                   <select class="form-control" v-model="dealer">
                       <option disabled selected value="select dealer">select dealer</option>
-                      <option>Dealer 1</option>
-                      <option>Dealer 2</option>
+                      <option v-for="(dl,i) in companyDealers" :key="i" :value="dl.id">{{dl.name}}</option>
                   </select>
                 </div>
               </div>
@@ -95,6 +94,26 @@
                       <option value="Nigeria">Nigeria</option>
                       <option value="Kenya">Kenya</option>
                   </select>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Secret Code</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <input type="text" placeholder="Secret Code" class=""  v-model="secreteCode"/>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center mt-3">
+              <div class="col-md-4 text-left">
+                <label>Send Report Mail</label>
+              </div>
+              <div class="col-md-8">
+                <div class="input__block">
+                  <input type="text" placeholder="Send  Report Mail" class=""  v-model="sendReportMail"/>
                 </div>
               </div>
             </div>
@@ -184,12 +203,15 @@ export default {
       engagementLevel: "select engagement level",
       serviceType: "select service type",
       states: [],
-      companyDealers: []
+      companyDealers: [],
+      branchUserId: "string",
+      secreteCode: null,
+      sendReportMail: null,
     };
   },
   mounted() {
     this.getStates()
-    this.getCompanyDealers()
+    this.getDealers()
   },
   methods: {
     validateEmail(email) {
@@ -202,19 +224,17 @@ export default {
       event.preventDefault();
       this.online = event.target.checked
     },
-    getCompanyDealers() {
-      this.axios
+    getDealers() {
+        this.axios
         .get(
-         `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.id}`, 
-          configObject.authConfig
-        )
-        .then(res => {
-          console.log(res.data)
-          this.companyDealers = res.data
-        })
-        .catch(error => {
-
-        });
+            `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
+            .then(res => {
+              console.log(res.data)
+              this.companyDealers = res.data
+            })
+            .catch(error => {
+                this.showLoader = false
+            });
     },
     getStates() {
       this.axios
@@ -223,7 +243,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {
@@ -290,6 +309,20 @@ export default {
           });
           return;
       }
+      if(!this.secreteCode) {
+          this.$toast("Secret code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.sendReportMail) {
+          this.$toast("Send Report mail field code Field cannot be blank", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       if(this.state === 'select state') {
           this.$toast("please select state", {
               type: "error", 
@@ -312,28 +345,33 @@ export default {
           city: this.city,
           state: this.state,
           country: this.country,
-          name: this.name
+          name: this.branchName,
+          dealerId: this.dealer,
+          secreteCode: this.secreteCode,
+          date: new Date().toISOString(),
+          sendReportMail: this.sendReportMail,
+          branchUserId: "string",
       }
 
       console.log(data);
-      // $('.loader').show();
-      //  this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,data, configObject.authConfig)
-      //     .then(res => {
-      //           this.$toast("Company created successfully", {
-      //               type: "success",
-      //               timeout: 3000
-      //           });
-      //           $('.loader').hide();
-      //           this.isButtonDisabled = false;
-      //     })
-      //     .catch(error => {
-      //         this.isButtonDisabled = false;
-      //         $('.loader').hide();
-      //         this.$toast("Unable to create company", {
-      //             type: "error",
-      //             timeout: 3000
-      //         });
-      //     });
+      $('.loader').show();
+       this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Branch created successfully", {
+                    type: "success",
+                    timeout: 3000
+                });
+                $('.loader').hide();
+                this.$router.push({name: 'branches', query: {companyId: this.$route.query.companyId}})
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast("Unable to create branch", {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
     }
   }
 };

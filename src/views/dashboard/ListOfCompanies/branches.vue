@@ -33,7 +33,7 @@
                             <h3>List of Registered Branches.</h3>
                         </div>
                         <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'create_branch'}" class="create_btn btn btn_theme">Create New Branch</router-link>
+                           <router-link :to="{name: 'create_branch', query: {companyId: this.$route.query.companyId}}" class="create_btn btn btn_theme">Create New Branch</router-link>
                         </div>
                     </div>
                     </div>
@@ -86,6 +86,7 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
+        TableLoader
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -140,13 +141,14 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.id}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data);
                     let index = 0
                     res.data.forEach(el => {
                         el.index = ++index;
                     })
+                    localStorage.setItem("companyBranchesList", JSON.stringify(res.data))
                     this.branchesCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data

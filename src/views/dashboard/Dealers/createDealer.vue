@@ -96,7 +96,14 @@
                   </select>
                 </div>
                  <div class="text-center mt-3">
-                  <button class="btn btn_theme" @click="createDealer">Create
+                  <button class="btn btn_theme" @click="createDealer"
+                    :disabled="isButtonDisabled ? true : null"
+                    :style="[
+                      isButtonDisabled
+                        ? { cursor: 'not-allowed' }
+                        : { cursor: 'pointer' }
+                    ]"
+                  >Create
                     <img
                       src="@/assets/img/git_loader.gif"
                       style="display:none"
@@ -140,7 +147,8 @@ export default {
       city: null,
       country: "select country",
       state: "select state",
-      states: []
+      states: [],
+      isButtonDisabled: false
     };
   },
   methods: {
@@ -218,6 +226,8 @@ export default {
           });
           return;
       }
+
+      this.isButtonDisabled = true;
       
       const data = {
         name: this.dealerName,
@@ -227,7 +237,8 @@ export default {
         city: this.city,
         state: this.state,
         country: this.country,
-        companyId: this.$route.query.companyId
+        companyId: this.$route.query.companyId,
+        id: this.$route.query.companyId
       }
 
       console.log(data);
@@ -240,11 +251,14 @@ export default {
                 });
                 $('.loader').hide();
                 this.isButtonDisabled = false;
+                this.$router.push({ name: "dealers", query: {
+                  companyId: this.$route.query.companyId
+                } });
           })
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable To Create Dealer", {
+              this.$toast(error.response.data.message, {
                   type: "error",
                   timeout: 3000
               });
