@@ -17,11 +17,7 @@
                   <div
                     class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
-                    <img
-                      src="@/assets/img/branch_icon.png"
-                      width="60px"
-                      style="opacity: 0.6"
-                    />
+                    <img src="@/assets/img/oil-tank.png" width="40px" />
                   </div>
                   <div class="mt-3">
                     <small
@@ -46,11 +42,7 @@
                   <div
                     class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
-                    <img
-                      src="@/assets/img/branch_icon.png"
-                      width="60px"
-                      style="opacity: 0.6"
-                    />
+                    <img src="@/assets/img/fuel.png" width="40px" />
                   </div>
                   <div class="mt-3">
                     <small
@@ -74,11 +66,7 @@
                   <div
                     class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
-                    <img
-                      src="@/assets/img/branch_icon.png"
-                      width="60px"
-                      style="opacity: 0.6"
-                    />
+                    <img src="@/assets/img/oil-truck (2).png" width="40px" />
                   </div>
                   <div class="mt-3">
                     <small
@@ -102,11 +90,7 @@
                   <div
                     class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
                   >
-                    <img
-                      src="@/assets/img/branch_icon.png"
-                      width="60px"
-                      style="opacity: 0.6"
-                    />
+                    <img src="@/assets/img/barrel.png" width="30px" />
                   </div>
                   <div class="mt-3">
                     <small
@@ -121,17 +105,13 @@
 
           <div class="small_card product_details_card mt-3">
             <div class="title">
-              <h4>Product Available in Stock</h4>
+              <h4>Products Available in Stock</h4>
               <hr />
             </div>
             <div class="row">
               <div class="col-lg-4 col-md-2 border-right">
                 <div class="text-center mt-3">
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
+                  <img src="@/assets/img/oil-truck (-2.png" width="40px" />
                 </div>
                 <div class="text-center">
                   <h6 class="dashboard__card__header">PMS Available</h6>
@@ -140,47 +120,39 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                      {{convertThousand(comapanyBranchObj.pmsTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
               </div>
               <div class="col-lg-4 col-md-2 border-right">
                 <div class="text-center mt-3">
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
+                  <img src="@/assets/img/oil-truck (-1.png" width="40px" />
                 </div>
                 <div class="text-center">
-                  <h6 class="dashboard__card__header">PMS Available</h6>
+                  <h6 class="dashboard__card__header">AGO Available</h6>
 
                   <div class="mt-3">
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                      {{convertThousand(comapanyBranchObj.agoTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
               </div>
               <div class="col-lg-4 col-md-2">
                 <div class="text-center">
-                  <img
-                    src="@/assets/img/branch_icon.png"
-                    width="60px"
-                    style="opacity: 0.6"
-                  />
+                  <img src="@/assets/img/oil-truck (1).png" width="40px" />
                 </div>
                 <div class="text-center">
-                  <h6 class="dashboard__card__header">PMS Available</h6>
+                  <h6 class="dashboard__card__header">DPK Available</h6>
 
                   <div class="mt-3">
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                     {{convertThousand(comapanyBranchObj.dpkTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
@@ -190,7 +162,7 @@
 
           <div class="small_card product_details_card mt-3">
             <div class="title">
-              <h4>Product Available in Stock</h4>
+              <h4>Installed tanks</h4>
               <hr />
             </div>
             <!-- <div class="row">
@@ -264,8 +236,8 @@
               <div class="text-center mt-3">
                 <img
                   src="@/assets/img/branch_icon.png"
-                  width="60px"
-                  style="opacity: 0.6"
+                  width="40px"
+                  
                 />
               </div>
               <div class="text-center">
@@ -283,8 +255,7 @@
               <div class="text-center">
                 <img
                   src="@/assets/img/branch_icon.png"
-                  width="60px"
-                  style="opacity: 0.6"
+                  width="40px"
                 />
               </div>
               <div class="text-center">
@@ -320,13 +291,9 @@
               <div
                 class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
               >
-                <img
-                  src="@/assets/img/money (3).svg"
-                  width="60px"
-                  style="opacity: 0.6"
-                />
+                <img src="@/assets/img/money (3).svg" width="60px" />
               </div>
-              <h3>90,000.00</h3>
+              <h4 class="dashboard__card__header font-weight-bold">60,000</h4>
             </div>
             <div class="align-items-center mt-3">
               <p style="font-size: 13px">
@@ -354,10 +321,14 @@
               </p>
             </div>
             <div class="mt-4 mx-auto text-center">
-               <router-link
-                  :to="{ name: 'addDevice', query: {companyBranchId: this.$route.query.companyBranchId}}"
-                  class="create_btn btn btn_theme"
-                  >Add Device</router-link>
+              <router-link
+                :to="{
+                  name: 'addDevice',
+                  query: { companyBranchId: this.$route.query.companyBranchId },
+                }"
+                class="btn btn_theme"
+                >Add Device</router-link
+              >
             </div>
           </div>
         </div>
