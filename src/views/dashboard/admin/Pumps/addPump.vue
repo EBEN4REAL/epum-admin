@@ -21,11 +21,9 @@
         </div>
       </div>
     </section>
-    <div class="full__row_section mt-3 ep_card">
+    <div class="full__row_section center_div margin-top-center-div mt-3 ep_card">
       <div class="">
         <form>
-          <div class="row">
-            <div class="col-md-6">
               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
                   <label class="label">Associate Pump to Tank</label>
@@ -109,8 +107,6 @@
                 <button class="btn btn_theme">Update</button>
                 <button class="btn btn_theme">Cancel</button>
               </div>
-            </div>
-          </div>
         </form>
       </div>
     </div>
