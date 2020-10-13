@@ -343,8 +343,10 @@ textarea {
 }
 
 .inner_border_radius {
-  background: #F3F2FF;
+  background: #f3f2ff;
   border-radius: 25%;
+  height: 50px;
+  width: 50px;
 }
 
 .label:after {
@@ -369,6 +371,7 @@ textarea {
 .create_btn {
   margin-top: 36px !important;
 }
+
 
 .margin-top-center-div.ep_card {
   height: auto;
@@ -402,19 +405,19 @@ textarea {
 
 .branch_card {
   .small_card {
-    background: #F4EDFF;
+    background: #f4edff;
     height: 100%;
     text-align: center;
     width: 100% !important;
   }
-  .dashboard__card__header_bottom, 
+  .dashboard__card__header_bottom,
   .dashboard__card__header {
     font-size: 18px;
   }
   .btn_theme {
     width: 248px;
     padding: 11px !important;
-    margin-top: 116px;
+    margin-top: 116px !important;
   }
 }
 
@@ -487,10 +490,30 @@ h6.dashboard__card__header {
   border-radius: 50%;
   width: 150px;
   height: 150px;
-  box-shadow: inset 0 -5px 0 0 rgba(0, 0, 0, 0.5), inset 0 -20px 5px 0 rgba(0, 0, 0, 0.2), inset -15px 0 5px 0 rgba(0, 0, 0, 0.1), inset 15px 0 5px 0 rgba(0, 0, 0, 0.1);
-  background: -moz-radial-gradient(center, ellipse cover, transparent 0%, transparent 76%, rgba(0, 0, 0, 0.65) 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, transparent 0%, transparent 76%, rgba(0, 0, 0, 0.65) 100%);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 76%, rgba(0, 0, 0, 0.65) 100%);
+  box-shadow: inset 0 -5px 0 0 rgba(0, 0, 0, 0.5),
+    inset 0 -20px 5px 0 rgba(0, 0, 0, 0.2),
+    inset -15px 0 5px 0 rgba(0, 0, 0, 0.1),
+    inset 15px 0 5px 0 rgba(0, 0, 0, 0.1);
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   margin: 20px;
 }
 
@@ -498,10 +521,33 @@ h6.dashboard__card__header {
   overflow: hidden;
   border-radius: 50%;
   content: "";
-  box-shadow: inset 0 -5px 0 0 rgba(0, 0, 0, 0.5), inset 0 -20px 5px 0 rgba(0, 0, 0, 0.2), inset -15px 0 5px 0 rgba(0, 0, 0, 0.1), inset 15px 0 5px 0 rgba(0, 0, 0, 0.1);
-  background: -moz-radial-gradient(center, ellipse cover, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.65) 81%, black 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.65) 81%, black 100%);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.65) 81%, #000000 100%);
+  box-shadow: inset 0 -5px 0 0 rgba(0, 0, 0, 0.5),
+    inset 0 -20px 5px 0 rgba(0, 0, 0, 0.2),
+    inset -15px 0 5px 0 rgba(0, 0, 0, 0.1),
+    inset 15px 0 5px 0 rgba(0, 0, 0, 0.1);
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.65) 81%,
+    black 100%
+  );
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.65) 81%,
+    black 100%
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.65) 81%,
+    #000000 100%
+  );
   position: absolute;
   width: 150px;
   height: 150px;
@@ -527,9 +573,26 @@ h6.dashboard__card__header {
   border-radius: 50%;
   width: 150px;
   height: 150px;
-  background: -moz-radial-gradient(center, ellipse cover, transparent 0%, transparent 76%, rgba(0, 0, 0, 0.65) 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, transparent 0%, transparent 76%, rgba(0, 0, 0, 0.65) 100%);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 76%, rgba(0, 0, 0, 0.65) 100%);
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    transparent 0%,
+    transparent 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 76%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
@@ -581,19 +644,19 @@ h6.dashboard__card__header {
 
 @-webkit-keyframes fillAction {
   0% {
-      -webkit-transform: translate(0, 150px);
+    -webkit-transform: translate(0, 150px);
   }
   100% {
-      -webkit-transform: translate(0, var(--h));
+    -webkit-transform: translate(0, var(--h));
   }
 }
 
 @-webkit-keyframes waveAction {
   0% {
-      -webkit-transform: translate(-150px, 0);
+    -webkit-transform: translate(-150px, 0);
   }
   100% {
-      -webkit-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
   }
 }
 
