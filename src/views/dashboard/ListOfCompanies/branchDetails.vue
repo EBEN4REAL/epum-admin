@@ -105,7 +105,7 @@
 
           <div class="small_card product_details_card mt-3">
             <div class="title">
-              <h4>Product Available in Stock</h4>
+              <h4>Products Available in Stock</h4>
               <hr />
             </div>
             <div class="row">
@@ -120,7 +120,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                      {{convertThousand(comapanyBranchObj.pmsTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
@@ -136,7 +136,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                      {{convertThousand(comapanyBranchObj.agoTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
@@ -152,7 +152,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold branch_details_font"
                     >
-                      123
+                     {{convertThousand(comapanyBranchObj.dpkTotalVolume)}} Ltrs
                     </small>
                   </div>
                 </div>
@@ -286,7 +286,7 @@
                 </div>
               </div>
             </div>
-            <div class="small__card_content_wrapper small_card">
+            <div class="small__card_content_wrapper small_card small__card_content_wrapper">
               <h4 class="dashboard__card__header">Wallet balance</h4>
               <div
                 class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
