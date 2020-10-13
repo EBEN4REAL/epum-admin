@@ -29,6 +29,7 @@ import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
 import Transactions from "../views/dashboard/ListOfCompanies/transactions";
 import BranchMailRecipent from "../views/dashboard/ListOfCompanies/branchMail_recipent";
+import FundBranch from "../views/dashboard/ListOfCompanies/fundBranch";
 import ManageRoles from "../views/dashboard/admin/manageRoles";
 import CreateRoles from "../views/dashboard/ListOfRoles/create_roles";
 import EditRoles from "../views/dashboard/ListOfRoles/edit_roles";
@@ -515,6 +516,15 @@ let routes = [
   path: "/installedTanks",
   name: "installedTanks",
   component: InstalledTanks,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/fundBranch",
+  name: "fundBranch",
+  component: FundBranch,
   meta: {
       authorize: true,
       authRoles: ['Admin']
