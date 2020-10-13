@@ -11,12 +11,11 @@
       <i class="fa fa-info-circle" aria-hidden="true"></i>
     </router-link>
     <router-link
-      
       title="Fund Branch"
       :to="{ name: 'fundBranch' }"
       class="btn btn-warning"
     >
-      <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+      <i class="fa fa-money" aria-hidden="true"></i>
     </router-link>
     <router-link
       
