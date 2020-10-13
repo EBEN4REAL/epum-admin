@@ -315,7 +315,7 @@
                 </div>
               </div>
             </div>
-            <div class="small__card_content_wrapper small_card">
+            <div class="small__card_content_wrapper small_card small__card_content_wrapper">
               <h4 class="dashboard__card__header">Wallet balance</h4>
               <div
                 class="icon_wrapper yellow centralize icon_div_big text-center mt-3"
@@ -326,6 +326,7 @@
                   style="opacity: 0.6"
                 />
               </div>
+              <h3>90,000.00</h3>
             </div>
             <div class="align-items-center mt-3">
               <p style="font-size: 13px">
