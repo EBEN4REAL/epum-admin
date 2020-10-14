@@ -35,15 +35,15 @@
         </div>
 
         <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''" @mouseover="toggleSidenavText" @mouseleave="hideTitles">
-            <!-- <div class="logo_section text-right mt-3">
+            <div class="logo_section text-right mt-3">
           <img
             src="@/assets/img/close_btn.png"
             width="35px"
             height="35px"
-            @click="closeNav"
+            @click="toggleCollapsibleNavBar"
             id="mySidenav"
           />
-            </div> -->
+            </div>
             <div class="logo_section text-content mt-3">
                 <svg class="lg"
                      version="1.1" height="50px" id="Layer_1"
@@ -438,7 +438,6 @@
                         }
                     })
                 }
-                console.log(this.collapseNavbar);
             },
             toggleSidenavText() {
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
@@ -472,7 +471,6 @@
                     //         el.classList.add("list_open")
                     //     }
                     // })
-                  
                 }
             },
             hideTitles() {

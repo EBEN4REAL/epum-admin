@@ -4,6 +4,18 @@
       <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
+                <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                    <div class="row">
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Outstanding Payments</h3>
+                        </div>
+                        <div class="col-md-4 mt-4">
+                           <router-link :to="{name: 'makePayments'}" class="btn create_btn primary_btn">Make Payments</router-link>
+                        </div>
+                    </div>
+                    </div>
+                </div>
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
@@ -17,18 +29,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>Outstanding Payments</h3>
-                        </div>
-                        <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'makePayments'}" class="create_btn btn btn_theme">Make Payments</router-link>
-                        </div>
-                    </div>
-                    </div>
                 </div>
             </div>
                 </div>
