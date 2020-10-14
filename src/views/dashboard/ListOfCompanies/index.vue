@@ -35,6 +35,7 @@
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
+                v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="false"

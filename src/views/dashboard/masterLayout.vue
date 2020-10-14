@@ -330,14 +330,21 @@
                                 </li>
                             </ul>
                              <li class="list-group-item " :class="activeRoute === 'outstandingPayments' ? 'navbar_item_active' : ''">
-                            <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
-                            <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
-                            <span class="sidenav_list_title">
-                                Outstanding Payment
-                            </span>
-                            
-                        </router-link>
-                    </li>
+                                <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
+                                    <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
+                                    <span class="sidenav_list_title">
+                                        Outstanding Payment
+                                    </span>
+                                </router-link>
+                            </li>
+                            <li class="list-group-item " :class="activeRoute === 'audit_sales' ? 'navbar_item_active' : ''">
+                                <router-link :to="{ name: 'audit_sales' }" class="vue_router_link">
+                                    <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
+                                    <span class="sidenav_list_title">
+                                        Audit Sales
+                                    </span>
+                                </router-link>
+                            </li>
                         </div>
                     </li>
                 </ul>
@@ -465,13 +472,6 @@
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeviews.forEach(el => {
-                    //     const classList = Array.from(el.classList);
-                    //     if(classList.includes("open")) {
-                    //         el.classList.remove("open")
-                    //         el.classList.add("list_open")
-                    //     }
-                    // })
                   
                 }
             },
@@ -487,12 +487,6 @@
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeviews.forEach(el => {
-                    //     const classList = Array.from(el.classList);
-                    //     if(classList.includes("open")) {
-                    //         el.classList.remove("open")
-                    //     }
-                    // })
                 }else{
                     sideNav_arrows.forEach(el => {
                         el.style.display = "inline"
@@ -502,10 +496,6 @@
             logout() {
                 localStorage.clear();
                 this.$router.push({name: 'login'});
-                this.$toast("Logout Successful", {
-                    type: "success",
-                    timeout: 3000
-                });
             }
         }
     };

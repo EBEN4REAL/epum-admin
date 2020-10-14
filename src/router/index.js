@@ -37,6 +37,7 @@ import Dealers from "../views/dashboard/Dealers/dealers";
 import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
+import AuditSales from "../views/dashboard/admin/Audit.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
@@ -72,6 +73,15 @@ let routes = [
     path: "/devices_not_pushing_ep2",
     name: "devices_not_pushing_ep2",
     component: DevicesNotPushingEp2,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/audit-sales",
+    name: "audit_sales",
+    component: AuditSales,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
