@@ -13,7 +13,7 @@
     <router-link
       
       title="Fund Branch"
-      :to="{ name: 'dealers' }"
+      :to="{ name: 'fundBranch' }"
       class="btn btn-warning"
     >
       <i class="fa fa-user-circle-o" aria-hidden="true"></i>

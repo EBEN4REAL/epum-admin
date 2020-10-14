@@ -29,6 +29,7 @@ import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
 import Transactions from "../views/dashboard/ListOfCompanies/transactions";
 import BranchMailRecipent from "../views/dashboard/ListOfCompanies/branchMail_recipent";
+import FundBranch from "../views/dashboard/ListOfCompanies/fundBranch";
 import ManageRoles from "../views/dashboard/admin/manageRoles";
 import CreateRoles from "../views/dashboard/ListOfRoles/create_roles";
 import EditRoles from "../views/dashboard/ListOfRoles/edit_roles";
@@ -40,13 +41,14 @@ import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
 import AddTank from "../views/dashboard/Tank/addTank";
+import InstalledTanks from "../views/dashboard/Tank/installedTanks";
 import TankTransaction from "../views/dashboard/Tank/tankTransaction";
 import EditTank from "../views/dashboard/Tank/editTank";
 import TankDipping from "../views/dashboard/Tank/tankDipping";
 import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
 
 // import Gateway from '../views/dashboard/devices/gateway';
-import Tanks from "../views/dashboard/devices/tanks";
+// import Tanks from "../views/dashboard/devices/tanks";
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
@@ -366,15 +368,15 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
-  {
-    path: "/tanks",
-    name: "tanks",
-    component: Tanks,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
+  // {
+  //   path: "/tanks",
+  //   name: "tanks",
+  //   component: Tanks,
+  //   meta: {
+  //     authorize: true,
+  //     authRoles: ["Admin"],
+  //   },
+  // },
   {
     path: "/pump_status",
     name: "pump_status",
@@ -505,6 +507,24 @@ let routes = [
   path: "/branchDetails",
   name: "branchDetails",
   component: BranchDetails,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/installedTanks",
+  name: "installedTanks",
+  component: InstalledTanks,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/fundBranch",
+  name: "fundBranch",
+  component: FundBranch,
   meta: {
       authorize: true,
       authRoles: ['Admin']

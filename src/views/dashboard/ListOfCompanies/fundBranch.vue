@@ -16,7 +16,7 @@
       >
         <div class="col-md-12">
           <div class="text-center">
-            <h5 class="title">Create Pump</h5>
+            <h5 class="title">Fund Branch</h5>
           </div>
         </div>
       </div>
@@ -26,23 +26,47 @@
         <form>
               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
-                  <label class="label">Associate Pump to Tank</label>
+                  <label> Branch Name</label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <select class="form-control">
-                      <option disabled selected>
-                        Select Associate Pump to Tank
-                      </option>
-                      <option>AGO Tank 1</option>
-                      <option>PMS Tank 1</option>
-                    </select>
+                    <input type="text" placeholder="" class="" />
                   </div>
                 </div>
               </div>
-              <div class="row align-items-center mt-3">
+               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
-                  <label class="label">Pump Manufacturer</label>
+                  <label>Branch Contact</label>
+                </div>
+                <div class="col-md-8">
+                  <div class="input__block">
+                    <input type="text" placeholder="" class="" />
+                  </div>
+                </div>
+              </div>
+               <div class="row align-items-center mt-3">
+                <div class="col-md-4">
+                  <label> Branch Address </label>
+                </div>
+                <div class="col-md-8">
+                  <div class="input__block">
+                    <textarea type="text" placeholder="" style="height: 50px;"> </textarea>
+                  </div>
+                </div>
+              </div>
+               <div class="row align-items-center mt-3">
+                <div class="col-md-4">
+                  <label> Branch Account Balance</label>
+                </div>
+                <div class="col-md-8">
+                  <div class="input__block">
+                    <input type="text" placeholder="" class="" />
+                  </div>
+                </div>
+              </div>
+               <div class="row align-items-center mt-3">
+                <div class="col-md-4">
+                  <label> Account Name </label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
@@ -52,7 +76,17 @@
               </div>
               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
-                  <label class="label">Pump Model</label>
+                  <label>Account Number</label>
+                </div>
+                <div class="col-md-8">
+                  <div class="input__block">
+                    <input type="number" placeholder="" class="" />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center mt-3">
+                <div class="col-md-4">
+                  <label>Bank</label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
@@ -62,50 +96,26 @@
               </div>
               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
-                  <label class="label">Pump Version</label>
+                  <label>Amount Deposited</label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <input type="text" placeholder="" class="" />
+                    <input type="text" placeholder="Enter the Amount Deposited" class="" />
                   </div>
                 </div>
               </div>
-              <div class="row align-items-center mt-5">
+               <div class="row align-items-center mt-3">
                 <div class="col-md-4">
-                  <label class="font-weight"> Pump</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="float-right">
-                    <button class="btn btn-success">
-                      <i class="fa fa-plus"></i>Add Pump
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label"> Pump Name</label>
+                  <label>Upload Document</label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label">Pump Display Name</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
+                    <input type="file"/>
                   </div>
                 </div>
               </div>
               <div class="text-center mt-3">
-                <button class="btn btn_theme">Update</button>
-                <button class="btn btn_theme">Cancel</button>
+                <button class="btn btn_theme">Save</button>
               </div>
         </form>
       </div>

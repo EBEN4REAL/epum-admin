@@ -372,7 +372,6 @@ textarea {
   margin-top: 36px !important;
 }
 
-
 .margin-top-center-div.ep_card {
   height: auto;
 }
@@ -421,6 +420,16 @@ textarea {
   }
 }
 
+.small_card.installed_tank_card {
+  height: 182px !important;
+}
+
+.installed_card {
+  background: #f4edff;
+  width: 94%;
+  margin-left: 6px;
+}
+
 .router_link__text:hover {
   text-decoration: none;
 }
@@ -430,6 +439,8 @@ p.dashboard__card__header {
 
 .product_details_card {
   width: 102% !important;
+  height: auto;
+  padding-bottom: 36px;
 }
 
 small.dashboard__card__header_bottom {
@@ -483,6 +494,57 @@ h6.dashboard__card__header {
 
 .low_tank_name {
   color: $primaryColor;
+}
+
+.vol_sold {
+  font-size: 14px;
+  padding-right: 20px;
+  padding-left: 10px;
+  font-weight: 400;
+}
+
+.tank__name {
+  color: $primaryColor;
+  font-size: 18px;
+}
+
+.probe_transactions_btn {
+  background: #0D0617;
+  border: 1px solid rgb(13, 6, 23);
+  font-size: 16px;
+  padding: 12px 40px;
+  color: $whiteColor;
+  &:hover {
+      color: $whiteColor;
+  }
+}
+.edit_tank_btn {
+  background: $primaryColor;
+  font-size: 16px;
+  padding: 12px 58px;
+  color: $whiteColor;
+  &:hover {
+      color: $whiteColor;
+  }
+}
+.tanks_probe {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactions__btn {
+  background: $editSecondColor;
+  font-size: 16px;
+  padding: 12px 40px;
+  color: $whiteColor;
+  &:hover {
+    color: $whiteColor;
+  }
+}
+
+.remove_text_decoration:hover {
+  color: $whiteColor;
+  text-decoration: none;
 }
 
 .bowl {
@@ -665,6 +727,80 @@ h6.dashboard__card__header {
   font-size: 17px;
   font-weight: 600;
   margin-top: 7px;
+}
+
+.small_card.inner_tank_card {
+  height: 148px;
+  margin-left: 34px;
+  margin-top: 17px;
+}
+
+.btn_device {
+  border: 1px solid $primaryColor !important;
+  border-radius: 15px !important;
+  text-align: center;
+  width: 72%;
+}
+
+.volume_info {
+  border-bottom: 1px solid #b9b8b8;
+  padding: 10px;
+}
+
+.flex___div {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty_bg {
+  background: #fefff2;
+}
+
+.offline_bg {
+  background: #fff3f2;
+}
+
+.product_summary__wrapper {
+  height: 100%;
+  min-height: 400px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+  background: $whiteColor;
+}
+
+.product_summary_header {
+  margin: 0px;
+  padding: 0px;
+  height: 70px;
+  width: 100%;
+  background: #d8991c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 22px;
+    color: $whiteColor;
+    margin: 0 !important;
+  }
+}
+
+.tank__header {
+  height: 20px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.tank__header__Wrapper {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.time__stamps {
+  color: grey;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 // Mobile Responsiveness
