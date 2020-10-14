@@ -3,6 +3,19 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
+                <div class="col-lg-8 remove-padding-left padding_div pr-0">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, Sam Sipo</h3>
+                            <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
+                        </div>
+                        <div class="col-md-4 mt-4">
+                           <router-link :to="{name: 'create_companies'}" class="btn create_btn primary_btn">Create Company</router-link>
+                        </div>
+                    </div>
+                </div>
+             </div>
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
@@ -14,38 +27,11 @@
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
                                 >{{companiesCount}}</small>
                                 </div>
-
-                            <!-- <div class="col-md-3">
-                                 <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <img src="@/assets/img/company_icon.png"  width="40" />
-                                </div>
-                            </div>
-                            <div class="col-md-7 remove-padding-left">
-                                <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Companies</h5>
-                                </div>
-                             <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">{{companiesCount}}</h5>
-                                </div>
-                           </div> -->
                             </div>
                         </div>
                     </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>Hi, Sam Sipo</h3>
-                            <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
-                        </div>
-                        <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Company</router-link>
-                        </div>
-                    </div>
-                    </div>
-                </div>
             </div>
-                </div>
+         </div>
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
@@ -61,7 +47,7 @@
                 :toolbarClick="toolbarClick"
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column :template="companies_image" width="100"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
                     <e-column width="200" field="street" headerText="Street"></e-column>
@@ -89,6 +75,7 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_companies_template.vue';
+import Templates from '@/components/Templates/imageTemplates/companies_image.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import Paginator from '@/components/Paginator.vue';
@@ -129,6 +116,11 @@ export default {
             list_of_companies_templates: function() {
                 return {
                     template: Temp
+                };
+            },
+            companies_image: function() {
+                return {
+                    template: Templates
                 };
             }
         }
