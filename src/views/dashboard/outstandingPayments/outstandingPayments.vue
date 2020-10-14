@@ -2,128 +2,103 @@
   <div>
     <div v-bind:class="[showSpinner ? 'show_spinner' : 'hide_spinner']">
       <div class="payment_section_holder">
-        <h3 class="our_branches__header">{{$t('text.payments.processingPayments')}}</h3>
+        <h3>Processing Payments</h3>
         <div>
           <b-spinner style="width: 5rem; height: 5rem;" label="Large Spinner"></b-spinner>
         </div>
       </div>
     </div>
-    <MasterLayout>
-      <div class="fuelbalance_first_row">
-        <div
-          class="card_container"
-          :style="{
-            backgroundImage: `url(${cardBackgroundUrl})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right',
-            backgroundSize: ' 136px'
-          }"
-        >
-          <div class="card__header___text">
-            <div>
-              <h3 class="our_branches__header">{{$t('text.payments.totalAmount')}}</h3>
-              <div class="dealer__icon__wrapper mt-3">
-                <div class="dealer__icon__div text-center">
-                  <div>
-                    <img src="@/assets/img/wallet.svg" width="70%" />
-                  </div>
+    <masterLayout>
+      <section class=" mt-3 full__row_section">
+            <div class="banner">
+            <div class="row">
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total Amount</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/wallet.svg" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{amount}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-9 card_inner_wrapper">
+                            <h3>Make Payments</h3>
+                        </div>
+                        <div class="col-md-3 mt-4">
+                           <button class="create_btn btn btn_theme"
+                           @click="promptPassword"
+                           >
+                           Make Payment
+                           </button>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-              </div>
-              <div class="text-center mt-3">
-                <h3>{{ amount }}</h3>
-              </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="fuelbalance_first_row_right_section mr-3 money_back"
-          :style="[
-            {
-              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'
-            }
-          ]"
-        >
-          <div class="our__branches__banner">
-            <div class="row align-items-center section__row">
-              <div class="col-md-6 text-center section___column_1">
-                <h3 class="our__branches__banner__title">{{$t('text.payments.makePayments')}}</h3>
-              </div>
-              <div class="col-md-6 text-center">
-                <button
-                  class="inverse_button"
-                  @click="promptPassword"
-                >
-                  {{$t('text.payments.makePayments')}}
-                </button>
-            </div>
-              <!-- <div class="col-md-6 text-right section___column_2">
-                <div class="row align-items-center"></div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <section class="mt-3 pump__details__section_2">
-        <div class="row add_driver_row record__expenses">
-          <div class=" col-md-12 col-lg-12 mt-3">
-            <ejs-grid
-              v-show="!showLoader"
-              ref="dataGrid"
-              :created="refreshGrid"
-              :allowPaging="true"
-              :allowSorting="true"
-              :pageSettings="pageSettings"
-              :toolbar="toolbar"
-              :searchSettings="search"
-              :allowExcelExport="true"
-              :allowPdfExport="true"
-              :toolbarClick="toolbarClick"
+                </div>
+        </section>
+        <div class="new_row_section mt-3">
+             <ejs-grid
+                v-show="!showLoader"
+                ref="dataGrid"
+                :created="refreshGrid"
+                :allowPaging="true"
+                :allowSorting="true"
+                :pageSettings="pageSettings"
+                :toolbar="toolbar"
+                :searchSettings="search"
+                :allowExcelExport="true"
+                :allowPdfExport="true"
+                :toolbarClick="toolbarClick"
             >
-              <e-columns>
+                <e-columns>
                 <e-column width="50" :template="checkBoxTemplate" headerText="#" :headerTemplate="selectAllTemplate"></e-column>
                 <e-column
                   width="200"
                   field="branchName"
-                  :headerText="$t('text.payments.branchName')"
+                  headerText="Branch Name"
                 ></e-column>
                 <e-column
                   width="200"
                   field="address"
-                  :headerText="$t('text.payments.address')"
+                  headerText="Address"
                 ></e-column>
                 <e-column
                   width="220"
                   field="accountName"
-                  :headerText="$t('text.payments.accountName')"
+                  headerText="Account Name"
                 ></e-column>
-                <e-column width="130" field="accountNumber" :headerText="$t('text.payments.accountNumber')"></e-column>
+                <e-column width="130" field="accountNumber" headerText="Account Number"></e-column>
                 <e-column
                   width="120"
                   field="amount"
-                  :headerText="$t('text.payments.amount')"
+                  headerText="Amount"
                 ></e-column>
                 <e-column
                   width="200"
                   :template="paymentTemplate"
-                  :headerText="$t('text.payments.amountToTransfer')"
+                  headerText="Amount To Transfer"
                 ></e-column>
               </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
-          </div>
         </div>
-      </section>
-      <notifications group="foo" position="bottom right" :max="1"/>
-    </MasterLayout>
+    </masterLayout>
+
     <div style="position: fixed" v-bind:class="['update_modal', showUpdateModal ? 'show_update_modal' : 'hide_update_modal']">
-      <p class="update_modal_text">{{$t('text.passwordPrompt.pleaseInput')}}</p>
-      <input :placeholder="$t('text.passwordPrompt.password')" v-model="password" type="password" class="update_modal_input"/>
+      <p class="update_modal_text">Please input your password</p>
+      <input :placeholder="Password" v-model="password" type="password" class="update_modal_input"/>
       <div class="update_modal_actions">
-        <button @click="showUpdateModal = !showUpdateModal" class="update_cancel_button">{{$t('text.passwordPrompt.cancel')}}</button>
-        <button @click="makePayment()" class="update_submit_button">{{$t('text.passwordPrompt.submit')}}</button> 
+        <button @click="showUpdateModal = !showUpdateModal" class="update_cancel_button">Cancel</button>
+        <button @click="makePayment()" class="update_submit_button">Submit</button> 
       </div>
     </div>
   </div>
@@ -132,8 +107,6 @@
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
-import backgroundUrl from "@/assets/img/money-background.png";
-import cardBackgroundUrl from "@/assets/img/Group393.svg";
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
 import {
@@ -159,13 +132,11 @@ export default {
   },
   data() {
     return {
-      amount: '',
+      amount: 0,
       accounts: [],
       password: '',
       showSpinner: false,
       showUpdateModal: false,
-      backgroundUrl,
-      cardBackgroundUrl,
       showLoader: false,
       pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
       toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -317,28 +288,25 @@ export default {
     promptPassword() {
       const filteredAccounts = this.accounts.filter(cur => cur.checked)
       if (!filteredAccounts.length) {
-        this.$toast.open({
-          message: this.$t('text.payments.noAccountError'),
-          type: "error",
-          duration: 3000
-        })
+        this.$toast("Please select at least one account to make payment to", {
+            type: "error",
+            timeout: 3000
+        });
         return;
       }
       for (var x of filteredAccounts) {
         if (!x.amountToPay) {
-          this.$toast.open({
-            message: `${this.$t('text.payments.amountMissing')} ${x.branchName}`,
-            type: "error",
-            duration: 3000
-          })
+            this.$toast(`Please input an amount for ${x.branchName}`, {
+                type: "error",
+                timeout: 3000
+            });
           return
         }
         if (x.amountToPay == 0) {
-          this.$toast.open({
-            message: `${this.$t('text.payments.amountLow')} ${x.branchName}`,
-            type: "error",
-            duration: 3000
-          })
+            this.$toast(`Please input an amount greater than 0 for ${x.branchName}`, {
+                type: "error",
+                timeout: 3000
+            });
           return
         }
       }
@@ -365,11 +333,10 @@ export default {
     },
     makePayment() {
       if (!this.password) {
-        this.$toast.open({
-            message: this.$t('text.errors.passwordMissing'),
+        this.$toast("Please input your password", {
             type: "error",
-            duration: 3000
-          })
+            timeout: 3000
+        });
         return;
       }
       this.showUpdateModal = false
@@ -390,7 +357,7 @@ export default {
           .post(
             `${configObject.apiBaseUrl}/Branch/BulkSettlement`,
             data,
-            configObject.authConfig()
+            configObject.authConfig
           )
           .then((res) => {
             const errorArray = res.data.errors
@@ -404,7 +371,7 @@ export default {
                   class="fa fa-close align_close -right mr-2"
                   aria-hidden="true"
                 ></i>`,
-              text: messageInformation ? messageInformation : this.$t('text.payments.successfulPayment'),
+              text: messageInformation ? messageInformation : "Successfully Made Payment!",
               duration: -1000,
               type: 'success'
             });
@@ -444,10 +411,9 @@ export default {
     getBranches() {
       this.showLoader = true;
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=true`, configObject.authConfig())
+        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=true`, configObject.authConfig)
         .then(response => {
           let amount = 0
-          // this.accounts = response.data
           response.data.sort((a, b) => {
             return a.branchName > b.branchName ? 1 : b.branchName > a.branchName ? -1 : 0;
           });
@@ -456,7 +422,6 @@ export default {
             amount += account.amount
             account.checked = false
             account.amountToPay = null
-            account.inputAmountText = this.$t('text.payments.inputAmount')
           });
           this.accounts = response.data
           this.amount = amount.toFixed(2)
@@ -466,16 +431,14 @@ export default {
         })
         .catch(error => {
           if(error.message && error.message === 'Network Error') {
-            this.$toast.open({
-              message: "Network Error, Please Check Your Internet Connection",
-              type: "error",
-              duration: 5000
+            this.$toast("Network Error, Please Check Your Internet Connection", {
+                type: "error",
+                timeout: 3000
             });
           }else {
-            this.$toast.open({
-              message: "An Error Occured",
-              type: "error",
-              duration: 5000
+            this.$toast("An Error Occured", {
+                type: "error",
+                timeout: 3000
             });
           }
         });

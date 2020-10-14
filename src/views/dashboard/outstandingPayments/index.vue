@@ -1,128 +1,97 @@
 <template>
   <div>
-    <MasterLayout>
-      <div class="fuelbalance_first_row">
-        <div
-          class="card_container"
-          :style="{
-            backgroundImage: `url(${cardBackgroundUrl})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right',
-            backgroundSize: ' 136px'
-          }"
-        >
-          <div class="card__header___text">
-            <div>
-              <h3 class="our_branches__header">{{$t('text.payments.totalAmount')}}</h3>
-              <div class="dealer__icon__wrapper mt-3">
-                <div class="dealer__icon__div text-center">
-                  <div>
-                    <img src="@/assets/img/wallet.svg" width="70%" />
-                  </div>
+    <masterLayout>
+      <section class=" mt-3 full__row_section">
+            <div class="banner">
+            <div class="row">
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total Amount</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/wallet.svg" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{ amount }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-9 card_inner_wrapper">
+                            <h3>Outstanding Payments</h3>
+                        </div>
+                        <div class="col-md-3 mt-4">
+                           <router-link :to="{name: 'makePayments'}" class="create_btn btn btn_theme">Make Payments</router-link>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-              </div>
-              <div class="text-center mt-3">
-                <h3>{{ amount }}</h3>
-              </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="fuelbalance_first_row_right_section mr-3 money_back"
-          :style="[
-            {
-              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'
-            }
-          ]"
-        >
-          <div class="our__branches__banner">
-            <div class="row align-items-center section__row">
-              <div class="col-md-6 text-center section___column_1">
-                <h3 class="our__branches__banner__title">{{$t('text.payments.title')}}</h3>
-              </div>
-              <div class="col-md-6">
-                <router-link :to="{name: 'make_payments'}" >
-                  <button class="fund_wallet_btn">
-                    <img src="@/assets/img/purse.png" width="30px" class="mr-3" />
-                    {{$t('text.payments.makePayments')}}
-                  </button>
-              </router-link>
-              </div>
-              <div class="col-md-6 text-right section___column_2">
-                <div class="row align-items-center"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <section class="mt-3 pump__details__section_2">
-        <div class="row add_driver_row record__expenses">
-          <div class=" col-md-12 col-lg-12 mt-3">
-            <ejs-grid
-              v-show="!showLoader"
-              ref="dataGrid"
-              :created="refreshGrid"
-              :allowPaging="true"
-              :allowSorting="true"
-              :pageSettings="pageSettings"
-              :toolbar="toolbar"
-              :searchSettings="search"
-              :allowExcelExport="true"
-              :allowPdfExport="true"
-              :toolbarClick="toolbarClick"
+                </div>
+        </section>
+        <div class="new_row_section mt-3">
+             <ejs-grid
+                v-show="!showLoader"
+                ref="dataGrid"
+                :created="refreshGrid"
+                :allowPaging="true"
+                :allowSorting="true"
+                :pageSettings="pageSettings"
+                :toolbar="toolbar"
+                :searchSettings="search"
+                :allowExcelExport="true"
+                :allowPdfExport="true"
+                :toolbarClick="toolbarClick"
             >
-              <e-columns>
+                <e-columns>
                 <e-column width="50" field="index" headerText="#"></e-column>
                 <e-column
                   width="230"
                   field="branchName"
-                  :headerText="$t('text.payments.branchName')"
+                  headerText="Branch Name"
                 ></e-column>
                 <e-column
                   width="230"
                   field="address"
-                  :headerText="$t('text.payments.address')"
+                  headerText="Address"
                 ></e-column>
                 <e-column
                   width="230"
                   field="accountName"
-                  :headerText="$t('text.payments.accountName')"
+                  headerText="Account Name"
                 ></e-column>
-                <e-column width="180" field="accountNumber" :headerText="$t('text.payments.accountNumber')"></e-column>
+                <e-column width="180" field="accountNumber" headerText="Account Number"></e-column>
                 <e-column
                   width="250"
                   field="bank"
-                  :headerText="$t('text.payments.bankName')"
+                  headerText="Bank Name"
                 ></e-column>
                 <e-column
                   width="150"
                   field="amount"
-                  :headerText="$t('text.payments.amount')"
+                  headerText="Amount"
                 ></e-column>
                  <e-column
                   width="350"
                   :template="buttonsTemplate"
-                  :headerText="$t('text.actionButtons.title')"
+                  headerText="Actions"
                 ></e-column>
               </e-columns>
             </ejs-grid>
-            <TableLoader :showLoader="showLoader"/>
-          </div>
+            <TableLoader :showLoader="showLoader"/> 
         </div>
-      </section>
       <EditDetailsModal :balance="balance" :accountName="accountName" :accountNumber="accountNumber" :bankName="bankName" :branchId="branchId" :branchName="branchName"></EditDetailsModal>
-    </MasterLayout>
+    </masterLayout>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
-import backgroundUrl from "@/assets/img/money-background.png";
-import cardBackgroundUrl from "@/assets/img/Group393.svg";
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
 import {
@@ -151,13 +120,11 @@ export default {
   },
   data() {
     return {
-      amount: '',
+      amount: 0,
       accounts: [],
-      backgroundUrl,
       branchId: '',
       branchName: '',
       showSpinner: false,
-      cardBackgroundUrl,
       showLoader: false,
       bankName: '',
       accountName: '',
@@ -197,9 +164,9 @@ export default {
   },
   created() {
     let user = JSON.parse(localStorage.getItem("userDetails"));
-    if (user.role !== 'Customer,Account Manager') {
-      this.$router.push({ name: "userDashboard" });
-    }
+    // if (user.role !== 'Customer,Account Manager') {
+    //   this.$router.push({ name: "userDashboard" });
+    // }
 
     this.$eventHub.$on("getBranches", () => {
       this.getBranches();
@@ -258,7 +225,7 @@ export default {
     getBranches() {
       this.showLoader = true;
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig())
+        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig)
         .then(response => {
           let amount = 0
           response.data.sort((a, b) => {
@@ -267,8 +234,6 @@ export default {
           response.data.forEach((account, index) => {
             account.index = index + 1;
             amount += account.amount
-            account.updateAccountButton = this.$t('text.payments.updateAccount')
-            account.viewTransactionsButton = this.$t('text.payments.viewTransactions')
           });
           this.accounts = response.data
           this.amount = amount.toFixed(2)
@@ -278,16 +243,14 @@ export default {
         })
         .catch(error => {
           if(error.message && error.message === 'Network Error') {
-            this.$toast.open({
-              message: "Network Error, Please Check Your Internet Connection",
-              type: "error",
-              duration: 5000
+            this.$toast("Network Error, Please Check Your Internet Connection", {
+                type: "error",
+                timeout: 3000
             });
           }else {
-            this.$toast.open({
-              message: "An Error Occured",
-              type: "error",
-              duration: 5000
+            this.$toast("An Error Occured", {
+                type: "error",
+                timeout: 3000
             });
           }
         });

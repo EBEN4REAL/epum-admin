@@ -6,6 +6,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Toast from "vue-toastification";
+import VModal from "vue-js-modal";
+import VueMoment from 'vue-moment';
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 import "vue-toastification/dist/index.css";
 
 import BootstrapVue from "bootstrap-vue";
@@ -14,8 +18,11 @@ import { GridPlugin } from "@syncfusion/ej2-vue-grids";
 
 Vue.config.productionTip = false
 
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 Vue.use(VueAxios, axios);
+Vue.use(VModal)
+Vue.use(VueMoment)
 Vue.use(Toast);
 Vue.use(BootstrapVue);
 Vue.use(GridPlugin);

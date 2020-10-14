@@ -2,20 +2,20 @@
 <modal class="editDetailsModal" name="editDetailsModal" transition="pop-out" :width="650" :height="650" @opened="opened" @before-close="beforeclose">
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="50" height="60"></span>
-      <h4> {{$t('text.editAccountDetailsModal.updateDetails')}}</h4>
+      <h4>Update Account Details</h4>
   </div>
 
   <div >
       <fieldset class="border p-3 form-group mt-3" style="margin: 0 auto; width: 85%">
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 50%">
             <label class="required">
-            {{$t('text.editAccountDetailsModal.accountNumber')}}
+            Account Number
             </label>
             <div class="input__block" ref="target_input_div">
                  <input
                     style="padding: 10px; width:100%"
                     type="number"
-                    :placeholder="$t('text.editAccountDetailsModal.accountNumber')"
+                    placeholder="Account Number"
                     v-model="accountNumberValue"
                 />
             </div>
@@ -24,12 +24,11 @@
         </div>
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 50%">
             <label class="required">
-            {{$t('text.editAccountDetailsModal.bankName')}}
+            Bank Name
             </label>
             <div class="input__block" ref="target_input_div">
                 <select v-model="bankDetail" style="padding-left: 10px; padding-top: 10px; width:100%">  
-                    <!-- <option disabled>Select a bank</option> -->
-                    <option v-for="(bank, index) in bankNames" :disabled="bank.bankName === $t('text.editAccountDetailsModal.selectBank')"
+                    <option v-for="(bank, index) in bankNames" :disabled="bank.bankName === 'Select a bank'"
                 :key="index" v-bind:value="bank">{{bank.bankName}}</option>                      
                 </select>
             </div>
@@ -38,13 +37,13 @@
         </div>
         <div class="input__group__block mt-4" v-if="updateAccount" style="margin: 0 auto; width: 50%">
             <label class="required">
-            {{$t('text.editAccountDetailsModal.accountName')}}
+            Account Name
             </label>
             <div class="input__block" ref="target_input_div">
                  <input
                     style="padding: 10px; width:100%"
                     type="text"
-                    :placeholder="$t('text.editAccountDetailsModal.bankName')"
+                    placeholder="Account Name"
                     readonly
                     v-model="accountNameValue"
                 />
@@ -55,13 +54,13 @@
 
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 50%">
             <label class="required">
-            {{$t('text.editAccountDetailsModal.accountBalance')}}
+            Account Balance
             </label>
             <div class="input__block" ref="target_input_div">
                  <input
                     style="padding: 10px; width:100%"
                     type="number"
-                    :placeholder="$t('text.editAccountDetailsModal.amount')"
+                    placeholder="Account Balance"
                     v-model="accountBalance"
                 />
             </div>
@@ -80,7 +79,7 @@
                 : { cursor: 'pointer' }
             ]"
           >
-            {{$t('text.editAccountDetailsModal.title')}}<span></span>
+            Update Account<span></span>
           </button>
           <img
             v-show="showSpinner"
@@ -100,7 +99,7 @@
                 : { cursor: 'pointer' }
             ]"
           >
-            {{$t('text.editAccountDetailsModal.verifyAccount')}}<span></span>
+            Verify Account<span></span>
           </button>
           <img
             v-show="showSpinner"
@@ -131,7 +130,7 @@ export default {
       showSpinner: false,
       verifyAccount: true,
       updateAccount: false,
-      bankNames: [{bankName: this.$t('text.editAccountDetailsModal.selectBank'), bankCode: null}],
+      bankNames: [{bankName: 'Select a bank', bankCode: null}],
       accountNameValue: '',
       accountNumberValue: '',
       bankDetail: '',
@@ -154,10 +153,10 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/Banks`,
-          configObject.authConfig()
+          configObject.authConfig
         )
         .then(response => { 
-          response.data.unshift({bankName: this.$t('text.editAccountDetailsModal.selectBank'), bankCode: null})  
+          response.data.unshift({bankName: 'Select a bank', bankCode: null})  
           this.bankNames = response.data;
         })
         .catch(error => {
@@ -165,59 +164,53 @@ export default {
     },
     verify() {
       if (!this.accountNumberValue) {
-        this.$toast.open({
-          message: `${this.$t('text.editAccountDetailsModal.accountNumberMissing')} ${this.branchName}`,
-          type: "error",
-          duration: 3000
-        })
+        this.$toast(`Please input an account number for ${this.branchName}`, {
+            type: "error",
+            timeout: 3000
+        });
         return;
       }
       if (this.bankDetail.bankName === 'Select a bank') {
-        this.$toast.open({
-          message: `${this.$t('text.editAccountDetailsModal.bankMissing')} ${this.branchName}`,
-          type: "error",
-          duration: 3000
-        })
+        this.$toast(`Please select a bank for ${this.branchName}`, {
+            type: "error",
+            timeout: 3000
+        });
         return;
       }
       this.showSpinner = true
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig())
+        .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig)
         .then(response => {
           this.accountNameValue = response.data.accountName
           this.verifyAccount = false
           this.updateAccount = true
           this.showSpinner = false
-          this.$toast.open({
-            message: this.$t('text.editAccountDetailsModal.successfullyVerified'),
+          this.$toast('Successfully verified account', {
             type: "success",
-            duration: 3000
-          })
+            timeout: 3000
+          });
         })
         .catch(error => {
           this.showSpinner = false
-          this.$toast.open({
-            message: error.response.data.message,
+          this.$toast(error.response.data.message, {
             type: "error",
-            duration: 3000
-          })
+            timeout: 3000
+          });
         });
     },
     update() {
       if (!this.accountNumberValue) {
-        this.$toast.open({
-          message: `${this.$t('text.editAccountDetailsModal.accountNumberMissing')} ${this.branchName}`,
-          type: "error",
-          duration: 3000
-        })
+        this.$toast(`Please input an account number for ${this.branchName}`, {
+            type: "error",
+            timeout: 3000
+        });
         return;
       }
       if (this.bankDetail.bankName === 'Select a bank') {
-        this.$toast.open({
-          message: `${this.$t('text.editAccountDetailsModal.bankMissing')} ${this.branchName}`,
-          type: "error",
-          duration: 3000
-        })
+        this.$toast(`Please select a bank for ${this.branchName}`, {
+            type: "error",
+            timeout: 3000
+        });
         return;
       }
       this.showSpinner = true
@@ -247,26 +240,24 @@ export default {
           .post(
             `${configObject.apiBaseUrl}/Branch/MAddBranchAccount`,
             data,
-            configObject.authConfig()
+            configObject.authConfig
           )
           .then((res) => {
             this.showSpinner = false
             this.verifyAccount = true
             this.updateAccount = false
             this.$modal.hide('editDetailsModal');
-            this.$toast.open({
-              message: this.$t('text.editAccountDetailsModal.successfullyUpdated'),
-              type: "success",
-              duration: 3000
-            })
+            this.$toast('Successfully verified account', {
+                type: "success",
+                timeout: 3000
+            });
             this.$eventHub.$emit("getBranches");
           })
           .catch(error => {
             this.showSpinner = false
-            this.$toast.open({
-              message: error.response.data.message,
-              type: "error",
-              duration: 5000
+            this.$toast(error.response.data.message, {
+                type: "error",
+                timeout: 3000
             });
           });
     },

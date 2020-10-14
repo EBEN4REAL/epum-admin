@@ -1,77 +1,63 @@
 <template>
   <div>
-    <MasterLayout>
-      <div class="fuel_consumption_row">
-        <div class="card_container" style="flex: 0 0 20%;">
-          <div class="row align-items-center fuel_consumption_buttons_row ">
-            <div class="col-md-12 fuel_consumption_btn_div mt-3">
-              <div
-                class="fuel_consumption_button active_tab"
-                style="height: 80px;width: 80px;"
-              >
-                <h3 class="text-white">{{ transactionCount }}</h3>
-              </div>
-              <div class="text-center voucher_type mt-2">
-                Total Transactions
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="fuel_consumption_row_right_section mr-3 vr__bg"
-          :style="[
-            {
-              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.92), rgb(12, 4, 31, 0.92)), url(${backgroundUrl})`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'
-            }
-          ]"
-        >
-          <div class="row align-items-center" style="height: 100%">
-            <div class="col-md-6">
-              <div
-                class="transaction_period_text text-center branch__sales__text"
-                style="font-size: 22px;"
-              >
-                Wallet Transactions
-              </div>
-            </div>
-            <div class="col-md-4 drop_down_input_group">
-              <div class="drop_down_section mt-2 mr-2">
-                <div class="drop_down_div align-items-center">
-                  <vue-ctk-date-time-picker
-                    v-model="dateRange"
-                    :max-date="maxDate"
-                    :range="true"
-                    :autoClose="true"
-                    :custom-shortcuts="customShortcuts"
-                    :color="$store.getters.getDatePickerColor"
-                    format="DDMMYYYY"
-                    formatted="DD/MM/YYYY"
-                    label="Select a date range"
-                  />
+    <masterLayout>
+      <section class=" mt-3 full__row_section">
+            <div class="banner">
+            <div class="row">
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total Transactions</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/wallet.svg" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{transactionCount}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-6 card_inner_wrapper">
+                            <h3>Wallet Transactions</h3>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                           <div class="drop_down_div align-items-center">
+                                <vue-ctk-date-time-picker
+                                    v-model="dateRange"
+                                    :max-date="maxDate"
+                                    :range="true"
+                                    :autoClose="true"
+                                    :custom-shortcuts="customShortcuts"
+                                    color="#290C53"
+                                    format="DDMMYYYY"
+                                    formatted="DD/MM/YYYY"
+                                    label="Select a date range"
+                                />
+                                </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="section__row mt-3">
-        <section>
-          <div class=" mt-3">
-            <div class="">
-              <div class="row top_section_row" v-show="!showLoader">
+                </div>
+        </section>
+        <div class="new_row_section mt-3">
+            <div class="row top_section_row" v-show="!showLoader">
                 <div class="col-md-8">
-                  <span>
+                <span>
                     <img src="@/assets/img/hand (1).png" class="mr-3" />
                     Transactions between {{ startDate }} and
                     {{ endDate }} for {{branchName}}
-                  </span>
+                </span>
                 </div>
                 <div class="col-md-4 text-right"></div>
-              </div>
-              <ejs-grid
+            </div>
+
+             <ejs-grid
                 v-show="!showLoader"
                 ref="dataGrid"
                 :dataBound="dataBound"
@@ -85,7 +71,7 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :rowDataBound = "rowDataBound"
-              >
+            >
                 <e-columns>
                   <e-column width="60" field="index" headerText="#"></e-column>
                   <e-column field="date" width="200" headerText="Date"></e-column>
@@ -110,20 +96,15 @@
                     headerText="Amount"
                   ></e-column>
                 </e-columns>
-              </ejs-grid>
-              <TableLoader :showLoader="showLoader" />
-            </div>
-          </div>
-        </section>
-      </div>
-    </MasterLayout>
+            </ejs-grid>
+            <TableLoader :showLoader="showLoader"/> 
+        </div>
+    </masterLayout>
   </div>
 </template>,
-  restoreFocus
 
 <script>
 import masterLayout from "@/views/dashboard/masterLayout";
-import backgroundUrl from "@/assets/img/danskebank.jpg";
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index"
 import {
@@ -166,7 +147,6 @@ export default {
         pluginStartDate: this.$moment().format("D-M-YYYY"),
         pluginEndDate: this.$moment().format("D-M-YYYY"),
         dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
-        backgroundUrl,
         pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
         toolbar: ["ExcelExport", "PdfExport", "Search"],
         search: { operator: "contains", ignoreCase: true },
@@ -185,13 +165,13 @@ export default {
   },
   created() {
     let user = JSON.parse(localStorage.getItem("userDetails"));
-    if (user.role !== 'Customer,Account Manager') {
-      this.$router.push({ name: "userDashboard" });
-    }
+    // if (user.role !== 'Customer,Account Manager') {
+    //   this.$router.push({ name: "userDashboard" });
+    // }
 
     if (localStorage.getItem("userDetails") === "null") {
       this.$router.push({ path: "/" });
-    } else if (configObject.authConfig() === null) {
+    } else if (configObject.authConfig === null) {
       window.location.reload();
     }
     this.dateRange.start = this.pluginStartDate;
@@ -240,7 +220,7 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/WalletTransactions/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`,
-          configObject.authConfig()
+          configObject.authConfig
         )
         .then(response => {
           let index = 0
@@ -269,16 +249,14 @@ export default {
         })
         .catch(error => {
           if(error.message && error.message === 'Network Error') {
-            this.$toast.open({
-              message: "Network Error, Please Check Your Internet Connection",
-              type: "error",
-              duration: 5000
+            this.$toast("Network Error, Please Check Your Internet Connection", {
+                type: "error",
+                timeout: 3000
             });
           }else {
-            this.$toast.open({
-              message: "An Error Occured",
-              type: "error",
-              duration: 5000
+            this.$toast("An Error Occured", {
+                type: "error",
+                timeout: 3000
             });
           }
         });
