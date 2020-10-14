@@ -4,13 +4,18 @@
             <div class="banner">
             <div class="row">
                  <div class="col-lg-4">
-                        <div class="dashboard__card large_card" :style="[
-                        {
-                            background: '#370F70',
-                        }
-                        ]">
-                        <div class="row make-row-hundred-percent align-items-center justify-content-center" >
-                            <div class="col-md-3">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of companies</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/oil-tank-1.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{companiesCount}}</small>
+                                </div>
+
+                            <!-- <div class="col-md-3">
                                  <div class="icon_wrapper yellow centralize icon_div_big">
                                     <img src="@/assets/img/company_icon.png"  width="40" />
                                 </div>
@@ -22,7 +27,7 @@
                              <div class="text-center mt-4">
                                     <h5 class="text-white mt-4 font-weight">{{companiesCount}}</h5>
                                 </div>
-                           </div>
+                           </div> -->
                             </div>
                         </div>
                     </div>
@@ -30,7 +35,8 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Companies.</h3>
+                            <h3>Hi, Sam Sipo</h3>
+                            <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
                         </div>
                         <div class="col-md-3 mt-4">
                            <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Company</router-link>

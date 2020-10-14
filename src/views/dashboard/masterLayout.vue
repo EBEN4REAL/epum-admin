@@ -329,6 +329,15 @@
                                     </router-link>
                                 </li>
                             </ul>
+                             <li class="list-group-item " :class="activeRoute === 'outstandingPayments' ? 'navbar_item_active' : ''">
+                            <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
+                            <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
+                            <span class="sidenav_list_title">
+                                Outstanding Payment
+                            </span>
+                            
+                        </router-link>
+                    </li>
                         </div>
                     </li>
                 </ul>

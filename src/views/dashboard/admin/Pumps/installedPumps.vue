@@ -2,13 +2,9 @@
     <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="dashboard__card large_card" :style="[
-                        {
-                            background: '#370F70',
-                        }
-                        ]">
+            <div class="row">
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
                         <div class="row make-row-hundred-percent align-items-center justify-content-center" >
                             <div class="col-md-3">
                                 <div class="icon_wrapper yellow centralize icon_div_big">

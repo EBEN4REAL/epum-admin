@@ -1,0 +1,62 @@
+@import "colors";
+
+.btn_theme {
+    background: $primaryColor 0 0 no-repeat padding-box !important;
+    color: $whiteColor !important;
+    font-size: 13px !important;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
+    width: 150px;
+    padding: 11px;
+  }
+
+  .create_btn {
+    margin-top: 36px !important;
+  }
+
+  .probe_transactions_btn {
+    background: #0D0617;
+    border: 1px solid rgb(13, 6, 23);
+    font-size: 16px;
+    padding: 12px 24px;
+    color: $whiteColor;
+    &:hover {
+        color: $whiteColor;
+    }
+  }
+
+  .edit_tank_btn {
+    background: $primaryColor;
+    font-size: 16px;
+    padding: 12px 58px;
+    color: $whiteColor;
+    &:hover {
+        color: $whiteColor;
+    }
+  }
+
+  .transactions__btn {
+    background: $editSecondColor;
+    font-size: 16px;
+    padding: 12px 40px;
+    color: $whiteColor;
+    &:hover {
+      color: $whiteColor;
+    }
+  }
+
+  .btn_device {
+    border: 1px solid $primaryColor !important;
+    border-radius: 15px !important;
+    text-align: center;
+    width: 72%;
+  }
+
+  .primary_btn {
+      border: 1px solid !important;
+      border-radius: 15px !important;
+      text-align: center;
+      width: 90%;
+      color: $primaryColor !important;
+    }
