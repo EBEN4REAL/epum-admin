@@ -111,16 +111,18 @@
                         </div>
                         <div class="col-md-4">
                             <label >Change Logo</label>
-                            <div class="">
-                                <b-form-file
-                                    v-model="Logo"
-                                    :state="Boolean(Logo)"
-                                    placeholder="Upload Logo"
-                                    accept="image/jpeg, image/png, image/gif">
-                                </b-form-file>
-                            </div>
-                            <div>
-                                <!-- <img :src="companyObj.url" width="70" height="70" /> -->
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <b-form-file
+                                        v-model="Logo"
+                                        :state="Boolean(Logo)"
+                                        placeholder="Upload Logo"
+                                        accept="image/jpeg, image/png, image/gif">
+                                    </b-form-file>
+                                </div>
+                                <div class="col-md-4">
+                                    <img :src="companyObj.url" width="70" height="70" />
+                                </div>
                             </div>
                         </div>
                     </div>
