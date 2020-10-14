@@ -30,26 +30,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row align-items-center mt-3">
-                            <div class="col-md-4 ">
-                                <label >Phone</label>
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="Phone" v-model="dealerObj.phone" class="" />
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="row align-items-center mt-3">
-                            <div class="col-md-4 ">
-                                <label >Email</label>
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="Email" v-model="dealerObj.companyName" class="" />
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="row align-items-center mt-3">
                             <div class="col-md-4 text-left">
                                 <label >Street</label>
@@ -226,7 +206,6 @@ export default {
                 companyId: this.dealerObj.companyId,
                 id: this.$route.query.dealerId,
             }
-
             console.log(data);
             $('.loader').show();
             this.axios.put(`${configObject.apiBaseUrl}/Company/UpdateDealer`, data, configObject.authConfig)
