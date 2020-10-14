@@ -3,6 +3,7 @@
 @import "scroll";
 @import "ejstable.scss";
 @import "paginator.scss";
+@import "button";
 
 html {
   overflow-x: hidden;
@@ -246,17 +247,6 @@ body {
   outline-width: 0;
 }
 
-.btn_theme {
-  background: $primaryColor 0 0 no-repeat padding-box !important;
-  color: $whiteColor !important;
-  font-size: 13px !important;
-  border-radius: 10px;
-  -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
-  width: 150px;
-  padding: 11px;
-}
-
 .form_content {
   margin-right: 56px;
   margin-left: 50px;
@@ -325,6 +315,7 @@ textarea {
   opacity: 1;
   width: 100%;
   height: 140px;
+  background: $primaryColor;
 }
 
 .icon_wrapper {
@@ -357,19 +348,22 @@ textarea {
 }
 .card_inner_wrapper {
   width: 90%;
-  padding-top: 57px;
+  padding-top: 22px;
   margin: 0 auto;
   h3 {
     font-size: 20px;
-    text-align: center;
+    text-align: left;
+    margin-left: 8px;
+  }
+  P {
+    color: $greyTextColor;
+    margin-left: 8px;
+    margin-top: 16px;
   }
 }
 .dashboard__card.small_card.align-center {
   margin-top: -14px;
   height: 140px;
-}
-.create_btn {
-  margin-top: 36px !important;
 }
 
 .margin-top-center-div.ep_card {
@@ -508,38 +502,9 @@ h6.dashboard__card__header {
   font-size: 18px;
 }
 
-.probe_transactions_btn {
-  background: #0D0617;
-  border: 1px solid rgb(13, 6, 23);
-  font-size: 16px;
-  padding: 12px 40px;
-  color: $whiteColor;
-  &:hover {
-      color: $whiteColor;
-  }
-}
-.edit_tank_btn {
-  background: $primaryColor;
-  font-size: 16px;
-  padding: 12px 58px;
-  color: $whiteColor;
-  &:hover {
-      color: $whiteColor;
-  }
-}
 .tanks_probe {
   display: flex;
   flex-direction: column;
-}
-
-.transactions__btn {
-  background: $editSecondColor;
-  font-size: 16px;
-  padding: 12px 40px;
-  color: $whiteColor;
-  &:hover {
-    color: $whiteColor;
-  }
 }
 
 .remove_text_decoration:hover {
@@ -733,13 +698,6 @@ h6.dashboard__card__header {
   height: 148px;
   margin-left: 34px;
   margin-top: 17px;
-}
-
-.btn_device {
-  border: 1px solid $primaryColor !important;
-  border-radius: 15px !important;
-  text-align: center;
-  width: 72%;
 }
 
 .volume_info {
