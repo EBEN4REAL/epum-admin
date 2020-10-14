@@ -93,9 +93,9 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label > Company Logo</label>
+                            <!-- <label > Company Logo</label> -->
                             <div class="">
-                                <!-- <img :src="companyObj.url" width="70" height="70" /> -->
+                                <img :src="companyObj.url" width="70" height="70" />
                             </div>
                             <div>
                                 

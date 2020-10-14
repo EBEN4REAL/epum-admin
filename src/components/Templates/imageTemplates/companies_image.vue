@@ -1,6 +1,6 @@
 <template>
     <div class="">
-       <img src="@/assets/img/company_icon.png" alt="" class="img-responsive" width="30">
+       <img :src="data.url" alt="" class="img-responsive" width="30">
   </div>
 </template>
 
