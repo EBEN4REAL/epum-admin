@@ -11,7 +11,7 @@
                             <p>Get started with epump company admin platform by creating and managing your dealer branches here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <router-link :to="{name: 'create_dealer_branch', query: {dealerId: this.$route.query.dealerId}}" class="btn create_btn primary_btn">Create New Branch</router-link>
+                           <router-link :to="{name: 'create_dealer_branch', query: {dealerId: this.$route.query.dealerId, companyId: this.$route.query.companyId }}" class="btn create_btn primary_btn">Create New Branch</router-link>
                         </div>
                     </div>
                 </div>

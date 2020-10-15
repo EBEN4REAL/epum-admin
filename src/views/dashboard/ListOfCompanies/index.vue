@@ -194,7 +194,7 @@ export default {
             })
             .catch((error) => {
                 $(".loader").hide();
-                this.$toast("Failed to delete company", {
+                this.$toast(error.response.data.message, {
                 type: "error",
                 timeout: 3000,
                 });

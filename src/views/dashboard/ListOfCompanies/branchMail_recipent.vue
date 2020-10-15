@@ -138,6 +138,14 @@ export default {
     },
     mounted() {
         this.getMailRecp()
+        $(".e-input").keyup(function(e) {
+            searchFun(e);
+        });
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
+        }
     },
     methods: {
         refreshGrid() {
@@ -171,12 +179,12 @@ export default {
                 .then(res => {
                     console.log(res.data)
                     let index = 0;
-                    res.data.data.forEach(el => {
+                    res.data.forEach(el => {
                         el.index = ++index;
                     })
                     this.mailRecpCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data.data
+                        dataSource: res.data
                     });
                     this.refreshGrid();
                     this.showLoader = false;
@@ -232,6 +240,9 @@ export default {
                         type: "success",
                         timeout: 3000
                     });
+                    this.phone = null
+                    this.email = null
+                    this.getMailRecp()
                     $('.loader').hide();
                 })
                 .catch(error => {

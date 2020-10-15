@@ -1,0 +1,22 @@
+.vueperslides__arrows {
+    .vueperslides__arrow {
+        color: $primaryColor !important;
+        font-size: 10px;
+        svg {
+            // color: lightgray !important;
+        }
+    }
+}
+.vueperslides__bullet {
+    display: none !important;
+}
+.vueperslide {
+    width: 100% !important;
+}
+.vueperslides__arrow {
+    color: $primaryColor;
+    font-size: 10px;
+}
+.vueperslides__bullet {
+    display: none !important;
+}
