@@ -142,7 +142,6 @@ export default {
 
         let companyDetails = JSON.parse(ml)
         this.companyObj = companyDetails
-        console.log(this.companyObj)
     },
     data() {
         return {

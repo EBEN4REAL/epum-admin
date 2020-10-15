@@ -146,6 +146,7 @@ export default {
                         el.index = ++index;
                     })
                     this.dealersCount = res.data.length
+                    sessionStorage.clear()
                     localStorage.setItem("dealersList", JSON.stringify(res.data))
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data

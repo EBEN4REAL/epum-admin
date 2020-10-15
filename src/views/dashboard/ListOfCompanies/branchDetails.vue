@@ -351,8 +351,8 @@ export default {
     this.companyBranchId = this.$route.query.companyBranchId;
     let ml = sessionStorage.getItem(this.companyBranchId);
     if (!ml) {
-      let allData = localStorage.getItem("companyBranchesList");
-      let dt = JSON.parse(allData);
+      let allData = localStorage.getItem("branchesList");
+     let dt = JSON.parse(allData);
       dt.forEach((my, index) => {
         if (my.id === this.companyBranchId) {
           ml = JSON.stringify(my);

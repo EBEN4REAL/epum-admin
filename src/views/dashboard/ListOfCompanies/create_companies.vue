@@ -287,7 +287,6 @@ export default {
           });
     },
     getStates() {
-      alert()
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 

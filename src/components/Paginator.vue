@@ -42,7 +42,6 @@
 
           <li class="pagination-item">
           <button 
-              type="button" 
               @click="onClickNextPage"
               :disabled="isInLastPage"
               aria-label="Go to next page"
@@ -111,7 +110,7 @@ computed: {
         return 1;
       }
 
-      if (this.currentPage === this.totalPages) { 
+      if ((this.currentPage === this.totalPages) && this.currentPage !== 2) { 
         return this.totalPages - this.maxVisibleButtons + 1;
       }
 
@@ -125,7 +124,6 @@ computed: {
     },
     pages() {
       const range = [];
-
       for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
         range.push({
           name: i,

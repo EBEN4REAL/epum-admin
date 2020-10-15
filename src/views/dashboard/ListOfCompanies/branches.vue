@@ -146,7 +146,8 @@ export default {
                     res.data.forEach(el => {
                         el.index = ++index;
                     })
-                    localStorage.setItem("companyBranchesList", JSON.stringify(res.data))
+                    sessionStorage.clear()
+                    localStorage.setItem("branchesList", JSON.stringify(res.data))
                     this.branchesCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data
