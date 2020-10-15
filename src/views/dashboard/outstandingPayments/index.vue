@@ -227,19 +227,20 @@ export default {
       this.axios
         .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig)
         .then(response => {
-          let amount = 0
-          response.data.sort((a, b) => {
-            return a.branchName > b.branchName ? 1 : b.branchName > a.branchName ? -1 : 0;
-          });
-          response.data.forEach((account, index) => {
-            account.index = index + 1;
-            amount += account.amount
-          });
-          this.accounts = response.data
-          this.amount = amount.toFixed(2)
-          this.showLoader = false;
-          this.$refs.dataGrid.ej2Instances.setProperties({ dataSource: this.accounts });
-          this.refreshGrid();
+            console.log(response.data)
+            let amount = 0
+            response.data.sort((a, b) => {
+                return a.branchName > b.branchName ? 1 : b.branchName > a.branchName ? -1 : 0;
+            });
+            response.data.forEach((account, index) => {
+                account.index = index + 1;
+                amount += account.amount
+            });
+            this.accounts = response.data
+            this.amount = amount.toFixed(2)
+            this.showLoader = false;
+            this.$refs.dataGrid.ej2Instances.setProperties({ dataSource: this.accounts });
+            this.refreshGrid();
         })
         .catch(error => {
           if(error.message && error.message === 'Network Error') {

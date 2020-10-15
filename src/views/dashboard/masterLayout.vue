@@ -500,10 +500,6 @@
             logout() {
                 localStorage.clear();
                 this.$router.push({name: 'login'});
-                this.$toast("Logout Successful", {
-                    type: "success",
-                    timeout: 3000
-                });
             }
         }
     };

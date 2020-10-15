@@ -66,7 +66,21 @@
                     @getPageSize="getPageSize"
                     :pageSize="pageSize"
                 />
-            </div>  
+            </div> 
+
+            <div class="dropdown-content" id="myDropdown">
+                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
+                    Details
+                </router-link>
+                <hr />
+                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
+                    Details
+                </router-link>
+                <hr />
+                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
+                    Details
+                </router-link>
+            </div>
         </div>
     </masterLayout>
 </template>
@@ -108,6 +122,7 @@ export default {
             totalPages: 1,
             searchTotalPages: 1,
             showLoader: true,
+            id: '',
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -125,6 +140,14 @@ export default {
                 };
             }
         }
+    },
+    created() {
+        this.$eventHub.$on('showExtra', (data) => {
+            this.id = data.id
+            const option = document.getElementById('myDropdown')
+            option.classList.add("show")
+            option.style.top = `${((68 * data.index) + 100).toString()}px`
+        })
     },
     mounted() {
         this.getCompanies();

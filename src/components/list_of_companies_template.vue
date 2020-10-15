@@ -34,26 +34,12 @@
       Dealers
     </router-link>
 
-    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn branches_btn mr-3">
+    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn branches_btn mr-3" style="background-color: red;">
       Branches
     </router-link>
 
-    <div class="droping_down ml-4">
-        <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
-        <div class="dropdown-content" :id="[`myDropdown${data.index}`]">
-            <router-link :to="{ name: 'map_user_to_comapny' }" class="">
-                  Details
-            </router-link>
-          <hr />
-            <router-link :to="{ name: 'map_user_to_comapny' }" class="">
-                  Details
-            </router-link>
-          <hr />
-            <router-link :to="{ name: 'map_user_to_comapny' }" class="">
-                  Details
-            </router-link>
-        </div>
-      </div>
+    <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
+        
 
   </div>
 </template>
@@ -86,14 +72,7 @@ export default {
   },
   methods: {
       dropdownOption() {
-            const old = Array.from(document.getElementsByClassName('dropdown-content'))
-            old.forEach(cur => {
-                  cur.classList.remove('show')
-            })
-            const idToUse = `myDropdown${this.data.index}`
-            const option = document.getElementById(idToUse)
-            option.classList.toggle("show")
-            option.style.top = `${((68 * this.data.index) + 100).toString()}px`
+        this.$eventHub.$emit('showExtra', this.data)
       },
     _deleteCompany($event) {
       $event.preventDefault();
