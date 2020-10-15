@@ -170,12 +170,14 @@ export default {
     },
     methods: {
     _deleteCompany(id) {
+    // _deleteCompany() {
       let resp = confirm("Are you sure want to delete this company?");
       if (resp) {
         $(".loader").show();
         this.axios
           .delete(
             `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
+            // `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
             configObject.authConfig
           )
           .then((res) => {
