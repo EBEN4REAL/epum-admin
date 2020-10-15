@@ -410,6 +410,9 @@
         .sidebar {
             &.collapsed {
                 width: 0px;
+                &:hover {
+                    width: 0;
+                }
             }
         }
 

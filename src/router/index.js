@@ -29,7 +29,6 @@ import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
 import Transactions from "../views/dashboard/ListOfCompanies/transactions";
 import BranchMailRecipent from "../views/dashboard/ListOfCompanies/branchMail_recipent";
-import FundBranch from "../views/dashboard/ListOfCompanies/fundBranch";
 import ManageRoles from "../views/dashboard/admin/manageRoles";
 import CreateRoles from "../views/dashboard/ListOfRoles/create_roles";
 import EditRoles from "../views/dashboard/ListOfRoles/edit_roles";
@@ -46,9 +45,9 @@ import TankTransaction from "../views/dashboard/Tank/tankTransaction";
 import EditTank from "../views/dashboard/Tank/editTank";
 import TankDipping from "../views/dashboard/Tank/tankDipping";
 import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
-
-// import Gateway from '../views/dashboard/devices/gateway';
-// import Tanks from "../views/dashboard/devices/tanks";
+import OutstandingPayments from "../views/dashboard/outstandingPayments/index";
+import MakePayments from "../views/dashboard/outstandingPayments/outstandingPayments";
+import WalletTransactions from "../views/dashboard/outstandingPayments/walletTransactions";
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
@@ -275,7 +274,7 @@ let routes = [
     component: EditBranch,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -284,7 +283,7 @@ let routes = [
     component: Transactions,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -293,7 +292,7 @@ let routes = [
     component: BranchMailRecipent,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -368,15 +367,6 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
-  // {
-  //   path: "/tanks",
-  //   name: "tanks",
-  //   component: Tanks,
-  //   meta: {
-  //     authorize: true,
-  //     authRoles: ["Admin"],
-  //   },
-  // },
   {
     path: "/pump_status",
     name: "pump_status",
@@ -401,7 +391,7 @@ let routes = [
     component: Dealers,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -410,7 +400,7 @@ let routes = [
     component: EditDealers,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -419,7 +409,7 @@ let routes = [
     component: DealerDetails,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -428,7 +418,7 @@ let routes = [
     component: CreateDealer,
     meta: {
       authorize: true,
-      authRoles: ["admin"],
+      authRoles: ["Admin"],
     },
   },
   {
@@ -522,9 +512,27 @@ let routes = [
   }
 },
 {
-  path: "/fundBranch",
-  name: "fundBranch",
-  component: FundBranch,
+  path: "/outstanding-payments",
+  name: "outstandingPayments",
+  component: OutstandingPayments,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/make-payments",
+  name: "makePayments",
+  component: MakePayments,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/wallet-transactions",
+  name: "walletTransactions",
+  component: WalletTransactions,
   meta: {
       authorize: true,
       authRoles: ['Admin']
@@ -548,7 +556,7 @@ router.beforeEach((to, from, next) => {
       let user = JSON.parse(localStorage.getItem("adminUserDetails"));
 
       // Company Admin
-      if (to.matched.some((rec) => rec.meta.authRoles.includes("admin"))) {
+      if (to.matched.some((rec) => rec.meta.authRoles.includes("Admin"))) {
         if (
           user.roles.includes("Super Admin") ||
           user.roles.includes("Admin")

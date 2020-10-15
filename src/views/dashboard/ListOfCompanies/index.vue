@@ -7,7 +7,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
-                            <h3>Hi, Sam Sipo</h3>
+                            <h3>Hi, {{userName}}</h3>
                             <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
                         </div>
                         <div class="col-md-4 mt-4">
@@ -47,12 +47,17 @@
                 :toolbarClick="toolbarClick"
                 >
                 <e-columns>
-                    <e-column :template="companies_image" width="100"></e-column>
+                    <e-column :template="companies_image" width="100" headerText="Logo"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
+<<<<<<< HEAD
                     <e-column width="200" field="street" headerText="Street"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column :template="list_of_companies_templates" headerText="Action" width="600"></e-column>
+=======
+                    <e-column width="200" field="city" headerText="city"></e-column>
+                    <e-column :template="list_of_companies_templates" headerText="Action" width="350"></e-column>
+>>>>>>> 8727ff26115542a77b56bd7e07182c7bf0971c48
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -99,6 +104,7 @@ export default {
             companiesCount: 0,
             searchLoader: false,
             sortingTable: false,
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             sortType: '',
             sortColumn: '',
             searchValue: '',
@@ -139,7 +145,11 @@ export default {
             this.getCompanies()
         });
     },
-   
+    computed: {
+        userName() {
+            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
+        }
+    },
     methods: {
         refreshGrid() {
             this.$refs.dataGrid.refresh();
@@ -169,22 +179,22 @@ export default {
             this.getCompanies();
         },
         getCompanies() {
+            console.log(`${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`)
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
                 .then(res => {
-                let index = 0 + ((this.currentPage - 1) * this.pageSize);
-                res.data.data.forEach(el => {
-                    el.index = ++index;
-                })
-                localStorage.setItem("companiesList", JSON.stringify(res.data.data))
-                console.log(res.data.data)
-                this.companiesCount = res.data.data.length
-                this.$refs.dataGrid.ej2Instances.setProperties({
-                    dataSource: res.data.data
-                });
-                this.refreshGrid();
-                this.showLoader = false;
+                    let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                    res.data.data.forEach(el => {
+                        el.index = ++index;
+                    })
+                    localStorage.setItem("companiesList", JSON.stringify(res.data.data))
+                    this.companiesCount = res.data.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
             })
             .catch(error => {
                 this.showLoader = false

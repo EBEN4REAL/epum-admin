@@ -42,12 +42,10 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <select class="form-control">
-                  <option disabled selected>Select Product in Tank</option>
-                  <option>AGO</option>
-                  <option>PMS</option>
-                  <option>DPK</option>
-                  <option>LPG</option>
+                <select v-model="product" >
+                    <option value="select product"  selected>select product</option>
+                    <option :value="prod.productId" v-for="(prod, index) in prodList"
+                  :key="index">{{prod.name}}</option>
                 </select>
               </div>
             </div>
@@ -107,6 +105,8 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
+import configObject from "@/config";
+
 
 export default {
   components: {
@@ -117,7 +117,30 @@ export default {
   data() {
     return {
       backgroundUrl,
+      prodList: [],
+      product: 'select product',
+      
     };
   },
+  mounted() {
+    this.getProducts()
+  },
+  methods: {
+    getProducts() {
+      this.axios
+        .get(
+          `https://api.epump.com.ng/Products`,
+          configObject.authConfig
+        )
+        .then(response => {
+          this.prodList = response.data
+            .map(prod => {
+              return prod.name;
+            });
+        })
+        .catch(error => {
+        });
+    },
+  }
 };
 </script>

@@ -35,15 +35,15 @@
         </div>
 
         <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''" @mouseover="toggleSidenavText" @mouseleave="hideTitles">
-            <!-- <div class="logo_section text-right mt-3">
+            <div class="logo_section text-right mt-3">
           <img
             src="@/assets/img/close_btn.png"
             width="35px"
             height="35px"
-            @click="closeNav"
+            @click="toggleCollapsibleNavBar"
             id="mySidenav"
           />
-            </div> -->
+            </div>
             <div class="logo_section text-content mt-3">
                 <svg class="lg"
                      version="1.1" height="50px" id="Layer_1"
@@ -273,11 +273,6 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
-                                <!-- <li>
-                                    <router-link :to="{ name: 'tanks' }" class="vue_router_link" :class="activeRoute === 'tanks' ? 'active' : ''">
-                                        Tanks
-                                    </router-link>
-                                </li> -->
                                  <li>
                                     <router-link :to="{ name: 'pump_status' }" class="vue_router_link" :class="activeRoute === 'pump_status' ? 'active' : ''">
                                         Pump Status
@@ -329,11 +324,6 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link :to="{ name: 'pefDashboard' }" class="vue_router_link" :class="activeRoute === 'pefDashboard' ? 'active' : ''">
-                                        PEF Dashboard
-                                    </router-link>
-                                </li>
-                                <li>
                                     <router-link :to="{ name: 'manageRoles' }" class="vue_router_link" :class="activeRoute === 'manageRoles' ? 'active' : ''">
                                         Manage Roles
                                     </router-link>
@@ -341,7 +331,7 @@
                             </ul>
                              <li class="list-group-item " :class="activeRoute === 'outstandingPayments' ? 'navbar_item_active' : ''">
                             <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
-                            <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
+                            <span class="mr-2"><img alt="" src="@/assets/img/debt.svg" width="20px" /></span>
                             <span class="sidenav_list_title">
                                 Outstanding Payment
                             </span>
@@ -448,7 +438,6 @@
                         }
                     })
                 }
-                console.log(this.collapseNavbar);
             },
             toggleSidenavText() {
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
@@ -482,7 +471,6 @@
                     //         el.classList.add("list_open")
                     //     }
                     // })
-                  
                 }
             },
             hideTitles() {
