@@ -140,14 +140,18 @@ export default {
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
-                option.style.top = `${((73 * (data.index - 1)) - 20).toString()}px`
+                const num = this.details.delete.hasDelete ? 1 : 0
+                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
             } else {
-                option.style.top = `${((68 * data.index) + 100).toString()}px`
+                option.style.top = `${((62 * data.index) + 100).toString()}px`
             }
         })
         this.$eventHub.$on(this.details.delete.deleteName, (id) => { // this is needed for the blahblah
             this._deleteCompany(id)
         })
+    },
+    beforeDestroy() { // this is needed for the blahblah
+        this.$eventHub.$off(this.details.delete.deleteName);
     },
     mounted() {
         this.getCompanies();
@@ -189,6 +193,8 @@ export default {
             this.$eventHub.$emit("refreshCompaniesList");
           })
           .catch((error) => {
+              console.log(error)
+              console.log(error.response)
             $(".loader").hide();
             this.$toast("Failed to delete company", {
               type: "error",
