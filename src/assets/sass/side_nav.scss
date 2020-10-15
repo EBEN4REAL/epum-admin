@@ -4,6 +4,9 @@
 .list-style-type-none {
     list-style-type: none !important;
 }
+img#mySidenav {
+    display: none;
+}
 .wrapper_type_2 {
     position: relative;
     top: 0;
@@ -406,6 +409,10 @@
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    img#mySidenav {
+        display: block;
+        margin-left: 250px !important;
+    }
     .wrapper_type_2 {
         .sidebar {
             &.collapsed {

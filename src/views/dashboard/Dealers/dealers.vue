@@ -3,39 +3,35 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                 <div class="col-lg-4">
-                        <div class="dashboard__card large_card">
-                        <div class="row make-row-hundred-percent align-items-center justify-content-center" >
-                            <div class="col-md-3">
-                                 <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <img src="@/assets/img/company_icon.png"  width="40" />
-                                </div>
-                            </div>
-                            <div class="col-md-7 remove-padding-left">
-                                <div class="text-center">
-                                    <h5 class="text-white font-weight">Number of Dealers</h5>
-                                </div>
-                             <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">{{dealersCount}}</h5>
-                                </div>
-                           </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
+                 <div class="col-lg-8 remove-padding-left padding_div pr-0">
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Registered Dealers.</h3>
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Get started with epump company admin platform by creating and managing your dealer here</p>
                         </div>
-                        <div class="col-md-3 mt-4">
-                           <router-link :to="{name: 'createDealer', query: {companyId: this.$route.query.companyId}}" class="create_btn btn btn_theme">Create New Dealer</router-link>
+                        <div class="col-md-4 mt-4 text-center">
+                           <router-link :to="{name: 'createDealer', query: {companyId: this.$route.query.companyId}}" class="btn create_btn primary_btn">Create Dealer</router-link>
                         </div>
-                    </div>
                     </div>
                 </div>
+             </div>
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of Dealers</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/company.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{dealersCount}}</small>
+                                </div>
+                            </div>
+                        </div>
+              </div>
             </div>
-                </div>
+        </div>
         </section>
         <div class="new_row_section mt-3">
             <ejs-grid
@@ -53,10 +49,10 @@
                 >
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="300" field="name" headerText="Dealer Name"></e-column>
+                    <e-column width="200" field="name" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="dealersTemplate" headerText="Action" width="100"></e-column>
+                    <e-column :template="dealersTemplate" headerText="Action" width="500"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -100,6 +96,7 @@ export default {
     data() {
         return {
             showLoader: false,
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             dealersCount: 0, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -112,6 +109,11 @@ export default {
                     template: Temp
                 };
             }
+        }
+    },
+    computed: {
+        userName() {
+            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
         }
     },
     methods: {

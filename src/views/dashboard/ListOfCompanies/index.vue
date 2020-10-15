@@ -8,9 +8,9 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
+                            <p>Get started with epump company admin platform by creating and managing your company here</p>
                         </div>
-                        <div class="col-md-4 mt-4">
+                        <div class="col-md-4 mt-4 text-center">
                            <router-link :to="{name: 'create_companies'}" class="btn create_btn primary_btn">Create Company</router-link>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+              </div>
             </div>
          </div>
         </section>
@@ -69,17 +69,15 @@
             </div> 
 
             <div class="dropdown-content" id="myDropdown">
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
+                <router-link :to="{ name: 'sales_rep', query: { id: this.id } }" class="border-bottom">
+                    Sales Rep
                 </router-link>
-                <hr />
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
+                <router-link :to="{ name: 'mail_recipient', query: { id: this.id } }" class="border-bottom">
+                   Mail Recipient
                 </router-link>
-                <hr />
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
-                </router-link>
+                <button class="text-center" @click="_deleteCompany($event)">
+                    Delete
+                </button>
             </div>
         </div>
     </masterLayout>
@@ -148,7 +146,7 @@ export default {
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
-                option.style.top = `${((68 * (data.index - 1)) - 30).toString()}px`
+                option.style.top = `${((73 * (data.index - 1)) - 30).toString()}px`
             } else {
                 option.style.top = `${((68 * data.index) + 100).toString()}px`
             }
@@ -175,6 +173,33 @@ export default {
         }
     },
     methods: {
+        _deleteCompany($event) {
+      $event.preventDefault();
+      let resp = confirm("Are you sure want to delete this company?");
+      if (resp) {
+        $(".loader").show();
+        this.axios
+          .delete(
+            `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
+            configObject.authConfig
+          )
+          .then((res) => {
+            this.$toast("Company Deleted Successfully", {
+              type: "success",
+              timeout: 3000,
+            });
+            $(".loader").hide();
+            this.$eventHub.$emit("refreshCompaniesList");
+          })
+          .catch((error) => {
+            $(".loader").hide();
+            this.$toast("Failed to delete company", {
+              type: "error",
+              timeout: 3000,
+            });
+          });
+      }
+    },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
