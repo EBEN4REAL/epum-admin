@@ -217,5 +217,17 @@ export default {
     return {
     };
   },
+  methods: {
+    getTanksCount() {
+      this.axios
+        .get(`${configObject.apiBaseUrl}​/Dashboard/Branch/TankCount/${this.$route.query.companyBranchId}`, configObject.authConfig)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    }
+  }
 };
 </script>

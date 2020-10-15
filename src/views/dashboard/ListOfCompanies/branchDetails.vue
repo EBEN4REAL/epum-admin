@@ -6,7 +6,7 @@
           <div class="row mt-3">
             <div class="col-lg-3 col-md-3 remove_padding-right">
               <router-link
-                :to="{ name: 'installedTanks' }"
+                :to="{ name: 'installedTanks', query: {companyBranchId: this.$route.query.companyBranchId} }"
                 class="router_link__text"
               >
                 <div
@@ -255,7 +255,7 @@
               </div>
               <div class="col-md-6">
                 <div class="">
-                  <h4 class="font-weight">{{ comapanyBranchObj.name }}</h4>
+                  <p style="font-size: 20px; font-weight: bold;">{{ comapanyBranchObj.name }}</p>
                 </div>
               </div>
             </div>
@@ -374,7 +374,7 @@ export default {
     getTanks() {
           this.axios
           .get(
-          `${configObject.apiBaseUrl}/Branch/Tanks/${this.industryBranchId}`,
+          `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
           configObject.authConfig
           )
           .then(response => {
