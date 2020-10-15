@@ -29,6 +29,39 @@ body {
   height: 100vh;
 }
 
+/**** Spinner for outstanding payments and date picker***/
+
+.show_spinner {
+  background-color: grey;
+  opacity: 0.9;
+  z-index: 9000;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hide_spinner {
+  display: none !important;
+}
+
+.payment_section_holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 30%;
+}
+
+.drop_down_div {
+  border: 1px solid $primaryColor;
+  border-radius: 5px;
+}
+
+/*** Spinner for outstanding payments ends ***/
+
 .image_section {
   padding-top: 23px;
   padding-left: 81px;

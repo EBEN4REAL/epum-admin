@@ -35,15 +35,15 @@
         </div>
 
         <section class="sidebar use-tiny-scroll" :class="collapseNavbar ? 'collapsed' : ''" @mouseover="toggleSidenavText" @mouseleave="hideTitles">
-            <!-- <div class="logo_section text-right mt-3">
+            <div class="logo_section text-right mt-3">
           <img
             src="@/assets/img/close_btn.png"
             width="35px"
             height="35px"
-            @click="closeNav"
+            @click="toggleCollapsibleNavBar"
             id="mySidenav"
           />
-            </div> -->
+            </div>
             <div class="logo_section text-content mt-3">
                 <svg class="lg"
                      version="1.1" height="50px" id="Layer_1"
@@ -329,19 +329,19 @@
                                     </router-link>
                                 </li>
                             </ul>
-                             <li class="list-group-item " :class="activeRoute === 'outstandingPayments' ? 'navbar_item_active' : ''">
-                                <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
-                                    <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
-                                    <span class="sidenav_list_title">
-                                        Outstanding Payment
-                                    </span>
-                                </router-link>
-                            </li>
                             <li class="list-group-item " :class="activeRoute === 'audit_sales' ? 'navbar_item_active' : ''">
                                 <router-link :to="{ name: 'audit_sales' }" class="vue_router_link">
                                     <span class="mr-2"><img alt="" src="@/assets/img/dashboard (1).png" width="20px" /></span>
                                     <span class="sidenav_list_title">
                                         Audit Sales
+                                    </span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
+                                    <span class="mr-2"><img alt="" src="@/assets/img/debt.svg" width="20px" /></span>
+                                    <span class="sidenav_list_title">
+                                        Outstanding Payment
                                     </span>
                                 </router-link>
                             </li>
@@ -445,7 +445,6 @@
                         }
                     })
                 }
-                console.log(this.collapseNavbar);
             },
             toggleSidenavText() {
                 const sideNav_arrows = Array.from(document.querySelectorAll(".sidenav_arrow"));
