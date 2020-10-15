@@ -50,14 +50,9 @@
                     <e-column :template="companies_image" width="100" headerText="Logo"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-<<<<<<< HEAD
                     <e-column width="200" field="street" headerText="Street"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column :template="list_of_companies_templates" headerText="Action" width="600"></e-column>
-=======
-                    <e-column width="200" field="city" headerText="city"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="350"></e-column>
->>>>>>> 8727ff26115542a77b56bd7e07182c7bf0971c48
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
