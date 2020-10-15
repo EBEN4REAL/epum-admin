@@ -36,6 +36,7 @@ import Dealers from "../views/dashboard/Dealers/dealers";
 import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
+import AuditSales from "../views/dashboard/admin/Audit.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
@@ -54,6 +55,7 @@ import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
 import AddDevice from "../views/dashboard/devices/addDevice";
+import PumpVariance from "../views/dashboard/admin/Pumps/pump_variance_report";
 
 
 Vue.use(VueRouter);
@@ -68,9 +70,27 @@ let routes = [
     },
   },
   {
+    path: "/pump-variance",
+    name: "pump_variance_report",
+    component: PumpVariance,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
     path: "/devices_not_pushing_ep2",
     name: "devices_not_pushing_ep2",
     component: DevicesNotPushingEp2,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/audit-sales",
+    name: "audit_sales",
+    component: AuditSales,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

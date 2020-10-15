@@ -178,7 +178,7 @@ export default {
       State: "select state",
       Street: null,
       Country: "select a country",
-      Logo: "",
+      Logo: [],
       states: []
     };
   },
@@ -287,6 +287,7 @@ export default {
           });
     },
     getStates() {
+      alert()
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 

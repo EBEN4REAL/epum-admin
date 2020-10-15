@@ -172,7 +172,7 @@ export default {
         return {
             companyObj: {},
             backgroundUrl,
-            Logo: "",
+            Logo: [],
             Phone: null,
             states: []
         }
@@ -187,6 +187,7 @@ export default {
         getStates() {
             this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     this.states = res.data
                 })
                 .catch(error => {

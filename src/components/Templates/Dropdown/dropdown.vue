@@ -13,7 +13,6 @@
 export default {
     props: ['details'],
     created() {
-        
     }, 
     methods: {
         deleteNow() {

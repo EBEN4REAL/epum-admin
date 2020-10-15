@@ -260,6 +260,34 @@
                             
                         </router-link>
                     </li>
+                    <li class="list-group-item treeview">
+                        <a href="#" class="vue_router_link has-submenu">
+                            <span class="mr-2 icon">
+                                <img src="@/assets/img/cpu.svg" width="20"/>
+                            </span>
+                            <span class="sidenav_list_title">
+                                Reports
+                            </span>
+                           
+                            <i class="fa fa-angle-right sidenav_arrow"></i>
+                        </a>
+                        <div>
+                            <ul class="treeview-menu">
+                                <li class="list-group-item " :class="activeRoute === 'audit_sales' ? 'navbar_item_active' : ''">
+                                    <router-link :to="{ name: 'audit_sales' }" class="vue_router_link">
+                                        <span class="sidenav_list_title">
+                                            Audit Sales
+                                        </span>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{ name: 'pump_variance_report' }" class="vue_router_link" :class="activeRoute === 'pump_variance_report' ? 'active' : ''">
+                                        Pump Variance 
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                             <span class="mr-2 icon">
@@ -329,15 +357,15 @@
                                     </router-link>
                                 </li>
                             </ul>
-                             <li class="list-group-item " :class="activeRoute === 'outstandingPayments' ? 'navbar_item_active' : ''">
-                            <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
-                            <span class="mr-2"><img alt="" src="@/assets/img/debt.svg" width="20px" /></span>
-                            <span class="sidenav_list_title">
-                                Outstanding Payment
-                            </span>
                             
-                        </router-link>
-                    </li>
+                            <li>
+                                <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
+                                    <span class="mr-2"><img alt="" src="@/assets/img/debt.svg" width="20px" /></span>
+                                    <span class="sidenav_list_title">
+                                        Outstanding Payment
+                                    </span>
+                                </router-link>
+                            </li>
                         </div>
                     </li>
                 </ul>
@@ -464,13 +492,7 @@
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeviews.forEach(el => {
-                    //     const classList = Array.from(el.classList);
-                    //     if(classList.includes("open")) {
-                    //         el.classList.remove("open")
-                    //         el.classList.add("list_open")
-                    //     }
-                    // })
+                  
                 }
             },
             hideTitles() {
@@ -485,12 +507,6 @@
                     sideNav_arrows.forEach(el => {
                         el.style.display = "none"
                     })
-                    // treeviews.forEach(el => {
-                    //     const classList = Array.from(el.classList);
-                    //     if(classList.includes("open")) {
-                    //         el.classList.remove("open")
-                    //     }
-                    // })
                 }else{
                     sideNav_arrows.forEach(el => {
                         el.style.display = "inline"

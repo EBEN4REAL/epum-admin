@@ -17,7 +17,7 @@
                 </div>
              </div>
                  <div class="col-lg-4">
-                        <div class="dashboard__card large_card">
+                    <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
                             <p class="dashboard__card__header text-white">Total number of companies</p>
                                 <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
@@ -27,14 +27,15 @@
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
                                 >{{companiesCount}}</small>
                                 </div>
-                            </div>
                         </div>
+                    </div>
               </div>
             </div>
          </div>
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
+                v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="false"
@@ -50,7 +51,6 @@
                     <e-column :template="companies_image" width="100" headerText="Logo"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <!-- <e-column width="200" field="street" headerText="Street"></e-column> -->
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column :template="list_of_companies_templates" headerText="Action" width="500"></e-column>
                 </e-columns>
@@ -173,36 +173,36 @@ export default {
         }
     },
     methods: {
-    _deleteCompany(id) {
-    // _deleteCompany() {
-      let resp = confirm("Are you sure want to delete this company?");
-      if (resp) {
-        $(".loader").show();
-        this.axios
-          .delete(
-            `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
-            // `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
-            configObject.authConfig
-          )
-          .then((res) => {
-            this.$toast("Company Deleted Successfully", {
-              type: "success",
-              timeout: 3000,
+        _deleteCompany(id) {
+        // _deleteCompany() {
+        let resp = confirm("Are you sure want to delete this company?");
+        if (resp) {
+            $(".loader").show();
+            this.axios
+            .delete(
+                `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
+                // `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
+                configObject.authConfig
+            )
+            .then((res) => {
+                this.$toast("Company Deleted Successfully", {
+                type: "success",
+                timeout: 3000,
+                });
+                $(".loader").hide();
+                this.$eventHub.$emit("refreshCompaniesList");
+            })
+            .catch((error) => {
+                console.log(error)
+                console.log(error.response)
+                $(".loader").hide();
+                this.$toast("Failed to delete company", {
+                type: "error",
+                timeout: 3000,
+                });
             });
-            $(".loader").hide();
-            this.$eventHub.$emit("refreshCompaniesList");
-          })
-          .catch((error) => {
-              console.log(error)
-              console.log(error.response)
-            $(".loader").hide();
-            this.$toast("Failed to delete company", {
-              type: "error",
-              timeout: 3000,
-            });
-          });
-      }
-    },
+        }
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -241,7 +241,9 @@ export default {
                         el.index = ++index;
                     })
                     localStorage.setItem("companiesList", JSON.stringify(res.data.data))
-                    this.tableCount = res.data.data.length // to be added for pages that need dot dot dot actions
+                    // this.companiesCount = res.data.data.length
+                    this.companiesCount = res.data.totalNumber
+                    this.tableCount = res.data.totalNumber // to be added for pages that need dot dot dot actions
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.data
                     });
