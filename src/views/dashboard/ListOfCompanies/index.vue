@@ -143,7 +143,7 @@ export default {
                 const num = this.details.delete.hasDelete ? 1 : 0
                 option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
             } else {
-                option.style.top = `${((62 * data.index) + 100).toString()}px`
+                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
             }
         })
         this.$eventHub.$on(this.details.delete.deleteName, (id) => { // this is needed for the blahblah
