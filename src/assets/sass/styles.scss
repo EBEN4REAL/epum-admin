@@ -180,6 +180,15 @@ body {
   align-items: center;
   flex-flow: column wrap;
 }
+.yellow_text {
+  color:  #ffbb00
+}
+.hundred-percent-height {
+  height: 100%;
+}
+.grey_text {
+  color: $greyTextColor
+}
 .dashboard__card__header {
   letter-spacing: 0px;
   color: $darkGreyColor;

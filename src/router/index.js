@@ -55,6 +55,7 @@ import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
 import AddDevice from "../views/dashboard/devices/addDevice";
+import PumpVariance from "../views/dashboard/admin/Pumps/pump_variance_report";
 
 
 Vue.use(VueRouter);
@@ -66,6 +67,15 @@ let routes = [
     component: Login,
     meta: {
       guest: true,
+    },
+  },
+  {
+    path: "/pump-variance",
+    name: "pump_variance_report",
+    component: PumpVariance,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
     },
   },
   {
