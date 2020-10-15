@@ -16,16 +16,16 @@
         </div>
       </div>
     </section>
-        <div class="full__row_section mt-3 ep_card">
+        <div class="full__row_section mt-3 center_div margin-top-center-div ep_card ep_card">
             <div class="">
                 <form>
-                    <div class="row ">
-                        <div class="col-md-4">
+                    <div class="">
+                        <div class="">
                             <div class="brand_logo_img">
                                 <img :src="this.$route.query.url"  width="80" />
                             </div>
                         </div>
-                        <div class="col-md-8 ">
+                        <div class="">
                             <div class="row align-items-center mt-3">
                                 <div class="col-md-4 ">
                                     <label> Parent Company Name</label >
