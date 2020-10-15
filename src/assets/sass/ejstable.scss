@@ -70,11 +70,11 @@
     background: rgb(242, 242, 246) !important;
     border-collapse: separate !important;
     border-spacing: 0 0.5em !important;
+    text-align: center;
     .e-row {
         height: auto !important;
         .e-rowcell {
             padding: 10px!important;
-            vertical-align: top;
             &:first-child {
                 padding-left: 20px!important;
             }
@@ -120,7 +120,9 @@
     background: rgb(242, 242, 246) !important;
     border: none !important;
     .e-headercell {
+        color: $primaryColor;
         .e-headercelldiv {
+            text-align: center;
             font-size: 14px;
             height: 30px;
             margin: 0;
@@ -128,7 +130,7 @@
         }
         &:last-child {
             .e-headercelldiv {
-                text-align: right!important;
+                text-align: center!important;
             }
         }
     }
@@ -269,4 +271,8 @@ table {
             transform: translateY(-1px);
         }
     }
+}
+
+.e-grid .e-content {
+    position: inherit;
 }

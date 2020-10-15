@@ -21,7 +21,7 @@
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
                             <p class="dashboard__card__header text-white">Total number of companies</p>
                                 <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
-                                <img src="@/assets/img/oil-tank-1.png" width="40px" />
+                                <img src="@/assets/img/company.png" width="40px" />
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
@@ -51,8 +51,8 @@
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
                     <e-column width="200" field="street" headerText="Street"></e-column>
-                    <e-column width="200" field="city" headerText="city"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="350"></e-column>
+                    <e-column width="200" field="city" headerText="City"></e-column>
+                    <e-column :template="list_of_companies_templates" headerText="Action" width="600"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>

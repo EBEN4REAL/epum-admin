@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-group btn-group-sm" role="group">
+    <!-- <div class="btn-group btn-group-sm" role="group">
           <router-link v-b-tooltip.hover title="Edit" :to="{name:'edit_companies'}" class="btn btn-warning" >
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           </router-link> 
@@ -16,7 +16,14 @@
            <router-link v-b-tooltip.hover title="USSD" :to="{name:'map_user_to_comapny'}" class="btn btn-success" >
                 <i class="fa fa-reply" aria-hidden="true"></i>
           </router-link>
+ </div> -->
+          <div class="button">
+             <router-link :to="{name:'map_user_to_comapny'}" class="btn primary_btn" > Name
+          </router-link>
+ 
   </div>
+
+
 </template>
 
 <script>
