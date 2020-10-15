@@ -72,16 +72,6 @@
             </div>
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label>Secret Code</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <input type="text" placeholder="Secret Code" class=""  v-model="secreteCode"/>
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
                 <label>Send Report Mail</label>
               </div>
               <div class="col-md-8">
@@ -193,7 +183,6 @@ export default {
       states: [],
       companyDealers: [],
       branchUserId: "string",
-      secreteCode: null,
       date: "2020-10-09T15:35:33.494Z",
       sendReportMail: null,
     };
@@ -292,13 +281,6 @@ export default {
           });
           return;
       }
-      if(!this.secreteCode) {
-          this.$toast("Secret code Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
       if(!this.sendReportMail) {
           this.$toast("Send Report mail field code Field cannot be blank", {
               type: "error", 
@@ -320,11 +302,12 @@ export default {
           });
           return;
       }
-      
+
       const data = {
           phone: this.phone,
           email: this.email,
           street: this.street,
+          companyId: this.$route.query.companyId,
           city: this.city,
           state: this.state,
           country: this.country,
@@ -332,10 +315,7 @@ export default {
           dealerId: this.$route.query.dealerId,
           engagementLevel: this.engagementLevel,
           online: this.online,
-          secreteCode: this.secreteCode,
-          date: new Date().toISOString(),
           sendReportMail: this.sendReportMail,
-          branchUserId: "string",
       }
 
       console.log(data);
