@@ -8,9 +8,9 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform<br> by creating and managing your company here</p>
+                            <p>Get started with epump company admin platform by creating and managing your company here</p>
                         </div>
-                        <div class="col-md-4 mt-4">
+                        <div class="col-md-4 mt-4 text-center">
                            <router-link :to="{name: 'create_companies'}" class="btn create_btn primary_btn">Create Company</router-link>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+              </div>
             </div>
          </div>
         </section>
@@ -51,9 +51,9 @@
                     <e-column :template="companies_image" width="100" headerText="Logo"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column width="200" field="street" headerText="Street"></e-column>
+                    <!-- <e-column width="200" field="street" headerText="Street"></e-column> -->
                     <e-column width="200" field="city" headerText="City"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="600"></e-column>
+                    <e-column :template="list_of_companies_templates" headerText="Action" width="500"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -70,17 +70,15 @@
             </div> 
 
             <div class="dropdown-content" id="myDropdown">
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
+                <router-link :to="{ name: 'sales_rep', query: { id: this.id } }" class="border-bottom">
+                    Sales Rep
                 </router-link>
-                <hr />
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
+                <router-link :to="{ name: 'mail_recipient', query: { id: this.id } }" class="border-bottom">
+                   Mail Recipient
                 </router-link>
-                <hr />
-                <router-link :to="{ name: 'map_user_to_comapny', query: { id: this.id } }" class="">
-                    Details
-                </router-link>
+                <button class="text-center" @click="_deleteCompany($event)">
+                    Delete
+                </button>
             </div>
         </div>
     </masterLayout>
@@ -123,7 +121,8 @@ export default {
             totalPages: 1,
             searchTotalPages: 1,
             showLoader: true,
-            id: '',
+            id: '',  // this is needed for the links 
+            tableCount: 0, // this is needed for the blahblah
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -147,7 +146,12 @@ export default {
             this.id = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            option.style.top = `${((68 * data.index) + 100).toString()}px`
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                option.style.top = `${((73 * (data.index - 1)) - 30).toString()}px`
+            } else {
+                option.style.top = `${((68 * data.index) + 100).toString()}px`
+            }
+            
         })
     },
     mounted() {
@@ -170,6 +174,33 @@ export default {
         }
     },
     methods: {
+        _deleteCompany($event) {
+      $event.preventDefault();
+      let resp = confirm("Are you sure want to delete this company?");
+      if (resp) {
+        $(".loader").show();
+        this.axios
+          .delete(
+            `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
+            configObject.authConfig
+          )
+          .then((res) => {
+            this.$toast("Company Deleted Successfully", {
+              type: "success",
+              timeout: 3000,
+            });
+            $(".loader").hide();
+            this.$eventHub.$emit("refreshCompaniesList");
+          })
+          .catch((error) => {
+            $(".loader").hide();
+            this.$toast("Failed to delete company", {
+              type: "error",
+              timeout: 3000,
+            });
+          });
+      }
+    },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -210,6 +241,7 @@ export default {
                     localStorage.setItem("companiesList", JSON.stringify(res.data.data))
                     // this.companiesCount = res.data.data.length
                     this.companiesCount = res.data.totalNumber
+                    this.tableCount = res.data.totalNumber // to be added for pages that need dot dot dot actions
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.data
                     });

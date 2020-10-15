@@ -1,5 +1,5 @@
 <template>
-   <div class="btn-group btn-group-sm" role="group">
+   <!-- <div class="btn-group btn-group-sm" role="group">
       <router-link  title="Edit" :to="{name:'editDealers', query: {dealerId: data.id}}" class="btn btn-warning" >
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </router-link> 
@@ -12,6 +12,22 @@
       <button  title="Delete" class="btn btn-danger" @click="_deleteDealer($event)">
         <i class="fa fa-trash" aria-hidden="true"></i>
       </button>
+  </div> -->
+
+  <div class="">
+    <router-link :to="{name:'editDealers', query: {dealerId: data.id}}" class="btn details_btn mr-3">
+      Edit
+    </router-link>
+
+    <router-link :to="{name:'dealerDetails',  query: {dealerId: data.id}}" class="btn dealers_btn mr-3">
+      Dealers
+    </router-link>
+
+    <router-link :to="{name:'dealer_branches', query: {dealerId: data.id}}" class="btn branches_btn mr-3">
+      Branches
+    </router-link>
+
+    <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
   </div>
 </template>
 

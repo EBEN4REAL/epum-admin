@@ -26,21 +26,22 @@
   </div> -->
 
   <div class="">
-    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn details_btn mr-3">
+    <router-link :to="{name:'edit_companies',  query: {companyId: data.id}}" class="btn details_btn mr-3">
+      Edit
+    </router-link>
+    <router-link :to="{name:'company_details', query: {companyId: data.id}}" class="btn details_btn mr-3">
       Details
     </router-link>
 
-    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn dealers_btn mr-3">
-      Dealers
+    <router-link :to="{name:'dealers',  query: {companyId: data.id}}" class="btn dealers_btn mr-3">
+      Dealers <span class="mr-2">{{data.numberOfDealers}}</span>
     </router-link>
 
-    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn branches_btn mr-3" style="background-color: red;">
-      Branches
+    <router-link :to="{name:'branches', query: {companyId: data.id}}" class="btn branches_btn mr-3">
+      Branches <span class="mr-2">{{data.numberOfBranches}}</span>
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
-        
-
   </div>
 </template>
 
@@ -74,33 +75,6 @@ export default {
       dropdownOption() {
         this.$eventHub.$emit('showExtra', this.data)
       },
-    _deleteCompany($event) {
-      $event.preventDefault();
-      let resp = confirm("Are you sure want to delete this company?");
-      if (resp) {
-        $(".loader").show();
-        this.axios
-          .delete(
-            `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
-            configObject.authConfig
-          )
-          .then((res) => {
-            this.$toast("Company Deleted Successfully", {
-              type: "success",
-              timeout: 3000,
-            });
-            $(".loader").hide();
-            this.$eventHub.$emit("refreshCompaniesList");
-          })
-          .catch((error) => {
-            $(".loader").hide();
-            this.$toast("Failed to delete company", {
-              type: "error",
-              timeout: 3000,
-            });
-          });
-      }
-    },
   },
 };
 

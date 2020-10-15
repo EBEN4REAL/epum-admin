@@ -172,7 +172,7 @@ export default {
         return {
             companyObj: {},
             backgroundUrl,
-            Logo: "",
+            Logo: [],
             Phone: null,
             states: []
         }
