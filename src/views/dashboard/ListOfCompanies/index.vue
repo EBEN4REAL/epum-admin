@@ -67,18 +67,7 @@
                     :pageSize="pageSize"
                 />
             </div> 
-
-            <div class="dropdown-content" id="myDropdown">
-                <router-link :to="{ name: 'sales_rep', query: { id: this.id } }" class="border-bottom">
-                    Sales Rep
-                </router-link>
-                <router-link :to="{ name: 'mail_recipient', query: { id: this.id } }" class="border-bottom">
-                   Mail Recipient
-                </router-link>
-                <button class="text-center" @click="_deleteCompany($event)">
-                    Delete
-                </button>
-            </div>
+            <DropDown :details="details"/>
         </div>
     </masterLayout>
 </template>
@@ -87,6 +76,7 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_companies_template.vue';
+import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 import Templates from '@/components/Templates/imageTemplates/companies_image.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
@@ -101,7 +91,7 @@ export default {
         masterLayout,
         TableLoader,
         Paginator,
-
+        DropDown
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -120,8 +110,12 @@ export default {
             totalPages: 1,
             searchTotalPages: 1,
             showLoader: true,
-            id: '',  // this is needed for the links 
             tableCount: 0, // this is needed for the blahblah
+            details: {
+                id: '',
+                info: [{ name: 'Sales Rep', link: 'sales_rep' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
+                delete: { hasDelete: true, deleteName: 'deleteCompany'}
+            }, // this is needed for the blahblah
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -141,16 +135,18 @@ export default {
         }
     },
     created() {
-        this.$eventHub.$on('showExtra', (data) => {
-            this.id = data.id
+        this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
+            this.details.id = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
-                option.style.top = `${((73 * (data.index - 1)) - 30).toString()}px`
+                option.style.top = `${((73 * (data.index - 1)) - 20).toString()}px`
             } else {
                 option.style.top = `${((68 * data.index) + 100).toString()}px`
             }
-            
+        })
+        this.$eventHub.$on(this.details.delete.deleteName, (id) => { // this is needed for the blahblah
+            this._deleteCompany(id)
         })
     },
     mounted() {
@@ -173,14 +169,13 @@ export default {
         }
     },
     methods: {
-        _deleteCompany($event) {
-      $event.preventDefault();
+    _deleteCompany(id) {
       let resp = confirm("Are you sure want to delete this company?");
       if (resp) {
         $(".loader").show();
         this.axios
           .delete(
-            `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
+            `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
             configObject.authConfig
           )
           .then((res) => {
