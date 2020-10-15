@@ -350,7 +350,6 @@ export default {
           secreteCode: this.secreteCode,
           date: new Date().toISOString(),
           sendReportMail: this.sendReportMail,
-          branchUserId: "string",
       }
 
       console.log(data);
