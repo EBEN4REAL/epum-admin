@@ -30,7 +30,7 @@
                 </div>
               </div>
             </div>
-             <div class="row align-items-center mt-3">
+             <!-- <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
                 <label>Dealer</label>
               </div>
@@ -42,7 +42,7 @@
                   </select>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
                 <label>Phone</label>
@@ -199,7 +199,7 @@ export default {
     this.companyBranchId = this.$route.query.companyBranchId
     let ml = sessionStorage.getItem(this.companyBranchId)
     if (!ml){
-        let allData = localStorage.getItem("companyBranchesList")
+        let allData = localStorage.getItem("branchesList")
         let dt = JSON.parse(allData)
         dt.forEach((my, index) =>{
             if(my.id === this.companyBranchId){
@@ -210,7 +210,6 @@ export default {
     }
     let companyBranchDetails = JSON.parse(ml)
     this.comapanyBranchObj = companyBranchDetails
-    console.log(this.comapanyBranchObj)
   },
   watch: {
     comapanyBranchObj(val) {
@@ -229,7 +228,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {
@@ -247,7 +245,6 @@ export default {
       .get(
           `${configObject.apiBaseUrl}/Company/Dealers/${this.comapanyBranchObj.companyId}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
             this.companyDealers = res.data
           })
           .catch(error => {
@@ -325,12 +322,10 @@ export default {
           secreteCode: this.comapanyBranchObj.secreteCode,
           date: new Date().toISOString(),
           sendReportMail: this.comapanyBranchObj.sendReportMail,
-          branchUserId: "string",
           online: this.comapanyBranchObj.online,
           engagementLevel: this.comapanyBranchObj.engagementLevel
       }
 
-      console.log(data);
       $('.loader').show();
        this.axios.post(`${configObject.apiBaseUrl}/Branch/UpdateBranch`,data, configObject.authConfig)
           .then(res => {
@@ -342,6 +337,7 @@ export default {
                 this.$router.push({name: 'branches', query: {companyId: this.comapanyBranchObj.companyId}})
           })
           .catch(error => {
+            console.log(error.response)
               this.isButtonDisabled = false;
               $('.loader').hide();
               this.$toast("Unable to update branch", {

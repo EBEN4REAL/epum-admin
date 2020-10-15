@@ -88,7 +88,7 @@
                                     ? { cursor: 'not-allowed' }
                                     : { cursor: 'pointer' }
                                 ]"
-                            >Create
+                            >Edit
                                 <img
                                 src="@/assets/img/git_loader.gif"
                                 style="display:none"

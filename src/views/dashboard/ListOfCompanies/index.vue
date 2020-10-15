@@ -193,8 +193,6 @@ export default {
                 this.$eventHub.$emit("refreshCompaniesList");
             })
             .catch((error) => {
-                console.log(error)
-                console.log(error.response)
                 $(".loader").hide();
                 this.$toast("Failed to delete company", {
                 type: "error",
@@ -231,7 +229,6 @@ export default {
             this.getCompanies();
         },
         getCompanies() {
-            console.log(`${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`)
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
@@ -240,9 +237,11 @@ export default {
                     res.data.data.forEach(el => {
                         el.index = ++index;
                     })
+                    sessionStorage.clear()
                     localStorage.setItem("companiesList", JSON.stringify(res.data.data))
                     // this.companiesCount = res.data.data.length
                     this.companiesCount = res.data.totalNumber
+                    this.totalPages = Math.ceil(res.data.totalNumber / this.pageSize)
                     this.tableCount = res.data.totalNumber // to be added for pages that need dot dot dot actions
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.data
