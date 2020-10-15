@@ -34,13 +34,11 @@
       Dealers
     </router-link>
 
-    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn branches_btn mr-3" style="background-color: red;">
+    <router-link :to="{ name: 'map_user_to_comapny' }" class="btn branches_btn mr-3">
       Branches
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
-        
-
   </div>
 </template>
 

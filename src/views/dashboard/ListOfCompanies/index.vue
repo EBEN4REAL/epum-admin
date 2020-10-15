@@ -50,9 +50,9 @@
                     <e-column :template="companies_image" width="100" headerText="Logo"></e-column>
                     <e-column width="200" field="name" headerText="Company Name"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column width="200" field="street" headerText="Street"></e-column>
+                    <!-- <e-column width="200" field="street" headerText="Street"></e-column> -->
                     <e-column width="200" field="city" headerText="City"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="600"></e-column>
+                    <e-column :template="list_of_companies_templates" headerText="Action" width="500"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -122,7 +122,8 @@ export default {
             totalPages: 1,
             searchTotalPages: 1,
             showLoader: true,
-            id: '',
+            id: '',  // this is needed for the links 
+            tableCount: 0, // this is needed for the blahblah
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -146,7 +147,12 @@ export default {
             this.id = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            option.style.top = `${((68 * data.index) + 100).toString()}px`
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                option.style.top = `${((68 * (data.index - 1)) - 30).toString()}px`
+            } else {
+                option.style.top = `${((68 * data.index) + 100).toString()}px`
+            }
+            
         })
     },
     mounted() {
@@ -207,7 +213,7 @@ export default {
                         el.index = ++index;
                     })
                     localStorage.setItem("companiesList", JSON.stringify(res.data.data))
-                    this.companiesCount = res.data.data.length
+                    this.tableCount = res.data.data.length // to be added for pages that need dot dot dot actions
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.data
                     });
