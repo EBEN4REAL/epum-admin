@@ -95,7 +95,7 @@
 
     <div style="position: fixed" v-bind:class="['update_modal', showUpdateModal ? 'show_update_modal' : 'hide_update_modal']">
       <p class="update_modal_text">Please input your password</p>
-      <input :placeholder="Password" v-model="password" type="password" class="update_modal_input"/>
+      <input placeholder="Password" v-model="password" type="password" class="update_modal_input"/>
       <div class="update_modal_actions">
         <button @click="showUpdateModal = !showUpdateModal" class="update_cancel_button">Cancel</button>
         <button @click="makePayment()" class="update_submit_button">Submit</button> 
@@ -197,9 +197,9 @@ export default {
   },
   created() {
     let user = JSON.parse(localStorage.getItem("userDetails"));
-    if (user.role !== 'Customer,Account Manager') {
-      this.$router.push({ name: "userDashboard" });
-    }
+    // if (user.role !== 'Customer,Account Manager') {
+    //   this.$router.push({ name: "userDashboard" });
+    // }
 
     this.$eventHub.$on("addToArray", (event, branchId, amount) => {
       this.addToArray(event, branchId, amount);
