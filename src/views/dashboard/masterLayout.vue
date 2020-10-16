@@ -263,7 +263,7 @@
                     <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                             <span class="mr-2 icon">
-                                <img src="@/assets/img/cpu.svg" width="20"/>
+                                <img src="@/assets/img/debt.svg" width="20"/>
                             </span>
                             <span class="sidenav_list_title">
                                 Reports

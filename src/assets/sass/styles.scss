@@ -12,6 +12,17 @@ html {
   overflow-x: hidden;
 }
 
+.clearfix {
+  overflow: auto;
+}
+
+.right_div {
+  float: right;
+}
+
+.left_div {
+  float: left;
+}
 // LOGIN
 body {
   height: 100vh;

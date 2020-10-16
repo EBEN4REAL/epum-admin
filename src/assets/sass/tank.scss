@@ -50,3 +50,65 @@
     -webkit-backface-visibility: hidden;
     -webkit-transform: translate3d(0, 0, 0);
 }
+
+.bowl .inner:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    position: absolute;
+    right: 40%;
+    top: 60%;
+    z-index: 2;
+    left: 0px;
+}
+
+.bowl .inner:after {
+    content: "";
+    width: 20px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    position: absolute;
+    right: 30%;
+    top: 15%;
+    transform: rotate(-20deg);
+    z-index: 2;
+}
+
+.bowl .fill {
+    -webkit-animation-name: fillAction;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: cubic-bezier(0.2, 0.6, 0.8, 0.4);
+    -webkit-animation-duration: 4s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.bowl .waveShape {
+    -webkit-animation-name: waveAction;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-duration: 0.5s;
+    width: 300px;
+    height: 150px;
+    fill: var(--c);
+}
+
+@-webkit-keyframes fillAction {
+    0% {
+        -webkit-transform: translate(0, 150px);
+    }
+    100% {
+        -webkit-transform: translate(0, var(--h));
+    }
+}
+
+@-webkit-keyframes waveAction {
+    0% {
+        -webkit-transform: translate(-150px, 0);
+    }
+    100% {
+        -webkit-transform: translate(0, 0);
+    }
+}
