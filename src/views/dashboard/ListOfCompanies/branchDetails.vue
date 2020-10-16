@@ -96,7 +96,7 @@
                   <div class="mt-3">
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
-                      >123</small
+                      >0</small
                     >
                   </div>
                 </div>
@@ -218,28 +218,29 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                         <div class="clearfix mt-3">
-                          <div class="left_div">
-                            <span class="left">Max Volume:</span>
-                          </div>
-                          <div class="right_div">
-                            <span class="litres">
-                            {{ convertThousand(tank.currentVolume) }}
-                            </span>
-                          </div>
-                        </div>
-                        <div class="clearfix pb-4 mt-2">
-                          <div class="left_div">
-                            <span class="left">Max Capacity:</span>
-                          </div>
-                          <div class="right_div">
-                            <span class="litres">
-                            {{ convertThousand(tank.maxCapacity) }}
-                            </span>
-                          </div>
-                        </div>
+                       
                       </div>
+                    </div>
+                     <div class="clearfix mt-3" style="width: 70%; margin: 0 auto;">
+                            <div class="left_div">
+                                <span class="left">Current Volume:</span>
+                            </div>
+                            <div class="right_div">
+                                <span class="tank__header__text">
+                                {{ convertThousand(tank.currentVolume) }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="clearfix pb-4 mt-2" style="width: 70%; margin: 0 auto;">
+                            <div class="left_div">
+                                <span class="left">Max Capacity:</span>
+                            </div>
+                            <div class="right_div">
+                                <span class="tank__header__text">
+                                {{ convertThousand(tank.maxCapacity) }}
+                                </span>
+                            </div>
+                        </div>
                   </template>
               </vueper-slide>
           </vueper-slides>
