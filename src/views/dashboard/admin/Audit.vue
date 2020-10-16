@@ -207,9 +207,9 @@
                     <e-column width="200" field="openingReading" headerText="Opening Reading"></e-column>
                     <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
                     <e-column width="200" field="productName" headerText="Product Name"></e-column>
+                    <e-column width="200" field="tankName" headerText="Tank Name"></e-column>
                     <e-column width="200" field="rtt" headerText="RTT"></e-column>
                     <e-column width="200" field="rttAmount" headerText="RTT Amount"></e-column>
-                    <!-- <e-column :template="AuditSalesTemplate" headerText="Action" width="250"></e-column> -->
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
