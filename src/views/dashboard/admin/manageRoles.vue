@@ -112,12 +112,12 @@ export default {
           {
             field: "roles",
             headerText: "Roles Name",
-            width: 300,
+            width: 200,
             textAlign: "center",
           },
           {
             headerText: "Action",
-            width: 100,
+            width: 300,
             textAlign: "center",
             template: () => {
               return {

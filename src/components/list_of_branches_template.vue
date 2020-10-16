@@ -1,47 +1,82 @@
 <template>
-  <div class="btn-group btn-group-sm" role="group">
-    <router-link  title="Edit" :to="{ name: 'editBranch', query: {companyBranchId: data.id}}" class="btn btn-warning" >
+  <div>
+    <!-- <router-link  title="Edit" :to="{ name: 'editBranch', query: {companyBranchId: data.id}}" class="btn btn-warning" > Edit
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </router-link> -->
+    <router-link
+      :to="{ name: 'editBranch', query: {companyBranchId: data.id}}"
+      class="btn details_btn mr-3"
+    >Edit
     </router-link>
     <router-link
-      title="Details"
       :to="{ name: 'branchDetails', query: {companyBranchId: data.id}}"
-      class="btn btn-primary"
-    >
-      <i class="fa fa-info-circle" aria-hidden="true"></i>
+      class="btn dealers_btn mr-3"
+    >Details
     </router-link>
     <router-link
-      title="Fund Branch"
-      :to="{ name: 'fundBranch' }"
-      class="btn btn-warning"
-    >
-      <i class="fa fa-money" aria-hidden="true"></i>
-    </router-link>
-    <router-link
-      
-      title="Transactions"
       :to="{ name: 'transactions' }"
-      class="btn btn-primary"
-    >
-      <i class="fa fa-mars" aria-hidden="true"></i>
+      class="btn branches_btn mr-3"
+    >Transactions
     </router-link>
-    <router-link
+    <!-- <router-link
       title="Mail Recipient"
       :to="{ name: 'branchMail_recipent', query: {companyBranchId: data.id} }"
       class="btn btn-success"
     >
       <i class="fa fa-reply" aria-hidden="true"></i>
-    </router-link>
+    </router-link> -->
+
+    <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
   </div>
 </template>
 
 <script>
+import configObject from "@/config";
+import Jquery from "jquery";
+let $ = Jquery;
+
 export default {
   data() {
     return {
       data: {},
     };
   },
-  mounted() {},
+  mounted() {
+      window.onclick = (event) => {
+            if (!event.target.matches('.dropbtn')) {
+                  var dropdowns = document.getElementsByClassName("dropdown-content");
+                  var i;
+                  for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                        }
+                  }
+            }
+      }
+      
+  },
+  methods: {
+      dropdownOption() {
+        this.$eventHub.$emit('showExtra', this.data)
+      },
+  },
 };
+
+
+
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 </script>

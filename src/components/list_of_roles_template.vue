@@ -1,14 +1,16 @@
 <template>
-  <div class="btn-group btn-group-sm" role="group">
-          <router-link v-b-tooltip.hover title="Edit" :to="{name:'edit_roles'}" class="btn btn-warning" >
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </router-link> 
-           <router-link v-b-tooltip.hover title="Details" :to="{name:'company_details'}" class="btn btn-primary" >
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-          </router-link> 
-           <router-link v-b-tooltip.hover title="Delete" :to="{name:'map_user_sales_rep'}" class="btn btn-danger" >
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-          </router-link> 
+  <div>
+   <router-link :to="{name:'edit_roles'}" class="btn details_btn mr-3">
+      Edit
+    </router-link>
+
+    <router-link :to="{name:'company_details'}" class="btn dealers_btn mr-3">
+      Details
+    </router-link>
+
+    <router-link :to="{name:'company_details'}" class="btn branches_btn mr-3">
+     Delete
+    </router-link> 
   </div>
 </template>
 

@@ -54,18 +54,20 @@
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="500"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
+             <DropDown :details="details"/>
         </div>
     </masterLayout>
 </template>
 <script>
 
 import Vue from 'vue';
-import masterLayout from '@/views/dashboard/masterLayout'
+import masterLayout from '@/views/dashboard/masterLayout';
 import Temp from '@/components/list_of_branches_template.vue';
+import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
 
@@ -78,7 +80,8 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        DropDown
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -100,6 +103,11 @@ export default {
             showLoader: false,
             branchesCount: 0,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
+            tableCount: 0,
+            details: {
+                id: '',
+                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }], 
+            },
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -111,6 +119,19 @@ export default {
                 };
             }
         }
+    },
+     created() {
+        this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
+            this.details.id = data.id
+            const option = document.getElementById('myDropdown')
+            option.classList.add("show")
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                const num = this.details.delete.hasDelete ? 1 : 0
+                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+            } else {
+                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+            }
+        })
     },
     computed: {
         userName() {

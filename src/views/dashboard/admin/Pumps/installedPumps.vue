@@ -29,8 +29,7 @@
                                 </div>
                             </div>
                         </div>
-              </div>
-
+                     </div>
                 </div>
             </div>
         </section>
@@ -59,7 +58,7 @@
                     <e-column width="200" field="sourceTank" headerText="Source Tank"></e-column>
                     <e-column width="200" field="lastReading" headerText="Last Reading"></e-column>
                     <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
-                    <e-column :template="installedPumpsTemplate" headerText="Action" width="100"></e-column>
+                    <e-column :template="installedPumpsTemplate" headerText="Action" width="300"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
