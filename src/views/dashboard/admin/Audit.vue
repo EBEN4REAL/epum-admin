@@ -239,6 +239,11 @@ export default {
             backgroundUrl,
             pmsTankVolumeSold: 0,
             pmsTankVolumeFilled: 0,
+            agoTankVolumeSold: 0,
+            agoTankVolumeFilled: 0,
+            dpkTankVolumeSold: 0,
+            dpkTankVolumeFilled: 0,
+            
             details: {
                 id: '',
                 info: [{ name: 'Edit', link: 'sales_rep' }], 
@@ -295,7 +300,7 @@ export default {
             },0) 
             this.dpkTankVolumeSold = dpkTankVolumeSold
             this.dpkTankVolumeRefilled = dpkTankVolumeRefilled
-            console.log(pmsVolumeSold)
+            // console.log(pmsVolumeSold)
 
         },
         pumpDaySales() {
