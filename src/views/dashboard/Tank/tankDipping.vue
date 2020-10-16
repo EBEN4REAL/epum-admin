@@ -144,7 +144,6 @@ let $ = Jquery;
 export default {
   components: {
     masterLayout,
-    backgroundUrl,
     EjsTable,
   },
   provide: {
@@ -164,6 +163,7 @@ export default {
   },
   data() {
     return {
+      backgroundUrl,
       tableProps: {
         pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
         toolbar: ["ExcelExport", "PdfExport", "Search", "Date"],

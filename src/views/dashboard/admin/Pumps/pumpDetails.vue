@@ -297,7 +297,7 @@ export default {
                 return;
             }
             if(!this.pumpDetails.status) {
-                this.$toast("Please input a pump status", {
+                this.$toast("Please select a pump status", {
                     type: "error", 
                     timeout: 3000
                 });

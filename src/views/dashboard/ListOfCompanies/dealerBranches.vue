@@ -54,10 +54,11 @@
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="200"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="350"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
+            <DropDown :details="details"/>
         </div>
     </masterLayout>
 </template>
@@ -68,6 +69,7 @@ import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_branches_template.vue';
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
+import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 
 
 
@@ -78,10 +80,24 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        DropDown
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+    },
+    created() {
+        this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
+            this.details.queryStrings.companyBranchId = data.id
+            const option = document.getElementById('myDropdown')
+            option.classList.add("show")
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                const num = this.details.delete.hasDelete ? 1 : 0
+                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+            } else {
+                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+            }
+        })
     },
     mounted() {
         this.getBranches();
@@ -104,6 +120,11 @@ export default {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
+            },
+            details: {
+                queryStrings: { companyBranchId: '', companyId: this.$route.query.companyId }, 
+                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }], 
+                delete: { hasDelete: false, deleteName: ''}
             },
             branchesTemplate: function() {
                 return {
@@ -145,7 +166,7 @@ export default {
                     res.data.forEach(el => {
                         el.index = ++index;
                     })
-                     sessionStorage.clear()
+                    sessionStorage.clear()
                     localStorage.setItem("branchesList", JSON.stringify(res.data))
                     this.branchesCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({

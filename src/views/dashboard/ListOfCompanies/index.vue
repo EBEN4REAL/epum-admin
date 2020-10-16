@@ -114,7 +114,8 @@ export default {
             details: {
                 queryStrings: { companyId: '' }, 
                 info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
-                delete: { hasDelete: true, deleteName: 'deleteCompany'}
+                delete: { hasDelete: true, deleteName: 'deleteCompany' }
+                // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
             }, // this is needed for the blahblah
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -139,6 +140,7 @@ export default {
             this.details.queryStrings.companyId = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
+            console.log(data.index)
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
                 const num = this.details.delete.hasDelete ? 1 : 0
                 option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
@@ -163,7 +165,8 @@ export default {
             var value = event.target.value;
             grid.search(value);
         }
-         this.$eventHub.$on("refreshCompaniesList", () => {
+        this.$eventHub.$on("refreshCompaniesList", () => {
+            this.currentPage = 1
             this.getCompanies()
         });
     },
@@ -233,7 +236,8 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
                 .then(res => {
-                    let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                    // let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                    let index = 0;
                     res.data.data.forEach(el => {
                         el.index = ++index;
                     })

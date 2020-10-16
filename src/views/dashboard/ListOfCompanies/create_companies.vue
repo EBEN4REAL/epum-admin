@@ -208,6 +208,13 @@ export default {
           });
           return;
       }
+      if(this.Phone.length < 10 || this.Phone.length > 13) {
+          this.$toast("Please input a phone number between 10 and 13 digits", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       if(!this.Email) {
           this.$toast("Email Field cannot be blank", {
               type: "error", 
@@ -238,20 +245,20 @@ export default {
           return;
       }
       if(this.Country === "select a country") {
-          this.$toast("Select a valid country", {
+          this.$toast("Plese select a country", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.State) {
+      if(this.State == 'select state') {
           this.$toast("State Field cannot be blank", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.Logo) {
+      if(Array.isArray(this.Logo)) {
           this.$toast("Please select a logo", {
               type: "error", 
               timeout: 3000

@@ -16,7 +16,8 @@ export default {
     }, 
     methods: {
         deleteNow() {
-            this.$eventHub.$emit(this.details.delete.deleteName, this.details.id)
+            this.$eventHub.$emit(this.details.delete.deleteName, this.details.queryStrings.companyId)
+            // this.$eventHub.$emit(this.details.delete.deleteName, this.details.queryStrings[this.details.delete.arg])
         }
     },
 }
