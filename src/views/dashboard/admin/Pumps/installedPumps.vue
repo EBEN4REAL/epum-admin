@@ -3,37 +3,34 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
+                <div class="col-lg-8 remove-padding-left padding_div pr-0">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Get started with epump company admin platform by creating and managing your installed pumps here</p>
+                        </div>
+                        <div class="col-md-4 mt-4 text-center">
+                           <router-link :to="{name: 'addPump'}" class="btn create_btn primary_btn"> Add More Pump</router-link>
+                        </div>
+                    </div>
+                </div>
+             </div>
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
-                        <div class="row make-row-hundred-percent align-items-center justify-content-center" >
-                            <div class="col-md-3">
-                                <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <img src="@/assets/img/company_icon.png"  width="40" />
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of Installed Pumps</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/company.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >66</small>
                                 </div>
                             </div>
-                            <div class="col-md-7 remove-padding-left">
-                                <div class="text-center">
-                                    <h5 class="text-white font-weight">Installed Pumps</h5>
-                                </div>
-                            <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">66</h5>
-                                </div>
                         </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 remove-padding-left padding_div">
-                        <div class="dashboard__card small_card align-center">
-                            <div class="row">
-                            <div class="col-md-9 card_inner_wrapper">
-                                <h3>List of Installed Pumps.</h3>
-                            </div>
-                            <div class="col-md-3 mt-4">
-                                <router-link :to="{name: 'addPump'}" class="create_btn btn btn_theme">Add More Pump</router-link>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
+              </div>
+
                 </div>
             </div>
         </section>
@@ -101,6 +98,7 @@ export default {
     },
     data() {
         return {
+              userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
               tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -148,6 +146,11 @@ export default {
                     template: Temp
                 };
             }
+        }
+    },
+    computed: {
+        userName() {
+            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
         }
     },
     methods: {

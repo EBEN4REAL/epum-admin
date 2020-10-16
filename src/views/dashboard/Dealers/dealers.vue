@@ -62,7 +62,7 @@
 <script>
 
 import Vue from 'vue';
-import masterLayout from '@/views/dashboard/masterLayout'
+import masterLayout from '@/views/dashboard/masterLayout';
 import Temp from '@/components/list_of_dealers_template.vue';
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
