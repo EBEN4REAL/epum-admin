@@ -374,7 +374,7 @@ export default {
     getTanks() {
           this.axios
           .get(
-          `${configObject.apiBaseUrl}/Branch/Tanks/a3f65d3a-a312-4534-a0a5-030cec97fcc5`,
+          `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
           configObject.authConfig
           )
           .then(response => {
