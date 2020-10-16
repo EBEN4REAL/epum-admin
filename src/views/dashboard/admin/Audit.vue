@@ -203,13 +203,10 @@
                 >
                 <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="date" headerText="Date Modified"></e-column>
+                    <e-column width="200" field="dateModified" headerText="Date Modified"></e-column>
                     <e-column width="200" field="volumeSold" headerText="Volume Sold (Naira)"></e-column>
                     <e-column width="200" field="amountSold" headerText="Amount Sold (Naira)"></e-column>
-                    <e-column width="200" field="openingReading" headerText="Opening Reading"></e-column>
-                    <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
-                    <e-column width="200" field="productName" headerText="Product Name"></e-column>
-                    <e-column width="200" field="tankName" headerText="Tank Name"></e-column>
+                    <e-column width="200" field="name" headerText="Tank Name"></e-column>
                     <e-column width="200" field="rtt" headerText="RTT"></e-column>
                     <e-column width="200" field="rttAmount" headerText="RTT Amount"></e-column>
                 </e-columns>
@@ -355,7 +352,7 @@ export default {
             searchFun(e);
         });
         function searchFun(event) {
-            var grid = document.getelsByClassName("e-grid")[0].ej2_instances[0];
+            var grid = document.getElementsByClassName("e-grid")[1].ej2_instances[1];
             var value = event.target.value;
             grid.search(value);
         }
@@ -482,35 +479,45 @@ export default {
                 `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
-                    // const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
-                    // console.log(ids)
-                    // const arr = []
-                    // res.data.pumpDaySales.forEach(cur => {
-                    //     ids.forEach(current => {
-                    //         const index = arr.findIndex(sery => sery.name == current)
-                    //         if (index == -1 && cur.tankName == current) {
-                    //         series.push({
-                    //             name: current,
-                    //             data: [cur.productVolume],
-                    //         });
-                    //         } 
-                    //         if (index != -1 && cur.tankName == current) {
-                    //         const value = series[index].data
-                    //         series[index].data = [...value, cur.productVolume]
-                    //         }
-                    //     })
-                    // });
-                    res.data.pumpDaySales.forEach(el => {
+                    const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
+                    console.log(ids)
+                    const arr = []
+                    res.data.pumpDaySales.forEach(cur => {
+                        console.log(cur)
+                        ids.forEach(current => {
+                            const i = arr.findIndex(el => el.name == current)
+                            if (i > -1) {
+                                console.log(cur.amountSold)
+                                arr[i].amountSold  += parseFloat(cur.amountSold)
+                                arr[i].volumeSold  += parseFloat(cur.volumeSold)
+                                arr[i].rtt  += parseFloat(cur.rtt)
+                                arr[i].rttAmount  += parseFloat(cur.rttAmount)
+                            }else {
+                                arr.push({
+                                    name: current,
+                                    amountSold: parseFloat(cur.amountSold),
+                                    volumeSold: parseFloat(cur.volumeSold),
+                                    date: cur.dateModified,
+                                    rtt: parseFloat(cur.rtt),
+                                    rttAmount: parseFloat(cur.rttAmount)
+                                });
+                            }
+                        })
+                    });
+                    console.log(arr)
+                    arr.forEach(el => {
                         el.index = ++index;
                         el.amountSold = this.convertThousand(el.amountSold)
                         el.volumeSold = this.convertThousand(el.volumeSold);
-                        el.date = this.$moment(el.dateModified).format( "MM/DD/YYYY hh:mm A");
+                        el.rtt = this.convertThousand(el.rtt)
+                        el.rttAmount = this.convertThousand(el.rttAmount);
+                        el.dateModified = this.$moment(el.dateModified).format("MM/DD/YYYY hh:mm A");
                     })
                     this.parseProductTankSales(res.data.productTankSales)
                     this.parseProductDaySales(res.data.productDaySales)
                     this.parseTankSales(res.data.tankSales)
                     this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data.pumpDaySales
+                        dataSource: arr
                     });
                     this.refreshGrid();
                     this.showLoader = false;
