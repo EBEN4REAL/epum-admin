@@ -24,129 +24,81 @@
     <div class="full__row_section center_div margin-top-center-div mt-3 ep_card">
       <div class="">
         <form>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label"> Tank Name</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-md-4">
+              <label class="label"> Tank Name</label>
+            </div>
+            <div class="col-md-8">
+              <div class="input__block">
+                <input type="text" placeholder="" class="" v-model="tankName"/>
               </div>
-               <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label">Tank Max Capacity</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-md-4">
+              <label class="label">Product in Tank</label>
+            </div>
+            <div class="col-md-8">
+              <div class="input__block">
+                <select v-model="product" >
+                    <option value="select product"  selected>select product</option>
+                    <option :value="prod.id" v-for="(prod, index) in prodList"
+                  :key="index">{{prod.name}}</option>
+                </select>
               </div>
-               <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label"> Current Volume </label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-md-4">
+              <label class="label">Max Capacity of Tank</label>
+            </div>
+            <div class="col-md-8">
+              <div class="input__block">
+                <input type="number" placeholder="" class="" v-model="tankCapacity"/>
               </div>
-               <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label"> Current Cost Price</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-md-4">
+              <label class="label">Current Volume</label>
+            </div>
+            <div class="col-md-8">
+              <div class="input__block">
+                <input type="number" placeholder="" class="" v-model="currentVolume"/>
               </div>
-               <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label"> Current Selling Price </label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-md-4">
+              <label class="label">Product Selling Price</label>
+            </div>
+            <div class="col-md-8">
+              <div class="input__block">
+                <input type="number" placeholder="" class="" v-model="sellingPrice"/>
               </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label class="label">Product in Tank</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <select class="form-control">
-                      <option disabled selected>
-                        Select Product in Tank
-                      </option>
-                      <option>AGO </option>
-                      <option>PMS </option>
-                        <option>DPK </option>
-                        <option>LPG </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label>Tank Has ATG</label>
-                </div>
-                <div class="col-md-8">
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="NO">
-                 <label class="form-check-label">No</label>
-                </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label>Probe Address</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label>Tank Is Calibrating</label>
-                </div>
-                <div class="col-md-8">
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="NO">
-                 <label class="form-check-label">No</label>
-                </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label>Calibration Start Volume</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-3">
-                <div class="col-md-4">
-                  <label>Calibration Start Date</label>
-                </div>
-                <div class="col-md-8">
-                  <div class="input__block">
-                    <input type="date" placeholder="" class="" />
-                  </div>
-                </div>
-              </div>
-              <div class="text-center mt-3">
-                <button class="btn btn_theme">Save</button>
-              </div>
+            </div>
+          </div>
+          <div class="form-check form-check-inline mt-4">
+            <input class="form-check-input" type="checkbox" id="" @change="toggleATG"> Status
+          </div>
+          <hr />
+          <div class="text-center mt-3">
+            <button class="btn btn-success" @click="createTank"
+                :disabled="isButtonDisabled ? true : null"
+                :style="[
+                  isButtonDisabled
+                    ? { cursor: 'not-allowed' }
+                    : { cursor: 'pointer' }
+                ]"
+              >Add
+                <img
+                  src="@/assets/img/git_loader.gif"
+                  style="display:none"
+                  width="35px"
+                  class="ml-3 loader"
+                />
+            </button> 
+          </div>
         </form>
       </div>
     </div>
@@ -169,5 +121,36 @@ export default {
       backgroundUrl,
     };
   },
+  mounted() {
+    this.tankId = this.$route.query.tankId;
+    let ml = sessionStorage.getItem(this.tankId);
+    if (!ml) {
+      let allData = localStorage.getItem("tanksList");
+     let dt = JSON.parse(allData);
+      dt.forEach((my, index) => {
+        if (my.id === this.tankId) {
+          ml = JSON.stringify(my);
+          sessionStorage.setItem(this.tankId, ml);
+        }
+      });
+    }
+    let tankDetails = JSON.parse(ml);
+    this.tankDetailsObj = tankDetails;
+    console.log(this.tankDetailsObj);
+  },
+  methods: {
+    getProducts() {
+      this.axios
+        .get(
+          `https://testapi.epump.com.ng/Products`,
+          configObject.authConfig
+        )
+        .then(response => {
+          this.prodList = response.data
+        })
+        .catch(error => {
+        });
+    },
+  }
 };
 </script>

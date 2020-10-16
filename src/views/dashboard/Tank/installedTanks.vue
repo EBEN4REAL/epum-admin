@@ -90,21 +90,22 @@
             </div>
             <div class="row" style="margin-right: 0px;">
           <div
-            class="col-md-4 ml-4 text-center"
+            class="col-md-4 mb-3 text-center"  v-for="(tank, index) in tanks"
+            :key="index"
           >
             <div class="product_summary__wrapper tank__header__Wrapper">
               <div
                 class="product_summary_header tank__header"
               ></div>
-              <h3 class="tank__name text-center mt-3">PMS Tank 1</h3>
+              <h3 class="tank__name text-center mt-3">{{tank.name}}</h3>
               <div class="text-center flex___div">
                 <small class="time__stamps">
                   <img src="@/assets/img/passage-of-time (1).png" width-="10px" />
-                  2 mins ago
+                  {{tank.lastSeen}}
                 </small>
                 <div class="bowl text-center">
                   <div class="inner">
-                    <!-- <div
+                    <div
                       class="fill"
                       v-bind:style="{
                         '--h': tank.height + 'px',
@@ -130,7 +131,7 @@
                                         c-2-0.1-20-0.8-32.2-1.9c0,0-3.1-0.3-8.1-0.7V300H300z"
                         />
                       </svg>
-                    </div> -->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,7 +140,7 @@
                   <h4 class="vol_sold">Product Level</h4>
                 </div>
                 <div class="right_div">
-                  <h4 class="vol_sold">10,000</h4>
+                  <h4 class="vol_sold">{{ convertThousand(tank.currentVolume) }}</h4>
                 </div>
               </div>
               <div class="clearfix volume_info">
@@ -147,7 +148,7 @@
                   <h4 class="vol_sold">Tank Capacity</h4>
                 </div>
                 <div class="right_div">
-                  <h4 class="vol_sold">33,000.00</h4>
+                  <h4 class="vol_sold">{{ convertThousand(tank.maxCapacity) }}</h4>
                 </div>
               </div>
               <div class="clearfix volume_info">
@@ -155,10 +156,10 @@
                   <h4 class="vol_sold">Water Level</h4>
                 </div>
                 <div class="right_div">
-                  <h4 class="vol_sold">1,937.00</h4>
+                  <h4 class="vol_sold">{{ convertThousand(tank.waterVolume) }}</h4>
                 </div>
               </div>
-              <div class="clearfix volume_info">
+              <!-- <div class="clearfix volume_info">
                 <div class="left_div">
                   <h4 class="vol_sold">Cost Price</h4>
                 </div>
@@ -173,7 +174,7 @@
                 <div class="right_div">
                   <h4 class="vol_sold">1,937.00</h4>
                 </div>
-              </div>
+              </div> -->
               <div class="mt-3 pb-3 tanks_probe">
                 <div class="mb-4 mt-4">
                   <router-link
@@ -189,7 +190,7 @@
                 </div>
                 <div class="mb-3">
                   <router-link
-                    :to="{ name: 'editTank'}"
+                    :to="{ name: 'editTank', query: {tankId: tank.id}}"
                     class="edit_tank_btn remove_text_decoration mt-2"
                     style="text-decoration: none"
                   >Edit Tank</router-link>
@@ -216,12 +217,80 @@ export default {
   mounted() {},
   data() {
     return {
-      tanksCount: 0
+      tanksCount: 0,
+      tanks: []
     };
   },
   mounted() {
+    this.getTanks()
   },
   methods: {
+    convertThousand(request) {
+        if (!isFinite(request)) {
+            return "0.00";
+        }
+        return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+     getTanks() {
+          this.axios
+          .get(
+          `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
+          configObject.authConfig
+          )
+          .then(response => {
+              console.log(response.data)
+              this.installedTanksCount = response.data.length;
+              response.data.forEach(element => {
+                            response.data.forEach(element => {
+            element.height = parseInt(
+              150 - (element.currentVolume / element.maxCapacity) * 140
+            );
+            if (element.height >= 98) {
+              element.waveColor = "red";
+            } else if (element.height >= 70) {
+              element.waveColor = "#039be4";
+            } else {
+              element.waveColor = "green";
+            }
+            element.waterVolume =
+              element.waterVolume == null ? 0 : element.waterVolume;
+            if (
+              element.productName !== undefined &&
+              element.productName !== null
+            ) {
+              if (element.productName.toLowerCase() === "pms") {
+                element.color = "#d8991c";
+              } else if (element.productName.toLowerCase() === "ago") {
+                element.color = "#0fce29";
+              } else if (element.productName.toLowerCase() === "dpk") {
+                element.color = "#00aced";
+              } else if (element.productName.toLowerCase() === "lpg") {
+                element.color = "purple";
+              }
+            } else if (element.name !== undefined && element.name !== null) {
+              if (element.name.toLowerCase().includes("pms")) {
+                element.color = "#d8991c";
+              } else if (element.name.toLowerCase().includes("ago")) {
+                element.color = "#0fce29";
+              } else if (element.name.toLowerCase().includes("dpk")) {
+                element.color = "#00aced";
+              } else if (element.name.toLowerCase().includes("lpg")) {
+                element.color = "purple";
+              }
+            }
+          });
+          response.data.sort(function(a, b) {
+            return a.height - b.height;
+          });
+          this.tanks = response.data;
+          sessionStorage.clear();
+          localStorage.setItem("tanksList", JSON.stringify(response.data))
+          this.tanksCount = response.data.length
+          console.log(this.tanks)
+            })
+          })
+          .catch(error => {});
+      },
   }
 };
 </script>

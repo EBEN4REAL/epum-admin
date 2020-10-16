@@ -280,11 +280,11 @@
                                         </span>
                                     </router-link>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <router-link :to="{ name: 'pump_variance_report' }" class="vue_router_link" :class="activeRoute === 'pump_variance_report' ? 'active' : ''">
                                         Pump Variance 
                                     </router-link>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
