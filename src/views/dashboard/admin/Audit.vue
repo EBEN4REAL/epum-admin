@@ -204,8 +204,8 @@
                 <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
                     <e-column width="200" field="date" headerText="Date Modified"></e-column>
-                    <e-column width="200" field="volumeSold" headerText="Volume Sold"></e-column>
-                    <e-column width="200" field="amountSold" headerText="Amount Sold"></e-column>
+                    <e-column width="200" field="volumeSold" headerText="Volume Sold (Naira)"></e-column>
+                    <e-column width="200" field="amountSold" headerText="Amount Sold (Naira)"></e-column>
                     <e-column width="200" field="openingReading" headerText="Opening Reading"></e-column>
                     <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
                     <e-column width="200" field="productName" headerText="Product Name"></e-column>
@@ -242,7 +242,7 @@
                 >
                  <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="volumeSold" headerText="Volume Sold"></e-column>
+                    <e-column width="200" field="volumeSold" headerText="Volume Sold (Naira)"></e-column>
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled"></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
@@ -482,6 +482,24 @@ export default {
                 `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
+                    // const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
+                    // console.log(ids)
+                    // const arr = []
+                    // res.data.pumpDaySales.forEach(cur => {
+                    //     ids.forEach(current => {
+                    //         const index = arr.findIndex(sery => sery.name == current)
+                    //         if (index == -1 && cur.tankName == current) {
+                    //         series.push({
+                    //             name: current,
+                    //             data: [cur.productVolume],
+                    //         });
+                    //         } 
+                    //         if (index != -1 && cur.tankName == current) {
+                    //         const value = series[index].data
+                    //         series[index].data = [...value, cur.productVolume]
+                    //         }
+                    //     })
+                    // });
                     res.data.pumpDaySales.forEach(el => {
                         el.index = ++index;
                         el.amountSold = this.convertThousand(el.amountSold)
