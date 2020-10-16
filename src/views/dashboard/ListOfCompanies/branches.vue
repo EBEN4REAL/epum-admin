@@ -54,7 +54,7 @@
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="city" headerText="City"></e-column>
                     <e-column width="200" field="country" headerText="Country"></e-column>
-                    <e-column :template="branchesTemplate" headerText="Action" width="500"></e-column>
+                    <e-column :template="branchesTemplate" headerText="Action" width="400"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>

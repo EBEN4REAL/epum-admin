@@ -30,7 +30,6 @@
                         </div>
                     </div>
               </div>
-
         </div>
       </div>
     </section>
@@ -97,12 +96,12 @@ export default {
           {
             field: "roles",
             headerText: "Roles Name",
-            width: 200,
+            width: 100,
             textAlign: "center",
           },
           {
             headerText: "Action",
-            width: 300,
+            width: 100,
             textAlign: "center",
             template: () => {
               return {
