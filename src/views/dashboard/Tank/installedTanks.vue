@@ -17,7 +17,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
                     >
-                      123
+                      {{ tanksCount }}
                     </small>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
                         <div class="col-lg-5">
                             <div class="small_card inner_tank_card">
                                 <div class="text-center pt-5">
-                                    <router-link :to="{name: 'addTank'}" class="btn btn_device">Add New Tank</router-link>
+                                    <router-link :to="{name: 'addTank', query: {companyBranchId: this.$route.query.companyBranchId}}" class="btn btn_device">Add New Tank</router-link>
                                 </div>
                            </div> 
                         </div>
@@ -206,6 +206,7 @@
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
+import configObject from "@/config";
 
 export default {
   components: {
@@ -215,19 +216,12 @@ export default {
   mounted() {},
   data() {
     return {
+      tanksCount: 0
     };
   },
+  mounted() {
+  },
   methods: {
-    getTanksCount() {
-      this.axios
-        .get(`${configObject.apiBaseUrl}​/Dashboard/Branch/TankCount/${this.$route.query.companyBranchId}`, configObject.authConfig)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        });
-    }
   }
 };
 </script>
