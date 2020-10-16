@@ -41,7 +41,7 @@
              <div class="row">
                 <div class="col-md-4 remove-right-padding">
                     <div class="header-three-text">Product Tank sales</div>
-                    <div class="small_card product_details_card mt-3">
+                    <div class="small_card product_details_card mt-3" v-show="!showLoader">
                         <div class="product_sales_flex_card_pump">
                             <div class="product_sales_flex_card_item_first">
 
@@ -87,10 +87,11 @@
                             </div>
                         </div>
                     </div>
+                    <TableLoader :showLoader="showLoader"/>
                 </div>
                 <div class="col-md-8 ">
                     <div class="header-three-text">Product Day sales</div>
-                    <div class="small_card product_details_card mt-3">
+                    <div class="small_card product_details_card mt-3"  v-show="!showLoader">
                         <div class="product_sales_flex_card">
                             <div class="product_sales_flex_card_item_first">
 
@@ -172,6 +173,7 @@
                             </div>
                         </div>
                     </div>
+                    <TableLoader :showLoader="showLoader"/>
                 </div>
             </div>
         </section>
