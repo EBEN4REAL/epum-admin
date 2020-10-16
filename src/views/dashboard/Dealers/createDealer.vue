@@ -241,7 +241,6 @@ export default {
         id: this.$route.query.companyId
       }
 
-      console.log(data);
       $('.loader').show();
        this.axios.post(`${configObject.apiBaseUrl}/Company/PostDealer`,data, configObject.authConfig)
           .then(res => {
@@ -271,7 +270,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {

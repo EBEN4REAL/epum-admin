@@ -151,7 +151,6 @@ export default {
         getStates() {
             this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     this.states = res.data
                 })
                 .catch(error => {
@@ -206,7 +205,6 @@ export default {
                 companyId: this.dealerObj.companyId,
                 id: this.$route.query.dealerId,
             }
-            console.log(data);
             $('.loader').show();
             this.axios.put(`${configObject.apiBaseUrl}/Company/UpdateDealer`, data, configObject.authConfig)
                 .then(res => {
@@ -221,8 +219,6 @@ export default {
                         }});
                 })
                 .catch(error => {
-                    console.log(error)
-                    console.log(error.response)
                     this.isButtonDisabled = false;
                     $('.loader').hide();
                     this.$toast(error.response.data.message, {

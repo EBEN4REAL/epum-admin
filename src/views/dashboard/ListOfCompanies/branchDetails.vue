@@ -344,7 +344,6 @@ export default {
     }
     let companyBranchDetails = JSON.parse(ml);
     this.comapanyBranchObj = companyBranchDetails;
-    console.log(this.comapanyBranchObj);
   },
   data() {
     return {
@@ -394,7 +393,6 @@ export default {
           configObject.authConfig
           )
           .then(response => {
-              console.log(response.data)
               this.installedTanksCount = response.data.length;
               response.data.forEach(element => {
                             response.data.forEach(element => {
@@ -439,7 +437,6 @@ export default {
             return a.height - b.height;
           });
           this.tanks = response.data;
-          console.log(this.tanks)
             })
           })
           .catch(error => {});

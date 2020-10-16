@@ -112,7 +112,6 @@ export default {
                 .post(
                 `${configObject.apiBaseUrl}/Account/login`, data)
                     .then(res => {
-                        console.log(res.data);
                         this.$toast("Login Successful", {
                             type: "success",
                             timeout: 3000

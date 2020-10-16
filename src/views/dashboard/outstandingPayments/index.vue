@@ -227,7 +227,6 @@ export default {
       this.axios
         .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig)
         .then(response => {
-            console.log(response.data)
             let amount = 0
             response.data.sort((a, b) => {
                 return a.branchName > b.branchName ? 1 : b.branchName > a.branchName ? -1 : 0;

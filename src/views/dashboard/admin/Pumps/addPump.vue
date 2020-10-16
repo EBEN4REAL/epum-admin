@@ -149,7 +149,6 @@ export default {
         configObject.authConfig
         )
         .then(response => {
-          console.log(response.data)
             this.tanks = response.data
         })
         .catch(error => {});
