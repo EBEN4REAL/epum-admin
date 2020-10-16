@@ -99,16 +99,6 @@
             </div>
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label>Secret Code</label>
-              </div>
-              <div class="col-md-8">
-                <div class="input__block">
-                  <input type="text" placeholder="Secret Code" class=""  v-model="comapanyBranchObj.secreteCode"/>
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center mt-3">
-              <div class="col-md-4 text-left">
                 <label>Send Report Mail</label>
               </div>
               <div class="col-md-8">
@@ -296,13 +286,6 @@ export default {
           });
           return;
       }
-      if(!this.comapanyBranchObj.secreteCode) {
-          this.$toast("Secret code Field cannot be blank", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
       if(!this.comapanyBranchObj.sendReportMail) {
           this.$toast("Send Report mail field code Field cannot be blank", {
               type: "error", 
@@ -311,19 +294,17 @@ export default {
           return;
       }
       const data = {
+          id: this.$route.query.companyBranchId,
+          name: this.comapanyBranchObj.name,
           phone: this.comapanyBranchObj.phone,
           email: this.comapanyBranchObj.email,
           street: this.comapanyBranchObj.street,
           city: this.comapanyBranchObj.city,
           state: this.comapanyBranchObj.state,
           country: this.comapanyBranchObj.country,
-          name: this.comapanyBranchObj.name,
-          dealerId: this.comapanyBranchObj.dealerId,
-          secreteCode: this.comapanyBranchObj.secreteCode,
-          date: new Date().toISOString(),
-          sendReportMail: this.comapanyBranchObj.sendReportMail,
+          engagementLevel: this.comapanyBranchObj.engagementLevel,
           online: this.comapanyBranchObj.online,
-          engagementLevel: this.comapanyBranchObj.engagementLevel
+          sendReportMail: this.comapanyBranchObj.sendReportMail         
       }
 
       $('.loader').show();
@@ -337,7 +318,6 @@ export default {
                 this.$router.push({name: 'branches', query: {companyId: this.comapanyBranchObj.companyId}})
           })
           .catch(error => {
-            console.log(error.response)
               this.isButtonDisabled = false;
               $('.loader').hide();
               this.$toast("Unable to update branch", {
