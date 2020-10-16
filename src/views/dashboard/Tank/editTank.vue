@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <input type="text" placeholder="" class="" v-model="tankName"/>
+                <input type="text" placeholder="" class="" v-model="tankDetailsObj.name"/>
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <select v-model="product" >
+                <select v-model="tankDetailsObj.productId" >
                     <option value="select product"  selected>select product</option>
                     <option :value="prod.id" v-for="(prod, index) in prodList"
                   :key="index">{{prod.name}}</option>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <input type="number" placeholder="" class="" v-model="tankCapacity"/>
+                <input type="number" placeholder="" class="" v-model="tankDetailsObj.maxCapacity"/>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <input type="number" placeholder="" class="" v-model="currentVolume"/>
+                <input type="number" placeholder="" class="" v-model="tankDetailsObj.currentVolume"/>
               </div>
             </div>
           </div>
@@ -79,22 +79,22 @@
             </div>
           </div>
           <div class="form-check form-check-inline mt-4">
-            <input class="form-check-input" type="checkbox" id="" @change="toggleATG"> Status
+            <input class="form-check-input" type="checkbox" id="" :checked="tankDetailsObj.hasATG" @change="toggleATG"> Status
           </div>
           <hr />
           <div class="text-center mt-3">
-            <button class="btn btn-success" @click="createTank"
+            <button class="btn btn-success" @click="editTank"
                 :disabled="isButtonDisabled ? true : null"
                 :style="[
                   isButtonDisabled
                     ? { cursor: 'not-allowed' }
                     : { cursor: 'pointer' }
                 ]"
-              >Add
+              >Update
                 <img
                   src="@/assets/img/git_loader.gif"
                   style="display:none"
-                  width="35px"
+                  width="20px"
                   class="ml-3 loader"
                 />
             </button> 
@@ -109,6 +109,10 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
+import configObject from "@/config";
+import Jquery from 'jquery';
+let $ = Jquery;
+
 
 export default {
   components: {
@@ -119,9 +123,14 @@ export default {
   data() {
     return {
       backgroundUrl,
+      prodList: [],
+      tankDetailsObj:{},
+      sellingPrice: '',
+      isButtonDisabled: false
     };
   },
   mounted() {
+    this.getProducts()
     this.tankId = this.$route.query.tankId;
     let ml = sessionStorage.getItem(this.tankId);
     if (!ml) {
@@ -139,6 +148,9 @@ export default {
     console.log(this.tankDetailsObj);
   },
   methods: {
+    toggleATG() {
+      this.tankDetailsObj.hasATG = !this.tankDetailsObj.hasATG
+    },
     getProducts() {
       this.axios
         .get(
@@ -151,6 +163,65 @@ export default {
         .catch(error => {
         });
     },
+    editTank(event) {
+      event.preventDefault()
+      if(!this.tankDetailsObj.name) {
+          this.$toast("Please input a tank name", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.tankDetailsObj.maxCapacity) {
+          this.$toast("Please input a tank capacity", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(!this.sellingPrice) {
+          this.$toast("Please input a selling price", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      const data = {
+        branchId: this.$route.query.branchId,
+        name: this.tankDetailsObj.name,
+        maxCapacity: parseFloat(this.tankDetailsObj.maxCapacity),
+        currentSellingPrice: parseFloat(this.sellingPrice),
+        actualVolume: parseFloat(this.tankDetailsObj.currentVolume),
+        productId: this.tankDetailsObj.productId,
+        hasATG: this.tankDetailsObj.hasATG,
+        id: this.$route.query.tankId
+      }
+      console.log(data)
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+      this.axios.put(`${configObject.apiBaseUrl}/Tank/EditTank`, data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Successfully Updated Tank", {
+                    type: "success",
+                    timeout: 3000
+                });
+                $('.loader').hide();
+                this.isButtonDisabled = false;
+                this.$router.push({ name: "installedTanks", query: {
+                  companyBranchId: this.$route.query.branchId
+                } });
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    }
   }
 };
 </script>

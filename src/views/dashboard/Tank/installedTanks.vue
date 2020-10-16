@@ -176,7 +176,7 @@
                 </div>
               </div> -->
               <div class="mt-3 pb-3 tanks_probe">
-                <div class="mb-4 mt-4">
+                <div class="mb-4 mt-4">``
                   <router-link
                     :to="{ name: 'tankTransaction'}"
                     class="transactions__btn remove_text_decoration"
@@ -186,11 +186,12 @@
                     :to="{ name: 'tankDipping'}"
                     class="probe_transactions_btn remove_text_decoration ml-4"
                     style="text-decoration: none"
-                  >Tank Dipping</router-link>
+                  >Tank Dipping
+                  </router-link>
                 </div>
                 <div class="mb-3">
                   <router-link
-                    :to="{ name: 'editTank', query: {tankId: tank.id}}"
+                    :to="{ name: 'editTank', query: {tankId: tank.id, branchId: $route.query.companyBranchId}}"
                     class="edit_tank_btn remove_text_decoration mt-2"
                     style="text-decoration: none"
                   >Edit Tank</router-link>
