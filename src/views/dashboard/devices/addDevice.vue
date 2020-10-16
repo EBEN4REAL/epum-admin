@@ -158,7 +158,7 @@ export default {
   },
   mounted() {
     this.getTanks()
-    this.getProbes()
+    this.getPumps()
     this.companyBranchId = this.$route.query.companyBranchId
     let ml = sessionStorage.getItem(this.companyBranchId)
     if (!ml){
@@ -186,6 +186,17 @@ export default {
         )
         .then(response => {
             this.tanks = response.data
+        })
+        .catch(error => {});
+    },
+    getPumps() {
+      this.axios
+        .get(
+        `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`,
+        configObject.authConfig
+        )
+        .then(response => {
+            this.pumps = response.data
         })
         .catch(error => {});
     },
@@ -256,8 +267,6 @@ export default {
           userID: 'string',
           devicePass: 'string'
       }
-
-      console.log(data);
 
       $('.loader').show();
       this.isButtonDisabled = true;

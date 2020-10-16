@@ -4,7 +4,7 @@
       <div class="col-lg-9 col-md-6">
         <div class="new_row_section">
           <div class="row mt-3">
-            <div class="col-lg-3 col-md-3 remove_padding-right">
+            <div class="col-lg-6 col-md-3 remove_padding-right">
               <router-link
                 :to="{ name: 'installedTanks', query: {companyBranchId: this.$route.query.companyBranchId} }"
                 class="router_link__text"
@@ -29,7 +29,7 @@
                 </div>
               </router-link>
             </div>
-            <div class="col-lg-3 col-md-3 remove_padding-right">
+            <div class="col-lg-6 col-md-3 remove_padding-right">
               <router-link
                 :to="{ name: 'installedPumps' }"
                 class="router_link__text"
@@ -48,13 +48,13 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
                       >
-                      0</small
+                      {{pumpCount}}</small
                     >
                   </div>
                 </div>
               </router-link>
             </div>
-            <div class="col-lg-3 col-md-3 remove_padding-right">
+            <!-- <div class="col-lg-3 col-md-3 remove_padding-right">
               <router-link
                 :to="{ name: 'installedPumps' }"
                 class="router_link__text"
@@ -101,7 +101,7 @@
                   </div>
                 </div>
               </router-link>
-            </div>
+            </div> -->
           </div>
 
           <div class="small_card product_details_card mt-3">
@@ -329,6 +329,7 @@ export default {
   mounted() {
     this.getWalletBalance();
     this.getTanks()
+    this.getPumpsCount()
     this.companyBranchId = this.$route.query.companyBranchId;
     let ml = sessionStorage.getItem(this.companyBranchId);
     if (!ml) {
@@ -351,6 +352,7 @@ export default {
       walletBalance: 0,
       tanks: [],
       installedTanksCount: 0,
+      pumpCount: 0
     };
   },
   methods: {
@@ -373,6 +375,17 @@ export default {
           this.walletBalance = this.convertThousand(res.data.balance);
         })
         .catch((error) => {});
+    },
+    getPumpsCount() {
+      this.axios
+        .get(
+        `${configObject.apiBaseUrl}/Dashboard/Branch/PumpCount/${this.$route.query.companyBranchId}`,
+        configObject.authConfig
+        )
+        .then(response => {
+            this.pumpCount = response.data.pumpCount
+        })
+        .catch(error => {});
     },
     getTanks() {
           this.axios
