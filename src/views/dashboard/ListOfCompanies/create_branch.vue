@@ -218,7 +218,6 @@ export default {
         .get(
             `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
             .then(res => {
-              console.log(res.data)
               this.companyDealers = res.data
             })
             .catch(error => {
@@ -335,7 +334,6 @@ export default {
           sendReportMail: this.sendReportMail,
       }
 
-      console.log(data);
       $('.loader').show();
        this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
           .then(res => {

@@ -163,7 +163,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data);
                     let index = 0
                     res.data.forEach(el => {
                         el.index = ++index;

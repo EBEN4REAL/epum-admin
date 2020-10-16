@@ -174,19 +174,6 @@ export default {
         })
         .catch(error => {});
     },
-    // getProbes() { // for getting probetransactions
-    //     this.axios
-    //     .get(
-    //     `${configObject.apiBaseUrl}/Tank/ProbeTransactions/8c903156-fd5f-494b-8b97-5e55e417f7dd/?startDate=2020-10-16T11:28:17.791Z&endDate=2020-10-16T11:28:17.791Z`,
-    //     configObject.authConfig
-    //     )
-    //     .then(response => {
-    //         console.log(response.data)
-    //     })
-    //     .catch(error => {
-    //       console.log(error.response)
-    //     });
-    // },
     addDevice(event) {
       event.preventDefault();
       if(this.selectedDevice == 'selectADevice') {

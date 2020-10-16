@@ -293,7 +293,6 @@ export default {
           configObject.authConfig
         )
         .then(res => {
-          console.log(res.data)
           this.states = res.data
         })
         .catch(error => {

@@ -177,7 +177,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0;
                     res.data.forEach(el => {
                         el.index = ++index;
@@ -232,7 +231,6 @@ export default {
                 branchId: this.$route.query.companyBranchId
             }
 
-            console.log(data);
             $('.loader').show();
             this.axios.post(`${configObject.apiBaseUrl}/Branch/CreateMailRecipient`,data, configObject.authConfig)
                 .then(res => {

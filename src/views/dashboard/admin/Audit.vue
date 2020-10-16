@@ -479,7 +479,6 @@ export default {
             .get(
                 `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0
                     res.data.pumpDaySales.forEach(el => {
                         el.index = ++index;

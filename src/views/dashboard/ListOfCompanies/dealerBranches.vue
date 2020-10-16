@@ -141,7 +141,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company/DealerBranches/${this.$route.query.dealerId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data);
                     let index = 0
                     res.data.forEach(el => {
                         el.index = ++index;
@@ -156,7 +155,6 @@ export default {
                     this.showLoader = false;
                 })
                 .catch(error => {
-                    console.log(error.response)
                     this.showLoader = false
                 });
         },

@@ -84,20 +84,21 @@
                     class="mt-4 pb-3 pumps_probe"
                     style="display: flex; justify-content: space-evenly"
                     >
-                        <div class="mb-4 remove_pumps_margin" style="margin-right: 1rem">
+                        <!-- <div class="mb-4 remove_pumps_margin" style="margin-right: 1rem"> -->
+                        <div class="mb-4 remove_pumps_margin">
                             <router-link
-                            :to="{ name: 'pump_details', query: {branchId: $route.query.branchId, id: pump.id} }"
+                            :to="{ name: 'pumpDetails', query: {companyBranchId: $route.query.companyBranchId, id: pump.id} }"
                             class="transactions_btn"
                             style="text-decoration: none"
                             >Details</router-link>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <router-link
                             :to="{ name: 'pump_transactions', query: {branchId: $route.query.branchId, id: pump.id} }"
                             class="probe_transactions_btn"
                             style="text-decoration: none"
                             >Transactions</router-link>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 </div>
@@ -155,7 +156,8 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`, configObject.authConfig)
                 .then(response => {
-                    console.log(response.data)
+                    sessionStorage.clear()
+                    localStorage.setItem("pumpsList", JSON.stringify(response.data))
                     response.data.forEach(element => {
                         if (element.productName !== undefined) {
                             if (element.productName.toLowerCase() === 'pms') {
@@ -167,21 +169,8 @@ export default {
                             } else if (element.productName.toLowerCase() === 'lpg') {
                                 element.color = "purple";
                             }
-                        } 
-                        // else if (element.displayName !== undefined) {
-                        //     if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product1)) {
-                        //         element.color = "#d8991c";
-                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product2)) {
-                        //         element.color = "#0fce29";
-                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product3)) {
-                        //         element.color = "#00aced";
-                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product4)) {
-                        //         element.color = "purple";
-                        //     }
-                        // }
+                        }
                     });
-
-
 
                     response.data.sort((a, b) =>
                         a.productName.toLowerCase() < b.productName.toLowerCase()

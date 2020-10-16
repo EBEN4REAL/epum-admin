@@ -150,7 +150,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data);
                     let index = 0
                     res.data.companyMailRecipients.forEach(el => {
                         el.index = ++index;
@@ -189,7 +188,6 @@ export default {
             }
             this.isButtonDisabled = true;
 
-            console.log(data);
             $('.loader').show();
             this.axios.post(`${configObject.apiBaseUrl}/Company/AddMailRecipient`,data, configObject.authConfig)
                 .then(res => {

@@ -18,7 +18,7 @@
     </section>
         <div class="full__row_section mt-3 ep_card">
             <div class="">
-                <form>
+                <!-- <form> -->
                     <div class="row ">
                         <div class="col-md-6 ">
                             <div class="row align-items-center mt-3">
@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="A1" class="" />
+                                        <input type="text" placeholder="A1" class="" v-model="pumpDetails.name"/>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="AGO 1" class="" />
+                                        <input type="text" placeholder="AGO 1" class="" v-model="pumpDetails.displayName"/>
                                     </div>
                                 </div>
                             </div>
@@ -47,10 +47,11 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <select class="form-control" >
-                                            <option disabled selected>Select Associate Pump to Tank</option>
-                                            <option>AGO Tank 1</option>
-                                            <option>PMS Tank 1</option>
+                                        <select class="form-control" v-model="pumpDetails.tankName">
+                                            <option disabled selected value="selectATank">
+                                                Select Associate Pump to Tank
+                                            </option>
+                                            <option v-for="(tank, index) in tanks" :key="index" :value="tank.name">{{tank.name}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -61,7 +62,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="number" placeholder="" class="" v-model="pumpDetails.currentReading">
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +72,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" readonly class="" v-model="pumpCalibration">
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +82,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" class="" v-model="pumpDetails.manufacturer">
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" class="" v-model="pumpDetails.model">
                                     </div>
                                 </div>
                             </div>
@@ -101,11 +102,11 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <select class="form-control" >
+                                        <select class="form-control" v-model="pumpDetails.status">
                                             <option disabled selected>Select Pump Status</option>
-                                            <option>Working Properly</option>
-                                            <option>Under Maintenance</option>
-                                            <option>Spoilt</option>
+                                            <option value="Working Properly">Working Properly</option>
+                                            <option value="Under Maintenance">Under Maintenance</option>
+                                            <option value="Spoilt">Spoilt</option>
                                         </select>
                                     </div>
                                 </div>
@@ -118,7 +119,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" class="" v-model="totalMultiplier">
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +129,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" class="" v-model="volumeMultiplier">
                                     </div>
                                 </div>
                             </div>
@@ -138,17 +139,30 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" >
+                                        <input type="text" placeholder="" class="" v-model="amountMultiplier">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <button class="btn btn_theme">Update</button>
-                             <button class="btn btn_theme">Cancel</button>
+                            <button class="btn btn_theme" @click="updatePump"
+                                :disabled="isButtonDisabled ? true : null"
+                                :style="[
+                                isButtonDisabled
+                                    ? { cursor: 'not-allowed' }
+                                    : { cursor: 'pointer' }
+                                ]"
+                            >Update
+                                <img
+                                src="@/assets/img/git_loader.gif"
+                                style="display:none"
+                                width="35px"
+                                class="ml-3 loader"
+                                />
+                            </button>
                         </div>
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
       
@@ -160,21 +174,161 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import backgroundUrl from "@/assets/img/bg__card.png";
-
-
+import configObject from "@/config";
+import Jquery from 'jquery';
+let $ = Jquery;
 
 export default {
     components: {
         masterLayout,
     },
-  
-    mounted(){
-       
-    },
     data() {
         return {
-          backgroundUrl
+          backgroundUrl,
+          pumpDetails: {},
+          tanks: [],
+          isButtonDisabled: false,
+          tankId: 'selectATank',
+          pumpCalibration: null,
+          volumeMultiplier: null,
+          amountMultiplier: null,
+          totalMultiplier: null
         }
+    },
+    mounted(){
+        this.getTanks()
+        this.getPumpCalibration()
+        this.getPumpDetails()
+        
+       this.pumpId = this.$route.query.id
+        let ml = sessionStorage.getItem(this.pumpId)
+        if (!ml){
+            let allData = localStorage.getItem("pumpsList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.pumpId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.pumpId, ml)
+                }
+            })
+        }
+
+        this.pumpDetails = JSON.parse(ml)
+    },
+    methods: {
+        getTanks() {
+            this.axios
+            .get(
+            `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
+            configObject.authConfig
+            )
+            .then(response => {
+                this.tanks = response.data
+            })
+            .catch(error => {});
+        },
+        getPumpCalibration() {
+            this.axios
+                .get(
+                `${configObject.apiBaseUrl}/Pumps/PumpCalibration/${this.$route.query.id}`,
+                configObject.authConfig
+                )
+                .then(response => {
+                    this.pumpCalibration = response.data
+                        ? parseFloat(response.data).toFixed(2)
+                        : 0;
+                })
+                .catch(error => {});
+        },
+        getPumpDetails() {
+            this.axios
+                .get(
+                `${configObject.apiBaseUrl}/Branch/Pumps/Detail/${this.$route.query.id}`,
+                configObject.authConfig
+                )
+                .then(response => {
+                    this.volumeMultiplier = response.data.volumeMultiplier
+                    this.amountMultiplier = response.data.amountMultiplier
+                    this.totalMultiplier = response.data.totalMultiplier
+                })
+                .catch(error => {});
+        },
+        updatePump() {
+            if(!this.pumpDetails.name) {
+                this.$toast("Please input a pump name", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.displayName) {
+                this.$toast("Please input a display name", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.currentReading && this.pumpDetails.currentReading !== 0) {
+                this.$toast("Please input a reading", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.manufacturer) {
+                this.$toast("Please input a manufacturer", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.model) {
+                this.$toast("Please input a model", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.model) {
+                this.$toast("Please input a model", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.pumpDetails.status) {
+                this.$toast("Please input a pump status", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+
+            const data = { ...this.pumpDetails, currentReading: parseFloat(this.pumpDetails.currentReading) }
+            
+            this.isButtonDisabled = true
+
+            $('.loader').show();
+            this.axios.post(`${configObject.apiBaseUrl}/Branch/UpdatePump`, data, configObject.authConfig)
+                .then(res => {
+                        this.$toast("Successfully updated pump", {
+                            type: "success",
+                            timeout: 3000
+                        });
+                        this.isButtonDisabled = false;
+                        $('.loader').hide();
+                        this.$router.push({name: 'installedPumps', query: {companyBranchId: this.companyBranchId}})
+                })
+                .catch(error => {
+                    this.isButtonDisabled = false;
+                    $('.loader').hide();
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000
+                    });
+                });
+            }
     }
+    
 }
 </script>

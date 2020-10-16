@@ -84,7 +84,6 @@ export default {
                         timeout: 3000
                     });
                     this.isButtonDisabled = false;
-                    console.log(res.data)
                     $('.loader').hide();
                 })
                 .catch(error => {
