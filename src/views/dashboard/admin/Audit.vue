@@ -162,6 +162,15 @@
                 </div>
             </div>
         </section>
+        
+        <div class="row top_section_row" style="border-radius: 8px">
+            <div class="col-md-8">
+              <span>Pump Sales</span>
+            </div>
+            <div class="col-md-4 text-right">
+                
+            </div>
+        </div>
         <div class="new_row_section mt-3">
              <ejs-grid
                 v-show="!showLoader"
@@ -244,9 +253,39 @@ export default {
         }
     },
     mounted() {
-        this.getAudits()
+        // this.getAudits()
+        this.pumpDaySales()
     },  
     methods: {
+        convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        pumpDaySales() {
+            this.showLoader = true
+            this.axios
+            .get(
+                `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e`, configObject.authConfig)
+                .then(res => {
+                    console.log(res.data)
+                    let index = 0
+                    res.data.pumpDaySales.forEach(el => {
+                        el.index = ++index;
+                        el.amountSold = this.convertThousand(this.amountSold)
+                        el.volumeSold = this.convertThousand(this.volumeSold);
+                    })
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data.pumpDaySales
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
+        },
         getAudits() {
             let data = [
                 {
