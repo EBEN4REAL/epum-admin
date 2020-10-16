@@ -173,7 +173,7 @@ export default {
       }
 
       if(this.tankId == 'selectATank') {
-          this.$toast(`Please select a ${this.selectedDevice}`, {
+          this.$toast('Please select a tank', {
               type: "error", 
               timeout: 3000
           });
