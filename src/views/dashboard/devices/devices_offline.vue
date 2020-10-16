@@ -3,43 +3,6 @@
     <section class="mt-3 full__row_section">
       <div class="banner">
         <div class="row">
-          <div class="col-lg-4">
-            <div class="dashboard__card large_card">
-              <div
-                class="row make-row-hundred-percent align-items-center justify-content-center"
-              >
-                <div class="col-md-3">
-                  <div class="icon_wrapper yellow centralize icon_div_big">
-                    <i
-                      class="fa fa-laptop"
-                      aria-hidden="true"
-                      style="font-size: 35px"
-                    ></i>
-                  </div>
-                </div>
-                <div class="col-md-7 remove-padding-left">
-                  <div class="text-center">
-                    <h5 class="text-white font-weight">Devices Offline</h5>
-                  </div>
-                  <div class="text-center mt-4">
-                    <h5 class="text-white mt-4 font-weight">28</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 remove-padding-left padding_div">
-            <div class="dashboard__card small_card align-center">
-              <div class="row">
-                <div class="col-md-9 card_inner_wrapper">
-                  <h3>List of Devices Offline</h3>
-                </div>
-                <div class="col-md-3 mt-4">
-                  <!-- <router-link :to="{name: ''}" class="create_btn btn btn_theme">Add Firmware</router-link> -->
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="col-lg-8 remove-padding-left padding_div pr-0">
             <div class="dashboard__card small_card align-center">
               <div class="row">
