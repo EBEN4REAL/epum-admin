@@ -175,7 +175,7 @@
               :slide-ratio="1 / 4"
               :dragging-distance="200"
               :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-              <vueper-slide   v-show="index <= 3 || showAll" v-for="(tank, index) in tanks" :key="index" style="display: block !important;padding-right: 0; padding-left: 0">
+              <vueper-slide  v-for="(tank, index) in tanks" :key="index" style="display: block !important;padding-right: 0; padding-left: 0">
                   <template v-slot:content>
                       <div class="low_tank text-center">
                         <h4 class="tank__name__header low_tank_name">{{ tank.name }}</h4>

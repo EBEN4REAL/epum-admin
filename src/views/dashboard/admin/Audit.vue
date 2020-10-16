@@ -41,7 +41,7 @@
              <div class="row">
                 <div class="col-md-4 remove-right-padding">
                     <div class="header-three-text">Product Tank sales</div>
-                    <div class="small_card product_details_card mt-3">
+                    <div class="small_card product_details_card mt-3" v-show="!showLoader">
                         <div class="product_sales_flex_card_pump">
                             <div class="product_sales_flex_card_item_first">
 
@@ -87,10 +87,11 @@
                             </div>
                         </div>
                     </div>
+                    <TableLoader :showLoader="showLoader"/>
                 </div>
                 <div class="col-md-8 ">
                     <div class="header-three-text">Product Day sales</div>
-                    <div class="small_card product_details_card mt-3">
+                    <div class="small_card product_details_card mt-3"  v-show="!showLoader">
                         <div class="product_sales_flex_card">
                             <div class="product_sales_flex_card_item_first">
 
@@ -172,18 +173,17 @@
                             </div>
                         </div>
                     </div>
+                    <TableLoader :showLoader="showLoader"/>
                 </div>
             </div>
         </section>
         <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Pump Sales</span>
+                    <span class="pl-3 ">Pump Sales between {{startDate}} and {{endDate}}</span>
                 </div>
                 <div class="col-md-4 text-right">
-                    <router-link :to="{name:'tank_sales', query: {companyBranchId: '8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e'}}" class="btn details_btn mr-3">
-                        Tank Sales
-                    </router-link>
+                   
                 </div>
             </div>
         </section>
@@ -203,19 +203,54 @@
                 >
                 <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="date" headerText="Date"></e-column>
+                    <e-column width="200" field="date" headerText="Date Modified"></e-column>
                     <e-column width="200" field="volumeSold" headerText="Volume Sold"></e-column>
                     <e-column width="200" field="amountSold" headerText="Amount Sold"></e-column>
                     <e-column width="200" field="openingReading" headerText="Opening Reading"></e-column>
                     <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
                     <e-column width="200" field="productName" headerText="Product Name"></e-column>
+                    <e-column width="200" field="tankName" headerText="Tank Name"></e-column>
                     <e-column width="200" field="rtt" headerText="RTT"></e-column>
                     <e-column width="200" field="rttAmount" headerText="RTT Amount"></e-column>
-                    <e-column :template="AuditSalesTemplate" headerText="Action" width="250"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
-            <DropDown :details="details"/>
+        </div>
+        <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
+                <div class="col-md-8">
+                    <span class="pl-3 ">Tank Sales between {{startDate}} and {{endDate}}</span>
+                </div>
+                <div class="col-md-4 text-right">
+                    
+                </div>
+            </div>
+        </section>
+        <div class="new_row_section mt-3 pb-4">
+             <ejs-grid
+                v-show="!showLoader"
+                ref="tankSalesdataGrid"
+                :created="refreshTankSalesGrid"
+                :allowPaging="true"
+                :allowSorting="true"
+                :pageSettings="tableProps.pageSettings"
+                :toolbar="tableProps.toolbar"
+                :searchSettings="tableProps.search"
+                :allowExcelExport="true"
+                :allowPdfExport="true"
+                :toolbarClick="toolbarClick"
+                >
+                 <e-columns>
+                    <e-column width="60" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="volumeSold" headerText="Volume Sold"></e-column>
+                    <e-column width="200" field="volumeFilled" headerText="Volume Filled"></e-column>
+                    <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
+                    <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
+                    <e-column width="200" field="productName" headerText="Product  Name" textAlign="center"></e-column>
+                    <e-column width="200" field="tankName" headerText="Tank  Name" textAlign="center"></e-column>
+                </e-columns>
+            </ejs-grid>
+            <TableLoader :showLoader="showLoader"/>
         </div>
     </masterLayout>
 </template>
@@ -320,7 +355,7 @@ export default {
             searchFun(e);
         });
         function searchFun(event) {
-            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var grid = document.getelsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
             grid.search(value);
         }
@@ -395,6 +430,20 @@ export default {
             this.dpkDaySalePrice = dpkSales[0].price
 
         },
+        parseTankSales(data) {
+            let index = 0
+            data.forEach(el => {
+                el.index = ++index;
+                el.volumeSold = this.convertThousand(el.volumeSold);
+                el.volumeFilled = this.convertThousand(el.volumeFilled);
+                el.openingDip = this.convertThousand(el.openingDip);
+                el.closingDip = this.convertThousand(el.closingDip);
+            })
+            this.$refs.tankSalesdataGrid.ej2Instances.setProperties({
+                dataSource: data
+            });
+            this.refreshTankSalesGrid();
+        },
         parseProductTankSales(data) {
             const pmsSales = data.filter(el => el.productName.toLowerCase() === 'pms');
             const agoSales = data.filter(el => el.productName.toLowerCase() === 'ago');
@@ -437,10 +486,11 @@ export default {
                         el.index = ++index;
                         el.amountSold = this.convertThousand(el.amountSold)
                         el.volumeSold = this.convertThousand(el.volumeSold);
-                        el.date = this.$moment(el.date).format( "MM/DD/YYYY hh:mm A");
+                        el.date = this.$moment(el.dateModified).format( "MM/DD/YYYY hh:mm A");
                     })
                     this.parseProductTankSales(res.data.productTankSales)
                     this.parseProductDaySales(res.data.productDaySales)
+                    this.parseTankSales(res.data.tankSales)
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.pumpDaySales
                     });
@@ -455,12 +505,15 @@ export default {
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
+        refreshTankSalesGrid() {
+            this.$refs.tankSalesdataGrid.refresh();
+        },
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
                 let pdfExportProperties = {
                     pageOrientation: 'Landscape',
-                    fileName: "List_of_companies"
+                    fileName: "salesAudit"
                 }
                 this.$refs.dataGrid.pdfExport();
                 break;

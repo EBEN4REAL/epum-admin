@@ -37,6 +37,16 @@
                 </div>
             </div>
         </section>
+         <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
+                <div class="col-md-8">
+                    <span class="pl-3 ">Tank Sales between {{startDate}} and {{endDate}}</span>
+                </div>
+                <div class="col-md-4 text-right">
+                   
+                </div>
+            </div>
+        </section>
         <div class="new_row_section mt-3 pb-4">
              <ejs-grid
                 v-show="!showLoader"
@@ -181,7 +191,7 @@ export default {
                 case "PDF Export":
                 let pdfExportProperties = {
                     pageOrientation: 'Landscape',
-                    fileName: "List_of_companies"
+                    fileName: "tankSales"
                 }
                 this.$refs.dataGrid.pdfExport();
                 break;
