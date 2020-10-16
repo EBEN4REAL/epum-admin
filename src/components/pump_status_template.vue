@@ -1,12 +1,10 @@
 <template>
-  <div class="btn-group btn-group-sm" role="group">
+  <div>
     <router-link
-      v-b-tooltip.hover
       title="Edit"
       :to="{ name: 'editPumpStatus', query: { id: data.index } }"
-      class="btn btn-warning"
-    >
-      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      class="btn details_btn mr-3"
+    >Edit
     </router-link>
   </div>
 </template>

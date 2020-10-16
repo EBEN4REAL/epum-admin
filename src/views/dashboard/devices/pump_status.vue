@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-                </div>
+        </div>
         </section>
         <div class="new_row_section mt-3">
             <!-- <EjsTable :tableProps="tableProps"  /> -->
