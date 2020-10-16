@@ -257,6 +257,13 @@ export default {
           });
           return;
       }
+      if(this.comapanyBranchObj.phone.length < 10 || this.comapanyBranchObj.phone.length > 13) {
+          this.$toast("Please input a phone number with 10 to 13 characters", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
       if(!this.comapanyBranchObj.email) {
           this.$toast("Email  Field cannot be blank", {
               type: "error", 
@@ -315,7 +322,11 @@ export default {
                     timeout: 3000
                 });
                 $('.loader').hide();
-                this.$router.push({name: 'branches', query: {companyId: this.comapanyBranchObj.companyId}})
+                if (this.$route.query.dealerId) {
+                  this.$router.push({name: 'dealer_branches', query: {dealerId: this.$route.query.dealerId, companyId: this.$route.query.companyId}})
+                } else {
+                  this.$router.push({name: 'branches', query: {companyId: this.comapanyBranchObj.companyId}})
+                }
           })
           .catch(error => {
               this.isButtonDisabled = false;

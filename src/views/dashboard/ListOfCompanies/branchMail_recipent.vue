@@ -216,7 +216,7 @@ export default {
                 });
                 return;
             }else {
-                 if(this.phone.length < 10 && this.phone.length > 13) {
+                 if(this.phone.length < 10 || this.phone.length > 13) {
                     this.$toast("Phone Number Should be between 10 and 13 characters", {
                         type: "error", 
                         timeout: 3000

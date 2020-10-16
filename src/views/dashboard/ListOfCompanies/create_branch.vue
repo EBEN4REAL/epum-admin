@@ -255,7 +255,14 @@ export default {
           return;
       }
       if(!this.phone) {
-          this.$toast("Phone Field Cannot be blank", {
+          this.$toast("Please input a phone number", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      if(this.phone.length < 10 || this.phone.length > 13) {
+          this.$toast("Please input a phone number with 10 to 13 characters", {
               type: "error", 
               timeout: 3000
           });

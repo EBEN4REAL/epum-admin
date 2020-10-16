@@ -176,7 +176,7 @@
                 </div>
               </div> -->
               <div class="mt-3 pb-3 tanks_probe">
-                <div class="mb-4 mt-4">``
+                <div class="mb-4 mt-4">
                   <router-link
                     :to="{ name: 'tankTransaction'}"
                     class="transactions__btn remove_text_decoration"

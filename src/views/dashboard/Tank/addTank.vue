@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="form-check form-check-inline mt-4">
-            <input class="form-check-input" type="checkbox" id="" @change="toggleATG"> Status
+            <input class="form-check-input" type="checkbox" id="" @change="toggleATG"> Has ATG
           </div>
           <hr />
           <div class="text-center mt-3">
@@ -163,7 +163,7 @@ export default {
           });
           return;
       }
-      if(!this.product == 'select product') {
+      if(this.product == 'select product') {
           this.$toast("Please select a product", {
               type: "error", 
               timeout: 3000

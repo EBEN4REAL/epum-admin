@@ -4,7 +4,7 @@
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </router-link> -->
     <router-link
-      :to="{ name: 'editBranch', query: {companyBranchId: data.id}}"
+      :to="{ name: 'editBranch', query: this.$route.query.dealerId ? {companyBranchId: data.id, dealerId: this.$route.query.dealerId, companyId: this.$route.query.companyId} : {companyBranchId: data.id}}"
       class="btn details_btn mr-3"
     >Edit
     </router-link>
@@ -43,16 +43,16 @@ export default {
   },
   mounted() {
       window.onclick = (event) => {
-            if (!event.target.matches('.dropbtn')) {
-                  var dropdowns = document.getElementsByClassName("dropdown-content");
-                  var i;
-                  for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                        }
-                  }
-            }
+        if (!event.target.matches('.dropbtn')) {
+              var dropdowns = document.getElementsByClassName("dropdown-content");
+              var i;
+              for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                    }
+              }
+        }
       }
       
   },
