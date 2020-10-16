@@ -153,11 +153,13 @@ export default {
         this.getStates()
         this.companyId = this.$route.query.companyId
         let ml = sessionStorage.getItem(this.companyId)
+        console.log(ml)
         if (!ml){
             let allData = localStorage.getItem("companiesList")
             let dt = JSON.parse(allData)
             dt.forEach((my, index) =>{
                 if(my.id === this.companyId){
+                    console.log(my)
                     ml = JSON.stringify(my)
                     sessionStorage.setItem(this.companyId, ml)
                 }

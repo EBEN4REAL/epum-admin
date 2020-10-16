@@ -202,6 +202,7 @@ export default {
         hasATG: this.hasATG
       }
       $('.loader').show();
+      this.isButtonDisabled = true;
 
       this.axios.post(`${configObject.apiBaseUrl}/Tank/AddTank`, data, configObject.authConfig)
           .then(res => {

@@ -105,7 +105,7 @@ export default {
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             tableCount: 0,
             details: {
-                queryStrings: { id: '', companyId: this.$route.query.companyId }, 
+                queryStrings: { companyBranchId: '', companyId: this.$route.query.companyId }, 
                 info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }], 
                 delete: { hasDelete: false, deleteName: ''}
             },
@@ -123,7 +123,7 @@ export default {
     },
      created() {
         this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
-            this.details.queryStrings.id = data.id
+            this.details.queryStrings.companyBranchId = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
