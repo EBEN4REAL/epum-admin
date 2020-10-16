@@ -1,7 +1,7 @@
 <template>
     <masterLayout>
         <div class="row mt-3 ml-1">
-            <div class="col-lg-2 col-md-3 remove_padding-right">
+            <div class="col-lg-4 col-md-3 remove_padding-right">
                  <div class="new_row_section">
                 <div
                   class="small__card_content_wrapper small_card installed_tank_card"
@@ -23,7 +23,7 @@
                 </div>
             </div>
             </div>
-            <div class="col-lg-2 col-md-3 remove_padding-right">
+            <!-- <div class="col-lg-2 col-md-3 remove_padding-right">
                  <div class="new_row_section">
                 <div
                   class="small__card_content_wrapper small_card installed_tank_card"
@@ -66,8 +66,8 @@
                   </div>
                 </div>
             </div>
-            </div>
-            <div class="col-lg-6 col-md-3 remove_padding-right">
+            </div> -->
+            <div class="col-lg-8 col-md-3 remove_padding-right">
                  <div class="new_row_section installed_card small_card installed_tank_card">
                     <div class="row">
                         <div class="col-lg-5">
