@@ -113,7 +113,7 @@ export default {
             tableCount: 0, // this is needed for the blahblah
             details: {
                 queryStrings: { companyId: '' }, 
-                info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Sales Rep', link: 'sales_rep' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
+                info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
                 delete: { hasDelete: true, deleteName: 'deleteCompany'}
             }, // this is needed for the blahblah
             tableProps: {

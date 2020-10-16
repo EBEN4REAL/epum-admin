@@ -31,7 +31,7 @@
             </div>
             <div class="col-lg-6 col-md-3 remove_padding-right">
               <router-link
-                :to="{ name: 'installedPumps' }"
+                :to="{ name: 'installedPumps', query: { companyBranchId: this.$route.query.companyBranchId} }"
                 class="router_link__text"
               >
                 <div

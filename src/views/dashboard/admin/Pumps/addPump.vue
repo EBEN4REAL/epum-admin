@@ -16,7 +16,7 @@
       >
         <div class="col-md-12">
           <div class="text-center">
-            <h5 class="title">Create Pump</h5>
+            <h5 class="title">Add Pump</h5>
           </div>
         </div>
       </div>
@@ -25,17 +25,36 @@
       <div class="">
         <form>
               <div class="row align-items-center mt-3">
+                  <div class="col-md-4">
+                    <label class="label"> Pump Name</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input type="text" placeholder="" class="" v-model="name"/>
+                    </div>
+                  </div>
+              </div>
+              <div class="row align-items-center mt-3" >
+                  <div class="col-md-4">
+                    <label class="label">Pump Display Name</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input type="text" placeholder="" class="" v-model="displayName" />
+                    </div>
+                  </div>
+              </div>
+              <div class="row align-items-center mt-3">
                 <div class="col-md-4">
                   <label class="label">Associate Pump to Tank</label>
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <select class="form-control">
-                      <option disabled selected>
+                    <select class="form-control" v-model="tankId">
+                      <option disabled selected value="selectATank">
                         Select Associate Pump to Tank
                       </option>
-                      <option>AGO Tank 1</option>
-                      <option>PMS Tank 1</option>
+                      <option v-for="(tank, index) in tanks" :key="index" :value="tank.id">{{tank.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -46,7 +65,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <input type="text" placeholder="" class="" />
+                    <input type="text" placeholder="" class="" v-model="manufacturer"/>
                   </div>
                 </div>
               </div>
@@ -56,7 +75,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <input type="text" placeholder="" class="" />
+                    <input type="text" placeholder="" class="" v-model="model"/>
                   </div>
                 </div>
               </div>
@@ -66,60 +85,26 @@
                 </div>
                 <div class="col-md-8">
                   <div class="input__block">
-                    <input type="text" placeholder="" class="" />
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center mt-5">
-                <div class="col-md-4">
-                   <button class="btn btn-success" @click="addPumpObj">
-                      <i class="fa fa-plus mr-2"></i>Add Pump
-                    </button>
-                </div>
-                <div class="col-md-8">
-                  <div class="float-right">
-                    <!-- <button class="btn btn-success" @click="addPumpObj">
-                      <i class="fa fa-plus mr-2"></i>Add Pump
-                    </button> -->
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <div class="" v-for="(pmpObj,i) in pumpArr" :key="i">
-                <div class="row align-items-center mt-3">
-                  <div class="col-md-4">
-                    <label class="label"> Pump Name</label>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="input__block">
-                      <input type="text" placeholder="" class="" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row align-items-center mt-3" >
-                  <div class="col-md-4">
-                    <label class="label">Pump Display Name</label>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="input__block">
-                      <input type="text" placeholder="" class="" v-model="pmpObj.name" />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <img src="@/assets/img/remove (1).png" v-show="pumpArr.length > 1 && i > 0" style="float: right; cursor: pointer" @click="removePump(i)"/>
+                    <input type="text" placeholder="" class="" v-model="version"/>
                   </div>
                 </div>
               </div>
               <div class="text-center mt-3">
-                <button class="btn btn_theme">Add
-                  <img
-                    src="@/assets/img/git_loader.gif"
-                    style="display:none"
-                    width="35px"
-                    class="ml-3 loader"
-                  />
+                <button class="btn btn-success" @click="addPump"
+                    :disabled="isButtonDisabled ? true : null"
+                    :style="[
+                      isButtonDisabled
+                        ? { cursor: 'not-allowed' }
+                        : { cursor: 'pointer' }
+                    ]"
+                  >Add Pump
+                    <img
+                      src="@/assets/img/git_loader.gif"
+                      style="display:none"
+                      width="35px"
+                      class="ml-3 loader"
+                    />
                 </button>
-                <!-- <button class="btn btn_theme">Cancel</button> -->
               </div>
         </form>
       </div>
@@ -132,7 +117,6 @@ import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
 import configObject from "@/config";
-
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -141,35 +125,116 @@ export default {
     masterLayout,
   },
 
-  mounted() {},
+  mounted() {
+    this.getTanks()
+  },
   data() {
     return {
       backgroundUrl,
-      pumpData: {
-        branchId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        name: "",
-        maxCapacity: 0,
-        currentSellingPrice: 0,
-        dateCreated: "2020-10-13T13:15:57.193Z",
-        dateModified: "2020-10-13T13:15:57.193Z",
-        actualVolume: 0,
-        productId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      },
-      pumpArr: [
-        {
-          name: "",
-          displayName: ""
-        }
-      ]
+      isButtonDisabled: false,
+      tanks: [],
+      name: '',
+      displayName: '',
+      tankId: 'selectATank',
+      manufacturer: '', 
+      model: '',
+      version: '',
     };
   },
   methods: {
-    addPumpObj(event) {
-      event.preventDefault();
-      this.pumpArr.push({name: '', displayName: ''})
+    getTanks() {
+        this.axios
+        .get(
+        `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
+        configObject.authConfig
+        )
+        .then(response => {
+          console.log(response.data)
+            this.tanks = response.data
+        })
+        .catch(error => {});
     },
-    removePump(i) {
-      this.pumpArr.splice(i,1)
+    addPump(event) {
+      event.preventDefault();
+      if(!this.name) {
+          this.$toast("Please input a pump name", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      if(!this.displayName) {
+          this.$toast("Please input a display name", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      if(this.tankId == 'selectATank') {
+          this.$toast('Please select a tank', {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      
+      if(!this.manufacturer) {
+          this.$toast("Please input a manufacturer", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      if(!this.model) {
+          this.$toast("Please input a model", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      if(!this.version) {
+          this.$toast("Please input a version", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+      
+      const data = {
+          branchId: this.$route.query.companyBranchId,
+          tankId: this.tankId,
+          name: this.name,
+          manufacturer: this.manufacturer,
+          model: this.model,
+          version: this.version,
+          displayName: this.displayName
+      }
+
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+       this.axios.post(`${configObject.apiBaseUrl}/Pumps/AddPump`, data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Successfully Added Pump", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+                this.$router.push({name: 'installedPumps', query: {companyBranchId: this.$route.query.companyBranchId}})
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
     }
   }
 };

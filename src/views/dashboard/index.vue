@@ -11,7 +11,7 @@
                             <img src="@/assets/img/company_icon.png" width="60px" style="opacity: 0.6;"  />
                         </div>
                          <div class="mt-3">
-                            <h3 class="dashboard__card__header_bottom fg-success">{{companiesCount}}</h3>
+                            <h3 class="dashboard__card__header_bottom fg-success">{{companyCount}}</h3>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                             <img src="@/assets/img/dealer_icon.png" width="80px" style="opacity: 0.6;" />
                         </div>
                          <div class="mt-3">
-                            <h3 class="dashboard__card__header_bottom fg-blue">0</h3>
+                            <h3 class="dashboard__card__header_bottom fg-blue">{{dealerCount}}</h3>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                             <img src="@/assets/img/branch_icon.png" width="70px" style="opacity: 0.6;" />
                         </div>
                         <div class="mt-3">
-                            <h3 class="dashboard__card__header_bottom fg-danger">{{stationsCount}}</h3>
+                            <h3 class="dashboard__card__header_bottom fg-danger">{{branchCount}}</h3>
                         </div>
                     </div>
                 </div>
@@ -58,37 +58,50 @@ export default {
     },
     data() {
         return {
-            companiesCount: 0,
-            stationsCount: 0
+            companyCount: 0,
+            branchCount: 0,
+            dealerCount: 0
         }
     },
     mounted() {
-        this.getCompanies()
-        this.getStations()
+        this.getCompanyCount()
+        this.getBranchCount()
+        this.getDealerCount()
     },
     methods: {
-        getCompanies() {
+        getCompanyCount() {
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/Count`, configObject.authConfig)
                 .then(res => {
-                    this.companiesCount = res.data.data.length
+                    this.companyCount = res.data
                 })
                 .catch(error => {
 
                 });
         },
-        getStations() {
+        getBranchCount() {
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Branch/GetStations`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/BranchCount`, configObject.authConfig)
                 .then(res => {
-                    this.stationsCount = res.data.length
+                    this.branchCount = res.data
                 })
                 .catch(error => {
 
                 });
         },
+        getDealerCount() {
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Company/DealerCount`, configObject.authConfig)
+                .then(res => {
+                    this.dealerCount = res.data
+                })
+                .catch(error => {
+
+                });
+        }
     }
 }
 </script>

@@ -900,6 +900,13 @@ h6.dashboard__card__header {
   .large_card {
     margin-top: 19px;
   }
+  .pumps_probe {
+    display: flex;
+    flex-direction: column;
+  }
+  .remove_pumps_margin {
+    margin-right: 0 !important;
+  }
 }
 
 .product_sales_flex_card {
@@ -964,4 +971,92 @@ h6.dashboard__card__header {
 }
 .remove-right-padding {
   padding-right: 0px !important;
+}
+
+// Pumps 
+.pump_holder {
+  height: 100%;
+  min-height: 400px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+  background: $whiteColor;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.pump_header {
+  height: 10px;
+  width: 100%;
+  background: var(--vh);
+  // border-top-right-radius: 5px;
+  // border-top-left-radius: 5px;
+}
+
+.pump_name {
+  color: $greyTextColor;
+}
+
+.flex_div {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.time_stamps {
+  color: grey;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+.volume_info {
+  border-bottom: 1px solid rgb(185, 184, 184);
+  padding: 10px;
+}
+
+.left_div {
+  float: left;
+}
+
+.vol_sold {
+  color: $greyTextColor;
+  font-size: 17px;
+  padding: 5px;
+  font-weight: 400;
+}
+
+.right_div {
+  float: right;
+}
+
+.litres {
+  color: $greyTextColor;
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 7px;
+}
+
+.transactions_btn {
+  background: $editSecondColor;
+  font-size: 16px;
+  padding: 10px 32px;
+  color: $whiteColor;
+  &:hover {
+      color: $whiteColor;
+  }
+}
+
+.probe_transactions_btn {
+  background: $darkGreyColor;
+  border: 1px solid $darkGreyColor;
+  font-size: 16px;
+  padding: 10px 10px;
+  color: $whiteColor;
+  &:hover {
+      color: $whiteColor;
+  }
 }

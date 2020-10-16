@@ -34,32 +34,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="row  mt-3">
-              <div class="col-md-4 text-left">
-                <label>Pumps</label>
-              </div>
-              <div class="col-md-8 text-left">
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="P1">
-                 P1
-                </div>
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="A1">
-                 A1
-                </div>
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="P4">
-                 P4
-                </div>
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="P3">P3
-                </div>
-                 <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="P2">
-                 P2
-                </div>
-              </div>
-            </div> -->
             <div class="row align-items-center mt-3" v-if="selectedDevice !== 'selectADevice'">
               <div class="col-md-4 text-left">
                 <label>{{selectedDevice}}</label>
