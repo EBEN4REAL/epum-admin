@@ -538,13 +538,11 @@ h6.dashboard__card__header {
   margin-top: -17px;
 }
 
-.low_tank {
-  // margin: 20px 5px;
-  // padding: 10px;
-  // -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
-  // box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
+.top_section_row {
+  background: $whiteColor;
+  margin: 0 auto;
+  width: 98%;
 }
-
 .max-lines {
   display: block;
   text-overflow: ellipsis;

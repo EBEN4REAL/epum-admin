@@ -37,7 +37,7 @@
                                     formatted="DD/MM/YYYY"
                                     label="Select a date range"
                                 />
-                                </div>
+                              </div>
                         </div>
                     </div>
                     </div>
