@@ -162,15 +162,16 @@
                 </div>
             </div>
         </section>
-        
-        <div class="row top_section_row" style="border-radius: 8px">
-            <div class="col-md-8">
-              <span>Pump Sales</span>
+        <section class="top_section_row mt-3">
+            <div class="row  mt-3 py-3 pl-3 pr-3">
+                <div class="col-md-8">
+                <span>Pump Sales</span>
+                </div>
+                <div class="col-md-4 text-right">
+                    
+                </div>
             </div>
-            <div class="col-md-4 text-right">
-                
-            </div>
-        </div>
+        </section>
         <div class="new_row_section mt-3">
              <ejs-grid
                 v-show="!showLoader"
@@ -186,11 +187,12 @@
                 :toolbarClick="toolbarClick"
                 >
                 <e-columns>
+                    <e-column width="40" field="index" headerText="#"></e-column>
                     <e-column width="200" field="date" headerText="Date"></e-column>
-                    <e-column width="300" field="openingReading" headerText="Opening Reading"></e-column>
-                    <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
                     <e-column width="200" field="volumeSold" headerText="Volume Sold"></e-column>
                     <e-column width="200" field="amountSold" headerText="Amount Sold"></e-column>
+                    <e-column width="300" field="openingReading" headerText="Opening Reading"></e-column>
+                    <e-column width="200" field="lastReading" headerText="Last Reading "></e-column>
                     <e-column width="200" field="productName" headerText="Product Name"></e-column>
                     <e-column width="200" field="rtt" headerText="RTT"></e-column>
                     <e-column width="200" field="rttAmount" headerText="RTT Amount"></e-column>
@@ -235,6 +237,8 @@ export default {
             showLoader: false,
             stationsCount: 0,
             backgroundUrl,
+            pmsTankVolumeSold: 0,
+            pmsTankVolumeFilled: 0,
             details: {
                 id: '',
                 info: [{ name: 'Edit', link: 'sales_rep' }], 
@@ -253,7 +257,6 @@ export default {
         }
     },
     mounted() {
-        // this.getAudits()
         this.pumpDaySales()
     },  
     methods: {
@@ -262,6 +265,38 @@ export default {
                 return "0.00";
             }
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        parseProductTankSales(data) {
+            const pmsSales = data.filter(el => el.productName.toLowerCase() === 'pms');
+            const agoSales = data.filter(el => el.productName.toLowerCase() === 'ago');
+            const dpkSales = data.filter(el => el.productName.toLowerCase() === 'dpk');
+            let pmsTankVolumeSold = pmsSales.reduce((acc,cur) => {
+                return acc += cur.volumeSold
+            },0)
+            let pmsTankVolumeFilled = pmsSales.reduce((acc,cur) => {
+                return acc += cur.volumeFilled
+            },0)
+            
+            this.pmsTankVolumeSold = pmsTankVolumeSold
+            this.pmsTankVolumeFilled = pmsTankVolumeFilled
+            let agoTankVolumeSold = agoSales.reduce((acc,cur) => {
+                return acc += cur.volumeSold
+            },0)
+             let agoTankVolumeRefilled = agoSales.reduce((acc,cur) => {
+                return acc += cur.volumeFilled
+            },0)
+            this.agoTankVolumeSold = agoTankVolumeSold
+            this.agoTankVolumeRefilled = agoTankVolumeRefilled
+            let dpkTankVolumeSold = dpkSales.reduce((acc,cur) => {
+                return acc += cur.volumeSold
+            },0) 
+            let dpkTankVolumeRefilled = dpkSales.reduce((acc,cur) => {
+                return acc += cur.volumeFilled
+            },0) 
+            this.dpkTankVolumeSold = dpkTankVolumeSold
+            this.dpkTankVolumeRefilled = dpkTankVolumeRefilled
+            console.log(pmsVolumeSold)
+
         },
         pumpDaySales() {
             this.showLoader = true
@@ -273,9 +308,11 @@ export default {
                     let index = 0
                     res.data.pumpDaySales.forEach(el => {
                         el.index = ++index;
-                        el.amountSold = this.convertThousand(this.amountSold)
-                        el.volumeSold = this.convertThousand(this.volumeSold);
+                        el.amountSold = this.convertThousand(el.amountSold)
+                        el.volumeSold = this.convertThousand(el.volumeSold);
+                        el.date = this.$moment(el.date).format( "MM/DD/YYYY hh:mm A");
                     })
+                    this.parseProductTankSales(res.data.productTankSales)
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.pumpDaySales
                     });
@@ -286,44 +323,7 @@ export default {
                     this.showLoader = false
                 });
         },
-        getAudits() {
-            let data = [
-                {
-                    date: '27-10-2020',
-                    openingReading: '15,000',
-                    lastReading: '15,000',
-                    volumeSold: "15,000",
-                    amountSold: "15,000",
-                    productName: 'AGO',
-                    rtt: '15,000',
-                    rttAmount: '15,000'
-                },
-                {
-                    date: '27-10-2020',
-                    openingReading: '15,000',
-                    lastReading: '15,000',
-                    volumeSold: "15,000",
-                    amountSold: "15,000",
-                    productName: 'DPK',
-                    rtt: '15,000',
-                    rttAmount: '15,000'
-                },
-                {
-                    date: '27-10-2020',
-                    openingReading: '15,000',
-                    lastReading: '15,000',
-                    volumeSold: "15,000",
-                    amountSold: "15,000",
-                    productName: 'PMS',
-                    rtt: '15,000',
-                    rttAmount: '15,000'
-                }
-            ]
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: data
-            });
-            this.refreshGrid();
-        },
+       
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },

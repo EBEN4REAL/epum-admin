@@ -12,6 +12,7 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 import "vue-toastification/dist/index.css";
 
+
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import { GridPlugin } from "@syncfusion/ej2-vue-grids";
