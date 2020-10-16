@@ -112,7 +112,7 @@ export default {
             showLoader: true,
             tableCount: 0, // this is needed for the blahblah
             details: {
-                id: '',
+                queryStrings: { id: '' }, 
                 info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Sales Rep', link: 'sales_rep' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
                 delete: { hasDelete: true, deleteName: 'deleteCompany'}
             }, // this is needed for the blahblah
@@ -136,7 +136,7 @@ export default {
     },
     created() {
         this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
-            this.details.id = data.id
+            this.details.queryStrings.id = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
