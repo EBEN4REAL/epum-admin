@@ -239,7 +239,6 @@ export default {
           configObject.authConfig
           )
           .then(response => {
-              console.log(response.data)
               this.installedTanksCount = response.data.length;
               response.data.forEach(element => {
                             response.data.forEach(element => {
@@ -287,7 +286,6 @@ export default {
           sessionStorage.clear();
           localStorage.setItem("tanksList", JSON.stringify(response.data))
           this.tanksCount = response.data.length
-          console.log(this.tanks)
             })
           })
           .catch(error => {});

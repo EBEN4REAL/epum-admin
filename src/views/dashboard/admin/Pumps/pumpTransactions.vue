@@ -235,7 +235,6 @@ export default {
           configObject.authConfig
         )
         .then(response => {
-            console.log(response.data)
           this.showLoader = false;
           let totalVol = response.data.reduce((acc, curr) => {
             return acc + curr.totalSale;

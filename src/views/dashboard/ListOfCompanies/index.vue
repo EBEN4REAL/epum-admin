@@ -140,7 +140,6 @@ export default {
             this.details.queryStrings.companyId = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            console.log(data.index)
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
                 const num = this.details.delete.hasDelete ? 1 : 0
                 option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`

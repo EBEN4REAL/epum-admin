@@ -145,7 +145,6 @@ export default {
     }
     let tankDetails = JSON.parse(ml);
     this.tankDetailsObj = tankDetails;
-    console.log(this.tankDetailsObj);
   },
   methods: {
     toggleATG() {
@@ -197,7 +196,6 @@ export default {
         hasATG: this.tankDetailsObj.hasATG,
         id: this.$route.query.tankId
       }
-      console.log(data)
       $('.loader').show();
       this.isButtonDisabled = true;
 

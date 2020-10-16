@@ -480,14 +480,11 @@ export default {
                 .then(res => {
                     let index = 0
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
-                    console.log(ids)
                     const arr = []
                     res.data.pumpDaySales.forEach(cur => {
-                        console.log(cur)
                         ids.forEach(current => {
                             const i = arr.findIndex(el => el.name == current)
                             if (i > -1) {
-                                console.log(cur.amountSold)
                                 arr[i].amountSold  += parseFloat(cur.amountSold)
                                 arr[i].volumeSold  += parseFloat(cur.volumeSold)
                                 arr[i].rtt  += parseFloat(cur.rtt)
@@ -504,7 +501,6 @@ export default {
                             }
                         })
                     });
-                    console.log(arr)
                     arr.forEach(el => {
                         el.index = ++index;
                         el.amountSold = this.convertThousand(el.amountSold)
