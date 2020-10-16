@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown-content" id="myDropdown">
-        <router-link v-for="(link, i) in details.info" :key="i" :to="{ name: link.link, query: { id: details.id } }">
+        <router-link v-for="(link, i) in details.info" :key="i" :to="{ name: link.link, query: { ...details.queryStrings } }">
             {{ link.name }}
         </router-link>
         <button class="text-center" @click="deleteNow" v-if="details.delete.hasDelete">
@@ -18,7 +18,7 @@ export default {
         deleteNow() {
             this.$eventHub.$emit(this.details.delete.deleteName, this.details.id)
         }
-    }
+    },
 }
 </script>
 
