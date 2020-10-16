@@ -8,12 +8,12 @@
     }
 }
 .vueperslides__bullet {
-    // display: none !important;
+    display: none !important;
 }
 .vueperslide {
     // width: 100% !important;
 }
 .vueperslides__arrow {
-    color: $primaryColor;
-    font-size: 10px;
+    color: $primaryColor !important;
+    font-size: 10px !important;
 }

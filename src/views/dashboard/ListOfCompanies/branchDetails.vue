@@ -23,7 +23,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
                     >
-                      123
+                      {{ installedTanksCount }}
                     </small>
                   </div>
                 </div>
@@ -47,7 +47,8 @@
                   <div class="mt-3">
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
-                      >123</small
+                      >
+                      0</small
                     >
                   </div>
                 </div>
@@ -71,7 +72,7 @@
                   <div class="mt-3">
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
-                      >123</small
+                      >0</small
                     >
                   </div>
                 </div>
@@ -347,7 +348,8 @@ export default {
     return {
       comapanyBranchObj: {},
       walletBalance: 0,
-      tanks: []
+      tanks: [],
+      installedTanksCount: 0,
     };
   },
   methods: {
@@ -379,6 +381,7 @@ export default {
           )
           .then(response => {
               console.log(response.data)
+              this.installedTanksCount = response.data.length;
               response.data.forEach(element => {
                             response.data.forEach(element => {
             element.height = parseInt(
