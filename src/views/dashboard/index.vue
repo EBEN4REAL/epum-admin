@@ -11,7 +11,7 @@
                             <img src="@/assets/img/company_icon.png" width="60px" style="opacity: 0.6;"  />
                         </div>
                          <div class="mt-3">
-                            <h3 class="dashboard__card__header_bottom fg-success">{{companiesCount}}</h3>
+                            <h3 class="dashboard__card__header_bottom fg-success">{{companyCount}}</h3>
                         </div>
                     </div>
                 </div>
@@ -58,26 +58,28 @@ export default {
     },
     data() {
         return {
-            companiesCount: 0,
-            stationsCount: 0
+            // companiesCount: 0,
+            stationsCount: 0,
+            companyCount: 0
         }
     },
     mounted() {
         this.getCompanies()
         this.getStations()
+        this.getCompanyCount()
     },
     methods: {
-        getCompanies() {
-            this.axios
-            .get(
-                `${configObject.apiBaseUrl}/Company`, configObject.authConfig)
-                .then(res => {
-                    this.companiesCount = res.data.data.length
-                })
-                .catch(error => {
+        // getCompanies() {
+        //     this.axios
+        //     .get(
+        //         `${configObject.apiBaseUrl}/Company`, configObject.authConfig)
+        //         .then(res => {
+        //             this.companiesCount = res.data.data.length
+        //         })
+        //         .catch(error => {
 
-                });
-        },
+        //         });
+        // },
         getStations() {
             this.axios
             .get(
@@ -89,6 +91,17 @@ export default {
 
                 });
         },
+        getCompanyCount() {
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Company/Count`, configObject.authConfig)
+                .then(res => {
+                    this.companyCount = res.data.length
+                })
+                .catch(error => {
+
+                });
+        }
     }
 }
 </script>

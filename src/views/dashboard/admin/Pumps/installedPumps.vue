@@ -11,7 +11,7 @@
                             <p>Get started with epump company admin platform by creating and managing your installed pumps here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <router-link :to="{name: 'addPump'}" class="btn create_btn primary_btn"> Add More Pump</router-link>
+                           <router-link :to="{name: 'addPump', query: { companyBranchId: this.$route.query.companyBranchId }}" class="btn create_btn primary_btn"> Add More Pump</router-link>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >66</small>
+                                >{{pumpCount}}</small>
                                 </div>
                             </div>
                         </div>
@@ -33,43 +33,95 @@
                 </div>
             </div>
         </section>
-        <div class="new_row_section mt-3">
-            <ejs-grid
-                ref="dataGrid"
-                :created="refreshGrid"
-                :allowPaging="true"
-                :allowSorting="true"
-                :pageSettings="tableProps.pageSettings"
-                :toolbar="tableProps.toolbar"
-                :searchSettings="tableProps.search"
-                :allowExcelExport="true"
-                :allowPdfExport="true"
-                :toolbarClick="toolbarClick"
-                :dataSource="tableProps.tableData"  v-cloak
-                :columns="tableProps.columns"
+        <section class="new_row_section mt-3">
+            <div class="row pb-3" style="margin-right: 0px;">
+                <div
+                class="col-md-4 text-center"
+                v-for="(pump, index) in pumps"
+                :key="index"
+                style="padding: 0px 15px !important; margin-bottom: 20px"
                 >
-                <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="productName" headerText="Product Name"></e-column>
-                    <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
-                    <e-column width="200" field="manufacturer" headerText="Manufacturer"></e-column>
-                    <e-column width="200" field="model" headerText="Model"></e-column>
-                    <e-column width="200" field="deviceId" headerText="Device ID"></e-column>
-                    <e-column width="200" field="sourceTank" headerText="Source Tank"></e-column>
-                    <e-column width="200" field="lastReading" headerText="Last Reading"></e-column>
-                    <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
-                    <e-column :template="installedPumpsTemplate" headerText="Action" width="300"></e-column>
-                </e-columns>
-            </ejs-grid>
-        </div>
+                <div class="pump_holder">
+                    <div
+                    class="pump_header"
+                    :style="{ '--vh': pump.color }"
+                    ></div>
+                    <h3 class="pump_name text-center mt-3">{{ pump.displayName }}</h3>
+                    <div class="text-center flex_div">
+                        <small class="time_stamps">
+                            <img src="@/assets/img/passage-of-time (1).png" width-="18px" />
+                            {{ pump.lastSeen }}
+                        </small>
+                        <div class="text-center mt-3">
+                            <img src="@/assets/img/Group 806.png" />
+                        </div>
+                    </div>
+                    <div class="clearfix volume_info mt-3">
+                        <div class="left_div">
+                            <h4 class="vol_sold">Last Reading</h4>
+                        </div>
+                        <div class="right_div">
+                            <h4 class="litres">{{ convertThousand(pump.currentReading) }}</h4>
+                        </div>
+                    </div>
+                    <div class="clearfix volume_info">
+                        <div class="left_div">
+                            <h4 class="vol_sold">Manufacturer</h4>
+                        </div>
+                        <div class="right_div">
+                            <h4 class="litres">{{ pump.manufacturer }}</h4>
+                        </div>
+                    </div>
+                    <div class="clearfix volume_info">
+                        <div class="left_div">
+                            <h4 class="litres">Source Tank</h4>
+                        </div>
+                        <div class="right_div">
+                            <h4 class="litres">{{ pump.tankName }}</h4>
+                        </div>
+                    </div>
+                    <div
+                    class="mt-4 pb-3 pumps_probe"
+                    style="display: flex; justify-content: space-evenly"
+                    >
+                        <div class="mb-4 remove_pumps_margin" style="margin-right: 1rem">
+                            <router-link
+                            :to="{ name: 'pump_details', query: {branchId: $route.query.branchId, id: pump.id} }"
+                            class="transactions_btn"
+                            style="text-decoration: none"
+                            >Details</router-link>
+                        </div>
+                        <div class="mb-3">
+                            <router-link
+                            :to="{ name: 'pump_transactions', query: {branchId: $route.query.branchId, id: pump.id} }"
+                            class="probe_transactions_btn"
+                            style="text-decoration: none"
+                            >Transactions</router-link>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div
+            style="background: white; display: flex; justify-content: center; align-items: center; flex-flow: column wrap; height: 300px;"
+            v-if="!pumps || pumps.length < 1 && !showLoader"
+            >
+                <div class="text-center" style="margin-top: 30px">
+                    <h3 style="color: rgb(161, 146, 146); font-size: 35px;">No Pumps Added</h3>
+                </div>
+            </div>
+            <TableLoader :showLoader="showLoader" />
+        </section>
     </masterLayout>
 </template>
 <script>
 
 import Vue from 'vue';
+import TableLoader from "@/components/tableLoader/index";
 import masterLayout from '@/views/dashboard/masterLayout'
-import EjsTable from '@/components/ejsTable.vue';
-import Temp from '@/components/installed_pumps_template.vue';
+import configObject from "@/config";
+// import EjsTable from '@/components/ejsTable.vue';
+// import Temp from '@/components/installed_pumps_template.vue';
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -78,73 +130,17 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        EjsTable
-    },
-     provide: {
-        grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+        TableLoader
     },
     mounted() {
-        this.getBranches();
-        $(".e-input").keyup(function(e) {
-            searchFun(e);
-        });
-        function searchFun(event) {
-            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-            var value = event.target.value;
-            grid.search(value);
-        }
-        
+        this.getPumps();
     },
     data() {
         return {
-              userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-              tableProps: {
-                pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
-                toolbar: ["ExcelExport", "PdfExport", "Search"],
-                search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        productName: "AGO",
-                        pumpName: "AGO 1",
-                        manufacturer: "Wayne",
-                        model: "Igem 2014",
-                        deviceId: "No Device",
-                        sourceTank: "AGO Tank 1",
-                        lastReading: "0.00",
-                        lastUpdate: "> 1 month ago",
-                     },
-                    {
-                        index: 2,
-                        productName: "AGO",
-                        pumpName: "AGO 1",
-                        manufacturer: "Wayne",
-                        model: "Igem 2014",
-                        deviceId: "No Device",
-                        sourceTank: "AGO Tank 1",
-                        lastReading: "0.00",
-                        lastUpdate: "> 1 month ago",
-                    },
-                    {
-                        index: 3,
-                        productName: "AGO",
-                        pumpName: "AGO 1",
-                        Manufacturer: "Wayne",
-                        model: "Igem 2014",
-                        deviceId: "No Device",
-                        sourceTank: "AGO Tank 1",
-                        lastReading: "0.00",
-                        lastUpdate: "> 1 month ago",
-                    },                   
-                ],
-                
-                fileName: 'pump_status'
-            },
-            installedPumpsTemplate: function() {
-                return {
-                    template: Temp
-                };
-            }
+            showLoader: false,
+            pumps: [],
+            pumpCount: 0,
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
         }
     },
     computed: {
@@ -153,29 +149,65 @@ export default {
         }
     },
     methods: {
-        refreshGrid() {
-            this.$refs.dataGrid.refresh();
+        getPumps() {
+            this.showLoader = true;
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`, configObject.authConfig)
+                .then(response => {
+                    console.log(response.data)
+                    response.data.forEach(element => {
+                        if (element.productName !== undefined) {
+                            if (element.productName.toLowerCase() === 'pms') {
+                                element.color = "#d8991c";
+                            } else if (element.productName.toLowerCase() === 'ago') {
+                                element.color = "#0fce29";
+                            } else if (element.productName.toLowerCase() === 'dpk') {
+                                element.color = "#00aced";
+                            } else if (element.productName.toLowerCase() === 'lpg') {
+                                element.color = "purple";
+                            }
+                        } 
+                        // else if (element.displayName !== undefined) {
+                        //     if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product1)) {
+                        //         element.color = "#d8991c";
+                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product2)) {
+                        //         element.color = "#0fce29";
+                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product3)) {
+                        //         element.color = "#00aced";
+                        //     } else if (element.displayName.toLowerCase().includes(this.countryProducts.productsLower.product4)) {
+                        //         element.color = "purple";
+                        //     }
+                        // }
+                    });
+
+
+
+                    response.data.sort((a, b) =>
+                        a.productName.toLowerCase() < b.productName.toLowerCase()
+                        ? -1
+                        : a.productName.toLowerCase() > b.productName.toLowerCase()
+                        ? 1
+                        : 0
+                    );
+
+                    this.pumps = response.data;
+                    this.pumpCount = response.data.length;
+                    this.showLoader = false
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
         },
-        toolbarClick(args) {
-            switch (args.item.text) {
-                case "PDF Export":
-                let pdfExportProperties = {
-                    pageOrientation: 'Landscape',
-                    fileName: "dealers.pdf"
-                }
-                this.$refs.dataGrid.pdfExport();
-                break;
-                case "Excel Export":
-                    this.$refs.dataGrid.excelExport();
-                break;
+        convertThousand(request) {
+            if (!isFinite(request) || request == undefined || request == null) {
+                return "0.00";
             }
+            return request
+                .toFixed(2)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-        getBranches() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
     }
 }
 </script>
