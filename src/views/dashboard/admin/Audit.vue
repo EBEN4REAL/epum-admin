@@ -352,7 +352,7 @@ export default {
             searchFun(e);
         });
         function searchFun(event) {
-            var grid = document.getElementsByClassName("e-grid")[1].ej2_instances[1];
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
             grid.search(value);
         }
@@ -511,7 +511,7 @@ export default {
                         el.volumeSold = this.convertThousand(el.volumeSold);
                         el.rtt = this.convertThousand(el.rtt)
                         el.rttAmount = this.convertThousand(el.rttAmount);
-                        el.dateModified = this.$moment(el.dateModified).format("MM/DD/YYYY hh:mm A");
+                        el.dateModified = this.$moment(el.dateModified).format("MM/DD/YYYY");
                     })
                     this.parseProductTankSales(res.data.productTankSales)
                     this.parseProductDaySales(res.data.productDaySales)
