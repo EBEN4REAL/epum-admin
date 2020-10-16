@@ -39,6 +39,7 @@ import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
 import AuditSales from "../views/dashboard/admin/Audit.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
+import PumpTransactions from "../views/dashboard/admin/Pumps/pumpTransactions";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
 import AddTank from "../views/dashboard/Tank/addTank";
 import InstalledTanks from "../views/dashboard/Tank/installedTanks";
@@ -468,7 +469,16 @@ let routes = [
         authorize: true,
         authRoles: ['Admin']
     }
-},
+  },
+  {
+    path: "/pump-transactions",
+    name: "pumpTransactions",
+    component: PumpTransactions,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
 {
   path: "/addPump",
   name: "addPump",

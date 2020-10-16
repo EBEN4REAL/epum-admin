@@ -22,7 +22,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-6 card_inner_wrapper">
-                            <h3>Wallet Transactions</h3>
+                            <h3>Total Transactions</h3>
                         </div>
                         <div class="col-md-6 mt-4">
                            <div class="drop_down_div align-items-center">
@@ -45,13 +45,58 @@
             </div>
                 </div>
         </section>
+
+        <section class="new_row_section mt-3 pb-3">
+        <div class="row" style="margin-right: 0px; mt-3 pb-3">
+          <div class="col-md-4 pump_trans_mob" style="padding-right: 0px !important">
+            <div class>
+              <div class="pump_transaction_header_1 pupmp_trans_header text-center">
+                <p class>{{ totalVolume }} Ltrs</p>
+                <div class="mt-4">
+                  <span>
+                    <img src="@/assets/img/measure.png" width class />
+                  </span>
+                </div>
+                <p class="mt-3">Total volume of products</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 pump_trans_mob" style="padding-right: 0px !important">
+            <div class>
+              <div class="pump_transaction_header_3 pupmp_trans_header">
+                <p class>{{ transactionCount }}</p>
+                <div class="mt-3">
+                  <span>
+                    <img src="@/assets/img/to-do.png" width class />
+                  </span>
+                </div>
+                <p class="mt-4">Total number of transactions</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 pump_trans_mob" style="padding-right: 0px !important">
+            <div class>
+              <div class="pump_transaction_header_2 pupmp_trans_header">
+                <p class>{{ averageLitre.toFixed(2) }} Ltrs</p>
+                <div class="mt-3">
+                  <span>
+                    <img src="@/assets/img/analytics (1).png" width class />
+                  </span>
+                </div>
+                <p class="mt-4">Average litres per transaction</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
         <div class="new_row_section mt-3">
             <div class="row top_section_row" v-show="!showLoader">
                 <div class="col-md-8">
                 <span>
                     <img src="@/assets/img/hand (1).png" class="mr-3" />
-                    Transactions between {{ startDate }} and
-                    {{ endDate }} for {{branchName}}
+                    Retail Outlet pump transactions between {{ startDate }} and
+                    {{ endDate }}
                 </span>
                 </div>
                 <div class="col-md-4 text-right"></div>
@@ -60,7 +105,6 @@
              <ejs-grid
                 v-show="!showLoader"
                 ref="dataGrid"
-                :dataBound="dataBound"
                 :created="refreshGrid"
                 :allowPaging="true"
                 :allowSorting="true"
@@ -70,33 +114,21 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
-                :rowDataBound = "rowDataBound"
-            >
+              >
                 <e-columns>
-                  <e-column width="60" field="index" headerText="#"></e-column>
-                  <e-column field="date" width="200" headerText="Date"></e-column>
-                  <e-column
-                    field="amount"
-                    width="150"
-                    headerText="Amount"
-                  ></e-column>
-                  <e-column
-                    field="source"
-                    width="250"
-                   headerText="Amount"
-                  ></e-column>
-                  <e-column
-                    field="status"
-                    width="150"
-                    headerText="Amount"
-                  ></e-column>
-                  <e-column
-                    field="walletBalance"
-                    width="200"
-                    headerText="Amount"
-                  ></e-column>
+                  <e-column width="80" field="index" headerText="#"></e-column>
+                  <e-column field="date" width="200" headerText="Date/Time"></e-column>
+                  <e-column field="pumpName" width="200" headerText="Pumn Name"></e-column>
+                  <e-column field="productName" width="200" headerText="Product Name"></e-column>
+                  <e-column field="pricePerLitre" width="200" headerText="Price/Litre"></e-column>
+                  <e-column field="openingRead" width="200" headerText="Opening Reading"></e-column>
+                  <e-column field="closingRead" width="200" headerText="Closing Reading"></e-column>
+                  <e-column field="priceSoldCash" width="200" headerText="Price Sold Cash"></e-column>
+                  <e-column field="totalSale" width="200" headerText="Volume Dispensed"></e-column>
+                  <e-column field="staffName" width="200" headerText="Dispensed By"></e-column>
+                  <e-column field="salesType" width="200" headerText="Sales Type"></e-column>
                 </e-columns>
-            </ejs-grid>
+              </ejs-grid>
             <TableLoader :showLoader="showLoader"/> 
         </div>
     </masterLayout>
@@ -132,16 +164,17 @@ export default {
   data() {
     return {
         transactionCount: 0,
-        branchName: this.$route.query.branchName,
+        totalVolume: 0,
+        averageLitre: 0,
         maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
         customShortcuts: [
-        { key: "Today", label: "Today", value: "day" },
-        { key: "yesterday", label: "Yesterday", value: "-day" },
-        { key: "last7Days", label: "Last 7 Days", value: 7 },
-        { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
-        { key: "last30Days", label: "Last 30 Days", value: 30 },
-        { key: "lastMonth", label: "Last Month", value: "-month" }
-      ],
+            { key: "Today", label: "Today", value: "day" },
+            { key: "yesterday", label: "Yesterday", value: "-day" },
+            { key: "last7Days", label: "Last 7 Days", value: 7 },
+            { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
+            { key: "last30Days", label: "Last 30 Days", value: 30 },
+            { key: "lastMonth", label: "Last Month", value: "-month" }
+        ],
         startDate: this.$moment().format("MMMM D, YYYY"),
         endDate: this.$moment().format("MMMM D, YYYY"),
         pluginStartDate: this.$moment().format("D-M-YYYY"),
@@ -159,7 +192,7 @@ export default {
         this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
         this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
 
-        this.getTransactions();
+        this.getPumpTransactions();
       }
     },
   },
@@ -169,7 +202,7 @@ export default {
   },
   mounted() {
     this.showLoader = true
-    this.getTransactions()
+    this.getPumpTransactions()
 
     $(".e-input").keyup(function(e) {
       searchFun(e);
@@ -191,64 +224,48 @@ export default {
           break;
       }
     },
-    dataBound: function() {
-      this.$refs.dataGrid.autoFitColumns();
-    },
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
-    rowDataBound: function(args) {
-      if (args.data['status'] === "Debit") {
-        args.row.cells[4].style.color = "red";
-      } 
-      if (args.data['status'] === "Credit") {
-        args.row.cells[4].style.color = "green";
-      } 
-    },
-    getTransactions() {
-      this.showLoader = true
+    getPumpTransactions() {
+      this.showLoader = true;
       this.axios
         .get(
-          `${configObject.apiBaseUrl}/Branch/WalletTransactions/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`,
+          `${configObject.apiBaseUrl}/Branch/PumpTransactions?pumpId=${this.$route.query.id}&strtDate=${this.startDate}&endDate=${this.endDate}`,
           configObject.authConfig
         )
         .then(response => {
-          let index = 0
-          response.data
-            .sort((a, b) => {
-              if (a.date !== b.date) {
-                return a.date > b.date ? -1 : a.date < b.date ? 1 : 0
-              }
-            })
-          response.data.forEach(transaction => {
-            index += 1
-            transaction.index = index
-            if (transaction.status.toLowerCase() === 'add') {
-              transaction.status = 'Credit'
-            }
-            transaction.date = this.$moment(transaction.date).format(
+            console.log(response.data)
+          this.showLoader = false;
+          let totalVol = response.data.reduce((acc, curr) => {
+            return acc + curr.totalSale;
+          }, 0);
+          let index = 0;
+          response.data.forEach(element => {
+            element.index = ++index;
+            element.date = this.$moment(element.date).format(
               "MM/DD/YYYY hh:mm A"
             );
-          })
-          this.showLoader = false
-          this.transactionCount = response.data.length
+            element.pricePerLitre = this.convertThousand(element.priceSold);
+            element.openingRead = this.convertThousand(element.openingRead);
+            element.closingRead = this.convertThousand(element.closingRead);
+            element.totalSale = this.convertThousand(element.totalSale);
+            element.priceSoldCash = this.convertThousand(element.priceSoldCash);
+          });
+          this.totalVolume = totalVol;
+          this.transactionCount = response.data.length;
+          this.averageLitre =
+            response.data.length === 0
+              ? 0
+              : this.totalVolume / this.transactionCount;
+          this.totalVolume = this.convertThousand(this.totalVolume);
           this.$refs.dataGrid.ej2Instances.setProperties({
             dataSource: response.data
           });
           this.refreshGrid();
         })
         .catch(error => {
-          if(error.message && error.message === 'Network Error') {
-            this.$toast("Network Error, Please Check Your Internet Connection", {
-                type: "error",
-                timeout: 3000
-            });
-          }else {
-            this.$toast("An Error Occured", {
-                type: "error",
-                timeout: 3000
-            });
-          }
+          this.showLoader = false;
         });
     },
     decimalThousand(request) {

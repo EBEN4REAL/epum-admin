@@ -163,11 +163,6 @@ export default {
     };
   },
   created() {
-    let user = JSON.parse(localStorage.getItem("userDetails"));
-    // if (user.role !== 'Customer,Account Manager') {
-    //   this.$router.push({ name: "userDashboard" });
-    // }
-
     this.$eventHub.$on("getBranches", () => {
       this.getBranches();
     });

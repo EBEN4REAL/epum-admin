@@ -84,21 +84,20 @@
                     class="mt-4 pb-3 pumps_probe"
                     style="display: flex; justify-content: space-evenly"
                     >
-                        <!-- <div class="mb-4 remove_pumps_margin" style="margin-right: 1rem"> -->
-                        <div class="mb-4 remove_pumps_margin">
+                        <div class="mb-4 remove_pumps_margin" style="margin-right: 1rem">
                             <router-link
                             :to="{ name: 'pumpDetails', query: {companyBranchId: $route.query.companyBranchId, id: pump.id} }"
                             class="transactions_btn"
                             style="text-decoration: none"
                             >Details</router-link>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <router-link
-                            :to="{ name: 'pump_transactions', query: {branchId: $route.query.branchId, id: pump.id} }"
+                            :to="{ name: 'pumpTransactions', query: {branchId: $route.query.branchId, id: pump.id} }"
                             class="probe_transactions_btn"
                             style="text-decoration: none"
                             >Transactions</router-link>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
                 </div>

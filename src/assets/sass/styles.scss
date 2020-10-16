@@ -1060,3 +1060,36 @@ h6.dashboard__card__header {
       color: $whiteColor;
   }
 }
+
+// Pump Transactions 
+.pump_trans_mob {
+  margin-top: 15px;
+}
+
+.pump_transaction_header_1 {
+  background: #00aced;
+}
+
+.pump_transaction_header_3 {
+  background: $primaryColor;
+}
+
+.pump_transaction_header_2 {
+  background: rgb(194, 97, 34);
+}
+
+.pupmp_trans_header {
+  margin: 0px;
+  padding: 0px;
+  min-height: 170px;
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  p {
+      font-size: 22px;
+      color: $whiteColor;
+      margin: 0 !important;
+  }
+}

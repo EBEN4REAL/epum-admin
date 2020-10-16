@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center mt-3">
+                        <div class="text-center mt-5" style="margin: 0 auto;">
                             <button class="btn btn_theme" @click="updatePump"
                                 :disabled="isButtonDisabled ? true : null"
                                 :style="[
