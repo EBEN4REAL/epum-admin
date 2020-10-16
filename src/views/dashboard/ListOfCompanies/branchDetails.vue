@@ -48,7 +48,7 @@
                     <small
                       class="dashboard__card__header_bottom font-weight-bold"
                       >
-                      0</small
+                      {{pumpCount}}</small
                     >
                   </div>
                 </div>
@@ -329,6 +329,7 @@ export default {
   mounted() {
     this.getWalletBalance();
     this.getTanks()
+    this.getPumpsCount()
     this.companyBranchId = this.$route.query.companyBranchId;
     let ml = sessionStorage.getItem(this.companyBranchId);
     if (!ml) {
@@ -351,6 +352,7 @@ export default {
       walletBalance: 0,
       tanks: [],
       installedTanksCount: 0,
+      pumpCount: 0
     };
   },
   methods: {
@@ -373,6 +375,17 @@ export default {
           this.walletBalance = this.convertThousand(res.data.balance);
         })
         .catch((error) => {});
+    },
+    getPumpsCount() {
+      this.axios
+        .get(
+        `${configObject.apiBaseUrl}/Dashboard/Branch/PumpCount/${this.$route.query.companyBranchId}`,
+        configObject.authConfig
+        )
+        .then(response => {
+            this.pumpCount = response.data.pumpCount
+        })
+        .catch(error => {});
     },
     getTanks() {
           this.axios
