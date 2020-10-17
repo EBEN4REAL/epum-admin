@@ -39,6 +39,7 @@
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="false"
+                :actionBegin='actionHandler'
                 :allowSorting="true"
                 :pageSettings="tableProps.pageSettings"
                 :toolbar="tableProps.toolbar"
@@ -157,13 +158,27 @@ export default {
     mounted() {
         this.getCompanies();
         $(".e-input").keyup(function(e) {
-            searchFun(e);
+            if (e.keyCode === 13) {
+                searchFun(e, 13);
+            } else {
+                searchFun(e, 1)
+            }
         });
-        function searchFun(event) {
-            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-            var value = event.target.value;
-            grid.search(value);
+        const searchFun = (event, number) => {
+          var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+          var value = event.target.value;
+          this.searchValue = value
+          if ((number !== 13) && value.length > 3) {
+            this.getCompanies()
+          }
+          if (number == 13) {
+            this.getCompanies()
+          }
+          if (!value.length) {
+            this.getCompanies()
+          }
         }
+
         this.$eventHub.$on("refreshCompaniesList", () => {
             this.currentPage = 1
             this.getCompanies()
@@ -175,6 +190,19 @@ export default {
         }
     },
     methods: {
+        actionHandler: function(args) {
+            if (args.requestType == 'sorting') {
+                if (args.direction) {
+                    this.sortType = args.direction
+                    this.sortColumn = args.columnName
+                } else {
+                    this.sortType = ''
+                    this.sortColumn = ''
+                }
+                
+                this.getCompanies()
+            }
+        },
         _deleteCompany(id) {
         // _deleteCompany() {
         let resp = confirm("Are you sure want to delete this company?");
@@ -233,7 +261,7 @@ export default {
         getCompanies() {
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)
                 .then(res => {
                     // let index = 0 + ((this.currentPage - 1) * this.pageSize);
                     let index = 0;

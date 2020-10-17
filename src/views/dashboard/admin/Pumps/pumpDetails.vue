@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="row align-items-center mt-3">
+                           <!-- <div class="row align-items-center mt-3">
                                 <div class="col-md-4 ">
                                     <label class="label">Pump Reading</label>
                                 </div>
@@ -65,14 +65,14 @@
                                         <input type="number" placeholder="" class="" v-model="pumpDetails.currentReading">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row align-items-center mt-3">
                                 <div class="col-md-4 ">
                                     <label class="label">Pump Calibration <small>xLtr-20Ltr</small></label>
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" readonly class="" v-model="pumpCalibration">
+                                        <input type="number" placeholder=""  class="" v-model="pumpCalibration">
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" v-model="totalMultiplier">
+                                        <input type="number" placeholder="" class="" v-model="totalMultiplier">
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" v-model="volumeMultiplier">
+                                        <input type="number" placeholder="" class="" v-model="volumeMultiplier">
                                     </div>
                                 </div>
                             </div>
@@ -139,12 +139,12 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="" class="" v-model="amountMultiplier">
+                                        <input type="number" placeholder="" class="" v-model="amountMultiplier">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="text-center mt-5" style="margin: 0 auto;">
+                        <div class="text-center mt-5" style="margin: 0 auto;">
                             <button class="btn btn_theme" @click="updatePump"
                                 :disabled="isButtonDisabled ? true : null"
                                 :style="[
@@ -160,7 +160,7 @@
                                 class="ml-3 loader"
                                 />
                             </button>
-                        </div> -->
+                        </div>
                     </div>
                 <!-- </form> -->
             </div>
@@ -188,7 +188,7 @@ export default {
           pumpDetails: {},
           tanks: [],
           isButtonDisabled: false,
-          tankId: 'selectATank',
+          tankId: '',
           pumpCalibration: null,
           volumeMultiplier: null,
           amountMultiplier: null,
@@ -304,12 +304,32 @@ export default {
                 return;
             }
 
-            const data = { ...this.pumpDetails, currentReading: parseFloat(this.pumpDetails.currentReading) }
+            this.tankId = this.tanks.filter(cur => cur.name == this.pumpDetails.tankName)[0].id
+
+
+            const data = {
+                tankId: this.tankId,
+                name: this.pumpDetails.name,
+                manufacturer: this.pumpDetails.manufacturer,
+                model: this.pumpDetails.model,
+                version: "string",
+                displayName: this.pumpDetails.displayName,
+                branchId: this.pumpDetails.branchId,
+                status: this.pumpDetails.status,
+                ipAddress: this.pumpDetails.ipAddress,
+                ssid: this.pumpDetails.ssid,
+                password: this.pumpDetails.password,
+                standardCalibration: this.pumpCalibration ? parseFloat(this.pumpCalibration) : 0,
+                totalMultiplier: this.totalMultiplier ? parseFloat(this.totalMultiplier) : 0,
+                amountMultiplier: this.amountMultiplier ? parseFloat(this.amountMultiplier) : 0,
+                volumeMultiplier: this.volumeMultiplier ? parseFloat(this.volumeMultiplier) : 0,
+                id: this.pumpDetails.id
+            }
             
             this.isButtonDisabled = true
 
             $('.loader').show();
-            this.axios.post(`${configObject.apiBaseUrl}/Branch/UpdatePump`, data, configObject.authConfig)
+            this.axios.put(`${configObject.apiBaseUrl}/Pumps/EditPump`, data, configObject.authConfig)
                 .then(res => {
                         this.$toast("Successfully updated pump", {
                             type: "success",
@@ -317,7 +337,7 @@ export default {
                         });
                         this.isButtonDisabled = false;
                         $('.loader').hide();
-                        this.$router.push({name: 'installedPumps', query: {companyBranchId: this.companyBranchId}})
+                        this.$router.push({name: 'installedPumps', query: { companyBranchId: this.$route.query.companyBranchId }})
                 })
                 .catch(error => {
                     this.isButtonDisabled = false;
