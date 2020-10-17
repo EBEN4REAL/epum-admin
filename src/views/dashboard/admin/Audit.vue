@@ -338,12 +338,12 @@ export default {
     },
     watch: {
         dateRange: function (newRange, oldRange) {
-        if ( newRange.start!== null && newRange.end !== null) {
-            this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
-            this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
+            if ( newRange.start!== null && newRange.end !== null) {
+                this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
+                this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
 
-            this.getSales();
-        }
+                this.getSales();
+            }
         },
     },
     mounted() {
@@ -478,6 +478,7 @@ export default {
             .get(
                 `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data);
                     let index = 0
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const arr = []

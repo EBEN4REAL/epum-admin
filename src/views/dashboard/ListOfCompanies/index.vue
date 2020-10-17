@@ -136,7 +136,7 @@ export default {
         }
     },
     created() {
-        this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
+        this.$eventHub.$on('showExtra', (data) => { 
             this.details.queryStrings.companyId = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
@@ -147,11 +147,11 @@ export default {
                 option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
             }
         })
-        this.$eventHub.$on(this.details.delete.deleteName, (id) => { // this is needed for the blahblah
+        this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
             this._deleteCompany(id)
         })
     },
-    beforeDestroy() { // this is needed for the blahblah
+    beforeDestroy() { 
         this.$eventHub.$off(this.details.delete.deleteName);
     },
     mounted() {
@@ -176,14 +176,12 @@ export default {
     },
     methods: {
         _deleteCompany(id) {
-        // _deleteCompany() {
         let resp = confirm("Are you sure want to delete this company?");
         if (resp) {
             $(".loader").show();
             this.axios
             .delete(
                 `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
-                // `${configObject.apiBaseUrl}/Company/DeleteCompany/${this.data.id}`,
                 configObject.authConfig
             )
             .then((res) => {
@@ -245,7 +243,7 @@ export default {
                     // this.companiesCount = res.data.data.length
                     this.companiesCount = res.data.totalNumber
                     this.totalPages = Math.ceil(res.data.totalNumber / this.pageSize)
-                    this.tableCount = res.data.totalNumber // to be added for pages that need dot dot dot actions
+                    this.tableCount = res.data.totalNumber 
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data.data
                     });

@@ -939,6 +939,33 @@ h6.dashboard__card__header {
     }
   } 
 }
+.product_sales_flex_card_pump_sales {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.first {
+    border-bottom: 1px solid #f4ebeb7d;
+  }
+  &.last {
+    border-top: 1px solid #f4ebeb7d;
+    .total_text {
+      font-size: 15px;
+
+    }
+  }
+  .product_sales_flex_card_item {
+    width: 50%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #f4ebeb7d;
+    div {
+      font-size: 15px ;
+      color: $primaryColor;
+    }
+  } 
+}
 .product_sales_flex_card_pump {
   display: flex;
   justify-content: center;
