@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="number" placeholder=""  class="" v-model="pumpCalibration">
+                                        <input type="number" placeholder="" readonly class="" v-model="pumpCalibration">
                                     </div>
                                 </div>
                             </div>
