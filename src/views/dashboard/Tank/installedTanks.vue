@@ -177,13 +177,13 @@
               </div> -->
               <div class="mt-3 pb-3 tanks_probe">
                 <div class="mb-4 mt-4">
-                  <router-link
-                    :to="{ name: 'tankTransaction'}"
+                  <!-- <router-link :to="{ name: 'tankTransaction'}" -->
+                  <router-link :to="{ name: $route.name, query: {...$route.query}  }"
                     class="transactions__btn remove_text_decoration"
                     style="text-decoration: none"
                   >Transaction</router-link>
-                  <router-link
-                    :to="{ name: 'tankDipping'}"
+                  <!-- <router-link :to="{ name: 'tankDipping'}" -->
+                  <router-link :to="{ name: $route.name, query: {...$route.query}  }"
                     class="probe_transactions_btn remove_text_decoration ml-4"
                     style="text-decoration: none"
                   >Tank Dipping
