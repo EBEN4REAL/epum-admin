@@ -260,34 +260,6 @@
                             
                         </router-link>
                     </li>
-                    <li class="list-group-item treeview">
-                        <a href="#" class="vue_router_link has-submenu">
-                            <span class="mr-2 icon">
-                                <img src="@/assets/img/debt.svg" width="20"/>
-                            </span>
-                            <span class="sidenav_list_title">
-                                Reports
-                            </span>
-                           
-                            <i class="fa fa-angle-right sidenav_arrow"></i>
-                        </a>
-                        <div>
-                            <ul class="treeview-menu">
-                                <li class="list-group-item " :class="activeRoute === 'audit_sales' ? 'navbar_item_active' : ''">
-                                    <router-link :to="{ name: 'audit_sales' }" class="vue_router_link">
-                                        <span class="sidenav_list_title">
-                                            Audit Sales
-                                        </span>
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link :to="{ name: 'pump_variance_report' }" class="vue_router_link" :class="activeRoute === 'pump_variance_report' ? 'active' : ''">
-                                        Pump Variance 
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                      <li class="list-group-item treeview">
                         <a href="#" class="vue_router_link has-submenu">
                             <span class="mr-2 icon">

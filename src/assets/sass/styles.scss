@@ -810,7 +810,7 @@ h6.dashboard__card__header {
   padding: 0px;
   height: 70px;
   width: 100%;
-  background: #d8991c;
+  background: var(--c);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -825,6 +825,7 @@ h6.dashboard__card__header {
   height: 20px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  
 }
 
 .tank__header__Wrapper {
@@ -950,7 +951,7 @@ h6.dashboard__card__header {
     border-top: 1px solid #f4ebeb7d;
     .total_text {
       font-size: 15px;
-
+      font-weight: 600
     }
   }
   .product_sales_flex_card_item {

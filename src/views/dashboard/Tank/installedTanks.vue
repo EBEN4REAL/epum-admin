@@ -95,7 +95,7 @@
           >
             <div class="product_summary__wrapper tank__header__Wrapper">
               <div
-                class="product_summary_header tank__header"
+                class="product_summary_header tank__header" v-bind:style="{ '--c': tank.color }"
               ></div>
               <h3 class="tank__name text-center mt-3">{{tank.name}}</h3>
               <div class="text-center flex___div">

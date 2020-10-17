@@ -1,10 +1,8 @@
 <template>
   <div class="">
-    <router-link :to="{name:'edit_companies',  query: {companyId: data.id}}" class="btn details_btn mr-3">
-      Edit
+    <router-link :to="{name:'pump_variance_report',  query: {branchId: data.branchId, varianceId: data.index, companyId: this.$route.query.companyId}}" class="btn details_btn mr-3">
+      Details
     </router-link>
-
-    <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
   </div>
 </template>
 

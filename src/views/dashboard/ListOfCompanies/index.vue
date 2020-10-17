@@ -110,13 +110,13 @@ export default {
             totalPages: 1,
             searchTotalPages: 1,
             showLoader: true,
-            tableCount: 0, // this is needed for the blahblah
+            tableCount: 0, 
             details: {
                 queryStrings: { companyId: '' }, 
-                info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }], 
+                info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }, { name: 'Audit Sales', link: 'audit_sales' }], 
                 delete: { hasDelete: true, deleteName: 'deleteCompany' }
                 // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
-            }, // this is needed for the blahblah
+            }, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],

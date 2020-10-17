@@ -14,16 +14,17 @@
                                 ]">
                                 <div class="row  hundred-percent-height align-items-center">
                                     <div class="col-md-4 text-center">
-                                        <i class="fa fa-chevron-circle-left" aria-hidden="true" style="color: white; font-size: 25px"></i>
+                                        <router-link :to="{name:'audit_sales', query: {companyId: this.$route.query.companyId}}">
+                                             <i class="fa fa-chevron-circle-left" aria-hidden="true" style="color: white; font-size: 28px"></i>
+                                        </router-link>
                                     </div>
                                     <div class="col-md-3">
                                          <div class="small__card_content_wrapper  " >
-                                            <p class="dashboard__card__header text-white">ETERNAL PLC.</p>
-                                            <p class="yellow_text">ALAPERE STATION</p>
-                                            <small class="grey_text">08-12-2020</small>
+                                            <h4 class="yellow_text">{{varianceObj.branchName}}</h4>
+                                            <h6 class="grey_text">{{varianceObj.date}}</h6>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <vue-ctk-date-time-picker
                                             v-model="dateRange"
                                             :max-date="maxDate"
@@ -42,32 +43,49 @@
                 </div>
             </div>
         </section>
+         <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
+                <div class="col-md-8">
+                    <span class="pl-3 ">Pump Sales between  {{startDate}} and {{endDate}} </span>
+                </div>
+                <div class="col-md-4 text-right">
+                   
+                </div>
+            </div>
+        </section>
         <section class=" mt-3 full__row_section">
              <div class="row ">
-                <div class="col-md-4 remove-right-padding" v-for="(pmpSale,index) in totalPumpSales" :key="index">
+                <div class="col-md-4" v-for="(x,i) in 3" :key="i + 'A'" v-show="showLoader">
+                    <TableLoader :showLoader="showLoader"/>
+                </div>
+                <div class="col-md-4 remove-right-padding" v-for="(pmpSale,index) in totalPumpSales" :key="index + 'C'" v-show="!showLoader">
+                    <div class="header-three-text">{{pmpSale.tankName}}</div>
                     <div class="small_card product_details_card mt-3">
                         <div class="product_sales_flex_card_pump_sales first">
                             <div class="product_sales_flex_card_item">
-                                {{pmpSale.tankName}}
+                                <div class="total_text">PUMP NAME</div>
                             </div>
                             <div class="product_sales_flex_card_item">
-                                <div class="text-black ">Volume  Sold</div>
+                                <div class="text-black ">VOLUME  Sold</div>
                             </div>
                         </div>
-                       <div class="product_sales_flex_card_pump_sales" v-for="(pmp,i) in totalPumpSales.data[i]" :key="i">
+                       <div class="product_sales_flex_card_pump_sales" v-for="(pmp,x) in pmpSale.pumpSalesArr" :key="x + 'B'">
                             <div class="product_sales_flex_card_item">
-                                <div class="text-black ">{{pmp.sale[0].pumpName}}</div>
+                                <div class="text-black ">
+                                    {{pmp['sale'][0].pumpName}}
+                                </div>
                             </div>
                             <div class="product_sales_flex_card_item">
-                                <div class="text-black ">{{pmp.sale[0].volumeSold}} Ltrs</div>
-                            </div>
+                              <div class="text-black ">
+                                    {{convertThousand(pmp['volumeSold'])}} Ltrs</div>
+                                </div>
                         </div>
                         <div class="product_sales_flex_card_pump_sales last">
                             <div class="product_sales_flex_card_item">
                                 <div class="total_text">TOTAL PUMP SALES</div>
                             </div>
                             <div class="product_sales_flex_card_item">
-                                <div class="text-black total_text ">{{pmpSale.totalVolumeSold}}</div>
+                                <div class="text-black total_text ">{{convertThousand(pmpSale.totalVolumeSold)}} Ltrs</div>
                             </div>
                         </div>
                     </div>
@@ -86,14 +104,19 @@ import backgroundUrl from "@/assets/img/Tankimage.png";
 // import PumpVarianceTemplate from '@/components/Templates/list_of_pump_variance_reports_template.vue';
 import Jquery from 'jquery';
 let $ = Jquery;
+import TableLoader from "@/components/tableLoader/index";
+
 
 
 export default {
     components: {
-        masterLayout
+        masterLayout,
+        TableLoader
     },
     data() {
         return {
+            showLoader: false,
+            varianceObj: {},
             companiesCount: 0,
             stationsCount: 0,
             backgroundUrl,
@@ -126,15 +149,35 @@ export default {
     },
     mounted() {
         this.getSales()
+        this.varianceId = this.$route.query.varianceId;
+        let ml = sessionStorage.getItem(this.varianceId);
+        if (!ml) {
+        let allData = localStorage.getItem("pumpsVarianceList");
+        let dt = JSON.parse(allData);
+        dt.forEach((my, index) => {
+            if (my.index === this.varianceId) {
+            ml = JSON.stringify(my);
+            sessionStorage.setItem(this.varianceId, ml);
+            }
+        });
+        }
+        let pumpVarianceDetailsObj = JSON.parse(ml);
+        this.varianceObj = pumpVarianceDetailsObj;
+        console.log(this.varianceObj)
     },
     methods: {
+        convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
         getSales() {
             this.showLoader = true
             this.axios
             .get(
-                `https://oh.epump.com.ng/Audit/DaySale/8f59a87d-e0e4-4ffd-917c-1d38b2e3e63e?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
+                `https://oh.epump.com.ng/Audit/DaySale/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data.pumpDaySales);
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const _salesArr = []
                     res.data.pumpDaySales.forEach(cur => {
@@ -152,11 +195,8 @@ export default {
                             }
                         })
                     });
-                    console.log(_salesArr)
                     let pumpTankSales = _salesArr.map((sale,i) =>  {
-                        console.log(sale)
                         const pumpNames = new Set(_salesArr[i].data.map(cur => cur.pumpName))
-                        console.log(pumpNames)
                         Array.prototype.groupBy = function(prop) {
                             return this.reduce(function(groups, item) {
                                 const val = item[prop]
@@ -166,7 +206,6 @@ export default {
                             }, {})
                         };
                         const groupByPumpName = _salesArr[i].data.groupBy('pumpName');
-                        console.log(groupByPumpName);
                         const pumpSalesArr = Object.keys(groupByPumpName).map(cur => {
                             return {
                                 sale: groupByPumpName[cur]
@@ -178,7 +217,6 @@ export default {
                             },0);
                             x.volumeSold = volumeSold
                         })
-                        console.log(pumpSalesArr)
                         return {
                             tankName: sale.tankName,
                             pumpSalesArr,
@@ -188,8 +226,8 @@ export default {
                         }
                     })
                     
-                    console.log(pumpTankSales)
                     this.totalPumpSales = pumpTankSales
+                    this.showLoader = false
                 })
                 .catch(error => {
                     this.showLoader = false
