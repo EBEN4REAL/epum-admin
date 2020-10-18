@@ -14,7 +14,7 @@
                             ]">
                             <div class="row  hundred-percent-height align-items-center">
                                 <div class="col-md-4 text-center">
-                                    <router-link :to="{name:'installedTanks', query: {branchId: this.$route.query.branchId}}">
+                                    <router-link :to="{name:'tankDipping', query: {tankId: this.$route.query.tankId, branchId: this.$route.query.branchId}}">
                                           <i class="fa fa-chevron-circle-left" aria-hidden="true" style="color: white; font-size: 28px"></i>
                                     </router-link>
                                 </div>
