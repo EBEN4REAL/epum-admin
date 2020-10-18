@@ -8,9 +8,10 @@
                     <div class="dashboard__card small_card align-center">
                     <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
-                            <h3>Outstanding Payments</h3>
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Here are your outstanding payments</p>
                         </div>
-                        <div class="col-md-4 mt-4">
+                        <div class="col-md-4 mt-4 text-center">
                            <router-link :to="{name: 'makePayments'}" class="btn create_btn primary_btn">Make Payments</router-link>
                         </div>
                     </div>
@@ -33,7 +34,7 @@
             </div>
                 </div>
         </section>
-        <div class="new_row_section mt-3">
+        <div class="new_row_section mt-5">
              <ejs-grid
                 v-show="!showLoader"
                 ref="dataGrid"
@@ -121,6 +122,7 @@ export default {
   },
   data() {
     return {
+      userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
       amount: 0,
       accounts: [],
       branchId: '',
@@ -185,6 +187,11 @@ export default {
     this.$eventHub.$off("getBranches");
     this.$eventHub.$off("changeRoute");
     this.$eventHub.$off("setCustomerOutstandingPay");
+  },
+  computed: {
+      userName() {
+          return `${this.userDetails.firstName} ${this.userDetails.lastName}`
+      }
   },
   mounted() {
     this.getBranches();

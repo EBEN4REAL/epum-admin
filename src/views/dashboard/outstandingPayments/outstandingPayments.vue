@@ -15,8 +15,9 @@
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>Make Payments</h3>
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Get started with epump company admin platform making outstanding payments</p>
                         </div>
                         <div class="col-md-3 mt-4">
                            <button class="create_btn btn btn_theme"
@@ -45,7 +46,7 @@
             </div>
                 </div>
         </section>
-        <div class="new_row_section mt-3">
+        <div class="new_row_section mt-5">
              <ejs-grid
                 v-show="!showLoader"
                 ref="dataGrid"
@@ -132,6 +133,7 @@ export default {
   },
   data() {
     return {
+      userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
       amount: 0,
       accounts: [],
       password: '',
@@ -212,6 +214,11 @@ export default {
     this.$eventHub.$off("addToArray");
     this.$eventHub.$off("createPaymentsArray");
     this.$eventHub.$off("selectAll");
+  },
+  computed: {
+      userName() {
+          return `${this.userDetails.firstName} ${this.userDetails.lastName}`
+      }
   },
   mounted() {
     this.getBranches();
