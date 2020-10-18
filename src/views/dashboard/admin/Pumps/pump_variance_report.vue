@@ -93,6 +93,42 @@
                
             </div>
         </section>
+         <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
+                <div class="col-md-8">
+                    <span class="pl-3 ">Tank Sales between {{startDate}} and {{endDate}}</span>
+                </div>
+                <div class="col-md-4 text-right">
+                    
+                </div>
+            </div>
+        </section>
+        <div class="new_row_section mt-3 pb-4">
+             <ejs-grid
+                v-show="!showLoader"
+                ref="tankSalesdataGrid"
+                :created="refreshTankSalesGrid"
+                :allowPaging="true"
+                :allowSorting="true"
+                :pageSettings="tableProps.pageSettings"
+                :toolbar="tableProps.toolbar"
+                :searchSettings="tableProps.search"
+                :allowExcelExport="true"
+                :allowPdfExport="true"
+                :toolbarClick="toolbarClick"
+                >
+                 <e-columns>
+                    <e-column width="60" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="volumeSold" headerText="Volume Sold (Litres)"></e-column>
+                    <e-column width="200" field="volumeFilled" headerText="Volume Filled"></e-column>
+                    <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
+                    <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
+                    <e-column width="200" field="productName" headerText="Product  Name" textAlign="center"></e-column>
+                    <e-column width="200" field="tankName" headerText="Tank  Name" textAlign="center"></e-column>
+                </e-columns>
+            </ejs-grid>
+            <TableLoader :showLoader="showLoader"/>
+        </div>
     </masterLayout>
 </template>
 <script>
@@ -105,6 +141,8 @@ import backgroundUrl from "@/assets/img/Tankimage.png";
 import Jquery from 'jquery';
 let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
+import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+
 
 
 
@@ -113,6 +151,9 @@ export default {
         masterLayout,
         TableLoader
     },
+    provide: {
+        grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+    }, 
     data() {
         return {
             showLoader: false,
@@ -135,6 +176,11 @@ export default {
             pluginStartDate: this.$moment().format("D-M-YYYY"),
             pluginEndDate: this.$moment().format("D-M-YYYY"),
             dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+            tableProps: {
+                pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
+                toolbar: ["ExcelExport", "PdfExport", "Search"],
+                search: { operator: "contains", ignoreCase: true },
+            },
         }
     },
     watch: {
@@ -163,14 +209,52 @@ export default {
         }
         let pumpVarianceDetailsObj = JSON.parse(ml);
         this.varianceObj = pumpVarianceDetailsObj;
-        console.log(this.varianceObj)
+        $(".e-input").keyup(function(e) {
+            searchFun(e);
+        });
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
+        }
     },
     methods: {
+        refreshTankSalesGrid() {
+            this.$refs.tankSalesdataGrid.refresh();
+        },
+        toolbarClick(args) {
+            switch (args.item.text) {
+                case "PDF Export":
+                let pdfExportProperties = {
+                    pageOrientation: 'Landscape',
+                    fileName: "salesAudit"
+                }
+                this.$refs.dataGrid.pdfExport();
+                break;
+                case "Excel Export":
+                this.$refs.dataGrid.excelExport();
+                break;
+            }
+        },
         convertThousand(request) {
             if (!isFinite(request)) {
                 return "0.00";
             }
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        parseTankSales(data) {
+            let index = 0
+            data.forEach(el => {
+                el.index = ++index;
+                el.volumeSold = this.convertThousand(el.volumeSold);
+                el.volumeFilled = this.convertThousand(el.volumeFilled);
+                el.openingDip = this.convertThousand(el.openingDip);
+                el.closingDip = this.convertThousand(el.closingDip);
+            })
+            this.$refs.tankSalesdataGrid.ej2Instances.setProperties({
+                dataSource: data
+            });
+            this.refreshTankSalesGrid();
         },
         getSales() {
             this.showLoader = true
@@ -225,7 +309,7 @@ export default {
                             },0)
                         }
                     })
-                    
+                    this.parseTankSales(res.data.tankSales)
                     this.totalPumpSales = pumpTankSales
                     this.showLoader = false
                 })
