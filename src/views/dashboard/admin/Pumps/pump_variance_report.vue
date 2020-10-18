@@ -119,8 +119,8 @@
                 >
                  <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="volumeSold" headerText="Volume Sold (Litres)"></e-column>
-                    <e-column width="200" field="volumeFilled" headerText="Volume Filled"></e-column>
+                    <e-column width="200" field="volumeSold" headerText="Volume Sold (Ltrs)"></e-column>
+                    <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="productName" headerText="Product  Name" textAlign="center"></e-column>
