@@ -14,7 +14,7 @@
                             ]">
                             <div class="row  hundred-percent-height align-items-center">
                                 <div class="col-md-4 text-center">
-                                    <router-link :to="{name:'audit_sales', query: {companyId: this.$route.query.companyId}}">
+                                    <router-link :to="{name:'installedTanks', query: {tankId: this.$route.query.tankId, branchId: this.$route.query.branchId}}">
                                           <i class="fa fa-chevron-circle-left" aria-hidden="true" style="color: white; font-size: 28px"></i>
                                     </router-link>
                                 </div>
@@ -25,8 +25,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <vue-ctk-date-time-picker
-                                        v-model="singleDate"
-                                        :max-date="maxDateForm"
+                                        v-model="dateRange"
                                         :range="true"
                                         :autoClose="true"
                                         :custom-shortcuts="customShortcuts"
@@ -156,20 +155,12 @@ export default {
     grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport],
   },
   watch: {
-     singleDate: function(newDate) {
-        if (newDate) {
-            this.startDate = this.$moment(newDate, "DD-MM-YYYY").format(
-            "MMMM D, YYYY"
-            );
-
-        }
-    },
     dateRange: function (newRange, oldRange) {
         if ( newRange.start!== null && newRange.end !== null) {
             this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
             this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
 
-            this.getSales();
+            this.getTankDip();
         }
     },
   },
@@ -204,7 +195,7 @@ export default {
       backgroundUrl,
       volume: '',
       maxDateForm: this.$moment(new Date()).format("YYYY-MM-DD"),
-      singleDate: this.startDate,
+      dateRange: this.startDate,
       pluginStartDate: this.$moment().format("D-M-YYYY"),
       startDate: this.$moment().format("MMMM D, YYYY"),
       showLoader: false,
@@ -274,20 +265,13 @@ export default {
           });
           return;
       }
-      if(!this.date) {
-          this.$toast("Please Select Date Recorded", {
-              type: "error", 
-              timeout: 3000
-          });
-          return;
-      }
       const data = {
         branchId: this.$route.query.branchId,
         tankId: this.$route.query.tankId,
         currentVolume: this.volume,
         start: this.date
       }
-      console.log(data)
+      
       this.isButtonDisabled = true;
 
       $('.loader').show();
