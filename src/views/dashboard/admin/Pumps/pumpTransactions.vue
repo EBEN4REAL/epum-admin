@@ -20,9 +20,9 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="row align-items-center justify-content-center" style="height: 100%">
-                        <div class="col-md-4 ">
-                            <h5>Total Transactions</h5>
+                        <div class="row align-items-center justify-content-center" style="height: 100%">  
+                        <div class="col-md-6">
+                            <h5>Pump Transactions</h5>
                         </div>
                         <div class="col-md-4 mt-4">
                                 <vue-ctk-date-time-picker
@@ -87,19 +87,18 @@
           </div>
         </div>
       </section>
-
-        <div class="new_row_section mt-3">
-            <div class="row top_section_row" v-show="!showLoader">
+       <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                <span>
-                    <img src="@/assets/img/hand (1).png" class="mr-3" />
-                    Retail Outlet pump transactions between {{ startDate }} and
-                    {{ endDate }}
-                </span>
+                    <span class="pl-3 "> Retail Outlet pump transactions between <strong>{{ startDate }} </strong> and
+                     <strong>{{ endDate }} </strong></span>
                 </div>
-                <div class="col-md-4 text-right"></div>
+                <div class="col-md-4 text-right">
+                    
+                </div>
             </div>
-
+      </section>
+        <div class="new_row_section mt-3">
              <ejs-grid
                 v-show="!showLoader"
                 ref="dataGrid"
@@ -116,7 +115,7 @@
                 <e-columns>
                   <e-column width="80" field="index" headerText="#"></e-column>
                   <e-column field="date" width="200" headerText="Date/Time"></e-column>
-                  <e-column field="pumpName" width="200" headerText="Pumn Name"></e-column>
+                  <e-column field="pumpName" width="200" headerText="Pump Name"></e-column>
                   <e-column field="productName" width="200" headerText="Product Name"></e-column>
                   <e-column field="pricePerLitre" width="200" headerText="Price/Litre"></e-column>
                   <e-column field="openingRead" width="200" headerText="Opening Reading"></e-column>
@@ -270,7 +269,7 @@ export default {
             return "0.00";
         }
         return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    }
   }
 };
 </script>

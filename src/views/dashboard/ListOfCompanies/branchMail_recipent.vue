@@ -59,6 +59,7 @@
                                     <e-column width="40" field="index" headerText="#"></e-column>
                                     <e-column width="300" field="email" headerText="Email"></e-column>
                                     <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
+                                    <e-column width="10"></e-column>
                                 </e-columns>
                             </ejs-grid>
                           <TableLoader :showLoader="showLoader"  />
@@ -78,7 +79,7 @@
                                     </div>
                                     <div class="align-items-center mt-3">
                                         <div class="input__block">
-                                            <input type="text" placeholder="Phone" class="" v-model="phone" />
+                                            <input type="number" placeholder="Phone" class="" v-model="phone" />
                                         </div>
                                     </div>
                                     <div class="text-center mt-3">
@@ -178,6 +179,9 @@ export default {
                 `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig)
                 .then(res => {
                     let index = 0;
+                    res.data.sort((a, b) => {
+                        return a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0;
+                    });
                     res.data.forEach(el => {
                         el.index = ++index;
                     })

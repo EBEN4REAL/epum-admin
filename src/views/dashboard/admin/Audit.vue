@@ -39,7 +39,7 @@
         <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Pump Variance Report on {{startDate}}</span>
+                    <span class="pl-3 ">Pump Variance Report on <strong>{{startDate}}</strong></span>
                 </div>
                 <div class="col-md-4 text-right">
                    

@@ -2,7 +2,7 @@
     <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
-            <div class="row">
+            <div class="row align-items-center" style="height: 100%">
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
@@ -19,11 +19,11 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-6 card_inner_wrapper">
-                            <h3>Total Transactions</h3>
+                        <div class="row align-items-center justify-content-center" style="height: 100%">
+                        <div class="col-md-6">
+                            <h5>Wallet Transactions</h5>
                         </div>
-                        <div class="col-md-6 mt-4">
+                        <div class="col-md-4 mt-4">
                            <div class="drop_down_div align-items-center">
                                 <vue-ctk-date-time-picker
                                     v-model="dateRange"
@@ -44,18 +44,18 @@
             </div>
                 </div>
         </section>
-
-        <div class="new_row_section mt-3">
-            <div class="row top_section_row" v-show="!showLoader">
+        <section class="top_section_row mt-3 ">
+            <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                <span>
-                    Retail Outlet pump transactions between {{ startDate }} and
-                    {{ endDate }}
-                </span>
+                    <span class="pl-3 ">  Retail Outlet wallet transactions between  <strong>{{ startDate }} </strong> and
+                     <strong>{{ endDate }} </strong></span>
                 </div>
-                <div class="col-md-4 text-right"></div>
+                <div class="col-md-4 text-right">
+                    
+                </div>
             </div>
-
+      </section>
+        <div class="new_row_section mt-3">
             <ejs-grid
                 ref="dataGrid"
                 v-show="!showLoader"

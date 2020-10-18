@@ -9,7 +9,7 @@
     </router-link>
 
     <router-link :to="{name:'dealer_branches', query: {dealerId: data.id, companyId: this.$route.query.companyId }}" class="btn branches_btn mr-3">
-      Branches
+      Retail Outlets
     </router-link>
 
   </div>

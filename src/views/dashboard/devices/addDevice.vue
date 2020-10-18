@@ -53,7 +53,7 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Phone Number on Device" class="" v-model="phoneNumber"/>
+                  <input type="number" placeholder="Phone Number on Device" class="" v-model="phoneNumber"/>
                 </div>
               </div>
             </div>
@@ -240,7 +240,7 @@ export default {
                 });
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-                // this.$router.push({name: 'branches', query: {companyId: this.$route.query.companyId}})
+                this.$router.push({name: 'branchDetails', query: { companyBranchId: this.$route.query.companyBranchId}})
           })
           .catch(error => {
               this.isButtonDisabled = false;

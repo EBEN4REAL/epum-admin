@@ -46,7 +46,7 @@
          <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Pump Sales between  {{startDate}} and {{endDate}} </span>
+                    <span class="pl-3 ">Pump Sales between <strong>{{startDate}}</strong> and <strong>{{endDate}}</strong></span>
                 </div>
                 <div class="col-md-4 text-right">
                    
@@ -96,7 +96,7 @@
          <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Tank Sales between {{startDate}} and {{endDate}}</span>
+                    <span class="pl-3 ">Tank Sales between <strong>{{startDate}}</strong> and <strong>{{endDate}}</strong></span>
                 </div>
                 <div class="col-md-4 text-right">
                     

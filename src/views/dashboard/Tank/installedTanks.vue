@@ -178,11 +178,10 @@
                   </div> -->
                   <div class="mt-3 pb-3 tanks_probe">
                     <div class="mb-4 mt-4">
-                      <!-- <router-link :to="{ name: 'tankTransaction', query: { id: tank.id }}" -->
-                      <router-link :to="{ name: $route.name, query: {...$route.query} }"
+                      <router-link :to="{ name: 'tankTransaction', query: { id: tank.id }}"
                         class="transactions__btn remove_text_decoration"
-                        style="text-decoration: none"
-                      >Transaction</router-link>
+                        style="text-decoration: none; padding: 12px 9px;"
+                      >Probe Transactions</router-link>
                       <!-- <router-link :to="{ name: 'tankDipping'}" -->
                       <router-link :to="{ name: 'tankDipping', query: {tankId: tank.id, branchId: $route.query.companyBranchId}}"
                         class="probe_transactions_btn remove_text_decoration ml-4"

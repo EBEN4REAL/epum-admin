@@ -151,6 +151,9 @@ export default {
                 `${configObject.apiBaseUrl}/Company/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
+                    res.data.companyMailRecipients.sort((a, b) => {
+                        return a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0;
+                    });
                     res.data.companyMailRecipients.forEach(el => {
                         el.index = ++index;
                     })

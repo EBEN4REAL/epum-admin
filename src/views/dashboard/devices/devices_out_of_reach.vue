@@ -3,39 +3,35 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                 <div class="col-lg-4">
-                        <div class="dashboard__card large_card">
-                        <div class="row make-row-hundred-percent align-items-center justify-content-center" >
-                            <div class="col-md-3">
-                                 <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <i class="fa fa-laptop" aria-hidden="true" style="font-size: 35px"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-7 remove-padding-left">
-                                <div class="text-center">
-                                    <h5 class="text-white font-weight">Devices  Out Of reach</h5>
-                                </div>
-                             <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">10</h5>
-                                </div>
-                           </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
+                <div class="col-lg-8 remove-padding-left padding_div pr-0">
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Devices  Out Of Reeach</h3>
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Get started with epump company admin platform by managing devices out of reach here</p>
                         </div>
-                        <div class="col-md-3 mt-4">
-                           <!-- <router-link :to="{name: ''}" class="create_btn btn btn_theme">Add Firmware</router-link> -->
+                        <div class="col-md-4 mt-4 text-center">
+                          
                         </div>
-                    </div>
                     </div>
                 </div>
+             </div>
+                 <div class="col-lg-4">
+                    <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of Devices out of Reach</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/company.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >18</small>
+                                </div>
+                        </div>
+                    </div>
+              </div>
             </div>
-                </div>
+        </div>
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
@@ -98,6 +94,7 @@ export default {
     },
     data() {
         return {
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
               tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -202,6 +199,11 @@ export default {
                 ] ,
                 fileName: 'pos'
             },
+        }
+    },
+    computed: {
+        userName() {
+            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
         }
     },
     methods: {
