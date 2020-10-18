@@ -1,24 +1,64 @@
 <template>
     <masterLayout>
-       <section class="mt-3 full__row_section banner-gradient"  :style="[
-            {
-              backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'
-            }
-          ]">
-      <div class="row align-items-center justify-content-center hundred-percent-height">
-        <div class="col-md-12 ">
-          <div class="text-center ">
-            <h5 class="title">Transactions</h5>
-          </div>
-        </div>
-      </div>
-    </section>
+        <section class=" mt-3 full__row_section">
+            <div class="banner">
+            <div class="row">
+                 <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total Transactions</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/wallet.svg" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{transactionCount}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row">
+                        <div class="col-md-6 card_inner_wrapper">
+                            <h3>Total Transactions</h3>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                           <div class="drop_down_div align-items-center">
+                                <vue-ctk-date-time-picker
+                                    v-model="dateRange"
+                                    :max-date="maxDate"
+                                    :range="true"
+                                    :autoClose="true"
+                                    :custom-shortcuts="customShortcuts"
+                                    color="#290C53"
+                                    format="DDMMYYYY"
+                                    formatted="DD/MM/YYYY"
+                                    label="Select a date range"
+                                />
+                              </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+        </section>
+
         <div class="new_row_section mt-3">
+            <div class="row top_section_row" v-show="!showLoader">
+                <div class="col-md-8">
+                <span>
+                    Retail Outlet pump transactions between {{ startDate }} and
+                    {{ endDate }}
+                </span>
+                </div>
+                <div class="col-md-4 text-right"></div>
+            </div>
+
             <ejs-grid
                 ref="dataGrid"
+                v-show="!showLoader"
                 :created="refreshGrid"
                 :allowPaging="true"
                 :allowSorting="true"
@@ -33,12 +73,14 @@
                 <e-columns>
                     <e-column width="40" field="index" headerText="#"></e-column>
                     <e-column width="200" field="date" headerText="Date"></e-column>
-                    <e-column width="200" field="transactionAmount" headerText="transactionAmount"></e-column>
+                    <e-column width="200" field="amount" headerText="Transaction Amount"></e-column>
                     <e-column width="200" field="walletBalance" headerText="Wallet Balance"></e-column>
                     <e-column width="200" field="source" headerText="Source"></e-column>
                     <e-column width="200" field="status" headerText="Status"></e-column>
+                    <e-column width="10"></e-column>
                 </e-columns>
             </ejs-grid>
+            <TableLoader :showLoader="showLoader"/> 
         </div>
     </masterLayout>
 </template>
@@ -46,9 +88,8 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout';
-import backgroundUrl from "@/assets/img/bg__card.png";
-import EjsTable from '@/components/ejsTable.vue';
-
+import TableLoader from "@/components/tableLoader/index"
+import configObject from "@/config";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
@@ -56,13 +97,17 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        EjsTable
+        TableLoader
     },
-     provide: {
+    provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
+    created() {
+        this.dateRange.start = this.pluginStartDate;
+        this.dateRange.end = this.pluginEndDate;
+    },
     mounted() {
-        this.getBranches();
+        this.getTransactions();
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -73,40 +118,39 @@ export default {
         }
         
     },
+    watch: {
+        dateRange: function (newRange, oldRange) {
+            if ( newRange.start!== null && newRange.end !== null) {
+                this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
+                this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
+
+                this.getTransactions();
+            }
+        },
+    },
     data() {
         return {
-            backgroundUrl,
+            transactionCount: 0,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
-                search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        date: "Jidsma oil & Gas",
-                        transactionAmount: "Jidsma",
-                        walletBalance: "Mushin",
-                        source: "Mushin",		
-                        status: "Lagos",
-                     },
-                    {
-                        index: 2,
-                        date: "Al-Istijabah Oil & Gas",
-                        transactionAmount: "Jidsma",
-                        walletBalance: "Mushin",
-                        source: "Mushin",		
-                        status: "Lagos",
-                    },
-                    {
-                        index: 3,
-                        date: "Dalsis Oil & Gas Limited",
-                        transactionAmount: "Jidsma",
-                        walletBalance: "Mushin",
-                        source: "Mushin",		
-                        status: "Lagos",
-                    },                   
-                ],
+                search: { operator: "contains", ignoreCase: true }
             },
+            showLoader: false,
+            maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
+            customShortcuts: [
+                { key: "Today", label: "Today", value: "day" },
+                { key: "yesterday", label: "Yesterday", value: "-day" },
+                { key: "last7Days", label: "Last 7 Days", value: 7 },
+                { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
+                { key: "last30Days", label: "Last 30 Days", value: 30 },
+                { key: "lastMonth", label: "Last Month", value: "-month" }
+            ],
+            startDate: this.$moment().format("MMMM D, YYYY"),
+            endDate: this.$moment().format("MMMM D, YYYY"),
+            pluginStartDate: this.$moment().format("D-M-YYYY"),
+            pluginEndDate: this.$moment().format("D-M-YYYY"),
+            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate }
         }
     },
     methods: {
@@ -127,12 +171,40 @@ export default {
                 break;
             }
         },
-        getBranches() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+        getTransactions() {
+            this.showLoader = true;
+            this.axios
+                .get(
+                `${configObject.apiBaseUrl}/Branch/WalletTransactions/${this.$route.query.companyBranchId}?startDate=${this.startDate}&endDate=${this.endDate}`,
+                configObject.authConfig
+                )
+                .then(response => {
+                this.showLoader = false;
+                let index = 0;
+                response.data.forEach(element => {
+                    element.index = ++index;
+                    element.date = this.$moment(element.date).format(
+                    "MM/DD/YYYY hh:mm A"
+                    );
+                    element.amount = this.convertThousand(element.amount);
+                    element.walletBalance = this.convertThousand(element.walletBalance);
+                });
+                this.transactionCount = response.data.length;
+                this.$refs.dataGrid.ej2Instances.setProperties({
+                    dataSource: response.data
+                });
+                this.refreshGrid();
+                })
+                .catch(error => {
+                    this.showLoader = false;
+                });
+        },
+        convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
     }
 }
 </script>

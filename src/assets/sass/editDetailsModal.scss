@@ -1,0 +1,67 @@
+.modal__header {
+    height: 80px;
+    background: $primaryColor;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h4 {
+        color: white;
+    }
+}
+
+.input__group__block {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.required:after {
+    content: "*";
+    color: red;
+}
+
+.input__block {
+    input {
+        width : 100%;
+    }
+    select {
+        width: 100%;
+        height: 100% !important;
+    }
+    height: 50px;
+    border-radius: 5px;
+    background: rgb(251, 251, 251);
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+     ::placeholder {
+        opacity: 1;
+    }
+    input {
+        border: none;
+        outline: none;
+        background: transparent;
+        height: 100%;
+    }
+}
+
+.sales_target_btn {
+    background: $editSecondColor;
+    border: 0px solid $primaryColor;
+    border-radius: 7px;
+    padding: 10px 50px;
+    color: $whiteColor;
+    font-size: 16px;
+    margin: 0 2px 5px 2px;
+    &:hover {
+        box-shadow: 0 4px 4px 0 #999999;
+        transform: translateY(-2px);
+    }
+    &:focus {
+        outline: 0!important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .input__group__block {
+        width: 95% !important;
+    }
+}

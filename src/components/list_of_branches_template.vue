@@ -10,8 +10,7 @@
       class="btn dealers_btn mr-3"
     >Details
     </router-link>
-    <!-- <router-link :to="{ name: 'transactions' }" -->
-    <router-link :to="{ name: this.$route.name, query: {...this.$route.query} }"
+    <router-link :to="{ name: 'transactions', query: {companyBranchId: data.id} }"
       class="btn branches_btn mr-3"
     >Transactions
     </router-link>
