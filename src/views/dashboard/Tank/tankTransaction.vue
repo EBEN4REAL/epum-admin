@@ -182,6 +182,12 @@ export default {
                     console.log(response.data)
                     this.showLoader = false;
                     let index = 0;
+                    response.data
+                        .sort((a, b) => {
+                            if (a.date !== b.date) {
+                                return a.date > b.date ? -1 : a.date < b.date ? 1 : 0
+                            }
+                    })
                     response.data.forEach(element => {
                         element.index = ++index;
                         element.date = this.$moment(element.date).format(
