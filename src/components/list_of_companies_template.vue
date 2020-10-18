@@ -38,7 +38,7 @@
     </router-link>
 
     <router-link :to="{name:'branches', query: {companyId: data.id}}" class="btn branches_btn mr-3">
-      Branches {{data.numberOfBranches}}
+      Retail Outlets {{data.numberOfBranches}}
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>

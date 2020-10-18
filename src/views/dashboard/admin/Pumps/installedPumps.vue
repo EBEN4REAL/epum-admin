@@ -172,9 +172,9 @@ export default {
                     });
 
                     response.data.sort((a, b) =>
-                        a.productName.toLowerCase() < b.productName.toLowerCase()
+                        a.displayName.toLowerCase() < b.displayName.toLowerCase()
                         ? -1
-                        : a.productName.toLowerCase() > b.productName.toLowerCase()
+                        : a.displayName.toLowerCase() > b.displayName.toLowerCase()
                         ? 1
                         : 0
                     );

@@ -8,10 +8,10 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by creating and managing your branch here</p>
+                            <p>Get started with epump company admin platform by creating and managing your retail outlets here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <router-link :to="{name: 'create_branch', query: {companyId: this.$route.query.companyId}}" class="btn create_btn primary_btn">Create New Branch</router-link>
+                           <router-link :to="{name: 'create_branch', query: {companyId: this.$route.query.companyId}}" class="btn create_btn primary_btn">Create New Outlet</router-link>
                         </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
-                            <p class="dashboard__card__header text-white">Total number of Branches</p>
+                            <p class="dashboard__card__header text-white">Total number of Retail Outlets</p>
                                 <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
                                 <img src="@/assets/img/company.png" width="40px" />
                                 </div>
@@ -164,6 +164,9 @@ export default {
                 `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
+                    res.data.sort((a, b) => {
+                        return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
+                    });
                     res.data.forEach(el => {
                         el.index = ++index;
                     })

@@ -21,7 +21,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-6 card_inner_wrapper">
-                            <h3>Total Transactions</h3>
+                            <h3>Tank Probe Transactions</h3>
                         </div>
                         <div class="col-md-6 mt-4">
                            <div class="drop_down_div align-items-center">
@@ -45,6 +45,16 @@
                 </div>
         </section>
         <div class="new_row_section mt-3">
+            <div class="row top_section_row mt-5" v-show="!showLoader">
+                <div class="col-md-8">
+                <span>
+                    Retail Outlet tank probe transactions between {{ startDate }} and
+                    {{ endDate }}
+                </span>
+                </div>
+                <div class="col-md-4 text-right"></div>
+            </div>
+
             <ejs-grid
                 ref="dataGrid"
                 v-show="!showLoader"
@@ -60,16 +70,14 @@
                 :dataSource="tableProps.tableData"  v-cloak
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="transactionDate" headerText="Transaction Date"></e-column>
-                    <e-column width="200" field="branchName" headerText="Branch Name"></e-column>
-                    <e-column width="200" field="tankName" headerText="Tank Name"></e-column>
-                    <e-column width="200" field="status" headerText="Status"></e-column>
-                    <e-column width="200" field="volume" headerText="Volume"></e-column>
-                    <e-column width="200" field="costPrice" headerText="Cost Price"></e-column>
-                    <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
-                    <e-column width="200" field="volumeIn" headerText="Volume In"></e-column>
-                    <e-column width="200" field="volumeOut" headerText="Volume Out"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="date" headerText="Date"></e-column>
+                    <e-column width="200" field="productHeight" headerText="Product Height"></e-column>
+                    <e-column width="200" field="productVolume" headerText="Product Volume"></e-column>
+                    <e-column width="200" field="temprature" headerText="Temperature"></e-column>
+                    <e-column width="200" field="waterHeight" headerText="Water Height"></e-column>
+                    <e-column width="200" field="waterVolume" headerText="Water Volume"></e-column>
+                    <e-column width="10"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/> 
@@ -179,8 +187,10 @@ export default {
                         element.date = this.$moment(element.date).format(
                         "MM/DD/YYYY hh:mm A"
                         );
-                        element.amount = this.convertThousand(element.amount);
-                        element.walletBalance = this.convertThousand(element.walletBalance);
+                        element.productVolume = this.convertThousand(element.productVolume);
+                        element.waterVolume = this.convertThousand(element.waterVolume);
+                        element.productHeight = this.convertThousand(element.productHeight);
+                        element.waterHeight = this.convertThousand(element.waterHeight);
                     });
                     this.transactionCount = response.data.length;
                     this.$refs.dataGrid.ej2Instances.setProperties({
@@ -189,6 +199,8 @@ export default {
                     this.refreshGrid();
                 })
                 .catch(error => {
+                    console.log(error)
+                    console.log(error.response)
                     this.showLoader = false;
                 });
         },
@@ -197,7 +209,7 @@ export default {
                 return "0.00";
             }
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        },
+        }
     }
 }
 </script>

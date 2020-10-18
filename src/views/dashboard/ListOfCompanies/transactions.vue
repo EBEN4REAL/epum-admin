@@ -21,7 +21,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-6 card_inner_wrapper">
-                            <h3>Total Transactions</h3>
+                            <h3>Wallet Transactions</h3>
                         </div>
                         <div class="col-md-6 mt-4">
                            <div class="drop_down_div align-items-center">
@@ -46,10 +46,10 @@
         </section>
 
         <div class="new_row_section mt-3">
-            <div class="row top_section_row" v-show="!showLoader">
+            <div class="row top_section_row mt-5" v-show="!showLoader">
                 <div class="col-md-8">
                 <span>
-                    Retail Outlet pump transactions between {{ startDate }} and
+                    Retail Outlet wallet transactions between {{ startDate }} and
                     {{ endDate }}
                 </span>
                 </div>

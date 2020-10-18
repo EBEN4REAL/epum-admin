@@ -137,7 +137,6 @@ import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
-// import PumpVarianceTemplate from '@/components/Templates/list_of_pump_variance_reports_template.vue';
 import Jquery from 'jquery';
 let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
@@ -260,7 +259,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `https://oh.epump.com.ng/Audit/DaySale/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const _salesArr = []

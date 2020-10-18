@@ -22,7 +22,7 @@
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
                         <div class="col-md-6 card_inner_wrapper">
-                            <h3>Total Transactions</h3>
+                            <h3>Pump Transactions</h3>
                         </div>
                         <div class="col-md-6 mt-4">
                            <div class="drop_down_div align-items-center">
@@ -94,7 +94,6 @@
             <div class="row top_section_row" v-show="!showLoader">
                 <div class="col-md-8">
                 <span>
-                    <img src="@/assets/img/hand (1).png" class="mr-3" />
                     Retail Outlet pump transactions between {{ startDate }} and
                     {{ endDate }}
                 </span>
@@ -118,7 +117,7 @@
                 <e-columns>
                   <e-column width="80" field="index" headerText="#"></e-column>
                   <e-column field="date" width="200" headerText="Date/Time"></e-column>
-                  <e-column field="pumpName" width="200" headerText="Pumn Name"></e-column>
+                  <e-column field="pumpName" width="200" headerText="Pump Name"></e-column>
                   <e-column field="productName" width="200" headerText="Product Name"></e-column>
                   <e-column field="pricePerLitre" width="200" headerText="Price/Litre"></e-column>
                   <e-column field="openingRead" width="200" headerText="Opening Reading"></e-column>
@@ -272,7 +271,7 @@ export default {
             return "0.00";
         }
         return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    }
   }
 };
 </script>

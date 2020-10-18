@@ -166,7 +166,8 @@
               <h4>Installed tanks</h4>
               <hr />
             </div>
-             <div class="">
+            <TableLoader :showLoader="showLoader"/>
+             <div class="" v-show="!showLoader">
              <vueper-slides                            
               class="no-shadow"
               :visible-slides="4"
@@ -245,6 +246,9 @@
               </vueper-slide>
           </vueper-slides>
           </div>
+          <div class="text-center py-3" v-show="tanks.length === 0 && !showLoader">
+             No Tanks Added Yet
+          </div>
           </div>
         </div>
       </div>
@@ -319,12 +323,14 @@ import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
+import TableLoader from "@/components/tableLoader/index";
 
 export default {
   components: {
     masterLayout,
     VueperSlides, 
     VueperSlide,
+    TableLoader
   },
   mounted() {
     this.getWalletBalance();
@@ -351,7 +357,8 @@ export default {
       walletBalance: 0,
       tanks: [],
       installedTanksCount: 0,
-      pumpCount: 0
+      pumpCount: 0,
+      showLoader: false
     };
   },
   methods: {
@@ -387,14 +394,16 @@ export default {
         .catch(error => {});
     },
     getTanks() {
+          this.showLoader = true;
           this.axios
           .get(
           `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
           configObject.authConfig
           )
           .then(response => {
-              this.installedTanksCount = response.data.length;
-              response.data.forEach(element => {
+            this.showLoader = false;
+            this.installedTanksCount = response.data.length;
+            response.data.forEach(element => {
                             response.data.forEach(element => {
             element.height = parseInt(
               150 - (element.currentVolume / element.maxCapacity) * 140
@@ -439,7 +448,9 @@ export default {
           this.tanks = response.data;
             })
           })
-          .catch(error => {});
+          .catch(error => {
+            this.showLoader = false
+          });
       },
   },
 };
