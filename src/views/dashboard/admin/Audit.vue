@@ -170,6 +170,9 @@ export default {
                 .then(res => {
                     console.log(res.data);
                     let index = 0;
+                    res.data.sort((a, b) => {
+                        return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+                    });
                     res.data.forEach(el => {
                         el.index = ++index;
                         el.pmsVariance = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))

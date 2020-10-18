@@ -259,7 +259,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Audit/DaySale/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const _salesArr = []

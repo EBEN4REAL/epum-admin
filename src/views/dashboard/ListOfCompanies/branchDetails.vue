@@ -403,6 +403,12 @@ export default {
           .then(response => {
             this.showLoader = false;
             this.installedTanksCount = response.data.length;
+            response.data.sort((a, b) => {
+                if (a.name === b.name) {
+                    return a.name > b.name ? 1 : -1;
+                }
+                return a.name > b.name ? 1 : -1;
+            });
             response.data.forEach(element => {
                             response.data.forEach(element => {
             element.height = parseInt(

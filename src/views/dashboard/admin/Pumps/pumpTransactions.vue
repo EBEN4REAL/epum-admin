@@ -3,7 +3,7 @@
     <masterLayout>
       <section class=" mt-3 full__row_section">
             <div class="banner">
-            <div class="row">
+            <div class="row align-items-center" style="height: 100%">
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
@@ -20,12 +20,11 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-6 card_inner_wrapper">
-                            <h3>Total Transactions</h3>
+                        <div class="row align-items-center justify-content-center" style="height: 100%">
+                        <div class="col-md-4 ">
+                            <h5>Total Transactions</h5>
                         </div>
-                        <div class="col-md-6 mt-4">
-                           <div class="drop_down_div align-items-center">
+                        <div class="col-md-4 mt-4">
                                 <vue-ctk-date-time-picker
                                     v-model="dateRange"
                                     :max-date="maxDate"
@@ -37,7 +36,6 @@
                                     formatted="DD/MM/YYYY"
                                     label="Select a date range"
                                 />
-                              </div>
                         </div>
                     </div>
                     </div>

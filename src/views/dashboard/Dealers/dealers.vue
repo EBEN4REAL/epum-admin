@@ -141,6 +141,12 @@ export default {
                 `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
+                    res.data.sort((a, b) => {
+                        if (a.name === b.name) {
+                            return a.name > b.name ? 1 : -1;
+                        }
+                        return a.name > b.name ? 1 : -1;
+                    });
                     res.data.forEach(el => {
                         el.index = ++index;
                     })

@@ -200,10 +200,10 @@
                   </div>
                 </div>
               </div>
-              <div class="text-center py-3" v-show="tanks.length === 0 && !showLoader">
-                No Tanks Added Yet
-              </div>
-        </div>
+            </div>
+            <div class="text-center py-3" v-show="tanks.length === 0 && !showLoader">
+              No Tanks Added Yet
+            </div>
         </div>   
        </div>
     </masterLayout>
@@ -250,6 +250,12 @@ export default {
           .then(response => {
               this.showLoader = false
               this.installedTanksCount = response.data.length;
+              response.data.sort((a, b) => {
+                  if (a.name === b.name) {
+                      return a.name > b.name ? 1 : -1;
+                  }
+                  return a.name > b.name ? 1 : -1;
+              });
               response.data.forEach(element => {
                 element.height = parseInt(
                   150 - (element.currentVolume / element.maxCapacity) * 140

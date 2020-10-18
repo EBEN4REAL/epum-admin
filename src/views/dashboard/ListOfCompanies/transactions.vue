@@ -189,6 +189,7 @@ export default {
                     element.amount = this.convertThousand(element.amount);
                     element.walletBalance = this.convertThousand(element.walletBalance);
                 });
+                
                 this.transactionCount = response.data.length;
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: response.data

@@ -52,7 +52,7 @@
                   v-show="!showLoader"
                   ref="dataGrid"
                   :created="refreshGrid"
-                  :allowPaging="false"
+                  :allowPaging="true"
                   :allowSorting="true"
                   :pageSettings="tableProps.pageSettings"
                   :toolbar="tableProps.toolbar"
@@ -86,17 +86,16 @@
                   </div>
                   <div class="align-items-center mt-3">
                     <div class="input__block">
-                       <!-- <vue-ctk-date-time-picker
-                          v-model="dateRange"
-                          :max-date="maxDate"
+                       <vue-ctk-date-time-picker
+                          v-model="dateRange2"
                           :onlyDate="true"
                           :autoClose="true"
                           color="#370F70"
                           format="DDMMYYYY"
                           formatted="DD/MM/YYYY"
                           label="Recorded on"
-                      /> -->
-                      <input type="date"  v-model="date" placeholder="Recorded on" />
+                      />
+                      <!-- <input type="date"  v-model="date" placeholder="Recorded on" /> -->
                     </div>
                   </div>
                   <div class="text-center mt-3">
@@ -163,6 +162,11 @@ export default {
             this.getTankDip();
         }
     },
+    dateRange2: function (newDate) {
+      if ( newDate) {
+        this.tankDipDate = this.$moment(newDate, "DD-MM-YYYY").format("MMMM D, YYYY")
+      }
+    },
   },
   mounted() {
     this.getTankDip()
@@ -196,6 +200,8 @@ export default {
       volume: '',
       maxDateForm: this.$moment(new Date()).format("YYYY-MM-DD"),
       dateRange: this.startDate,
+      dateRange2: this.tankDipDate,
+      tankDipDate: this.$moment().format("MMMM D, YYYY"),
       pluginStartDate: this.$moment().format("D-M-YYYY"),
       startDate: this.$moment().format("MMMM D, YYYY"),
       showLoader: false,
@@ -223,6 +229,9 @@ export default {
       date: ""
     };
   },
+  created() {
+    this.dateRange2 = this.pluginStartDate;
+  },
   methods: {
     convertThousand(request) {
         if (!isFinite(request)) {
@@ -236,8 +245,14 @@ export default {
         .get(
             `${configObject.apiBaseUrl}/Tank/TankDip/${this.$route.query.branchId}/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
             .then(res => {
-              console.log(res.data)
                 let index = 0
+                res.data.sort((a, b) => {
+                  return a.date < b.date
+                    ? 1
+                    : a.date > b.date
+                    ? -1
+                    : 0;
+                });
                 res.data.forEach(el => {
                     el.index = ++index;
                     el.date = this.$moment(el.date).format(
@@ -245,7 +260,7 @@ export default {
                     );
                     el.actualVolume = this.convertThousand(el.actualVolume)
                 })
-                
+               
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: res.data
                 });
@@ -269,9 +284,8 @@ export default {
         branchId: this.$route.query.branchId,
         tankId: this.$route.query.tankId,
         currentVolume: this.volume,
-        start: this.date
+        start: this.tankDipDate
       }
-      
       this.isButtonDisabled = true;
 
       $('.loader').show();

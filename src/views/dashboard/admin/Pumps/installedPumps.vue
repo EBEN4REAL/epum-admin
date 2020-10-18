@@ -107,7 +107,8 @@
             v-if="!pumps || pumps.length < 1 && !showLoader"
             >
                 <div class="text-center" style="margin-top: 30px">
-                    <h3 style="color: rgb(161, 146, 146); font-size: 35px;">No Pumps Added</h3>
+                    <!-- <h3 style="color: rgb(161, 146, 146); font-size: 35px;">No Pumps Added</h3> -->
+                    <div>No Pumps Added</div>
                 </div>
             </div>
             <TableLoader :showLoader="showLoader" />
