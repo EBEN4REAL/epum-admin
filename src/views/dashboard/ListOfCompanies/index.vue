@@ -122,7 +122,6 @@ export default {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-               
             },
             list_of_companies_templates: function() {
                 return {

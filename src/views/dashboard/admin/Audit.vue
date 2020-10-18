@@ -166,7 +166,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `https://oh.epump.com.ng/Audit/PumpTankSale/${this.$route.query.companyId}?date=${this.startDate}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Audit/PumpTankSale/${this.$route.query.companyId}?date=${this.startDate}`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data);
                     let index = 0;
@@ -179,7 +179,7 @@ export default {
                         el.pumpAGO =  this.convertThousand(el.pumpAGO)
                         el.tankAGO =  this.convertThousand(el.tankAGO)
                         el.date = this.$moment(el.date).format(
-                        "MM/DD/YYYY "
+                        "MM-DD-YYYY"
                         );
                     })
                     sessionStorage.clear()
