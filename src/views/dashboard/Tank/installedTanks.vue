@@ -200,9 +200,9 @@
                   </div>
                 </div>
               </div>
-          <div class="text-center py-3" v-show="tanks.length === 0 && !showLoader">
-             No Tanks Added Yet
-          </div>
+              <div class="text-center py-3" v-show="tanks.length === 0 && !showLoader">
+                No Tanks Added Yet
+              </div>
         </div>
         </div>   
        </div>
