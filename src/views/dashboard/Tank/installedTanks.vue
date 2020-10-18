@@ -177,8 +177,8 @@
               </div> -->
               <div class="mt-3 pb-3 tanks_probe">
                 <div class="mb-4 mt-4">
-                  <!-- <router-link :to="{ name: 'tankTransaction'}" -->
-                  <router-link :to="{ name: $route.name, query: {...$route.query}  }"
+                  <!-- <router-link :to="{ name: 'tankTransaction', query: { id: tank.id }}" -->
+                  <router-link :to="{ name: $route.name, query: {...$route.query} }"
                     class="transactions__btn remove_text_decoration"
                     style="text-decoration: none"
                   >Transaction</router-link>
@@ -241,52 +241,50 @@ export default {
           .then(response => {
               this.installedTanksCount = response.data.length;
               response.data.forEach(element => {
-                            response.data.forEach(element => {
-            element.height = parseInt(
-              150 - (element.currentVolume / element.maxCapacity) * 140
-            );
-            if (element.height >= 98) {
-              element.waveColor = "red";
-            } else if (element.height >= 70) {
-              element.waveColor = "#039be4";
-            } else {
-              element.waveColor = "green";
-            }
-            element.waterVolume =
-              element.waterVolume == null ? 0 : element.waterVolume;
-            if (
-              element.productName !== undefined &&
-              element.productName !== null
-            ) {
-              if (element.productName.toLowerCase() === "pms") {
-                element.color = "#d8991c";
-              } else if (element.productName.toLowerCase() === "ago") {
-                element.color = "#0fce29";
-              } else if (element.productName.toLowerCase() === "dpk") {
-                element.color = "#00aced";
-              } else if (element.productName.toLowerCase() === "lpg") {
-                element.color = "purple";
-              }
-            } else if (element.name !== undefined && element.name !== null) {
-              if (element.name.toLowerCase().includes("pms")) {
-                element.color = "#d8991c";
-              } else if (element.name.toLowerCase().includes("ago")) {
-                element.color = "#0fce29";
-              } else if (element.name.toLowerCase().includes("dpk")) {
-                element.color = "#00aced";
-              } else if (element.name.toLowerCase().includes("lpg")) {
-                element.color = "purple";
-              }
-            }
-          });
-          response.data.sort(function(a, b) {
-            return a.height - b.height;
-          });
-          this.tanks = response.data;
-          sessionStorage.clear();
-          localStorage.setItem("tanksList", JSON.stringify(response.data))
-          this.tanksCount = response.data.length
-            })
+                element.height = parseInt(
+                  150 - (element.currentVolume / element.maxCapacity) * 140
+                );
+                if (element.height >= 98) {
+                  element.waveColor = "red";
+                } else if (element.height >= 70) {
+                  element.waveColor = "#039be4";
+                } else {
+                  element.waveColor = "green";
+                }
+                element.waterVolume =
+                  element.waterVolume == null ? 0 : element.waterVolume;
+                if (
+                  element.productName !== undefined &&
+                  element.productName !== null
+                ) {
+                  if (element.productName.toLowerCase() === "pms") {
+                    element.color = "#d8991c";
+                  } else if (element.productName.toLowerCase() === "ago") {
+                    element.color = "#0fce29";
+                  } else if (element.productName.toLowerCase() === "dpk") {
+                    element.color = "#00aced";
+                  } else if (element.productName.toLowerCase() === "lpg") {
+                    element.color = "purple";
+                  }
+                } else if (element.name !== undefined && element.name !== null) {
+                  if (element.name.toLowerCase().includes("pms")) {
+                    element.color = "#d8991c";
+                  } else if (element.name.toLowerCase().includes("ago")) {
+                    element.color = "#0fce29";
+                  } else if (element.name.toLowerCase().includes("dpk")) {
+                    element.color = "#00aced";
+                  } else if (element.name.toLowerCase().includes("lpg")) {
+                    element.color = "purple";
+                  }
+                }
+              });
+              response.data.sort(function(a, b) {
+                return a.height - b.height;
+              });
+              this.tanks = response.data;
+              sessionStorage.clear();
+              localStorage.setItem("tanksList", JSON.stringify(response.data))
+              this.tanksCount = response.data.length
           })
           .catch(error => {});
       },

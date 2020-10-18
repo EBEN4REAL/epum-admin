@@ -127,6 +127,7 @@
                   <e-column field="totalSale" width="200" headerText="Volume Dispensed"></e-column>
                   <e-column field="staffName" width="200" headerText="Dispensed By"></e-column>
                   <e-column field="salesType" width="200" headerText="Sales Type"></e-column>
+                  <e-column width="10"></e-column>
                 </e-columns>
               </ejs-grid>
             <TableLoader :showLoader="showLoader"/> 
@@ -152,7 +153,6 @@ import JQuery from "jquery";
 let $ = JQuery;
 
 export default {
-  title: 'Wallet Transactions: Customer Portal',
   name: "DashboardHome",
   components: {
     masterLayout,
@@ -267,15 +267,12 @@ export default {
           this.showLoader = false;
         });
     },
-    decimalThousand(request) {
-      if (!isFinite(request)) {
-        return "0.00";
-      }
-      return request
-        .toFixed(2)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    convertThousand(request) {
+        if (!isFinite(request)) {
+            return "0.00";
+        }
+        return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   }
 };
 </script>

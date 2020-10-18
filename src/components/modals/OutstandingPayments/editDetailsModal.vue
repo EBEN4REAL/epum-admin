@@ -1,5 +1,5 @@
 <template>
-<modal class="editDetailsModal" name="editDetailsModal" transition="pop-out" :width="650" :height="650" @opened="opened" @before-close="beforeclose">
+<modal class="editDetailsModal" name="editDetailsModal" transition="pop-out" :width="650" :height="600" @opened="opened" @before-close="beforeclose">
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="50" height="60"></span>
       <h4>Update Account Details</h4>
@@ -181,6 +181,7 @@ export default {
       this.axios
         .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig)
         .then(response => {
+          console.log(response.data)
           this.accountNameValue = response.data.accountName
           this.verifyAccount = false
           this.updateAccount = true

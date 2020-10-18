@@ -84,8 +84,9 @@
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/> 
         </div>
-      <EditDetailsModal :balance="balance" :accountName="accountName" :accountNumber="accountNumber" :bankName="bankName" :branchId="branchId" :branchName="branchName"></EditDetailsModal>
+      
     </masterLayout>
+    <EditDetailsModal :balance="balance" :accountName="accountName" :accountNumber="accountNumber" :bankName="bankName" :branchId="branchId" :branchName="branchName"></EditDetailsModal>
   </div>
 </template>
 
@@ -138,8 +139,8 @@ export default {
             template: Vue.component("columnTemplate", {
               template:
                 `<div> 
-                <button class="zone_action_buttons assign_branch" v-on:click="verifyDetails(data)">{{data.updateAccountButton}}</button>
-                <a :href="'/wallet-transactions?branchId=' + data.branchId + '&branchName=' + data.branchName" class="zone_action_buttons assign_branch" @click="changeRoute($event, 'wallet_transactions', data.branchId, data.branchName)">{{data.viewTransactionsButton}}</a> 
+                <button class="btn details_btn mr-3" style="width: 150px; height: 35px" v-on:click="verifyDetails(data)">Update Account</button>
+                <a :href="'/wallet-transactions?branchId=' + data.branchId + '&branchName=' + data.branchName" class="btn dealers_btn" @click="changeRoute($event, 'walletTransactions', data.branchId, data.branchName)">Wallet Transactions</a> 
                 </div>`,
               data: function() {
                 return {
@@ -257,7 +258,7 @@ export default {
 <style>
 @media screen and (max-width: 602px) {
   .editDetailsModal .v--modal-box.v--modal {
-      top: 68px !important;
+      /* top: 68px !important; */
       margin: 0 auto !important;
       width: 90% !important;
       height: 550px !important;
