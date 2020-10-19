@@ -4,9 +4,9 @@
       Edit
     </router-link>
 
-    <router-link :to="{name:'company_details'}" class="btn dealers_btn mr-3">
+    <!-- <router-link :to="{name:'company_details'}" class="btn dealers_btn mr-3">
       Details
-    </router-link>
+    </router-link> -->
 
     <router-link :to="{name:''}" class="btn branches_btn mr-3">
      Delete

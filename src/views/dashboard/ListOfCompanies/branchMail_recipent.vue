@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt-3">
-                                        <button class="btn btn_theme" @click="createMailRecp">Create
+                                        <button class="btn btn_theme" @click="createMailRecp" >Create
                                             <img
                                                 src="@/assets/img/git_loader.gif"
                                                 style="display:none"
@@ -129,6 +129,7 @@ export default {
             email: null,
             backgroundUrl,
             showLoader: false,
+            isButtonDisabled: false,
             mailRecpCount:0,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -248,7 +249,7 @@ export default {
                     $('.loader').hide();
                 })
                 .catch(error => {
-                    this.isButtonDisabled = false;
+                    this.refreshRoles = false;
                     $('.loader').hide();
                     this.$toast("Unable to create mail recipient", {
                         type: "error",
