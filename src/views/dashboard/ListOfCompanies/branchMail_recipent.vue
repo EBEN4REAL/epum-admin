@@ -254,10 +254,12 @@ export default {
                     });
                     this.phone = null
                     this.email = null
+                    this.isButtonDisabled = false;
                     this.getMailRecp()
                     $('.loader').hide();
                 })
                 .catch(error => {
+                    this.refreshRoles = false;
                     this.isButtonDisabled = false;
                     $('.loader').hide();
                     this.$toast(error.response.data.message, {
