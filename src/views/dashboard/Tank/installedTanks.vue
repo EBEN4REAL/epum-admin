@@ -293,9 +293,9 @@ export default {
                   }
                 }
               });
-              response.data.sort(function(a, b) {
-                return a.height - b.height;
-              });
+              // response.data.sort(function(a, b) {
+              //   return a.height - b.height;
+              // });
               this.tanks = response.data;
               sessionStorage.clear();
               localStorage.setItem("tanksList", JSON.stringify(response.data))

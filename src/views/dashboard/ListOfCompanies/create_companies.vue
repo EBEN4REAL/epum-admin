@@ -287,7 +287,7 @@ export default {
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast("Unable to create company", {
+              this.$toast(error.response.data.message, {
                   type: "error",
                   timeout: 3000
               });
