@@ -20,11 +20,10 @@
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
                         <div class="row align-items-center justify-content-center" style="height: 100%">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <h5>Wallet Transactions</h5>
                         </div>
-                        <div class="col-md-4 mt-4">
-                           <div class="drop_down_div align-items-center">
+                        <div class="col-md-4">
                                 <vue-ctk-date-time-picker
                                     v-model="dateRange"
                                     :max-date="maxDate"
@@ -36,7 +35,6 @@
                                     formatted="DD/MM/YYYY"
                                     label="Select a date range"
                                 />
-                              </div>
                         </div>
                     </div>
                     </div>
