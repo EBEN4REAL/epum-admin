@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >40</small>
+                                >{{usersCount}}</small>
                                 </div>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
+                v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="true"
@@ -56,6 +57,7 @@
                     <e-column :template="manageUsersTemplate" headerText="Action" width="300"></e-column>
                 </e-columns>
             </ejs-grid>
+            <TableLoader :showLoader="showLoader"  />
         </div>
     </masterLayout>
 </template>
@@ -64,7 +66,8 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/manageUsersTemplate.vue';
-
+import TableLoader from "@/components/tableLoader/index";   
+import configObject from "@/config";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
@@ -72,6 +75,7 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
+        TableLoader
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -90,8 +94,10 @@ export default {
     },
     data() {
         return {
-             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-              tableProps: {
+            showLoader: false,
+            usersCount: 0,
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
@@ -127,11 +133,39 @@ export default {
             }
         },
         getUsers() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+            this.showLoader = true
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Admin/GetUsers`, configObject.authConfig)
+                .then(res => {
+                    console.log(res.data)
+                    let index = 0;
+                    res.data.sort((a, b) => {
+                    // if (a.branchName && b.branchName) {
+                        return a.email > b.email ? 1 : b.email > a.email ? -1 : 0;
+                    // } else if (a.branchName && !b.branchName) {
+                    //     return -1
+                    // } else { 
+                    //     return 1
+                    // }
+                        
+                    });
+                    res.data.forEach(el => {
+                        el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
+                        el.index = ++index;
+                        el.status = 'Offline'
+                    })
+                    this.usersCount = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
+        },
     }
 }
 </script>
