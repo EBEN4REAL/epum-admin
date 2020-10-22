@@ -48,7 +48,7 @@
           :toolbarClick="toolbarClick"
           >
           <e-columns>
-              <e-column width="40" field="index" headerText="#"></e-column>
+              <e-column width="80" field="index" headerText="#"></e-column>
               <e-column width="250" field="name" headerText="Role"></e-column>
              <e-column :template="rolesTemplates" headerText="Action" width="300"></e-column>
           </e-columns>
@@ -85,9 +85,6 @@ export default {
         var value = event.target.value;
         grid.search(value);
     }
-    this.$eventHub.$on("refreshRoles", () => { 
-      this.getRoles()
-    })
   },
   data() {
     return {

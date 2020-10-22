@@ -48,7 +48,7 @@
                 :dataSource="tableProps.tableData"  v-cloak
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="userName" headerText="Username"></e-column>
                     <e-column width="200" field="firstName" headerText="First Name"></e-column>
                     <e-column width="200" field="lastName" headerText="Last Name"></e-column>
@@ -63,7 +63,6 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import EjsTable from '@/components/ejsTable.vue';
 import Temp from '@/components/manageUsersTemplate.vue';
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
@@ -73,7 +72,6 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        EjsTable
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -97,44 +95,6 @@ export default {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        userName: "eben@g.com",
-                        firstName: "Ebenezer",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
-                    },
-                    {
-                        index: 2,
-                        userName: "josh@g.com",
-                        firstName: "Josh",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
-                    },
-                    {
-                        index: 3,
-                        userName: "john@die.com",
-                        firstName: "John",
-                        lastName: "Doe",
-                        phoneNumber: "080748464838"
-                    },
-                    {
-                        index: 4,
-                        userName: "sarah@g.com",
-                        firstName: "Sarah",
-                        lastName: "Doe",
-                        phoneNumber: "080748464838"
-                    },
-                    {
-                        index: 5,
-                        userName: "eben@g.com",
-                        firstName: "Ebenezer",
-                        lastName: "Igbinoba",
-                        phoneNumber: "080748464838"
-                    },
-                ],
-                fileName: 'list_of_companies'
             },
             manageUsersTemplate: function() {
                 return {

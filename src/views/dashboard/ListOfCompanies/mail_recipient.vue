@@ -40,7 +40,7 @@
                             :toolbarClick="toolbarClick"
                             >
                             <e-columns>
-                                <e-column width="40" field="index" headerText="#"></e-column>
+                                <e-column width="80" field="index" headerText="#"></e-column>
                                 <e-column width="200" field="email" headerText="Email"></e-column>
                                 <e-column width="10" ></e-column>
                             </e-columns>

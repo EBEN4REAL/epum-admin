@@ -48,7 +48,7 @@
                 :toolbarClick="toolbarClick"
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <!-- <e-column width="200" field="companyName" headerText="Company Name"></e-column> -->
                     <e-column width="200" field="dealerName" headerText="Dealer Name"></e-column>
                     <e-column width="200" field="name" headerText="Name"></e-column>

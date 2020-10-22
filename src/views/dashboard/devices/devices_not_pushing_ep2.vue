@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >18</small>
+                                >{{notPushingEp2Count}}</small>
                                 </div>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
         </section>
         <div class="new_row_section mt-3">
              <ejs-grid
+                v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="true"
@@ -49,16 +50,18 @@
                 :columns="tableProps.columns"
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device ID"></e-column>
                     <e-column width="200" field="fwVersion" headerText="Firmware Version"></e-column>
                     <e-column width="200" field="fwDate" headerText="Firmware Date"></e-column>
-                    <e-column width="200" field="lastEp2" headerText="Last Ep2"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
+                    <e-column width="200" field="lastEp2Date" headerText="Last Ep2"></e-column>
                     <e-column width="200" field="branchName" headerText="Branch Name"></e-column>
                     <e-column width="350" field="address" headerText="Address"></e-column>
+                    <e-column width="10"></e-column>
                 </e-columns>
             </ejs-grid>
+            <TableLoader :showLoader="showLoader"  />
         </div>
     </masterLayout>
 </template>
@@ -66,8 +69,9 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import EjsTable from '@/components/ejsTable.vue';
-import Temp from '@/components/devicePosTemplate.vue';
+// import Temp from '@/components/devicePosTemplate.vue';
+import TableLoader from "@/components/tableLoader/index";
+import configObject from "@/config";
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -77,13 +81,13 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        EjsTable
+        TableLoader
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
-        this.getPos();
+        this.getDevicesNotPusingEp2()
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -97,118 +101,13 @@ export default {
     data() {
         return {
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-              tableProps: {
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        deviceId: "864626046222144",
-                        fwVersion: "20412",
-                        fwDate: "Sep 26 2019,10:18:28",
-                        lastEp2: "2 Hours ago",
-                        memoryUsage: "8.021749",
-                        lastSeen: "18 Hours ago",
-                        branchName: "Malok station - Malok Igbobo",
-                        address: "Meri Junction Ikorodu, Lagos"
-                    },
-                    {
-                        index: 2,
-                        deviceId: "864626046222144",
-                        fwVersion: "20412",
-                        fwDate: "Sep 26 2019,10:18:28",
-                        lastEp2: "5 Hours ago",
-                        memoryUsage: "8.021749",
-                        lastSeen: "18 Hours ago",
-                        branchName: "Malok station - Malok Igbobo",
-                        address: "Meri Junction Ikorodu, Lagos"
-                    },
-                    {
-                        index: 3,
-                        deviceId: "864626046222144",
-                        fwVersion: "20412",
-                        fwDate: "Sep 26 2019,10:18:28",
-                        lastEp2: "10 Hours ago",
-                        memoryUsage: "8.021749",
-                        lastSeen: "18 Hours ago",
-                        branchName: "Malok station - Malok Igbobo",
-                        address: "Meri Junction Ikorodu, Lagos"
-                    },
-                    {
-                        index: 4,
-                        deviceId: "864626046222144",
-                        fwVersion: "20412",
-                        fwDate: "Sep 26 2019,10:18:28",
-                        lastEp2: "19 Hours ago",
-                        memoryUsage: "8.021749",
-                        lastSeen: "18 Hours ago",
-                        branchName: "Malok station - Malok Igbobo",
-                        address: "Meri Junction Ikorodu, Lagos"
-                    },
-                ],
-                columns: [ 
-                    { 
-                        field: "index", 
-                        headerText: "#", 
-                        width: 40, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "devices", 
-                        headerText: "Devices", 
-                        width: 150, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "lastUpdate", 
-                        headerText: "Last Update", 
-                        width: 180, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "fwVersion", 
-                        headerText: "FW Version", 
-                        width: 150, 
-                        textAlign: "center"
-                    }, 
-                    { 
-                        field: "memoryUsage", 
-                        headerText: "Memory Usage", 
-                        width: 150, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "name", 
-                        headerText: "Name", 
-                        width: 300, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "state", 
-                        headerText: "State", 
-                        width: 100, 
-                        textAlign: "center"
-                    },
-                    { 
-                        field: "firmware", 
-                        headerText: "Firmware Update", 
-                        width: 300, 
-                        textAlign: "center"
-                    },
-                    { 
-                        headerText: "Action", 
-                        width: 500, 
-                        textAlign: "center",
-                        template:   () => {
-                            return {
-                                template: Temp
-                            }
-                        }
-                    },  
-                ] ,
-                fileName: 'pos'
             },
+            notPushingEp2Count: 0,
+            showLoader: false,
         }
     },
     computed: {
@@ -234,12 +133,41 @@ export default {
                 break;
             }
         },
-        getPos() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+        getDevicesNotPusingEp2() {
+            this.showLoader = true
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Admin/DeviceNotPushingEP2`, configObject.authConfig)
+                .then(res => {
+                console.log(res.data)
+                    let index = 0;
+                    res.data.sort((a, b) => {
+                    if (a.branchName && b.branchName) {
+                        return a.branchName.toLowerCase() > b.branchName.toLowerCase() ? 1 : b.branchName.toLowerCase() > a.branchName.toLowerCase() ? -1 : 0;
+                    } else if (a.branchName && !b.branchName) {
+                        return -1
+                    } else { 
+                        return 1
+                    }
+                        
+                    });
+                    res.data.forEach(el => {
+                        el.lastEp2Date = this.$moment(el.lastEp2Date).format("MM/DD/YYYY hh:mm A");
+                        el.index = ++index;
+                        el.address = `${el.street} ${el.city}, ${el.state}`
+                    })
+                    this.notPushingEp2Count = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                console.log(error)
+                    this.showLoader = false
+                });
+        },
     }
 }
 </script>

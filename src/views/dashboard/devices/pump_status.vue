@@ -3,20 +3,7 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                <div class="col-lg-8 remove-padding-left padding_div pr-0">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-8 card_inner_wrapper">
-                            <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by managing your pumps here</p>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                           
-                        </div>
-                    </div>
-                </div>
-             </div>
-                 <div class="col-lg-4">
+                <div class="col-lg-4">
                     <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
                             <p class="dashboard__card__header text-white">Pump Status</p>
@@ -30,12 +17,36 @@
                         </div>
                     </div>
               </div>
+              <div class="col-lg-8 remove-padding-left padding_div">
+                    <div class="dashboard__card small_card align-center">
+                        <div class="row  align-items-center justify-content-center" style="height:100%;">
+                        <div class="col-md-6 card_inner_wrapper">
+                            <h3>Pump Status</h3>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                           <div class="drop_down_div align-items-center">
+                                <vue-ctk-date-time-picker
+                                    v-model="dateRange"
+                                    :max-date="maxDate"
+                                    :range="true"
+                                    :autoClose="true"
+                                    :custom-shortcuts="customShortcuts"
+                                    color="#290C53"
+                                    format="DDMMYYYY"
+                                    formatted="DD/MM/YYYY"
+                                    label="Select a date range"
+                                />
+                              </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
         </section>
         <div class="new_row_section mt-3">
-            <!-- <EjsTable :tableProps="tableProps"  /> -->
             <ejs-grid
+                v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="true"
@@ -50,7 +61,7 @@
                 :columns="tableProps.columns"
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="stationName" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
@@ -65,6 +76,7 @@
                     <e-column :template="pumpStatusTemplate" headerText="Action" width="100"></e-column>
                 </e-columns>
             </ejs-grid>
+            <TableLoader :showLoader="showLoader"  />
         </div>
     </masterLayout>
 </template>
@@ -72,8 +84,9 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import EjsTable from '@/components/ejsTable.vue';
 import Temp from '@/components/pump_status_template.vue';
+import TableLoader from "@/components/tableLoader/index";
+import configObject from "@/config";
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -82,13 +95,17 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        EjsTable
+        TableLoader
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
+    created() {
+        this.dateRange.start = this.pluginStartDate;
+        this.dateRange.end = this.pluginEndDate;
+    },
     mounted() {
-        this.getBranches();
+        this.getPumpStatus()
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -101,58 +118,26 @@ export default {
     },
     data() {
         return {
-            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-              tableProps: {
+            showLoader: false,
+            tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        stationName: "Abijo",
-                        pumpName: "Nozzle 9",
-                        deviceId: "864626046213549",
-                        todayOpening: "3,353,160.75",
-                        yesterdayClosing: "3,353,160.75",
-                        todayClosing: "3,356,454.25",
-                        difference: "0.00",
-                        lastTransaction: "12 Hours ago",
-                        volumeToday: "1,743.57",
-                        status: "Unreacheable",
-                        lastHit: "1 Hour ago",
-                     },
-                    {
-                        index: 2,
-                        stationName: "Abijo",
-                        pumpName: "Nozzle 9",
-                        deviceId: "864626046213549",
-                        todayOpening: "3,353,160.75",
-                        yesterdayClosing: "3,353,160.75",
-                        todayClosing: "3,356,454.25",
-                        difference: "0.00",
-                        lastTransaction: "12 Hours ago",
-                        volumeToday: "1,743.57",
-                        status: "Unreacheable",
-                        lastHit: "1 Hour ago",
-                    },
-                    {
-                        index: 3,
-                        stationName: "Abijo",
-                        pumpName: "Nozzle 9",
-                        deviceId: "864626046213549",
-                        todayOpening: "3,353,160.75",
-                        yesterdayClosing: "3,353,160.75",
-                        todayClosing: "3,356,454.25",
-                        difference: "0.00",
-                        lastTransaction: "12 Hours ago",
-                        volumeToday: "1,743.57",
-                        status: "Unreacheable",
-                        lastHit: "1 Hour ago",
-                    },                   
-                ],
-                
-                fileName: 'pump_status'
             },
+            maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
+            customShortcuts: [
+                { key: "Today", label: "Today", value: "day" },
+                { key: "yesterday", label: "Yesterday", value: "-day" },
+                { key: "last7Days", label: "Last 7 Days", value: 7 },
+                { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
+                { key: "last30Days", label: "Last 30 Days", value: 30 },
+                { key: "lastMonth", label: "Last Month", value: "-month" }
+            ],
+            startDate: this.$moment().format("MMMM D, YYYY"),
+            endDate: this.$moment().format("MMMM D, YYYY"),
+            pluginStartDate: this.$moment().format("D-M-YYYY"),
+            pluginEndDate: this.$moment().format("D-M-YYYY"),
+            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
             pumpStatusTemplate: function() {
                 return {
                     template: Temp
@@ -160,10 +145,15 @@ export default {
             }
         }
     },
-    computed: {
-        userName() {
-            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
-        }
+    watch: {
+        dateRange: function (newRange, oldRange) {
+            if ( newRange.start!== null && newRange.end !== null) {
+                this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
+                this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
+
+                this.getPumpStatus();
+            }
+        },
     },
     methods: {
         refreshGrid() {
@@ -183,12 +173,41 @@ export default {
                 break;
             }
         },
-        getBranches() {
-            this.$refs.dataGrid.ej2Instances.setProperties({
-                dataSource: this.tableProps.tableData
-            });
-            this.refreshGrid();
-        }
+        getPumpStatus() {
+            this.showLoader = true
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Admin/PumpStatus?qSDate=${this.startDate}&qEDate=${this.endDate}`, configObject.authConfig)
+                .then(res => {
+                    console.log(res.data)
+                    let index = 0;
+                    res.data.sort((a, b) => {
+                    if (a.branchName && b.branchName) {
+                        return a.branchName.toLowerCase() > b.branchName.toLowerCase() ? 1 : b.branchName.toLowerCase() > a.branchName.toLowerCase() ? -1 : 0;
+                    } else if (a.branchName && !b.branchName) {
+                        return -1
+                    } else { 
+                        return 1
+                    }
+                        
+                    });
+                    res.data.forEach(el => {
+                        el.lastEp2Date = this.$moment(el.lastEp2Date).format("MM/DD/YYYY hh:mm A");
+                        el.index = ++index;
+                        el.address = `${el.street} ${el.city}, ${el.state}`
+                    })
+                    this.notPushingEp2Count = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                console.log(error)
+                    this.showLoader = false
+                });
+        },
     }
 }
 </script>

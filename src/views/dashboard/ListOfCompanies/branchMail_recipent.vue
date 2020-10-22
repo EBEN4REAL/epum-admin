@@ -56,7 +56,7 @@
                                 :toolbarClick="toolbarClick"
                                 >
                                 <e-columns>
-                                    <e-column width="40" field="index" headerText="#"></e-column>
+                                    <e-column width="80" field="index" headerText="#"></e-column>
                                     <e-column width="300" field="email" headerText="Email"></e-column>
                                     <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
                                     <e-column width="10"></e-column>
@@ -113,7 +113,6 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
-import EjsTable from '@/components/ejsTable.vue';
 import configObject from "@/config";
 import Jquery from 'jquery';
 let $ = Jquery;
@@ -124,7 +123,6 @@ import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vu
 export default {
     components: {
         masterLayout,
-        EjsTable,
         TableLoader
     },
     provide: {

@@ -71,7 +71,7 @@
                 :dataSource="tableProps.tableData"  v-cloak
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="date" headerText="Date"></e-column>
                     <e-column width="200" field="amount" headerText="Transaction Amount"></e-column>
                     <e-column width="200" field="walletBalance" headerText="Wallet Balance"></e-column>
