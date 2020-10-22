@@ -16,14 +16,9 @@
             </div>
         </div>
         </section>
-        <div  class="full__row_section mt-3">
+        <div  class="full__row_section ml-4 mt-3">
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- <div class="pad_div">
-                        <div class="text-left tabs__lists">
-                          <EjsTable :tableProps="tableProps"  />
-                    </div>
-                    </div> -->
 
                     <div class="new_row_section mt-3">
                         <ejs-grid
@@ -55,8 +50,11 @@
                         <form>
                     <div class="text-center">
                         <div class="align-items-center mt-3">
+                           <div class="text-left">
+                                <label for="">Email</label>
+                            </div>
                             <div class="input__block">
-                            <input type="text" placeholder="Email" class="" v-model="email"/>
+                            <input type="email" placeholder="Email" class="" v-model="email"/>
                             </div>
                         </div>
                          <div class="text-center mt-3">
@@ -79,6 +77,31 @@
                     </div>
                     </form>
                      </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="new_row_section mt-3">
+                        <ejs-grid
+                            v-show="!showLoader"
+                            ref="dataGrid"
+                            :created="refreshGrid"
+                            :allowPaging="true"
+                            :allowSorting="true"
+                            :pageSettings="tableProps.pageSettings"
+                            :toolbar="tableProps.toolbar"
+                            :searchSettings="tableProps.search"
+                            :allowExcelExport="true"
+                            :allowPdfExport="true"
+                            :toolbarClick="toolbarClick"
+                            >
+                            <e-columns>
+                                <e-column width="40" field="index" headerText="#"></e-column>
+                                <e-column width="200" field="email" headerText="Email"></e-column>
+                                <e-column width="10" ></e-column>
+                            </e-columns>
+                        </ejs-grid>
+                        <TableLoader :showLoader="showLoader"/>
                     </div>
                 </div>
             </div>

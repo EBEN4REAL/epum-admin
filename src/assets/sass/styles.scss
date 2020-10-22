@@ -195,13 +195,13 @@ body {
   flex-flow: column wrap;
 }
 .yellow_text {
-  color:  #ffbb00
+  color: #ffbb00;
 }
 .hundred-percent-height {
   height: 100%;
 }
 .grey_text {
-  color: $greyTextColor
+  color: $greyTextColor;
 }
 .dashboard__card__header {
   letter-spacing: 0px;
@@ -273,6 +273,11 @@ body {
 
 .pad_div {
   padding: 10px;
+}
+
+.mail_card .pad_div {
+  margin-top: -59px;
+  padding: 65px;
 }
 
 .tabs__lists {
@@ -439,7 +444,7 @@ textarea {
 }
 
 .card_height {
-  height: 277px;
+  height: 336px;
 }
 
 .branch_card {
@@ -489,9 +494,8 @@ p.dashboard__card__header {
   font-size: 17px;
 }
 .header-three-text {
-  color: #290C53;
+  color: #290c53;
   font-weight: 600;
-
 }
 .card_table_header {
   font-size: 15px !important;
@@ -499,14 +503,14 @@ p.dashboard__card__header {
 .card_table_padding {
   padding: 12px;
 }
-.card-border{
+.card-border {
   border: 1px solid #f4ebeb7d;
 }
 .card-table-header {
   margin-top: 10px;
 }
 .grey_text {
-  color: grey
+  color: grey;
 }
 .product_details_card {
   width: 100% !important;
@@ -826,7 +830,6 @@ h6.dashboard__card__header {
   height: 20px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  
 }
 
 .tank__header__Wrapper {
@@ -857,7 +860,7 @@ h6.dashboard__card__header {
   .small_card:first-child {
     margin-top: 0px !important;
   }
-  .epump-color{
+  .epump-color {
     color: $primaryColor !important;
   }
   .small_card {
@@ -926,7 +929,7 @@ h6.dashboard__card__header {
     div {
       color: $primaryColor !important;
       font-weight: 600;
-      font-size: 15px !important
+      font-size: 15px !important;
     }
   }
   .product_sales_flex_card_item {
@@ -939,7 +942,7 @@ h6.dashboard__card__header {
     div {
       font-size: 15px !important;
     }
-  } 
+  }
 }
 .product_sales_flex_card_pump_sales {
   display: flex;
@@ -952,7 +955,7 @@ h6.dashboard__card__header {
     border-top: 1px solid #f4ebeb7d;
     .total_text {
       font-size: 15px;
-      font-weight: 600
+      font-weight: 600;
     }
   }
   .product_sales_flex_card_item {
@@ -963,10 +966,10 @@ h6.dashboard__card__header {
     align-items: center;
     border-right: 1px solid #f4ebeb7d;
     div {
-      font-size: 15px ;
+      font-size: 15px;
       color: $primaryColor;
     }
-  } 
+  }
 }
 .product_sales_flex_card_pump {
   display: flex;
@@ -983,7 +986,7 @@ h6.dashboard__card__header {
     div {
       color: $primaryColor !important;
       font-weight: 600;
-      font-size: 15px !important
+      font-size: 15px !important;
     }
   }
   .product_sales_flex_card_item {
@@ -996,13 +999,13 @@ h6.dashboard__card__header {
     div {
       font-size: 15px !important;
     }
-  } 
+  }
 }
 .remove-right-padding {
   padding-right: 0px !important;
 }
 
-// Pumps 
+// Pumps
 .pump_holder {
   height: 100%;
   min-height: 400px;
@@ -1075,7 +1078,7 @@ h6.dashboard__card__header {
   padding: 10px 32px;
   color: $whiteColor;
   &:hover {
-      color: $whiteColor;
+    color: $whiteColor;
   }
 }
 
@@ -1086,11 +1089,11 @@ h6.dashboard__card__header {
   padding: 10px 10px;
   color: $whiteColor;
   &:hover {
-      color: $whiteColor;
+    color: $whiteColor;
   }
 }
 
-// Pump Transactions 
+// Pump Transactions
 .pump_trans_mob {
   margin-top: 15px;
 }
@@ -1117,8 +1120,8 @@ h6.dashboard__card__header {
   justify-content: center;
   align-items: center;
   p {
-      font-size: 22px;
-      color: $whiteColor;
-      margin: 0 !important;
+    font-size: 22px;
+    color: $whiteColor;
+    margin: 0 !important;
   }
 }

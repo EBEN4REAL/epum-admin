@@ -3,41 +3,36 @@
          <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                 <div class="col-lg-4">
-                        <div class="dashboard__card large_card">
-                        <div class="row make-row-hundred-percent align-items-center justify-content-center" >
-                            <div class="col-md-3">
-                                 <div class="icon_wrapper yellow centralize icon_div_big">
-                                    <img src="@/assets/img/company_icon.png"  width="40" />
-                                </div>
-                            </div>
-                            <div class="col-md-7 remove-padding-left">
-                                <div class="text-center">
-                                    <h5 class="text-white font-weight"> Mail Recipients</h5>
-                                </div>
-                             <div class="text-center mt-4">
-                                    <h5 class="text-white mt-4 font-weight">{{mailRecpCount}}</h5>
-                                </div>
-                           </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
+                <div class="col-lg-8 remove-padding-left padding_div pr-0">
                     <div class="dashboard__card small_card align-center">
                         <div class="row">
-                        <div class="col-md-9 card_inner_wrapper">
-                            <h3>List of Mail Recipients.</h3>
+                        <div class="col-md-8 card_inner_wrapper">
+                            <h3>Hi, {{userName}}</h3>
+                            <p>Get started with epump company admin platform by managing your branch mail recipient here</p>
                         </div>
-                        <div class="col-md-3 mt-4">
-                           <!-- <router-link :to="{name: 'create_companies'}" class="create_btn btn btn_theme">Create Company</router-link> -->
+                        <div class="col-md-4 mt-4 text-center">
                         </div>
-                    </div>
                     </div>
                 </div>
+             </div>
+                 <div class="col-lg-4">
+                    <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of Mail Recipient</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/company.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{mailRecpCount}}</small>
+                                </div>
+                        </div>
+                    </div>
+              </div>
             </div>
-                </div>
+         </div>
         </section>
-        <div  class="full__row_section mt-3">
+        <div  class="full__row_section ml-4 mt-3">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="pad_div">
@@ -73,13 +68,19 @@
                             <form>
                                 <div class="text-center">
                                     <div class="align-items-center mt-3">
+                                        <div class="text-left">
+                                            <label for="">Email</label>
+                                        </div>
                                         <div class="input__block">
-                                        <input type="email" placeholder="Email" class="" v-model="email"/>
+                                        <input type="email" placeholder="Enter your Email" class="" v-model="email"/>
                                         </div>
                                     </div>
                                     <div class="align-items-center mt-3">
+                                        <div class="text-left">
+                                            <label for="">Phone Number</label>
+                                        </div>
                                         <div class="input__block">
-                                            <input type="number" placeholder="Phone" class="" v-model="phone" />
+                                            <input type="number" placeholder="Enter Your Phone Number" class="" v-model="phone" />
                                         </div>
                                     </div>
                                     <div class="text-center mt-3">
@@ -101,6 +102,34 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7 col-lg-7">
+                    <div class="pad_div">
+                        <div class="text-left tabs__lists">
+                           <ejs-grid
+                                v-show="!showLoader"
+                                ref="dataGrid"
+                                :created="refreshGrid"
+                                :allowPaging="false"
+                                :allowSorting="true"
+                                :pageSettings="tableProps.pageSettings"
+                                :toolbar="tableProps.toolbar"
+                                :searchSettings="tableProps.search"
+                                :allowExcelExport="true"
+                                :allowPdfExport="true"
+                                :toolbarClick="toolbarClick"
+                                >
+                                <e-columns>
+                                    <e-column width="40" field="index" headerText="#"></e-column>
+                                    <e-column width="300" field="email" headerText="Email"></e-column>
+                                    <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
+                                    <e-column width="10"></e-column>
+                                </e-columns>
+                            </ejs-grid>
+                          <TableLoader :showLoader="showLoader"  />
                         </div>
                     </div>
                 </div>
@@ -136,6 +165,7 @@ export default {
             showLoader: false,
             isButtonDisabled: false,
             mailRecpCount:0,
+            userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -152,6 +182,11 @@ export default {
             var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
             grid.search(value);
+        }
+    },
+     computed: {
+        userName() {
+            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
         }
     },
     methods: {

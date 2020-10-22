@@ -16,29 +16,28 @@
             </div>
         </div>
         </section>
-        <div  class="full__row_section mt-3">
+        <div  class="full__row_section ml-4 mt-3">
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="pad_div">
-                        <div class="text-left tabs__lists">
-                          <EjsTable :tableProps="tableProps"  />
-                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 mt-5 div ep_card card_height mb-5">
+                <div class="col-lg-5 col-md-4 mt-5 div ep_card mail_card card_height mb-5">
                     <div class="pad_div">
                         <div class="mb-3 tabs__lists">
                             <h5>CREATE NEW SALES REP.</h5>
                         <form>
                     <div class="text-center">
                         <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Name</label>
+                            </div>
                             <div class="input__block">
-                            <input type="text" placeholder="Name" class="" />
+                            <input type="text" placeholder="Enter Your Name" class="" />
                             </div>
                         </div>
                         <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Email</label>
+                            </div>
                             <div class="input__block">
-                            <input type="text" placeholder="Email" class="" />
+                            <input type="email" placeholder="Email@email.com" class="" />
                             </div>
                         </div>
                          <div class="text-center mt-3">
@@ -47,6 +46,13 @@
                     </div>
                     </form>
                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="pad_div">
+                        <div class="text-left tabs__lists">
+                          <EjsTable :tableProps="tableProps"  />
+                         </div>
                     </div>
                 </div>
             </div>
@@ -116,7 +122,7 @@ export default {
                     { 
                         field: "email", 
                         headerText: "Email", 
-                        width: 180, 
+                        width: 150, 
                         textAlign: "center"
                     },  
                 ] ,

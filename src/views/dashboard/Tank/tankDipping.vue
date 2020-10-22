@@ -42,49 +42,26 @@
             </div>
         </div>
     </section>
-    <div class="full__row_section mt-3">
+    <div class="full__row_section ml-4 mt-3">
       <div class="row">
-        <div class="col-lg-8">
-          <div class="pad_div">
-            <div class="text-left tabs__lists">
-              <div class="new_row_section mt-3">
-                 <ejs-grid
-                  v-show="!showLoader"
-                  ref="dataGrid"
-                  :created="refreshGrid"
-                  :allowPaging="true"
-                  :allowSorting="true"
-                  :pageSettings="tableProps.pageSettings"
-                  :toolbar="tableProps.toolbar"
-                  :searchSettings="tableProps.search"
-                  :allowExcelExport="true"
-                  :allowPdfExport="true"
-                  :toolbarClick="toolbarClick"
-                  :key="1"
-                  >
-                  <e-columns>
-                      <e-column width="60" field="index" headerText="Index"></e-column>
-                      <e-column width="200" field="actualVolume" headerText="Actual Volume(Ltrs)"></e-column>
-                      <e-column width="200" field="date" headerText="Date"></e-column>
-                  </e-columns>
-              </ejs-grid>
-              <TableLoader :showLoader="showLoader"/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 div ep_card card_height mail_card mb-5">
+        <div class="col-lg-5 col-md-4 div ep_card card_height mail_card mb-5">
           <div class="pad_div">
             <div class="mb-3 tabs__lists">
               <h5>Add Tank Dip</h5>
               <form>
                 <div class="text-center">
                   <div class="align-items-center mt-3">
+                    <div class="text-left">
+                        <label for="">Tank Volume</label>
+                      </div>
                     <div class="input__block">
                       <input type="number" placeholder="Tank Volume" class="" v-model="volume" />
                     </div>
                   </div>
                   <div class="align-items-center mt-3">
+                    <div class="text-left">
+                        <label for="">Date Recorded</label>
+                      </div>
                     <div class="input__block">
                        <vue-ctk-date-time-picker
                           v-model="dateRange2"
@@ -117,6 +94,36 @@
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-7">
+          <div class="pad_div">
+            <div class="text-left tabs__lists">
+              <div class="new_row_section mt-3">
+                 <ejs-grid
+                  v-show="!showLoader"
+                  ref="dataGrid"
+                  :created="refreshGrid"
+                  :allowPaging="true"
+                  :allowSorting="true"
+                  :pageSettings="tableProps.pageSettings"
+                  :toolbar="tableProps.toolbar"
+                  :searchSettings="tableProps.search"
+                  :allowExcelExport="true"
+                  :allowPdfExport="true"
+                  :toolbarClick="toolbarClick"
+                  :key="1"
+                  >
+                  <e-columns>
+                      <e-column width="60" field="index" headerText="Index"></e-column>
+                      <e-column width="200" field="actualVolume" headerText="Actual Volume(Ltrs)"></e-column>
+                      <e-column width="200" field="date" headerText="Date"></e-column>
+                  </e-columns>
+              </ejs-grid>
+              <TableLoader :showLoader="showLoader"/>
+              </div>
             </div>
           </div>
         </div>
