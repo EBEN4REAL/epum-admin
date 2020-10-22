@@ -88,20 +88,20 @@ export default {
        
 
         $('.loader').show();
-        this.axios.post(`${configObject.apiBaseUrl}/Admin/CreateRole?role=${this.role}`, configObject.authConfig)
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/CreateRole?role=${this.role}`, {}, configObject.authConfig)
             .then(res => {
                 this.$toast("Role created successfully", {
                     type: "success",
                     timeout: 3000
                 });
                 this.role = null
-                this.$eventHub.$emit('refreshRoles')
+                this.$router.push({name: 'manageRoles'})
                 $('.loader').hide();
             })
             .catch(error => {
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-                this.$toast("Unable to create Role", {
+                this.$toast(error.response.data.message, {
                     type: "error",
                     timeout: 3000
                 });

@@ -14,7 +14,6 @@
                   </p>
                 </div>
                 <div class="col-md-4 mt-4 text-center">
-                  <!-- <router-link :to="{name: 'create_companies'}" class="btn create_btn primary_btn">Create Company</router-link> -->
                 </div>
               </div>
             </div>
@@ -25,7 +24,7 @@
                 class="small__card_content_wrapper align-items-center justify-content-center"
               >
                 <p class="dashboard__card__header text-white">
-                  Total number of Offline Devices
+                  Total number of Devices Offline
                 </p>
                 <div
                   class="icon_wrapper centralize text-center"
@@ -36,7 +35,7 @@
                 <div class="">
                   <small
                     class="dashboard__card__header_bottom text-white font-weight-bold"
-                    >4</small
+                    >{{offlineCount}}</small
                   >
                 </div>
               </div>
@@ -47,6 +46,7 @@
     </section>
     <div class="new_row_section mt-3">
       <ejs-grid
+        v-show="!showLoader"
         ref="dataGrid"
         :created="refreshGrid"
         :allowPaging="true"
@@ -62,17 +62,7 @@
         :columns="tableProps.columns"
       >
         <e-columns>
-          <e-column width="40" field="index" headerText="#"></e-column>
-          <e-column
-            width="200"
-            field="branchName"
-            headerText="Branch Name"
-          ></e-column>
-          <e-column
-            width="200"
-            field="displayName"
-            headerText="Display Name"
-          ></e-column>
+          <e-column width="80" field="index" headerText="#"></e-column>
           <e-column
             width="200"
             field="deviceId"
@@ -80,20 +70,42 @@
           ></e-column>
           <e-column
             width="200"
-            field="offlinePeriod"
-            headerText="Offline period"
+            field="pumps"
+            headerText="Display Name"
           ></e-column>
-          <e-column width="350" field="status" headerText="Status"></e-column>
+          <e-column
+            width="200"
+            field="branchName"
+            headerText="Branch Name"
+          ></e-column>
+          <e-column
+            width="200"
+            field="date"
+            headerText="Date/Time"
+          ></e-column>
+          <e-column
+            width="100"
+            field="status"
+            headerText="Status"
+          ></e-column>
+          <e-column
+            width="150"
+            :template="buttonsTemplate"
+            headerText="Actions"
+          ></e-column>
+          <e-column width="10"></e-column>
         </e-columns>
       </ejs-grid>
+      <TableLoader :showLoader="showLoader"  />
     </div>
   </masterLayout>
 </template>
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
-import EjsTable from "@/components/ejsTable.vue";
-import Temp from "@/components/devicePosTemplate.vue";
+// import Temp from "@/components/devicePosTemplate.vue";
+import TableLoader from "@/components/tableLoader/index";
+import configObject from "@/config";
 
 import {
   Page,
@@ -109,13 +121,13 @@ let $ = Jquery;
 export default {
   components: {
     masterLayout,
-    EjsTable,
+    TableLoader
   },
   provide: {
     grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport],
   },
   mounted() {
-    this.getPos();
+    this.getOfflineDevices()
     $(".e-input").keyup(function (e) {
       searchFun(e);
     });
@@ -130,111 +142,39 @@ export default {
       userDetails: localStorage.getItem("adminUserDetails")
         ? JSON.parse(localStorage.getItem("adminUserDetails"))
         : null,
+      showLoader: false,
+      offlineCount: 0,
       tableProps: {
         pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
         toolbar: ["ExcelExport", "PdfExport", "Search"],
         search: { operator: "contains", ignoreCase: true },
-        tableData: [
-          {
-            index: 1,
-            branchName: "Abeokuta",
-            displayName: "AGO 1",
-            deviceId: "862273049192933",
-            offlinePeriod:
-              "Started 9 Hours ago and Currently Reporting Offline!",
-            status: "Offline",
-          },
-          {
-            index: 2,
-            branchName: "Agungi",
-            displayName: "AGO 2",
-            deviceId: "862273049192933",
-            offlinePeriod:
-              "Started 4 Hours ago and Currently Reporting Offline!",
-            status: "Offline",
-          },
-          {
-            index: 3,
-            branchName: "Alapere",
-            displayName: "PMS 1",
-            deviceId: "862273049192933",
-            offlinePeriod:
-              "Started 5 Hours ago and Currently Reporting Offline!",
-            status: "Offline",
-          },
-          {
-            index: 4,
-            branchName: "Lekki",
-            displayName: "PMS 2",
-            deviceId: "862273049192933",
-            offlinePeriod:
-              "Started 8 Hours ago and Currently Reporting Offline!",
-            status: "Offline",
-          },
-        ],
-        columns: [
-          {
-            field: "index",
-            headerText: "#",
-            width: 40,
-            textAlign: "center",
-          },
-          {
-            field: "devices",
-            headerText: "Devices",
-            width: 150,
-            textAlign: "center",
-          },
-          {
-            field: "lastUpdate",
-            headerText: "Last Update",
-            width: 180,
-            textAlign: "center",
-          },
-          {
-            field: "fwVersion",
-            headerText: "FW Version",
-            width: 150,
-            textAlign: "center",
-          },
-          {
-            field: "memoryUsage",
-            headerText: "Memory Usage",
-            width: 150,
-            textAlign: "center",
-          },
-          {
-            field: "name",
-            headerText: "Name",
-            width: 300,
-            textAlign: "center",
-          },
-          {
-            field: "state",
-            headerText: "State",
-            width: 100,
-            textAlign: "center",
-          },
-          {
-            field: "firmware",
-            headerText: "Firmware Update",
-            width: 300,
-            textAlign: "center",
-          },
-          {
-            headerText: "Action",
-            width: 500,
-            textAlign: "center",
-            template: () => {
-              return {
-                template: Temp,
-              };
-            },
-          },
-        ],
-        fileName: "pos",
+      },
+      buttonsTemplate: function() {
+          return {
+            template: Vue.component("columnTemplate", {
+              template:
+                `<div> 
+                <button class="btn details_btn mr-3" style="width: 150px; height: 35px" v-on:click="resolve(data)">Resolve</button>
+                </div>`,
+              data: function() {
+                return {
+                  data: {}
+                };
+              },
+              methods: {
+                resolve(data) {
+                  this.$eventHub.$emit("resolve", data);
+                }
+              }
+            })
+          };
       },
     };
+  },
+  created() {
+    this.$eventHub.$on("resolve", (data) => {
+      this.resolvePumpStatus(data);
+    });
   },
   computed: {
     userName() {
@@ -250,7 +190,6 @@ export default {
         case "PDF Export":
           let pdfExportProperties = {
             pageOrientation: "Landscape",
-            fileName: "branches.pdf",
           };
           this.$refs.dataGrid.pdfExport(pdfExportProperties);
           break;
@@ -259,11 +198,59 @@ export default {
           break;
       }
     },
-    getPos() {
-      this.$refs.dataGrid.ej2Instances.setProperties({
-        dataSource: this.tableProps.tableData,
-      });
-      this.refreshGrid();
+    resolvePumpStatus(data) {
+        let resp = confirm("Are you sure want to delete this company?");
+        if (!resp) {
+          return 
+        }
+        
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/ResolveOffline?id=${parseInt(data.deviceId)}`, {}, configObject.authConfig)
+            .then(res => {
+                this.$toast("Successfully resolved device", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.getOfflineDevices()
+            })
+            .catch(error => {
+                this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000
+                });
+            });
+    },
+    getOfflineDevices() {
+        this.showLoader = true
+        this.axios
+        .get(
+            `${configObject.apiBaseUrl}/Admin/OfflinePump`, configObject.authConfig)
+            .then(res => {
+                let index = 0;
+                res.data.sort((a, b) => {
+                  if (a.branchName && b.branchName) {
+                    return a.branchName.toLowerCase() > b.branchName.toLowerCase() ? 1 : b.branchName.toLowerCase() > a.branchName.toLowerCase() ? -1 : 0;
+                  } else if (a.branchName && !b.branchName) {
+                    return -1
+                  } else { 
+                    return 1
+                  }
+                    
+                });
+                res.data.forEach(el => {
+                    el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
+                    el.index = ++index;
+                    el.status = 'Offline'
+                })
+                this.offlineCount = res.data.length
+                this.$refs.dataGrid.ej2Instances.setProperties({
+                    dataSource: res.data
+                });
+                this.refreshGrid();
+                this.showLoader = false;
+            })
+            .catch(error => {
+                this.showLoader = false
+            });
     },
   },
 };

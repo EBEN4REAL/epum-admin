@@ -53,7 +53,7 @@
                 :columns="tableProps.columns"
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="devices" headerText="Devices"></e-column>
                     <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
                     <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>

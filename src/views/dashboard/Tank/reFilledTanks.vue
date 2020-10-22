@@ -54,7 +54,7 @@
                 :actionBegin='actionHandler'
                 >
                 <e-columns>
-                    <e-column width="40" field="index" headerText="#"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="date" headerText="Date"></e-column>
                     <e-column width="200" field="tankName" headerText="Tank Name"></e-column>
                     <e-column width="200" field="productName" headerText="Product Name"></e-column>

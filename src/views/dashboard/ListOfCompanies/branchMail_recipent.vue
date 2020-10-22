@@ -11,7 +11,6 @@
                             <p>Get started with epump company admin platform by managing your branch mail recipient here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <!-- <router-link :to="{name: 'create_companies'}" class="btn create_btn primary_btn">Create Company</router-link> -->
                         </div>
                     </div>
                 </div>
@@ -35,7 +34,34 @@
         </section>
         <div  class="full__row_section ml-4 mt-3">
             <div class="row">
-                <div class="col-lg-5 col-md-5 div ep_card card_height mail_card mb-5">
+                <div class="col-lg-8">
+                    <div class="pad_div">
+                        <div class="text-left tabs__lists">
+                           <ejs-grid
+                                v-show="!showLoader"
+                                ref="dataGrid"
+                                :created="refreshGrid"
+                                :allowPaging="false"
+                                :allowSorting="true"
+                                :pageSettings="tableProps.pageSettings"
+                                :toolbar="tableProps.toolbar"
+                                :searchSettings="tableProps.search"
+                                :allowExcelExport="true"
+                                :allowPdfExport="true"
+                                :toolbarClick="toolbarClick"
+                                >
+                                <e-columns>
+                                    <e-column width="80" field="index" headerText="#"></e-column>
+                                    <e-column width="300" field="email" headerText="Email"></e-column>
+                                    <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
+                                    <e-column width="10"></e-column>
+                                </e-columns>
+                            </ejs-grid>
+                          <TableLoader :showLoader="showLoader"  />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 div ep_card card_height mail_card mb-5">
                     <div class="pad_div">
                         <div class="mb-3 tabs__lists">
                             <h5>Add Mail Recipient to Branch</h5>
@@ -116,7 +142,6 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
-import EjsTable from '@/components/ejsTable.vue';
 import configObject from "@/config";
 import Jquery from 'jquery';
 let $ = Jquery;
@@ -127,7 +152,6 @@ import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vu
 export default {
     components: {
         masterLayout,
-        EjsTable,
         TableLoader
     },
     provide: {
