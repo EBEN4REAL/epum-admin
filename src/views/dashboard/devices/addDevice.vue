@@ -36,15 +36,15 @@
             </div>
             <div class="row align-items-center mt-3" v-if="selectedDevice !== 'selectADevice'">
               <div class="col-md-4 text-left">
-                <label>{{selectedDevice}}</label>
+                <label>{{selectedDevice}}s</label>
               </div>
               <div class="col-md-8">
-                <div class="input__block">
-                  <select class="form-control" v-model="deviceId">
-                      <option disabled selected value="selectADevice">Select A {{selectedDevice}}</option>
-                      <option v-for="(device, index) in selectedDevice == 'Tank' ? tanks : pumps" :key="index" :value="device.id">{{device.name}}</option>
-                  </select>
-                </div>
+                <b-form-checkbox-group
+                  v-model="selected"
+                  :options="selectedDevice == 'Tank' ? tanks : pumps"
+                  name="flavour-2a"
+                >
+                </b-form-checkbox-group>
               </div>
             </div>
             <div class="row align-items-center mt-3">
@@ -120,6 +120,7 @@ export default {
     return {
       backgroundUrl,
       comapanyBranchObj: {},
+      selected: [],
       selectedDevice: 'selectADevice',
       deviceId: 'selectADevice',
       pumps: [], 
@@ -129,6 +130,13 @@ export default {
       inputDeviceId: null,
       isButtonDisabled: false
     };
+  },
+  watch: {
+    selectedDevice: function(newDevice, oldDevice) {
+      if (newDevice != oldDevice) {
+        this.selected = []
+      }
+    }
   },
   mounted() {
     this.getTanks()
@@ -159,7 +167,13 @@ export default {
         configObject.authConfig
         )
         .then(response => {
-            this.tanks = response.data
+            this.tanks = response.data.map(cur => {
+              return {
+                text: cur.name,
+                value: cur.id
+              }
+
+            })
         })
         .catch(error => {});
     },
@@ -170,7 +184,12 @@ export default {
         configObject.authConfig
         )
         .then(response => {
-            this.pumps = response.data
+            this.pumps = response.data.map(cur => {
+              return {
+                text: cur.name,
+                value: cur.id
+              }
+            })
         })
         .catch(error => {});
     },
@@ -184,8 +203,8 @@ export default {
           return;
       }
 
-      if(this.deviceId == 'selectADevice') {
-          this.$toast(`Please select a ${this.selectedDevice}`, {
+      if(!this.selected.length) {
+          this.$toast(`Please select at least one ${this.selectedDevice}`, {
               type: "error", 
               timeout: 3000
           });
@@ -209,25 +228,28 @@ export default {
       }
 
       if(!this.inputDeviceId) {
-          this.$toast("Please input a phone number", {
+          this.$toast("Please input a device ID", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
+
+      const devicesToAdd = this.selected.join()
       
       const data = {
           branchId: this.$route.query.companyBranchId,
           deviceId: this.inputDeviceId,
           isDemo: this.isDemo,
-          deviceType: this.selectedDevice,
-          pumpId: this.selectedDevice == 'Pump' ? this.deviceId : '',
+          deviceType: this.selectedDevice == 'Tank' ? 'Tanks' : 'Pump',
+          pumpId: this.selectedDevice == 'Pump' ? devicesToAdd : '',
           phoneNumber: this.phoneNumber,
-          tankId: this.selectedDevice == 'Tank' ? this.deviceId : '',
+          tankId: this.selectedDevice == 'Tank' ? devicesToAdd : '',
           probeAddress: 'string',
           userID: 'string',
           devicePass: 'string'
       }
+
 
       $('.loader').show();
       this.isButtonDisabled = true;

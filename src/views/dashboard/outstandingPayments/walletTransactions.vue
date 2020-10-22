@@ -20,7 +20,7 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="row">
+                        <div class="row  align-items-center justify-content-center" style="height:100%;">
                         <div class="col-md-6 card_inner_wrapper">
                             <h3>Wallet Transactions</h3>
                         </div>
@@ -47,7 +47,7 @@
         </section>
         <div class="new_row_section mt-3">
             <div class="row top_section_row" v-show="!showLoader">
-                <div class="col-md-8">
+                <div class="col-md-8 mt-5">
                 <span>
                     <img src="@/assets/img/hand (1).png" class="mr-3" />
                     Transactions between {{ startDate }} and

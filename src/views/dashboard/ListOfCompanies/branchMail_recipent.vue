@@ -58,11 +58,18 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt-3">
-                                        <button class="btn btn_theme" @click="createMailRecp">Create
+                                        <button class="btn btn_theme" @click="createMailRecp"
+                                            :disabled="isButtonDisabled ? true : null"
+                                            :style="[
+                                                isButtonDisabled
+                                                ? { cursor: 'not-allowed' }
+                                                : { cursor: 'pointer' }
+                                            ]"
+                                            >Create
                                             <img
                                                 src="@/assets/img/git_loader.gif"
                                                 style="display:none"
-                                                width="19"
+                                                width="35px"
                                                 class="ml-3 loader"
                                             />
                                         </button>
@@ -132,6 +139,7 @@ export default {
             email: null,
             backgroundUrl,
             showLoader: false,
+            isButtonDisabled: false,
             mailRecpCount:0,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             tableProps: {
@@ -244,7 +252,9 @@ export default {
                 branchId: this.$route.query.companyBranchId
             }
 
+            this.isButtonDisabled = true;
             $('.loader').show();
+            
             this.axios.post(`${configObject.apiBaseUrl}/Branch/CreateMailRecipient`,data, configObject.authConfig)
                 .then(res => {
                     this.$toast("Mail Recipient created successfully", {
@@ -253,13 +263,15 @@ export default {
                     });
                     this.phone = null
                     this.email = null
+                    this.isButtonDisabled = false;
                     this.getMailRecp()
                     $('.loader').hide();
                 })
                 .catch(error => {
+                    this.refreshRoles = false;
                     this.isButtonDisabled = false;
                     $('.loader').hide();
-                    this.$toast("Unable to create mail recipient", {
+                    this.$toast(error.response.data.message, {
                         type: "error",
                         timeout: 3000
                     });
