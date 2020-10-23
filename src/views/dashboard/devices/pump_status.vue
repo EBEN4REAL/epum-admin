@@ -3,12 +3,34 @@
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="dashboard__card large_card">
-                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
-                            <p class="dashboard__card__header text-white">Pump Status</p>
-                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
-                                <img src="@/assets/img/company.png" width="40px" />
+                <div class="col-lg-12">
+                        <div class="dashboard__card large_card"  :style="[
+                                    {
+                                    backgroundImage: `linear-gradient(rgb(37, 37, 37 , 0.9), rgb(37, 37, 37 , 0.9)), url(${backgroundUrl})`,
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'cover'
+                                    }
+                                ]">
+                                <div class="row align-items-center justify-content-center hundred-percent-height">
+                                     <div class="col-md-2">
+                                    <small class="text-white">Refresh in
+                                      0:00</small>
+                                    </div>
+                                    <div class="col-md-4">
+                                         <div class="small__card_content_wrapper align-items-center " >
+                                            <p class="dashboard__card__header text-white">PUMP STATUS</p>
+                                        </div>
+                                    </div>
+                                <label class="radio-inline text-white mr-4"><input type="radio" >Not Okay</label>
+                                <label class="radio-inline text-white"><input type="radio">Show All</label>
+                                    <div class="col-md-3">
+                                         <div class="search-container">
+                                            <form action="">
+                                            <input type="text" placeholder="Search.." name="search" class="input__block">
+                                            <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
+                                            </form>
+                                    </div>
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
@@ -38,8 +60,8 @@
                         </div>
                     </div>
                     </div>
-                </div>
             </div>
+        </div>
         </div>
         </section>
         <div class="new_row_section mt-3">
@@ -85,6 +107,8 @@ import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/pump_status_template.vue';
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
+import backgroundUrl from "@/assets/img/Tankimage.png";
+
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
@@ -117,6 +141,7 @@ export default {
     data() {
         return {
             showLoader: false,
+            backgroundUrl,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
