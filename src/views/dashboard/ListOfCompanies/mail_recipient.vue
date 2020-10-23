@@ -79,31 +79,6 @@
                      </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-7">
-                    <div class="new_row_section mt-3">
-                        <ejs-grid
-                            v-show="!showLoader"
-                            ref="dataGrid"
-                            :created="refreshGrid"
-                            :allowPaging="true"
-                            :allowSorting="true"
-                            :pageSettings="tableProps.pageSettings"
-                            :toolbar="tableProps.toolbar"
-                            :searchSettings="tableProps.search"
-                            :allowExcelExport="true"
-                            :allowPdfExport="true"
-                            :toolbarClick="toolbarClick"
-                            >
-                            <e-columns>
-                                <e-column width="40" field="index" headerText="#"></e-column>
-                                <e-column width="200" field="email" headerText="Email"></e-column>
-                                <e-column width="10" ></e-column>
-                            </e-columns>
-                        </ejs-grid>
-                        <TableLoader :showLoader="showLoader"/>
-                    </div>
-                </div>
             </div>
         </div>
     </masterLayout>
@@ -174,6 +149,7 @@ export default {
                 `${configObject.apiBaseUrl}/Company/${this.$route.query.companyId}`, configObject.authConfig)
                 .then(res => {
                     let index = 0
+                    console.log(res.data.companyMailRecipients)
                     res.data.companyMailRecipients.sort((a, b) => {
                         return a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0;
                     });
