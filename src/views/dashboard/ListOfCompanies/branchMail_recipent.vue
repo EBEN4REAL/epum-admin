@@ -105,34 +105,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-7 col-lg-7">
-                    <div class="pad_div">
-                        <div class="text-left tabs__lists">
-                           <ejs-grid
-                                v-show="!showLoader"
-                                ref="dataGrid"
-                                :created="refreshGrid"
-                                :allowPaging="false"
-                                :allowSorting="true"
-                                :pageSettings="tableProps.pageSettings"
-                                :toolbar="tableProps.toolbar"
-                                :searchSettings="tableProps.search"
-                                :allowExcelExport="true"
-                                :allowPdfExport="true"
-                                :toolbarClick="toolbarClick"
-                                >
-                                <e-columns>
-                                    <e-column width="40" field="index" headerText="#"></e-column>
-                                    <e-column width="300" field="email" headerText="Email"></e-column>
-                                    <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
-                                    <e-column width="10"></e-column>
-                                </e-columns>
-                            </ejs-grid>
-                          <TableLoader :showLoader="showLoader"  />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </masterLayout>
