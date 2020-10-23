@@ -168,7 +168,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Audit/PumpTankSale/${this.$route.query.companyId}?date=${this.startDate}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data);
                     let index = 0;
                     res.data.sort((a, b) => {
                         return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;

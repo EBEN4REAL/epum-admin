@@ -11,7 +11,12 @@
                             <p>Get started with epump company admin platform by creating and managing your users here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <!-- <router-link :to="{name: 'create_roles'}" class="btn create_btn primary_btn">Create New</router-link> -->
+                           <form >
+                               <div class="input__block mb-2">
+                                    <input type="text" v-model="query" class="" />
+                                </div>
+                                <button type="submit" @click="search($event)" >Search</button>
+                           </form>
                         </div>
                     </div>
                 </div>
@@ -96,6 +101,7 @@ export default {
         return {
             showLoader: false,
             usersCount: 0,
+            query: '',
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -108,6 +114,13 @@ export default {
                 };
             }
         }
+    },
+    watch: {
+         query: function(newQuery) {
+            if (newQuery == '') {
+                this.getUsers();
+            }
+        },
     },
     computed: {
         userName() {
@@ -132,22 +145,19 @@ export default {
                 break;
             }
         },
+        search(e) {
+            e.preventDefault()
+            this.getUsers()
+        },
         getUsers() {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/GetUsers`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/GetUsers?query=${this.query}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
-                    // if (a.branchName && b.branchName) {
-                        return a.email > b.email ? 1 : b.email > a.email ? -1 : 0;
-                    // } else if (a.branchName && !b.branchName) {
-                    //     return -1
-                    // } else { 
-                    //     return 1
-                    // }
+                        return a.userName > b.userName ? 1 : b.userName > a.userName ? -1 : 0;
                         
                     });
                     res.data.forEach(el => {
@@ -155,6 +165,8 @@ export default {
                         el.index = ++index;
                         el.status = 'Offline'
                     })
+                    sessionStorage.clear()
+                    localStorage.setItem("usersList", JSON.stringify(res.data))
                     this.usersCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data

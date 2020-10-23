@@ -181,7 +181,6 @@ export default {
       this.axios
         .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig)
         .then(response => {
-          console.log(response.data)
           this.accountNameValue = response.data.accountName
           this.verifyAccount = false
           this.updateAccount = true
