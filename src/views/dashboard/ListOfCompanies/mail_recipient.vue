@@ -19,29 +19,6 @@
         <div  class="full__row_section ml-4 mt-3">
             <div class="row">
                 <div class="col-lg-8">
-
-                    <div class="new_row_section mt-3">
-                        <ejs-grid
-                            v-show="!showLoader"
-                            ref="dataGrid"
-                            :created="refreshGrid"
-                            :allowPaging="true"
-                            :allowSorting="true"
-                            :pageSettings="tableProps.pageSettings"
-                            :toolbar="tableProps.toolbar"
-                            :searchSettings="tableProps.search"
-                            :allowExcelExport="true"
-                            :allowPdfExport="true"
-                            :toolbarClick="toolbarClick"
-                            >
-                            <e-columns>
-                                <e-column width="80" field="index" headerText="#"></e-column>
-                                <e-column width="200" field="email" headerText="Email"></e-column>
-                                <e-column width="10" ></e-column>
-                            </e-columns>
-                        </ejs-grid>
-                        <TableLoader :showLoader="showLoader"/>
-                    </div>
                 </div>
                 <div class="col-lg-4 col-md-4 div ep_card card_height mail_card mb-5">
                     <div class="pad_div">
@@ -98,7 +75,7 @@
                             <e-columns>
                                 <e-column width="40" field="index" headerText="#"></e-column>
                                 <e-column width="200" field="email" headerText="Email"></e-column>
-                                <e-column width="10" ></e-column>
+                                <e-column :template="CompanyRecp" headerText="Action" width="150"></e-column>
                             </e-columns>
                         </ejs-grid>
                         <TableLoader :showLoader="showLoader"/>
@@ -116,6 +93,7 @@ import backgroundUrl from "@/assets/img/bg__card.png";
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import CompanyMailRecp from '@/components/Templates/company_mail_recp_templates'
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -138,6 +116,11 @@ export default {
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
             },
+            CompanyRecp: () => {
+                return {
+                    template:   CompanyMailRecp
+                }
+            }
         }
     },
     mounted() {

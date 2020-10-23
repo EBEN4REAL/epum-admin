@@ -32,14 +32,10 @@
                                             </form>
                                     </div>
                                 </div>
-                                <div class="">
-                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >7</small>
-                                </div>
                         </div>
                     </div>
               </div>
-              <div class="col-lg-8 remove-padding-left padding_div">
+              <!-- <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
                         <div class="row  align-items-center justify-content-center" style="height:100%;">
                         <div class="col-md-3  ">
@@ -60,7 +56,7 @@
                         </div>
                     </div>
                     </div>
-            </div>
+            </div> -->
         </div>
         </div>
         </section>
@@ -202,6 +198,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Admin/PumpStatus?qSDate=${this.startDate}&qEDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.branchName && b.branchName) {
