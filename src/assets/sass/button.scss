@@ -158,3 +158,11 @@
     outline: none !important;
   }
 }
+
+.search_button {
+  width: 39px;
+  height: 39px;
+  background: $primaryColor;
+  color: $whiteColor;
+  border: none;
+}
