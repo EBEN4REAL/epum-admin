@@ -28,7 +28,7 @@
                 <div class="input__block">
                   <select class="form-control" v-model="role">
                       <option disabled value="selectRole">Select Role</option>
-                      <option v-for="(aRole, index) in roles" :value="aRole" :key="index">{{ aRole }}</option>
+                      <option v-for="(aRole, index) in roles" :value="aRole.name" :key="index">{{ aRole.name }}</option>
                       
                   </select>
                 </div>
@@ -91,7 +91,7 @@ export default {
               `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
               .then(res => {
                   res.data.sort((a, b) => {
-                      return a.toLowerCase() > b.toLowerCase() ? 1 : b.toLowerCase() > a.toLowerCase() ? -1 : 0;
+                      return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
                   });
                   this.roles = res.data
               })
@@ -110,6 +110,7 @@ export default {
       }
 
       const data = {
+        userId: this.$route.query.id,
         role: this.role,
         id: ''
       }

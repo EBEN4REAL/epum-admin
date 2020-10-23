@@ -134,19 +134,15 @@ export default {
               `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
               .then(res => {
                   let index = 0;
-                  const arr = []
-                  res.data.forEach(el => {
-                      arr.push({name: el})
-                  })
-                  arr.sort((a, b) => {
+                  res.data.sort((a, b) => {
                       return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
                   });
-                  arr.forEach(el => {
+                  res.data.forEach(el => {
                       el.index = ++index
                   })
-                  this.rolesCount = arr.length
+                  this.rolesCount = res.data.length
                   this.$refs.dataGrid.ej2Instances.setProperties({
-                      dataSource: arr
+                      dataSource: res.data
                   });
                   this.refreshGrid();
                   this.showLoader = false;
