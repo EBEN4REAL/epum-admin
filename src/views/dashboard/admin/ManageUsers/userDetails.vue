@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="email" placeholder="username" class="" />
+                                        <input type="email" readonly v-model="userObject.userName" class="" />
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="firstname" class="" />
+                                        <input type="text" readonly v-model="userObject.firstName" class="" />
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="lastname" class="" />
+                                        <input type="text" readonly v-model="userObject.lastName" class="" />
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="text" placeholder="lastname" class="" />
+                                        <input type="text" readonly v-model="userObject.phoneNumber" class="" />
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-md-8">
                                      <div class="input__block">
-                                        <input type="number" placeholder="0.00" class="" />
+                                        <input type="number" readonly v-model="userObject.creditLimit" class="" />
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +75,12 @@
                         
                         <div class="col-md-6">
                              <div class="row align-items-center mt-3">
-                                <div class="col-md-4 ">
+                                <div class="col-md-12 mb-1">
                                     <label >List of Roles for this  user</label>
                                 </div>
-                                <div class="col-md-8">
-                                     <div class="input__block">
-                                        <input type="number" placeholder="Admin" class="" />
+                                <div class="col-md-9">
+                                     <div class="input__block mb-2" v-for="(role, index) in roles" :key="index">
+                                        <input type="text" :value="role" readonly class="" />
                                     </div>
                                 </div>
                             </div>
@@ -105,14 +105,29 @@ export default {
     components: {
         masterLayout,
     },
-  
-    mounted(){
-       
-    },
     data() {
         return {
-          backgroundUrl
+            userObject: {},
+            backgroundUrl, 
+            roles: []
         }
-    }
+    },
+  
+    mounted(){
+        this.id = this.$route.query.id;
+        let ml = sessionStorage.getItem(this.id);
+        if (!ml) {
+        let allData = localStorage.getItem("usersList");
+        let dt = JSON.parse(allData);
+        dt.forEach((my, index) => {
+            if (my.id === this.id) {
+                ml = JSON.stringify(my);
+                sessionStorage.setItem(this.id, ml);
+            }
+        });
+        }
+        this.userObject = JSON.parse(ml);
+        this.roles = this.userObject.roles.split(',')
+    },
 }
 </script>

@@ -11,7 +11,7 @@
                 <div class="form-group row">
                   <label for="amount" class="col-sm-4 col-form-label">VOUCHER PIN TO VERIFY</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control form__input" id="inputVoucher" placeholder="e.g. 1234567890" v-model="voucherPin">
+                    <input type="number" class="form-control form__input" placeholder="e.g. 1234567890" v-model="voucherPin">
                       <div class="mt-4 mx-auto text-center">
                         <button class="btn btn_theme" 
                         @click="verifyVoucher($event)"
@@ -23,6 +23,12 @@
                         ]"
                         >
                           Verify Voucher
+                          <img
+                            src="@/assets/img/git_loader.gif"
+                            style="display:none"
+                            width="35px"
+                            class="ml-3 loader"
+                          />
                         </button>
                       </div>
                   </div>
@@ -75,25 +81,27 @@ export default {
           return;
         }
 
-      this.isButtonDisabled = true
 
-      this.axios.get(`${configObject.apiBaseUrl}/Sale/VerifyVoucher?voucher=${this.voucherPin.toString()}`, configObject.authConfig)
-                .then(res => {
-                    this.$toast("Successfully verified voucher", {
-                        type: "success",
-                        timeout: 3000
-                    });
-                    this.isButtonDisabled = false;
-                    $('.loader').hide();
-                })
-                .catch(error => {
-                    this.isButtonDisabled = false;
-                    $('.loader').hide();
-                    this.$toast("Failed to verify voucher", {
-                        type: "error",
-                        timeout: 3000
-                    });
+        $('.loader').show();
+        this.isButtonDisabled = true
+
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/VoucherMonitor?pin=${this.voucherPin.toString()}`, {}, configObject.authConfig)
+            .then(res => {
+                this.$toast("Successfully verified voucher", {
+                    type: "success",
+                    timeout: 3000
                 });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+            })
+            .catch(error => {
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+                this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000
+                });
+            });
       }
     }
 }

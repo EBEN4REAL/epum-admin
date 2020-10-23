@@ -180,7 +180,6 @@ export default {
                 configObject.authConfig
                 )
                 .then(response => {
-                    console.log(response.data)
                     this.showLoader = false;
                     let index = 0;
                     response.data
@@ -206,8 +205,6 @@ export default {
                     this.refreshGrid();
                 })
                 .catch(error => {
-                    console.log(error)
-                    console.log(error.response)
                     this.showLoader = false;
                 });
         },

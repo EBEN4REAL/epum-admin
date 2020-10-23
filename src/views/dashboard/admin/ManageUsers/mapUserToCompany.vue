@@ -26,29 +26,43 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <select class="form-control" >
-                      <option disabled selected>Select Company</option>
-                      <option>Fuelmetrics Limited</option>
-                      <option>Ascon</option>
+                  <select class="form-control" v-model="companyId">
+                      <option disabled value="selectCompany">Select Company</option>
+                      <option v-for="(company, index) in companies" :value="company.id" :key="index">{{ company.name }}</option>
                   </select>
                 </div>
               </div>
             </div>
+           
              <div class="row mt-3">
               <div class="col-md-4 text-left">
                 <small>Select Role</small>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <select class="form-control" >
-                      <option disabled selected>Select Role</option>
-                      <option>Branch Manager</option>
-                      <option>Company Admin</option>
-                      <option>Industry Manager</option>
+                  <select class="form-control" v-model="role">
+                      <option disabled value="selectRole">Select Role</option>
+                      <option value="companyadmin">Company Admin</option>
+                      <option value="industryadmin">Industry Admin</option>
+                      
                   </select>
                 </div>
                 <div class="text-center mt-3">
-                  <button class="btn btn_theme">Add User</button>
+                  <button class="btn btn_theme" @click="addUserToCompany"
+                    :disabled="isButtonDisabled ? true : null"
+                    :style="[
+                      isButtonDisabled
+                        ? { cursor: 'not-allowed' }
+                        : { cursor: 'pointer' }
+                    ]"
+                  >Add User
+                    <img
+                      src="@/assets/img/git_loader.gif"
+                      style="display:none"
+                      width="35px"
+                      class="ml-3 loader"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -64,17 +78,84 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
+import configObject from "@/config";
+import Jquery from 'jquery';
+let $ = Jquery;
 
 export default {
   components: {
     masterLayout,
   },
 
-  mounted() {},
+  mounted() {
+    this.getCompanies()
+  },
   data() {
     return {
-      backgroundUrl
+      backgroundUrl,
+      companies: [],
+      companyId: 'selectCompany',
+      role: 'selectRole',
+      isButtonDisabled: false,
     };
+  },
+  
+  methods: {
+    getCompanies() {
+        this.axios
+        .get(
+            `${configObject.apiBaseUrl}/Company?SortName=${'Ascending'}`, configObject.authConfig)
+            .then(res => {
+                this.companies = res.data.data
+        })
+        .catch(error => {
+        });
+    },
+    addUserToCompany(event) {
+      event.preventDefault();
+      if(this.companyId == 'selectCompany') {
+          this.$toast("Please select a company", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      if(this.role == 'selectRole') {
+          this.$toast("Please select a role", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      const data = {
+        role: this.role,
+        id: this.companyId
+      }
+
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Successfully Added User", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+                this.$router.push({name: 'edit_user', query: {id: this.$route.query.id}})
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    }
   },
 };
 </script>

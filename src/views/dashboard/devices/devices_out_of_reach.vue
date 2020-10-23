@@ -140,7 +140,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Admin/DeviceOutOfReach`, configObject.authConfig)
                 .then(res => {
-                console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.branchName && b.branchName) {
@@ -165,7 +164,6 @@ export default {
                     this.showLoader = false;
                 })
                 .catch(error => {
-                console.log(error)
                     this.showLoader = false
                 });
         },

@@ -82,20 +82,20 @@
     </div>
     <section class="full__row_section">
        <div class="btn-group btn-group-sm" role="group">
-          <router-link v-b-tooltip.hover title="Map User To Branch" :to="{name:'map_user_branch'}" class="btn btn-warning" >
+          <router-link v-b-tooltip.hover title="Map User To Branch" :to="{name:'map_user_branch', query: { id: this.$route.query.id }}" class="btn btn-warning" >
                 <i class="fa fa-map-o mr-1" aria-hidden="true"></i>
           </router-link>
-          <router-link v-b-tooltip.hover title="Map User To Dealer" :to="{name:'map_user_dealer'}" class="btn btn-primary" >
+          <router-link v-b-tooltip.hover title="Map User To Dealer" :to="{name:'map_user_dealer', query: { id: this.$route.query.id }}" class="btn btn-primary" >
                 <i class="fa fa-refresh mr-1" aria-hidden="true"></i>
           </router-link>
-          <router-link v-b-tooltip.hover title="Map User To Sales Rep" :to="{name:'map_user_sales_rep'}" class="btn btn-info" >
+          <router-link v-b-tooltip.hover title="Map User To Sales Rep" :to="{name:'map_user_sales_rep', query: { id: this.$route.query.id }}" class="btn btn-info" >
                 <i class="fa fa-map-o mr-1" aria-hidden="true"></i>
           </router-link>
-           <router-link v-b-tooltip.hover title="Map User To Role" :to="{name:'map_user_to_role'}" class="btn btn-primary" >
+           <router-link v-b-tooltip.hover title="Map User To Role" :to="{name:'map_user_to_role', query: { id: this.$route.query.id }}" class="btn btn-primary" >
                 <i class="fa fa-refresh mr-1" aria-hidden="true"></i>
           </router-link>
 
-           <router-link v-b-tooltip.hover title="Map User To Company" :to="{name:'map_user_to_comapny'}" class="btn btn-success" >
+           <router-link v-b-tooltip.hover title="Map User To Company" :to="{name:'map_user_to_comapny', query: { id: this.$route.query.id }}" class="btn btn-success" >
                 <i class="fa fa-refresh mr-1" aria-hidden="true"></i>
           </router-link>
       </div>
