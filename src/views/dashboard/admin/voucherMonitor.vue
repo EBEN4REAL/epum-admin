@@ -34,7 +34,7 @@
                   <img
                     src="@/assets/img/git_loader.gif"
                     style="display: none"
-                    width="35px"
+                    width="15px"
                     class="ml-3 loader"
                   />
                 </button>
@@ -45,7 +45,7 @@
       </div>
     </div>
     
-      <div class="full__row_section p-5 mt-3 center_div margin-top-center-div ep_card mb-5">
+      <div class="full__row_section p-5 mt-3 center_div margin-top-center-div ep_card mb-5" v-if="voucherVerified">
         <div class="">
           <form>
                 <div class="row align-items-center mt-3">
@@ -55,7 +55,9 @@
                   <div class="col-md-8">
                     <div class="input__block">
                       <input
-                        type="number"
+                        type="text"
+                        readonly
+                        v-model="voucherDetails.pin"
                       />
                     </div>
                   </div>
@@ -68,8 +70,9 @@
                     <div class="input__block">
                       <input
                         type="number"
-                        placeholder=""
                         class=""
+                        readonly
+                        v-model="voucherDetails.amount"
                       />
                     </div>
                   </div>
@@ -82,8 +85,9 @@
                     <div class="input__block">
                       <input
                         type="text"
-                        placeholder=""
                         class=""
+                        readonly
+                        v-model="voucherDetails.userId"
                       />
                     </div>
                   </div>
@@ -96,8 +100,9 @@
                     <div class="input__block">
                       <input
                         type="text"
-                        placeholder=""
                         class=""
+                        readonly
+                        v-model="voucherDetails.dateGenerated"
                       />
                     </div>
                   </div>
@@ -110,8 +115,9 @@
                     <div class="input__block">
                       <input
                         type="text"
-                        placeholder=""
                         class=""
+                        readonly
+                        v-model="voucherDetails.deleted"
                       />
                     </div>
                   </div>
@@ -124,8 +130,9 @@
                     <div class="input__block">
                       <input
                         type="text"
-                        placeholder=""
                         class=""
+                        readonly
+                        v-model="voucherDetails.isUsed"
                       />
                     </div>
                   </div>
@@ -160,6 +167,8 @@ export default {
       backImg,
       voucherPin: "",
       isButtonDisabled: false,
+      voucherVerified: false,
+      voucherDetails: {}
     };
   },
   methods: {
@@ -189,12 +198,16 @@ export default {
             type: "success",
             timeout: 3000,
           });
+          const data = { ...res.data, dateGenerated: this.$moment(res.data.dateGenerated).format("MM/DD/YYYY hh:mm A"), isUsed: res.data.isUsed == true ? 'Yes': 'No', deleted: res.data.deleted == true ? 'Yes' : 'No' }
+          this.voucherDetails = data
+          this.voucherVerified = true
           this.isButtonDisabled = false;
           $(".loader").hide();
         })
         .catch((error) => {
           this.isButtonDisabled = false;
           $(".loader").hide();
+          console.log(error)
           this.$toast(error.response.data.message, {
             type: "error",
             timeout: 3000,
