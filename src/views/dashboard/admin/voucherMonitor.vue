@@ -132,7 +132,7 @@
                 </div>
                 <div class="mt-3">
                     <div class="text-center mt-3">
-                      <button class="btn btn-success mr-2">Extend Voucher<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></button>
+                      <router-link :to="{name: 'extendVoucher'}" class="btn btn-success mr-2">Extend Voucher<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></router-link>                     
                       <button class="btn btn-primary mr-2"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Return to Wallet </button>
                       <button class="btn btn-info"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Make Expired</button>
                     </div>

@@ -58,7 +58,7 @@ import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing
 import AddDevice from "../views/dashboard/devices/addDevice";
 import PumpVariance from "../views/dashboard/admin/Pumps/pump_variance_report";
 import TankSales from "../views/dashboard/admin/tankSales";
-
+import ExtendVoucher from "../views/dashboard/admin/extendVoucher";
 
 Vue.use(VueRouter);
 
@@ -573,6 +573,15 @@ let routes = [
   path: "/wallet-transactions",
   name: "walletTransactions",
   component: WalletTransactions,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/extendVoucher",
+  name: "extendVoucher",
+  component: ExtendVoucher,
   meta: {
       authorize: true,
       authRoles: ['Admin']
