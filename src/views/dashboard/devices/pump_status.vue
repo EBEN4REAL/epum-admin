@@ -35,7 +35,7 @@
                         </div>
                     </div>
               </div>
-              <!-- <div class="col-lg-8 remove-padding-left padding_div">
+              <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
                         <div class="row  align-items-center justify-content-center" style="height:100%;">
                         <div class="col-md-3  ">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     </div>
-            </div> -->
+            </div>
         </div>
         </div>
         </section>

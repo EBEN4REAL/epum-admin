@@ -19,68 +19,69 @@
         <div  class="full__row_section ml-4 mt-3">
             <div class="row">
                 <div class="col-lg-8">
+                    <ejs-grid
+                        v-show="!showLoader"
+                        ref="dataGrid"
+                        :created="refreshGrid"
+                        :allowPaging="true"
+                        :allowSorting="true"
+                        :pageSettings="tableProps.pageSettings"
+                        :toolbar="tableProps.toolbar"
+                        :searchSettings="tableProps.search"
+                        :allowExcelExport="true"
+                        :allowPdfExport="true"
+                        :toolbarClick="toolbarClick"
+                        >
+                        <e-columns>
+                            <e-column width="40" field="index" headerText="#"></e-column>
+                            <e-column width="200" field="email" headerText="Email"></e-column>
+                            <e-column :template="CompanyRecp" headerText="Action" width="150"></e-column>
+                        </e-columns>
+                    </ejs-grid>
+                    <TableLoader :showLoader="showLoader"/>
                 </div>
                 <div class="col-lg-4 col-md-4 div ep_card card_height mail_card mb-5">
                     <div class="pad_div">
                         <div class="mb-3 tabs__lists">
                             <h5>Add to Mail Recipients</h5>
-                        <form>
-                    <div class="text-center">
-                        <div class="align-items-center mt-3">
-                           <div class="text-left">
-                                <label for="">Email</label>
-                            </div>
-                            <div class="input__block">
-                            <input type="email" placeholder="Email" class="" v-model="email"/>
-                            </div>
+                            <form>
+                                <div class="text-center">
+                                    <div class="align-items-center mt-3">
+                                    <div class="text-left">
+                                            <!-- <label for="">Email</label> -->
+                                        </div>
+                                        <div class="input__block">
+                                        <input type="email" placeholder="Email" class="" v-model="email"/>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <button class="btn btn_theme" @click="createMailRecp"
+                                            :disabled="isButtonDisabled ? true : null"
+                                            :style="[
+                                                isButtonDisabled
+                                                ? { cursor: 'not-allowed' }
+                                                : { cursor: 'pointer' }
+                                            ]"
+                                            >Create
+                                            <img
+                                                src="@/assets/img/git_loader.gif"
+                                                style="display:none"
+                                                width="35px"
+                                                class="ml-3 loader"
+                                            />
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                         <div class="text-center mt-3">
-                            <button class="btn btn_theme" @click="createMailRecp"
-                                :disabled="isButtonDisabled ? true : null"
-                                :style="[
-                                    isButtonDisabled
-                                    ? { cursor: 'not-allowed' }
-                                    : { cursor: 'pointer' }
-                                ]"
-                                >Create
-                                <img
-                                    src="@/assets/img/git_loader.gif"
-                                    style="display:none"
-                                    width="35px"
-                                    class="ml-3 loader"
-                                />
-                            </button>
-                         </div>
-                    </div>
-                    </form>
-                     </div>
                     </div>
                 </div>
                 
-                <div class="col-lg-7">
+                <!-- <div class="col-lg-7">
                     <div class="new_row_section mt-3">
-                        <ejs-grid
-                            v-show="!showLoader"
-                            ref="dataGrid"
-                            :created="refreshGrid"
-                            :allowPaging="true"
-                            :allowSorting="true"
-                            :pageSettings="tableProps.pageSettings"
-                            :toolbar="tableProps.toolbar"
-                            :searchSettings="tableProps.search"
-                            :allowExcelExport="true"
-                            :allowPdfExport="true"
-                            :toolbarClick="toolbarClick"
-                            >
-                            <e-columns>
-                                <e-column width="40" field="index" headerText="#"></e-column>
-                                <e-column width="200" field="email" headerText="Email"></e-column>
-                                <e-column :template="CompanyRecp" headerText="Action" width="150"></e-column>
-                            </e-columns>
-                        </ejs-grid>
-                        <TableLoader :showLoader="showLoader"/>
+                      
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </masterLayout>
@@ -122,6 +123,11 @@ export default {
                 }
             }
         }
+    },
+    created() {
+         this.$eventHub.$on('refreshCompanyMailRecps', (id) => { 
+            this.getMailRecipients()
+        })
     },
     mounted() {
         this.getMailRecipients()
