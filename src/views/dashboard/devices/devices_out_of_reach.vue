@@ -52,8 +52,8 @@
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
-                    <e-column width="200" field="fwVersion" headerText="Firmware Version"></e-column>
-                    <e-column width="200" field="fwDate" headerText="Firmware Date"></e-column>
+                    <e-column width="200" field="firmWareVersion" headerText="Firmware Version"></e-column>
+                    <e-column width="200" field="firmWareDate" headerText="Firmware Date"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
                     <e-column width="200" field="lastDate" headerText="Last Seen"></e-column>
                     <!-- <e-column width="200" field="nozzles" headerText="Display Name"></e-column> -->

@@ -165,6 +165,7 @@ export default {
       }
 
       const data = {
+        userId: this.$route.query.id,
         role: this.role,
         id: this.salesRepId
       }
