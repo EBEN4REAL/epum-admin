@@ -147,23 +147,22 @@ export default {
         "yesterdayClosing": this.pumpStatusObj.yesterdayClosing,
         "multiplier":  this.pumpStatusObj.totalMultiplier,
       }
-      console.log(data)
-      // this.axios
-      //   .get(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
-      //   .then(response => {
-      //     this.showSpinner = false
-      //     this.$toast('Successfully Updated Pump Status', {
-      //       type: "success",
-      //       timeout: 3000
-      //     });
-      //   })
-      //   .catch(error => {
-      //     this.showSpinner = false
-      //     this.$toast(error.response.data.message, {
-      //       type: "error",
-      //       timeout: 3000
-      //     });
-      //   });
+      this.axios
+        .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
+        .then(response => {
+          this.showSpinner = false
+          this.$toast('Successfully Updated Pump Status', {
+            type: "success",
+            timeout: 3000
+          });
+        })
+        .catch(error => {
+          this.showSpinner = false
+          this.$toast(error.response.data.message, {
+            type: "error",
+            timeout: 3000
+          });
+        });
     },
   }
 }

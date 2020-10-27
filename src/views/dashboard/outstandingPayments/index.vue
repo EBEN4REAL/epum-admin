@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >{{ amount }}</small>
+                                >&#x20A6; {{ amount }}</small>
                                 </div>
                             </div>
                         </div>
@@ -225,6 +225,12 @@ export default {
         branchName
       } });
     },
+    convertThousand(request) {
+          if (!isFinite(request)) {
+              return "0.00";
+          }
+          return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
     getBranches() {
       this.showLoader = true;
       this.axios
@@ -239,7 +245,7 @@ export default {
                 amount += account.amount
             });
             this.accounts = response.data
-            this.amount = amount.toFixed(2)
+            this.amount = this.convertThousand(amount)
             this.showLoader = false;
             this.$refs.dataGrid.ej2Instances.setProperties({ dataSource: this.accounts });
             this.refreshGrid();

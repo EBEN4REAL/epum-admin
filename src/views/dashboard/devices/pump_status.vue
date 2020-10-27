@@ -118,6 +118,7 @@ export default {
         this.$nextTick(function () {
             window.setInterval(() => {
                 this.getPumpStatus('showAll');
+                this.selected = "showAll"
             },60000);
         })
         $(".e-input").keyup(function(e) {
@@ -135,7 +136,6 @@ export default {
     },
     created() {
         this.$eventHub.$on("pumpStatusObj", (data) => {
-            console.log(data)
             this.pumpStatusObj = data
         });
     },
@@ -259,7 +259,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
 
                     let index = 0;
                     res.data.sort((a, b) => {

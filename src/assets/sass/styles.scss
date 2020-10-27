@@ -849,6 +849,114 @@ h6.dashboard__card__header {
   font-weight: 600;
 }
 
+.profile__section__outer_wrapper {
+  color: $primaryColor !important;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: $whiteColor;
+  .account__header__banner {
+      background: $whiteColor;
+      min-height: 150px;
+      padding: 0 0 20px 0;
+  }
+  .account_Settings_profile_details_section_row {
+      display: flex;
+      margin-left: 30px;
+      .camera_icon {
+        position: absolute;
+        top: 31px;
+    left: 29px;
+    background: white;
+    width: 39px;
+    padding-left: 4px;
+    padding-top: 6px;
+    border-radius: 5px;
+    padding-bottom: 3px;
+        i.fa.fa-camera {
+          font-size: 28px;
+          color: $primaryColor;
+      }
+      }
+      .account_Settings_profile_details_section_first_row {
+          flex: 0 0 10%;
+          position: relative;
+          .profile__pic {
+              position: absolute;
+              top: -48px;
+              left: 0;
+              width: 100px;
+          }
+      }
+      .account_Settings_profile_details_section_second_row {
+          flex: 0 0 60%;
+          small {
+              color: grey;
+              font-size: 18px;
+          }
+      }
+  }
+  .account_settings_banner {
+      margin: 0 auto;
+      width: 100%;
+      min-height: 100px;
+      border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .banner__text_section {
+          h3 {
+              color: $whiteColor;
+              align-self: center;
+              height: 100%;
+              font-family: 'Montserrat', sans-serif;
+          }
+      }
+  }
+  .account_Settings_profile_details_section {
+      width: 98%;
+      margin-left: 16px;
+  }
+  .profile__form_section {
+      .profile__edit_form_section {
+          -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+          padding: 20px;
+          background: $whiteColor;
+      }
+      .profile__change_password_form_section {
+          -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
+          padding: 20px;
+          background: $whiteColor;
+      }
+      .left-section {
+          section {
+              width: 100%;
+              padding-left: 20px;
+              padding-right: 20px;
+          }
+      }
+  }
+  label {
+    color: $greyTextColor;
+  }
+  .details_input {
+    input {
+      border: none;
+      color: $primaryColor !important;
+      &:focus {
+        outline: none !important;
+      }
+  }
+  }
+  .details_form {
+    padding-left: 44px;
+    padding-right: 149px;
+}
+}
+
+
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {

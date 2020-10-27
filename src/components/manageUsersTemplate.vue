@@ -8,9 +8,9 @@
       Details
     </router-link>
 
-    <router-link :to="{name:''}" class="btn branches_btn mr-3">
+    <!-- <router-link :to="{name:''}" class="btn branches_btn mr-3">
      Delete
-    </router-link> 
+    </router-link>  -->
    </div>
 </template>
 
