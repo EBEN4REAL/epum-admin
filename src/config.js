@@ -26,8 +26,8 @@ if (token !== null) {
   };
 } else {
   configObject = {
-    // apiBaseUrl: "https://api.epump.com.ng",
-    apiBaseUrl: "https://testapi.epump.com.ng", 
+    apiBaseUrl: "https://api.epump.com.ng",
+    // apiBaseUrl: "https://testapi.epump.com.ng", 
     // apiBaseUrl: "https://oh.epump.com.ng",
     authConfig: null,
   };

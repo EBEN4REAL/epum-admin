@@ -158,6 +158,17 @@
     outline: none !important;
   }
 }
+.var_btn {
+  border: none;
+  color: $primaryColor;
+  margin-left: 34px !important;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 17px;
+  &:focus {
+    outline: none !important;
+  }
+}
 
 .search_button {
   width: 39px;

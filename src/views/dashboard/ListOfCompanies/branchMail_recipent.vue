@@ -41,7 +41,7 @@
                                 v-show="!showLoader"
                                 ref="dataGrid"
                                 :created="refreshGrid"
-                                :allowPaging="false"
+                                :allowPaging="true"
                                 :allowSorting="true"
                                 :pageSettings="tableProps.pageSettings"
                                 :toolbar="tableProps.toolbar"
@@ -54,7 +54,7 @@
                                     <e-column width="80" field="index" headerText="#"></e-column>
                                     <e-column width="300" field="email" headerText="Email"></e-column>
                                     <e-column width="250" field="phoneNumber" headerText="Phone Number"></e-column>
-                                    <e-column width="10"></e-column>
+                                   <e-column :template="BranchMailRecp" headerText="Action" width="200"></e-column>
                                 </e-columns>
                             </ejs-grid>
                           <TableLoader :showLoader="showLoader"  />
@@ -69,7 +69,7 @@
                                 <div class="text-center">
                                     <div class="align-items-center mt-3">
                                         <div class="text-left">
-                                            <label for="">Email</label>
+                                            <!-- <label for="">Email</label> -->
                                         </div>
                                         <div class="input__block">
                                         <input type="email" placeholder="Enter your Email" class="" v-model="email"/>
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="align-items-center mt-3">
                                         <div class="text-left">
-                                            <label for="">Phone Number</label>
+                                            <!-- <label for="">Phone Number</label> -->
                                         </div>
                                         <div class="input__block">
                                             <input type="number" placeholder="Enter Your Phone Number" class="" v-model="phone" />
@@ -119,6 +119,8 @@ import Jquery from 'jquery';
 let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import BranchMailRecp from '@/components/Templates/branch_mail_recp_template'
+
 
 
 export default {
@@ -143,6 +145,11 @@ export default {
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
             },
+            BranchMailRecp: () => {
+                return {
+                    template:   BranchMailRecp
+                }
+            }
         }
     },
     mounted() {
@@ -156,7 +163,12 @@ export default {
             grid.search(value);
         }
     },
-     computed: {
+    created()  {
+        this.$eventHub.$on('refreshBranchMailRecps', () => { 
+            this.getMailRecp()
+        })
+    },
+    computed: {
         userName() {
             return `${this.userDetails.firstName} ${this.userDetails.lastName}`
         }
@@ -191,6 +203,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                         return a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0;
