@@ -28,6 +28,7 @@
                                     <b-form-group label="Radios using options">
                                         <b-form-radio-group
                                             id="radio-group-1"
+                                            class="pumpstatus"
                                             v-model="selected"
                                             :options="options"
                                             name="radio-options"

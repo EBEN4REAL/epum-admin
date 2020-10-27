@@ -243,6 +243,7 @@ export default {
             response.data.forEach((account, index) => {
                 account.index = index + 1;
                 amount += account.amount
+                account.amount = this.convertThousand(account.amount)
             });
             this.accounts = response.data
             this.amount = this.convertThousand(amount)
