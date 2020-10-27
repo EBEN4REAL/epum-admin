@@ -46,33 +46,12 @@
                 <small>Roles</small>
               </div>
               <div class="col-md-8 text-left align-items-center ">
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="LPG">
-                 <small class="form-check-label">DPR</small>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="AGO">
-                 <small class="form-check-label">Dealers</small>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <small class="form-check-label">DPRcontrol</small>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <small class="form-check-label">BranchManager</small>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <small class="form-check-label">Super Admin</small>
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="" value="PMS">
-                 <small class="form-check-label">Industry Manager</small>
-                </div>
-                <div class="text-center mt-4">
-                  <button class="btn btn_theme">Save</button>
-               </div>
+                  <b-form-checkbox-group
+                    v-model="userRole"
+                    :options="roles"
+                    name="flavour-2a"
+                  >
+                  </b-form-checkbox-group>
               </div>
             </div>
             
@@ -107,17 +86,71 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import backgroundUrl from "@/assets/img/bg__card.png";
+import configObject from "@/config";
 
 export default {
   components: {
     masterLayout,
   },
 
-  mounted() {},
+  mounted() {
+    this.getRoles()
+    this.id = this.$route.query.id;
+    let ml = sessionStorage.getItem(this.id);
+    if (!ml) {
+    let allData = localStorage.getItem("usersList");
+    let dt = JSON.parse(allData);
+    dt.forEach((my, index) => {
+        if (my.id === this.id) {
+            ml = JSON.stringify(my);
+            sessionStorage.setItem(this.id, ml);
+        }
+    });
+    }
+    console.log(JSON.parse(ml))
+    const userObject = JSON.parse(ml);
+    this.userRoles = userObject.roles.split(',')
+  },
   data() {
     return {
-      backgroundUrl
+      backgroundUrl,
+      id: '',
+      userRoles: [],
+      userRole: [],
+      roles: []
     };
   },
+  watch: {
+    roles: function(roles) {
+      if (roles.length) {
+        this.roles.forEach(cur => {
+          if (this.userRoles.includes(cur.text)) {
+            this.userRole.push(cur.value)
+          }
+        })
+      }
+    }
+  },
+  methods: {
+    getRoles() {
+        this.axios
+        .get(
+            `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
+            .then(res => {
+                res.data.sort((a, b) => {
+                    return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
+                });
+                this.roles = res.data.map(cur => {
+                  return {
+                    text: cur.name,
+                    value: cur.id
+                  }
+
+                })
+            })
+            .catch(error => {
+            });
+    },
+  }
 };
 </script>

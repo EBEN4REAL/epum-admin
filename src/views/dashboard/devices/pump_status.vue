@@ -6,7 +6,6 @@
                 <div class="col-lg-12">
                         <div class="dashboard__card large_card"  :style="[
                                     {
-                                    backgroundImage: `linear-gradient(rgb(37, 37, 37 , 0.9), rgb(37, 37, 37 , 0.9)), url(${backgroundUrl})`,
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: 'cover'
@@ -95,8 +94,8 @@ export default {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     created() {
-        this.dateRange.start = this.pluginStartDate;
-        this.dateRange.end = this.pluginEndDate;
+        // this.dateRange.start = this.pluginStartDate;
+        // this.dateRange.end = this.pluginEndDate;
     },
     mounted() {
         this.getPumpStatus()
@@ -112,42 +111,20 @@ export default {
     },
     data() {
         return {
+            dh: '',
             showLoader: false,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
             },
-            maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
-            customShortcuts: [
-                { key: "Today", label: "Today", value: "day" },
-                { key: "yesterday", label: "Yesterday", value: "-day" },
-                { key: "last7Days", label: "Last 7 Days", value: 7 },
-                { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
-                { key: "last30Days", label: "Last 30 Days", value: 30 },
-                { key: "lastMonth", label: "Last Month", value: "-month" }
-            ],
-            startDate: this.$moment().format("MMMM D, YYYY"),
-            endDate: this.$moment().format("MMMM D, YYYY"),
-            pluginStartDate: this.$moment().format("D-M-YYYY"),
-            pluginEndDate: this.$moment().format("D-M-YYYY"),
-            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+            startDate: (new Date()).toISOString(),
             pumpStatusTemplate: function() {
                 return {
                     template: Temp
                 };
             }
         }
-    },
-    watch: {
-        dateRange: function (newRange, oldRange) {
-            if ( newRange.start!== null && newRange.end !== null) {
-                this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
-                this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
-
-                this.getPumpStatus();
-            }
-        },
     },
     methods: {
         refreshGrid() {
@@ -171,8 +148,10 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/PumpStatus?qSDate=${this.startDate}&qEDate=${this.endDate}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/PumpStatus`, configObject.authConfig)
                 .then(res => {
+                    console.log(res)
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.branchName && b.branchName) {

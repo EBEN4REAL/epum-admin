@@ -89,7 +89,7 @@
             headerText="Status"
           ></e-column>
           <e-column
-            width="150"
+            width="200"
             :template="buttonsTemplate"
             headerText="Actions"
           ></e-column>
@@ -199,7 +199,7 @@ export default {
       }
     },
     resolvePumpStatus(data) {
-        let resp = confirm("Are you sure want to delete this company?");
+        let resp = confirm("Are you sure want to resolve this device?");
         if (!resp) {
           return 
         }

@@ -24,6 +24,7 @@
                       format="YYYY-MM-DDTHH:mm:ss.sssZ"
                       formatted="DD/MM/YYYY h:mm a"
                       label="Select date and time"
+                      :min-date="minDate"
                     />
                      <div class="mt-4 mx-auto text-center">
                       <button class="btn btn_theme" @click="extendVoucher"
@@ -37,7 +38,7 @@
                       <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
-                        width="35px"
+                        width="15px"
                         class="ml-3 loader"
                       />
                     </button>
@@ -81,6 +82,7 @@ export default {
           pin: '',
           expiry: "", 
           isButtonDisabled: false,
+          minDate:this.$moment(new Date()).format("YYYY-MM-DD"),
         }
     },
     methods: {

@@ -45,9 +45,8 @@
       </div>
     </div>
     
-      <div class="full__row_section p-5 mt-3 center_div margin-top-center-div ep_card mb-5" v-if="voucherVerified">
+    <div class="full__row_section p-5 mt-3 center_div margin-top-center-div ep_card mb-5" v-if="voucherVerified">
         <div class="">
-          <form>
                 <div class="row align-items-center mt-3">
                   <div class="col-md-4">
                     <label> Pin</label>
@@ -140,11 +139,39 @@
                 <div class="mt-3">
                     <div class="text-center mt-3">
                       <router-link :to="{name: 'extendVoucher'}" class="btn btn-success mr-2">Extend Voucher<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></router-link>                     
-                      <button class="btn btn-primary mr-2"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Return to Wallet </button>
-                      <button class="btn btn-info"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Make Expired</button>
+                      <button class="btn btn-primary mr-2" @click="cancelVoucher"
+                        :disabled="isButtonDisabled ? true : null"
+                        :style="[
+                          isButtonDisabled
+                            ? { cursor: 'not-allowed' }
+                            : { cursor: 'pointer' }
+                        ]"
+                      ><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Return to Wallet
+                        <img
+                          src="@/assets/img/git_loader.gif"
+                          style="display:none"
+                          width="25px"
+                          class="ml-3 loader"
+                        />
+                      </button>
+                      <!-- <button class="btn btn-info"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Make Expired</button> -->
+                      <button class="btn btn-info" @click="expireVoucher"
+                        :disabled="isButtonDisabled2 ? true : null"
+                        :style="[
+                          isButtonDisabled2
+                            ? { cursor: 'not-allowed' }
+                            : { cursor: 'pointer' }
+                        ]"
+                      ><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Make Expired
+                        <img
+                          src="@/assets/img/git_loader.gif"
+                          style="display:none"
+                          width="25px"
+                          class="ml-3 loader2"
+                        />
+                      </button>
                     </div>
                 </div>
-          </form>
         </div>
       </div>
   </masterLayout>
@@ -168,7 +195,9 @@ export default {
       voucherPin: "",
       isButtonDisabled: false,
       voucherVerified: false,
-      voucherDetails: {}
+      voucherDetails: {},
+      isButtonDisabled: false,
+      isButtonDisabled2: false,
     };
   },
   methods: {
@@ -194,6 +223,7 @@ export default {
           configObject.authConfig
         )
         .then((res) => {
+          console.log(res.data)
           this.$toast("Successfully verified voucher", {
             type: "success",
             timeout: 3000,
@@ -207,13 +237,60 @@ export default {
         .catch((error) => {
           this.isButtonDisabled = false;
           $(".loader").hide();
-          console.log(error)
           this.$toast(error.response.data.message, {
             type: "error",
             timeout: 3000,
           });
         });
     },
+    cancelVoucher() {
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
+          .then(res => {
+            console.log(res)
+                this.$toast("Successfully Cancelled Voucher", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+          })
+          .catch(error => {
+            console.log(error.response)
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    },
+    expireVoucher() {
+      $('.loader2').show();
+      this.isButtonDisabled2 = true;
+
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
+          .then(res => {
+            console.log(res)
+                this.$toast("Successfully Cancelled Voucher", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled2 = false;
+                $('.loader2').hide();
+          })
+          .catch(error => {
+            console.log(error.response)
+              this.isButtonDisabled2 = false;
+              $('.loader2').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    }
   },
 };
 </script>
