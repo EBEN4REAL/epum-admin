@@ -18,17 +18,17 @@
                                       0:00</small>
                                     </div>
                                     <div class="col-md-4">
-                                         <div class="small__card_content_wrapper align-items-center " >
+                                         <div class="small__card_content_wrapper align-items-center"    >
                                             <p class="dashboard__card__header text-white">PUMP STATUS</p>
                                         </div>
                                     </div>
-                                <label class="radio-inline text-white mr-4"><input type="radio" >Not Okay</label>
-                                <label class="radio-inline text-white"><input type="radio">Show All</label>
+                                <label class="radio-inline text-white mr-4"><input type="radio" :value="label" :name="name" v-model="value">Not Okay</label>
+                                <label class="radio-inline text-white"><input type="radio" :value="label" :name="name" v-model="value">Show All</label>
                                     <div class="col-md-3">
                                          <div class="search-container">
                                             <form action="">
-                                            <input type="text" placeholder="Search.." name="search" class="input__block">
-                                            <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
+                                                <input type="text" placeholder="Search.." name="search" class="input__block">
+                                                <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
                                             </form>
                                     </div>
                                 </div>
@@ -36,26 +36,7 @@
                     </div>
               </div>
               <div class="col-lg-8 remove-padding-left padding_div">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row  align-items-center justify-content-center" style="height:100%;">
-                        <div class="col-md-3  ">
-                            <h6>Pump Status</h6>
-                        </div>
-                        <div class="col-md-4">
-                                <vue-ctk-date-time-picker
-                                    v-model="dateRange"
-                                    :max-date="maxDate"
-                                    :range="true"
-                                    :autoClose="true"
-                                    :custom-shortcuts="customShortcuts"
-                                    color="#290C53"
-                                    format="DDMMYYYY"
-                                    formatted="DD/MM/YYYY"
-                                    label="Select a date range"
-                                />
-                        </div>
-                    </div>
-                    </div>
+
             </div>
         </div>
         </div>
@@ -78,7 +59,7 @@
                 >
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="stationName" headerText="Station Name"></e-column>
+                    <e-column width="200" field="station" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
                     <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
@@ -86,7 +67,7 @@
                     <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
                     <e-column width="200" field="difference" headerText="Difference"></e-column>
                     <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
-                    <e-column width="200" field="volumeToday" headerText="Volume Today"></e-column>
+                    <e-column width="200" field="totalVolumeToday" headerText="Volume Today"></e-column>
                     <e-column width="200" field="status" headerText="Status"></e-column>
                     <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
                     <e-column :template="pumpStatusTemplate" headerText="Action" width="100"></e-column>
@@ -136,13 +117,18 @@ export default {
     },
     data() {
         return {
+            okStatus: false,
+            notOkayStatus: true,
             showLoader: false,
             backgroundUrl,
+            pumpStatus: '',
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
             },
+            okPumps: [],
+            notOkPumps: [],
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
             customShortcuts: [
                 { key: "Today", label: "Today", value: "day" },
@@ -173,6 +159,9 @@ export default {
                 this.getPumpStatus();
             }
         },
+        pumpStatus(status) {
+            console.log(status)
+        }
     },
     methods: {
         refreshGrid() {
@@ -192,11 +181,43 @@ export default {
                 break;
             }
         },
+         convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        timeSince(date) {
+            var seconds = Math.floor((new Date() - date) / 1000);
+
+            var interval = Math.floor(seconds / 31536000);
+
+            if (interval > 1) {
+                return interval + " years";
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) {
+                return interval + " months";
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) {
+                return interval + " days";
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) {
+                return interval + " hours";
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) {
+                return interval + " minutes";
+            }
+            return Math.floor(seconds) + " seconds";
+        },
         getPumpStatus() {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/PumpStatus?qSDate=${this.startDate}&qEDate=${this.endDate}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/PumpStatus`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data)
                     let index = 0;
@@ -211,11 +232,17 @@ export default {
                         
                     });
                     res.data.forEach(el => {
+                        el.lastTransaction = this.timeSince(new Date(el.lastTransaction))
+                        el.lastHit = this.timeSince(new Date(el.lastHit))
                         el.lastEp2Date = this.$moment(el.lastEp2Date).format("MM/DD/YYYY hh:mm A");
+                        el.todayOpening = this.convertThousand(el.todayOpening)
+                        el.yesterdayClosing = this.convertThousand(el.yesterdayClosing)
+                        el.todayClosing = this.convertThousand(el.todayClosing)
                         el.index = ++index;
                         el.address = `${el.street} ${el.city}, ${el.state}`
                     })
-                    this.notPushingEp2Count = res.data.length
+                    this.okPumps = res.data.filter(el => el.status === "Ok")
+                    this.notOkPumps = res.data.filter(el => el.status !== "Ok")
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: res.data
                     });
