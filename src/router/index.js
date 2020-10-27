@@ -12,6 +12,7 @@ import ListOfCompanies from "../views/dashboard/ListOfCompanies/index";
 import EditCompanies from "../views/dashboard/ListOfCompanies/edit_companies";
 import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies";
 import CompanyDetails from "../views/dashboard/ListOfCompanies/companyDetails";
+import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_details";
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
 import UserDetails from "../views/dashboard/admin/ManageUsers/userDetails";
 import EditUser from "../views/dashboard/admin/ManageUsers/editUser";
@@ -36,6 +37,7 @@ import Dealers from "../views/dashboard/Dealers/dealers";
 import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
+import DetailsDealer from "../views/dashboard/Dealers/detailsDealer";
 import AuditSales from "../views/dashboard/admin/Audit.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
@@ -582,6 +584,24 @@ let routes = [
   path: "/extendVoucher",
   name: "extendVoucher",
   component: ExtendVoucher,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/newCompanyDetails",
+  name: "newCompanyDetails",
+  component: NewCompanyDetails,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/detailsDealer",
+  name: "detailsDealer",
+  component: DetailsDealer,
   meta: {
       authorize: true,
       authRoles: ['Admin']

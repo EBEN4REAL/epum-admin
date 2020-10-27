@@ -12,10 +12,10 @@
                         </div>
                         <div class="col-md-4 mt-4 text-center">
                            <form >
-                               <div class="input__block mb-2">
+                               <div class="input__block mt-3 mb-2">
                                     <input type="text" v-model="query" class="" />
                                 </div>
-                                <button type="submit" @click="search($event)" >Search</button>
+                                <button type="submit" class="btn btn_theme" @click="search($event)" >Search</button>
                            </form>
                         </div>
                     </div>
