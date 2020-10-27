@@ -430,6 +430,7 @@ export default {
             amount += account.amount
             account.checked = false
             account.amountToPay = null
+            account.amount = this.convertThousand(account.amount)
           });
           this.accounts = response.data
           this.amount =  this.convertThousand(amount)
