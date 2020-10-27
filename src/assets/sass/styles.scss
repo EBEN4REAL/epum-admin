@@ -16,6 +16,11 @@ html {
 .clearfix {
   overflow: auto;
 }
+.custom-control-label {
+  span {
+    color: $whiteColor !important;
+  }
+}
 
 .right_div {
   float: right;

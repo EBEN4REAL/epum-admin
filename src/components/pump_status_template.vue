@@ -1,11 +1,8 @@
 <template>
   <div>
-    <router-link
-      title="Edit"
-      :to="{ name: 'editPumpStatus', query: { id: data.index } }"
-      class="btn details_btn mr-3"
-    >Edit
-    </router-link>
+    <button  title="Edit" class="btn details_btn mr-3" @click="showPumpStatusEditModal">
+      Edit
+    </button>
   </div>
 </template>
 
@@ -17,5 +14,11 @@ export default {
     };
   },
   mounted() {},
+  methods: {
+    showPumpStatusEditModal() {
+       this.$eventHub.$emit('pumpStatusObj', this.data)
+      this.$modal.show('editPumpStatusModal')
+    }
+  }
 };
 </script>

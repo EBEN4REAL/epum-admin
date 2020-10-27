@@ -1,4 +1,6 @@
 <template>
+    <div>
+        <EditPumpStatusModal :pumpStatusObj="pumpStatusObj" />
     <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
@@ -14,21 +16,28 @@
                                 ]">
                                 <div class="row align-items-center justify-content-center hundred-percent-height">
                                      <div class="col-md-2">
-                                    <small class="text-white">Refresh in
-                                      0:00</small>
+                                    <h5 class="text-white ">Refresh in
+                                      <span id="countDown"></span>
+                                    </h5>
                                     </div>
                                     <div class="col-md-4">
                                          <div class="small__card_content_wrapper align-items-center"    >
                                             <p class="dashboard__card__header text-white">PUMP STATUS</p>
                                         </div>
                                     </div>
-                                <label class="radio-inline text-white mr-4"><input type="radio" :value="label" :name="name" v-model="value">Not Okay</label>
-                                <label class="radio-inline text-white"><input type="radio" :value="label" :name="name" v-model="value">Show All</label>
+                                    <b-form-group label="Radios using options">
+                                        <b-form-radio-group
+                                            id="radio-group-1"
+                                            v-model="selected"
+                                            :options="options"
+                                            name="radio-options"
+                                        ></b-form-radio-group>
+                                    </b-form-group>
                                     <div class="col-md-3">
                                          <div class="search-container">
                                             <form action="">
-                                                <input type="text" placeholder="Search.." name="search" class="input__block">
-                                                <button type="submit" class="search_button"><i class="fa fa-search"></i></button>
+                                                <input type="text" placeholder="Search.." name="search" class="input__block"  v-model="searchText">
+                                                <button type="submit" class="search_button" @click="searchChange"><i class="fa fa-search"></i></button>
                                             </form>
                                     </div>
                                 </div>
@@ -68,14 +77,16 @@
                     <e-column width="200" field="difference" headerText="Difference"></e-column>
                     <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
                     <e-column width="200" field="totalVolumeToday" headerText="Volume Today"></e-column>
-                    <e-column width="200" field="status" headerText="Status"></e-column>
+                    <e-column width="200" :template="pumpStatus" field="status" headerText="Status" ></e-column>
                     <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
-                    <e-column :template="pumpStatusTemplate" headerText="Action" width="100"></e-column>
+                    <e-column :template="pumpStatusTemplate" headerText="Action" width="200"></e-column>
+                    pumpStatus
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"  />
         </div>
     </masterLayout>
+    </div>
 </template>
 <script>
 
@@ -85,6 +96,8 @@ import Temp from '@/components/pump_status_template.vue';
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
+import pumpTempStatus from '@/components/Templates/pump_status_template';
+import EditPumpStatusModal from '@/components/modals/pumpStatus/editPumpStatus.vue';
 
 
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
@@ -94,17 +107,19 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        EditPumpStatusModal
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
-    created() {
-        this.dateRange.start = this.pluginStartDate;
-        this.dateRange.end = this.pluginEndDate;
-    },
     mounted() {
-        this.getPumpStatus()
+        this.getPumpStatus('showAll')
+        this.$nextTick(function () {
+            window.setInterval(() => {
+                this.getPumpStatus('showAll');
+            },60000);
+        })
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -113,13 +128,27 @@ export default {
             var value = event.target.value;
             grid.search(value);
         }
-        
+        const mins = 60 * 1,
+        display = document.querySelector('#countDown');
+        this.startTimer(mins, display);
+       
+    },
+    created() {
+        this.$eventHub.$on("pumpStatusObj", (data) => {
+            console.log(data)
+            this.pumpStatusObj = data
+        });
     },
     data() {
         return {
-            okStatus: false,
-            notOkayStatus: true,
+            selected: 'showAll',
+            options: [
+                { text: 'show All', value: 'showAll' },
+                { text: 'Not Okay', value: 'notOkay' }
+            ],
+            searchText: '',
             showLoader: false,
+            pumpStatusObj:{},
             backgroundUrl,
             pumpStatus: '',
             tableProps: {
@@ -127,43 +156,29 @@ export default {
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
             },
-            okPumps: [],
-            notOkPumps: [],
-            maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
-            customShortcuts: [
-                { key: "Today", label: "Today", value: "day" },
-                { key: "yesterday", label: "Yesterday", value: "-day" },
-                { key: "last7Days", label: "Last 7 Days", value: 7 },
-                { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
-                { key: "last30Days", label: "Last 30 Days", value: 30 },
-                { key: "lastMonth", label: "Last Month", value: "-month" }
-            ],
-            startDate: this.$moment().format("MMMM D, YYYY"),
-            endDate: this.$moment().format("MMMM D, YYYY"),
-            pluginStartDate: this.$moment().format("D-M-YYYY"),
-            pluginEndDate: this.$moment().format("D-M-YYYY"),
-            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
             pumpStatusTemplate: function() {
                 return {
                     template: Temp
                 };
+            },
+            pumpStatus: function() {
+                return {
+                    template: pumpTempStatus
+                };
             }
+            
         }
     },
     watch: {
-        dateRange: function (newRange, oldRange) {
-            if ( newRange.start!== null && newRange.end !== null) {
-                this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
-                this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
-
-                this.getPumpStatus();
-            }
-        },
-        pumpStatus(status) {
-            console.log(status)
+        selected(status) {
+            this.getPumpStatus(status)
         }
     },
     methods: {
+        searchChange($e) {
+            $e.preventDefault();
+            this.getPumpStatus(this.selected, this.searchText)
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -181,7 +196,7 @@ export default {
                 break;
             }
         },
-         convertThousand(request) {
+        convertThousand(request) {
             if (!isFinite(request)) {
                 return "0.00";
             }
@@ -211,15 +226,41 @@ export default {
             if (interval > 1) {
                 return interval + " minutes";
             }
+            if(Math.floor(seconds)  < 0) {
+                return "now";
+            }
             return Math.floor(seconds) + " seconds";
         },
-        getPumpStatus() {
+        startTimer(duration, display) {
+            var start = Date.now(),diff, minutes,seconds;
+            function timer() {
+                /***** get the number of seconds that have elapsed since startTimer() was called ***/
+                diff = duration - (((Date.now() - start) / 1000) | 0);
+                /***** does the same job as parseInt truncates the float ***/
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds; 
+
+                if (diff <= 0) {
+                     /***** add one second so that the count down starts at the full duration example 05:00 not 04:59 ***/
+                    start = Date.now() + 1000;
+                }
+            };
+            /***** we don't want to wait a full second before the timer starts ***/
+            timer();
+            setInterval(timer, 1000);
+        },
+        getPumpStatus(status, searchText ='') {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/PumpStatus`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig)
                 .then(res => {
                     console.log(res.data)
+
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.branchName && b.branchName) {
@@ -239,13 +280,19 @@ export default {
                         el.yesterdayClosing = this.convertThousand(el.yesterdayClosing)
                         el.todayClosing = this.convertThousand(el.todayClosing)
                         el.index = ++index;
-                        el.address = `${el.street} ${el.city}, ${el.state}`
                     })
+                    this.allPumps = res.data
                     this.okPumps = res.data.filter(el => el.status === "Ok")
                     this.notOkPumps = res.data.filter(el => el.status !== "Ok")
-                    this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data
-                    });
+                    if(status === 'notOkay') {
+                        this.$refs.dataGrid.ej2Instances.setProperties({
+                            dataSource: this.notOkPumps
+                        });
+                    }else {
+                        this.$refs.dataGrid.ej2Instances.setProperties({
+                            dataSource: this.okPumps
+                        });
+                    }
                     this.refreshGrid();
                     this.showLoader = false;
                 })

@@ -89,9 +89,7 @@ export default {
             var value = event.target.value;
             grid.search(value);
         }
-        this.$eventHub.$on("refreshDealersTable", () => {
-            this.getDealers()
-        });
+        
     },
     data() {
         return {
