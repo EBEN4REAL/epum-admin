@@ -1,5 +1,5 @@
 <template>
-  <masterLayout>
+  <masterLayout :branchName="branchName">
     <section
       class="mt-3 full__row_section banner-gradient"
       :style="[
@@ -127,6 +127,21 @@ export default {
 
   mounted() {
     this.getTanks()
+
+    const companyBranchId = this.$route.query.companyBranchId
+    let info = sessionStorage.getItem(companyBranchId)
+    if (!info){
+        let allData = localStorage.getItem("branchesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === companyBranchId){
+                info = JSON.stringify(my)
+                sessionStorage.setItem(companyBranchId, info)
+            }
+        })
+    }
+    let companyBranchDetails = JSON.parse(info)
+    this.branchName = companyBranchDetails.name
   },
   data() {
     return {
@@ -139,6 +154,7 @@ export default {
       manufacturer: '', 
       model: '',
       version: '',
+      branchName: ''
     };
   },
   methods: {

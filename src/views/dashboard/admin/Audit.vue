@@ -39,7 +39,7 @@
         <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Pump Variance Report on <strong>{{startDate}}</strong></span>
+                    <span class="pl-3 ">Pump Variance Report on <strong>{{startDate}}</strong> for <strong>{{companyName}}</strong></span>
                 </div>
                 <div class="col-md-4 text-right">
                    
@@ -59,6 +59,7 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
+                :rowDataBound='rowDataBound'
                 >
                 <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
@@ -66,9 +67,9 @@
                     <e-column width="200" field="branchName" headerText="Branch"></e-column>
                     <e-column width="200" field="pumpPMS" headerText="Pump PMS (Ltrs)"></e-column>
                     <e-column width="200" field="tankPMS" headerText="Tank PMS (Ltrs)"></e-column>
+                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (Ltrs)"></e-column>
                     <e-column width="200" field="pumpAGO" headerText="Pump AGO (Ltrs)"></e-column>
                     <e-column width="200" field="tankAGO" headerText="Tank AGO (Ltrs)"></e-column>
-                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (Ltrs)"></e-column>
                     <e-column width="200" field="agoVariance" headerText="AGO Variance (Ltrs)"></e-column>
                     <e-column :template="AuditSalesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
@@ -130,6 +131,7 @@ export default {
                     template: AuditSalesTemplate
                 };
             },
+            companyName: ''
         }
     },
     watch: {
@@ -146,6 +148,23 @@ export default {
     mounted() {
         this.dateRange = this.pluginStartDate;
         this.getPumpTankSale()
+
+        this.companyId = this.$route.query.companyId
+        let ml = sessionStorage.getItem(this.companyId)
+        if (!ml){
+            let allData = localStorage.getItem("companiesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.companyId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.companyId, ml)
+                }
+            })
+        }
+
+        let companyDetails = JSON.parse(ml)
+        this.companyName = companyDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -156,6 +175,17 @@ export default {
         }
     },  
     methods: {
+        rowDataBound: function(arging) {
+            arging.row.addEventListener("mouseover", args => {
+                arging.row.children[5].innerHTML = arging.data.pmsVarianceActual
+                arging.row.children[8].innerHTML = arging.data.agoVarianceActual
+            });
+
+            arging.row.addEventListener("mouseleave", args => {
+                arging.row.children[5].innerHTML = arging.data.pmsVariance
+                arging.row.children[8].innerHTML = arging.data.agoVariance
+            });
+        },
         convertThousand(request) {
             if (!isFinite(request)) {
                 return "0.00";
@@ -174,12 +204,20 @@ export default {
                     });
                     res.data.forEach(el => {
                         el.index = ++index;
-                        el.pmsVariance = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
-                        el.agoVariance = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
+
+                        el.pmsVarianceActual = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
+                        el.agoVarianceActual = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
+                        let pumpSales = parseFloat(el.pumpPMS)  + parseFloat(el.pumpAGO)
+                        let pmsVariance = (((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS)))) / pumpSales) * 100
+                        el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+
+                        let agoVariance = (((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO)))) / pumpSales) * 100
+                        el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
                         el.pumpPMS =  this.convertThousand(el.pumpPMS)
                         el.tankPMS =  this.convertThousand(el.tankPMS)
                         el.pumpAGO =  this.convertThousand(el.pumpAGO)
                         el.tankAGO =  this.convertThousand(el.tankAGO)
+
                         el.date = this.$moment(el.date).format(
                         "MM-DD-YYYY"
                         );

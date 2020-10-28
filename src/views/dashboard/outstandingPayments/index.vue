@@ -252,16 +252,24 @@ export default {
             this.refreshGrid();
         })
         .catch(error => {
+          this.showLoader = false;
           if(error.message && error.message === 'Network Error') {
             this.$toast("Network Error, Please Check Your Internet Connection", {
                 type: "error",
                 timeout: 3000
             });
           }else {
-            this.$toast("An Error Occured", {
+            if (error.response.data.message.toLowerCase() == 'your account does not have access to this data') {
+              this.$toast("Your account doesn't have the required role to access this data", {
                 type: "error",
                 timeout: 3000
-            });
+              });
+            } else {
+              this.$toast(error.response.data.message, {
+                type: "error",
+                timeout: 3000
+              });
+            }
           }
         });
     },

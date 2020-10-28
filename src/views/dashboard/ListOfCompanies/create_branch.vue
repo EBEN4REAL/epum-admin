@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Create New Branch</h5>
+            <h5 class="title">Create New Outlet for <span class="branchName">{{companyName}}</span></h5>
           </div>
         </div>
       </div>
@@ -22,11 +22,11 @@
           <div class="text-center">
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label> Branch Name</label>
+                <label> Outlet Name</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Branch Name" class="" v-model="branchName" />
+                  <input type="text" placeholder="Outlet Name" class="" v-model="branchName" />
                 </div>
               </div>
             </div>
@@ -176,7 +176,6 @@ export default {
     masterLayout,
   },
 
-  mounted() {},
   data() {
     return {
       backgroundUrl,
@@ -196,11 +195,28 @@ export default {
       companyDealers: [],
       branchUserId: "string",
       sendReportMail: null,
+      companyName: ''
     };
   },
   mounted() {
     this.getStates()
     this.getDealers()
+
+    this.companyId = this.$route.query.companyId
+    let ml = sessionStorage.getItem(this.companyId)
+    if (!ml){
+        let allData = localStorage.getItem("companiesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === this.companyId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(this.companyId, ml)
+            }
+        })
+    }
+
+    let companyDetails = JSON.parse(ml)
+    this.companyName = companyDetails.name
   },
   methods: {
     validateEmail(email) {

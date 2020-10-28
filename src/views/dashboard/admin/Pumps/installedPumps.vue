@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="mb-3">
                             <router-link
-                            :to="{ name: 'pumpTransactions', query: {branchId: $route.query.branchId, id: pump.id} }"
+                            :to="{ name: 'pumpTransactions', query: {companyBranchId: $route.query.companyBranchId, id: pump.id} }"
                             class="probe_transactions_btn"
                             style="text-decoration: none"
                             >Transactions</router-link>
@@ -135,6 +135,21 @@ export default {
     },
     mounted() {
         this.getPumps();
+
+        const companyBranchId = this.$route.query.companyBranchId
+        let ml = sessionStorage.getItem(companyBranchId)
+        if (!ml){
+            let allData = localStorage.getItem("branchesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === companyBranchId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(companyBranchId, ml)
+                }
+            })
+        }
+        let companyBranchDetails = JSON.parse(ml)
+        this.branchName = companyBranchDetails.name
     },
     data() {
         return {
@@ -142,6 +157,7 @@ export default {
             pumps: [],
             pumpCount: 0,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
+            branchName: ''
         }
     },
     computed: {

@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row align-items-center" style="height: 100%">
@@ -109,6 +109,22 @@ export default {
     },
     mounted() {
         this.getTankTransactions();
+
+        const companyBranchId = this.$route.query.companyBranchId
+        let ml = sessionStorage.getItem(companyBranchId)
+        if (!ml){
+            let allData = localStorage.getItem("branchesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === companyBranchId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(companyBranchId, ml)
+                }
+            })
+        }
+        let companyBranchDetails = JSON.parse(ml)
+        this.branchName = companyBranchDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -151,7 +167,8 @@ export default {
             endDate: this.$moment().format("MMMM D, YYYY"),
             pluginStartDate: this.$moment().format("D-M-YYYY"),
             pluginEndDate: this.$moment().format("D-M-YYYY"),
-            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate }
+            dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+            branchName: ''
         }
     },
     methods: {

@@ -1,5 +1,5 @@
 <template>
-  <masterLayout>
+  <masterLayout :branchName="comapanyBranchObj.name">
     <div class="row">
       <div class="col-lg-9 col-md-6">
         <div class="new_row_section">

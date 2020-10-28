@@ -11,7 +11,7 @@
         <div class="row align-items-center justify-content-center hundred-percent-height">
             <div class="col-md-12 ">
             <div class="text-center ">
-                <h5 class="title">MAIL RECIPIENTS</h5>
+                <h5 class="title">Mail Recipients For <span class="branchName">{{companyName}}</span></h5>
             </div>
             </div>
         </div>
@@ -109,6 +109,7 @@ export default {
     data() {
         return {
             backgroundUrl,
+            companyName: '',
             isButtonDisabled: false,
             showLoader: false,
             email: '',
@@ -131,6 +132,22 @@ export default {
     },
     mounted() {
         this.getMailRecipients()
+
+        this.companyId = this.$route.query.companyId
+        let ml = sessionStorage.getItem(this.companyId)
+        if (!ml){
+            let allData = localStorage.getItem("companiesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.companyId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.companyId, ml)
+                }
+            })
+        }
+
+        let companyDetails = JSON.parse(ml)
+        this.companyName = companyDetails.name
     },
     methods: {
         refreshGrid() {

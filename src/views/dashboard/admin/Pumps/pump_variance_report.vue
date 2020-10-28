@@ -63,7 +63,7 @@
                     <div class="small_card product_details_card mt-3">
                         <div class="product_sales_flex_card_pump_sales first">
                             <div class="product_sales_flex_card_item">
-                                <div class="total_text">PUMP NAME</div>
+                                <div class="total_text">TANK NAME</div>
                             </div>
                             <div class="product_sales_flex_card_item">
                                 <div class="text-black ">VOLUME  Sold</div>
@@ -119,12 +119,12 @@
                 >
                  <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="tankName" headerText="Tank  Name" textAlign="center"></e-column>
+                     <e-column width="200" field="productName" headerText="Product  Name" textAlign="center"></e-column>
                     <e-column width="200" field="volumeSold" headerText="Volume Sold (Ltrs)"></e-column>
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
-                    <e-column width="200" field="productName" headerText="Product  Name" textAlign="center"></e-column>
-                    <e-column width="200" field="tankName" headerText="Tank  Name" textAlign="center"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -242,6 +242,7 @@ export default {
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         parseTankSales(data) {
+            console.log(data)
             let index = 0
             data.forEach(el => {
                 el.index = ++index;
@@ -261,6 +262,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Audit/DaySale/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const _salesArr = []
                     res.data.pumpDaySales.forEach(cur => {
@@ -310,6 +312,7 @@ export default {
                     })
                     this.parseTankSales(res.data.tankSales)
                     this.totalPumpSales = pumpTankSales
+                    console.log(this.totalPumpSales)
                     this.showLoader = false
                 })
                 .catch(error => {
