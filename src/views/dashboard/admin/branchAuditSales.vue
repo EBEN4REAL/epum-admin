@@ -1,7 +1,7 @@
 <template>
   <masterLayout>
     <div class="row">
-      <div class="col-lg-9 col-md-6">
+      <div class="col-lg-7 col-md-6">
         <div class="new_row_section">
           <div class="row mt-3">
             <div class="col-lg-12 remove-padding-left padding_div pr-0">
@@ -21,19 +21,38 @@
 
           <div class="small_card product_details_card audit-sales mt-3">
               <div class="row p-4 align-items-center">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="start-date input__block">
-                    <input type="date" name="" placeholder="set a date" id="" />
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="start-date ml-5 input__block">
-                    <input type="date" name="" id="" />
+                    <vue-ctk-date-time-picker
+                        v-model="dateRange"
+                        :max-date="maxDate"
+                        :range="true"
+                        :autoClose="true"
+                        :custom-shortcuts="customShortcuts"
+                        color="#290C53"
+                        format="YYYY-MM-DDTHH:mm:ss.sssZ"
+                        formatted="DD/MM/YYYY"
+                        label="Select a date range"
+                    />
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="text-center">
-                    <button class="btn btn-success text-white"><i class="fa fa-plus mr-2"></i>Download</button>
+                    <button class="btn btn-success text-white" @click="download"
+                      :disabled="isButtonDisabled ? true : null"
+                      :style="[
+                        isButtonDisabled
+                          ? { cursor: 'not-allowed' }
+                          : { cursor: 'pointer' }
+                      ]"
+                    ><i class="fa fa-plus mr-2"></i>Download
+                      <img
+                        src="@/assets/img/git_loader.gif"
+                        style="display:none"
+                        width="35px"
+                        class="ml-3 loader"
+                      />
+                    </button>
                 </div>
             </div>
 
@@ -42,43 +61,48 @@
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-6">
-        <div class="branch_card audit-sales-card position-fixed">
-          <div class="">
+      <div class="col-lg-5 col-md-6">
+        <div class="branch_card audit-sales-card" style="width: 100%; display: flex; flex-direction: column; justify-content: space-around;">
             <div class="row align-items-center mt-3">
               <div class="col-md-6 mt-2 text-left">
                 <p>Branch Name</p>
               </div>
               <div class="col-md-6">
                 <div class="">
-                  <p style="font-size: 20px; font-weight: bold;"></p>
+                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.name}}</p>
                 </div>
               </div>
             </div>
-            <div class="align-items-center mt-3">
-              <p style="font-size: 13px">
-                Company Name<span
-                  class="font-weight-bold ml-2"
-                  style="font-size: 13px"
-                  ></span
-                >
-              </p>
-              <p style="font-size: 13px">
-                Company City<span
-                  class="font-weight-bold text-left ml-2"
-                  style="font-size: 13px"
-                  ></span
-                >
-              </p>
-              <p style="font-size: 13px">
-                Country<span
-                  class="font-weight-bold ml-2"
-                  style="font-size: 13px"
-                  ></span
-                >
-              </p>
+            <div class="row align-items-center">
+              <div class="col-md-6 mt-2 text-left">
+                <p>Company Name</p>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.companyName}}</p>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="row align-items-center">
+              <div class="col-md-6 mt-2 text-left">
+                <p>City</p>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.city}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-md-6 mt-2 text-left">
+                <p>Country</p>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.country}}</p>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -89,21 +113,56 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
-import { VueperSlides, VueperSlide } from 'vueperslides'
-import 'vueperslides/dist/vueperslides.css'
-import TableLoader from "@/components/tableLoader/index";
+// import { VueperSlides, VueperSlide } from 'vueperslides'
+// import 'vueperslides/dist/vueperslides.css'
+import Jquery from 'jquery';
+let $ = Jquery;
 
 export default {
   components: {
     masterLayout,
-    TableLoader
   },
  
   data() {
     return {
-        userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-      showLoader: false
+      userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
+      comapanyBranchObj: {},
+      maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
+      customShortcuts: [
+        { key: "Today", label: "Today", value: "day" },
+        { key: "yesterday", label: "Yesterday", value: "-day" },
+        { key: "last7Days", label: "Last 7 Days", value: 7 },
+        { key: "lastWeek", label: "Last Week", value: "-isoWeek" },
+        { key: "last30Days", label: "Last 30 Days", value: 30 },
+        { key: "lastMonth", label: "Last Month", value: "-month" }
+      ],
+      startDate: this.$moment().format("MMMM D, YYYY"),
+      endDate: this.$moment().format("MMMM D, YYYY"),
+      pluginStartDate: this.$moment().format("D-M-YYYY"),
+      pluginEndDate: this.$moment().format("D-M-YYYY"),
+      dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+      isButtonDisabled: false
     };
+  },
+  mounted() {
+    this.dateRange.start = this.pluginStartDate;
+    this.dateRange.end = this.pluginEndDate;
+
+    const companyBranchId = this.$route.query.companyBranchId;
+    let ml = sessionStorage.getItem(companyBranchId);
+    if (!ml) {
+      let allData = localStorage.getItem("branchesList");
+     let dt = JSON.parse(allData);
+      dt.forEach((my, index) => {
+        if (my.id === companyBranchId) {
+          ml = JSON.stringify(my);
+          sessionStorage.setItem(companyBranchId, ml);
+        }
+      });
+    }
+    let companyBranchDetails = JSON.parse(ml);
+    console.log(companyBranchDetails)
+    this.comapanyBranchObj = companyBranchDetails;
   },
   computed: {
         userName() {
@@ -111,7 +170,45 @@ export default {
         }
     },
   methods: {
+    download() {
+      console.log(this.dateRange)
+      if(!this.dateRange) {
+          this.$toast("Please select a date range", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
 
+      
+      const data = {
+        branchId: this.$route.query.companyBranchId
+      }
+      return
+
+
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+       this.axios.post(`${configObject.apiBaseUrl}/Company/AddDevice`,data, configObject.authConfig)
+          .then(res => {
+                this.$toast("Successfully Downloaded", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+                // this.$router.push({name: 'branchDetails', query: { companyBranchId: this.$route.query.companyBranchId}})
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    }
   },
 };
 </script>

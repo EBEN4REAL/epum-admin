@@ -106,7 +106,7 @@ export default {
             tableCount: 0,
             details: {
                 queryStrings: { companyBranchId: '', companyId: this.$route.query.companyId }, 
-                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }], 
+                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }, { name: 'Audit Sales', link: 'branchAuditSales' }], 
                 delete: { hasDelete: false, deleteName: ''}
             },
             tableProps: {
