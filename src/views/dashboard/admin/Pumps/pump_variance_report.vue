@@ -244,7 +244,6 @@ export default {
         },
         parseTankSales(data) {
             this.tankSales = data
-            console.log(data)
             let index = 0
             data.forEach(el => {
                 el.index = ++index;
@@ -265,7 +264,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Audit/DaySale/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     const ids = new Set(res.data.pumpDaySales.map(cur => cur.tankName))
                     const _salesArr = []
                     res.data.pumpDaySales.forEach(cur => {

@@ -107,9 +107,6 @@ export default {
       obj.yesterdayClosing =  parseFloat(obj.yesterdayClosing.replace(/,/g, ''))
     }
   },
-  mounted(){
-    console.log(this.pumpStatusObj)
-  },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH
       ? MODAL_WIDTH / 2
@@ -146,7 +143,6 @@ export default {
         "yesterdayClosing": this.pumpStatusObj.yesterdayClosing,
         "multiplier":  parseFloat(this.pumpStatusObj.totalMultiplier),
       }
-      console.log(data)
       this.axios
         .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
         .then(response => {

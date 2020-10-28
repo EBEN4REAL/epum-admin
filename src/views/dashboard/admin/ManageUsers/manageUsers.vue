@@ -202,12 +202,10 @@ export default {
         },
         getUsers() {
             this.showLoader = true
-            console.log(this.currentPage)
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Admin/GetUsers?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     // let index = 0;
                     let index = 0 + ((this.currentPage - 1) * this.pageSize);
                     res.data.data.sort((a, b) => {
