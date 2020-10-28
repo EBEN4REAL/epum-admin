@@ -58,15 +58,15 @@
                 <div class="col-md-4" v-for="(x,i) in 3" :key="i + 'A'" v-show="showLoader">
                     <TableLoader :showLoader="showLoader"/>
                 </div>
-                <div class="col-md-4 remove-right-padding" v-for="(pmpSale,index) in totalPumpSales" :key="index + 'C'" v-show="!showLoader">
-                    <div class="header-three-text">{{pmpSale.tankName}}</div>
+                <div class="col-md-5 remove-right-padding" v-for="(pmpSale,index) in totalPumpSales" :key="index + 'C'" v-show="!showLoader">
+                    <div class="header-three-text"></div>
                     <div class="small_card product_details_card mt-3">
                         <div class="product_sales_flex_card_pump_sales first">
                             <div class="product_sales_flex_card_item">
-                                <div class="total_text">TANK NAME</div>
+                                <div class="total_text">{{pmpSale.tankName}}</div>
                             </div>
                             <div class="product_sales_flex_card_item">
-                                <div class="text-black ">VOLUME  Sold</div>
+                                <div class="text-black ">{{pmpSale.tankVolumeSold}}  {{!pmpSale.tankVolumeSold ? null : 'Ltrs'}}</div>
                             </div>
                         </div>
                        <div class="product_sales_flex_card_pump_sales" v-for="(pmp,x) in pmpSale.pumpSalesArr" :key="x + 'B'">
@@ -251,15 +251,9 @@ export default {
                 el.volumeSold = this.convertThousand(el.volumeSold);
                 el.volumeFilled = this.convertThousand(el.volumeFilled);
                 el.openingDip = this.convertThousand(el.openingDip);
-                // this.totalPumpSales.forEach(sale => {
-                //     console.log(sale.tankName)
-                //     if(sale.tankName === el.tankName) {
-                //         el.tankVolume = sale.volumeSold
-                //     }
-                // })
+                el.closingDip = this.convertThousand(el.closingDip);
             })
             
-            console.log(this.totalPumpSales)
             this.$refs.tankSalesdataGrid.ej2Instances.setProperties({
                 dataSource: data
             });
@@ -290,7 +284,6 @@ export default {
                         })
                     });
                     let pumpTankSales = _salesArr.map((sale,i) =>  {
-                        const pumpNames = new Set(_salesArr[i].data.map(cur => cur.pumpName))
                         Array.prototype.groupBy = function(prop) {
                             return this.reduce(function(groups, item) {
                                 const val = item[prop]
@@ -319,10 +312,16 @@ export default {
                             },0)
                         }
                     }) 
-                    this.totalPumpSales = pumpTankSales
                     this.parseTankSales(res.data.tankSales)
-                   
-                    console.log(this.totalPumpSales)
+                    pumpTankSales.forEach(el => {
+                        let sale = res.data.tankSales.filter(x => x.tankName === el.tankName)
+                        if(sale.length > 0) {
+                            el.tankVolumeSold = this.convertThousand(sale.reduce((acc,cur) => {
+                                return acc += parseFloat(cur.volumeSold.replace(/,/g, ''))  
+                            }, 0))
+                        }
+                    })
+                    this.totalPumpSales = pumpTankSales
                     this.showLoader = false
                 })
                 .catch(error => {

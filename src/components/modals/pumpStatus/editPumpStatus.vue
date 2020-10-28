@@ -55,7 +55,6 @@
                     type="number"
                     placeholder="Multiplier"
                     v-model="pumpStatusObj.totalMultiplier"
-                    readonly
                 />
             </div>
         </div>
@@ -145,8 +144,9 @@ export default {
         "opening": this.pumpStatusObj.todayOpening,
         "closing": this.pumpStatusObj.todayOpening,
         "yesterdayClosing": this.pumpStatusObj.yesterdayClosing,
-        "multiplier":  this.pumpStatusObj.totalMultiplier,
+        "multiplier":  parseFloat(this.pumpStatusObj.totalMultiplier),
       }
+      console.log(data)
       this.axios
         .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
         .then(response => {

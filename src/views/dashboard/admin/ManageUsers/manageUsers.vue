@@ -11,12 +11,7 @@
                             <p>Get started with epump company admin platform by creating and managing your users here</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                           <form >
-                               <div class="input__block mt-3 mb-2">
-                                    <input type="text" v-model="query" class="" />
-                                </div>
-                                <button type="submit" class="btn btn_theme" @click="search($event)" >Search</button>
-                           </form>
+                          
                         </div>
                     </div>
                 </div>
@@ -43,10 +38,11 @@
                 v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
-                :allowPaging="true"
+                :allowPaging="false"
                 :allowSorting="true"
                 :pageSettings="tableProps.pageSettings"
                 :toolbar="tableProps.toolbar"
+                :actionBegin='actionHandler'
                 :searchSettings="tableProps.search"
                 :allowExcelExport="true"
                 :allowPdfExport="true"
@@ -63,12 +59,24 @@
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"  />
+             <div class="mt-3" style="margin:  0 auto">
+                <Paginator 
+                    v-show="!showLoader"
+                    :total-pages="totalPages"
+                    :per-page="pageSize"
+                    :current-page="currentPage"
+                    @pagechanged="onPageChange"
+                    @getPageSize="getPageSize"
+                    :pageSize="pageSize"
+                />
+            </div> 
         </div>
     </masterLayout>
 </template>
 <script>
 
 import Vue from 'vue';
+import Paginator from '@/components/Paginator.vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/manageUsersTemplate.vue';
 import TableLoader from "@/components/tableLoader/index";   
@@ -80,25 +88,46 @@ let $ = Jquery;
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        Paginator
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
         this.getUsers();
-        $(".e-input").keyup(function(e) {
-            searchFun(e);
+         $(".e-input").keyup(function(e) {
+            if (e.keyCode === 13) {
+                searchFun(e, 13);
+            } else {
+                searchFun(e, 1)
+            }
         });
-        function searchFun(event) {
-            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-            var value = event.target.value;
-            grid.search(value);
+        const searchFun = (event, number) => {
+          var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+          var value = event.target.value;
+          this.searchValue = value
+          if ((number !== 13) && value.length > 3) {
+            this.getUsers()
+          }
+          if (number == 13) {
+            this.getUsers()
+          }
+          if (!value.length) {
+            this.getUsers()
+          }
         }
-        
     },
     data() {
         return {
+            searchLoader: false,
+            sortingTable: false,
+            sortType: '',
+            sortColumn: '',
+            searchValue: '',
+            currentPage: 1,
+            pageSize: 10,
+            totalPages: 1,
             showLoader: false,
             usersCount: 0,
             query: '',
@@ -128,6 +157,28 @@ export default {
         }
     },
     methods: {
+        getPageSize(pageSize) {
+            this.pageSize = pageSize;
+            this.currentPage = 1
+            this.totalPages = Math.ceil(this.getUsers.totalNumber / pageSize)
+            this.getUsers();
+        },
+        actionHandler: function(args) {
+            if (args.requestType == 'sorting') {
+                if (args.direction) {
+                    this.sortType = args.direction
+                    this.sortColumn = args.columnName
+                } else {
+                    this.sortType = ''
+                    this.sortColumn = ''
+                }
+                this.getUsers()
+            }
+        },
+        onPageChange(page) {
+            this.currentPage = page;
+            this.getUsers();
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -136,7 +187,7 @@ export default {
                 case "PDF Export":
                 let pdfExportProperties = {
                     pageOrientation: 'Landscape',
-                    fileName: "branches.pdf"
+                    fileName: "Users.pdf"
                 }
                     this.$refs.dataGrid.pdfExport(pdfExportProperties);
                 break;
@@ -151,25 +202,29 @@ export default {
         },
         getUsers() {
             this.showLoader = true
+            console.log(this.currentPage)
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/GetUsers?query=${this.query}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/GetUsers?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)
                 .then(res => {
-                    let index = 0;
-                    res.data.sort((a, b) => {
+                    console.log(res.data)
+                    // let index = 0;
+                    let index = 0 + ((this.currentPage - 1) * this.pageSize);
+                    res.data.data.sort((a, b) => {
                         return a.userName > b.userName ? 1 : b.userName > a.userName ? -1 : 0;
                         
                     });
-                    res.data.forEach(el => {
+                    res.data.data.forEach(el => {
                         el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
                         el.index = ++index;
                         el.status = 'Offline'
                     })
                     sessionStorage.clear()
-                    localStorage.setItem("usersList", JSON.stringify(res.data))
-                    this.usersCount = res.data.length
+                    localStorage.setItem("usersList", JSON.stringify(res.data.data))
+                    this.usersCount = res.data.totalNumber
+                    this.totalPages = Math.ceil(res.data.totalNumber / this.pageSize)
                     this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data
+                        dataSource: res.data.data
                     });
                     this.refreshGrid();
                     this.showLoader = false;
