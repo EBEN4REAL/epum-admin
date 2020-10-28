@@ -59,6 +59,7 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
+                :rowDataBound='rowDataBound'
                 >
                 <e-columns>
                     <e-column width="60" field="index" headerText="#"></e-column>
@@ -66,9 +67,9 @@
                     <e-column width="200" field="branchName" headerText="Branch"></e-column>
                     <e-column width="200" field="pumpPMS" headerText="Pump PMS (Ltrs)"></e-column>
                     <e-column width="200" field="tankPMS" headerText="Tank PMS (Ltrs)"></e-column>
+                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (Ltrs)"></e-column>
                     <e-column width="200" field="pumpAGO" headerText="Pump AGO (Ltrs)"></e-column>
                     <e-column width="200" field="tankAGO" headerText="Tank AGO (Ltrs)"></e-column>
-                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (Ltrs)"></e-column>
                     <e-column width="200" field="agoVariance" headerText="AGO Variance (Ltrs)"></e-column>
                     <e-column :template="AuditSalesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
@@ -156,6 +157,17 @@ export default {
         }
     },  
     methods: {
+        rowDataBound: function(arging) {
+            arging.row.addEventListener("mouseover", args => {
+                arging.row.children[5].innerHTML = arging.data.pmsVarianceActual
+                arging.row.children[8].innerHTML = arging.data.agoVarianceActual
+            });
+
+            arging.row.addEventListener("mouseleave", args => {
+                arging.row.children[5].innerHTML = arging.data.pmsVariance
+                arging.row.children[8].innerHTML = arging.data.agoVariance
+            });
+        },
         convertThousand(request) {
             if (!isFinite(request)) {
                 return "0.00";
@@ -174,8 +186,9 @@ export default {
                     });
                     res.data.forEach(el => {
                         el.index = ++index;
-                        // el.pmsVariance = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
-                        // el.agoVariance = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
+
+                        el.pmsVarianceActual = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
+                        el.agoVarianceActual = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
                         let pumpSales = parseFloat(el.pumpPMS)  + parseFloat(el.pumpAGO)
                         let pmsVariance = (((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS)))) / pumpSales) * 100
                         el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'

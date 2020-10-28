@@ -259,10 +259,17 @@ export default {
                 timeout: 3000
             });
           }else {
-            this.$toast(error.response.data.message, {
+            if (error.response.data.message.toLowerCase() == 'your account does not have access to this data') {
+              this.$toast("Your account doesn't have the required role to access this data", {
                 type: "error",
                 timeout: 3000
-            });
+              });
+            } else {
+              this.$toast(error.response.data.message, {
+                type: "error",
+                timeout: 3000
+              });
+            }
           }
         });
     },

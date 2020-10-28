@@ -9,7 +9,9 @@
                 </span>
             </b-navbar-brand>
 
-            {{branchName}}
+            <div style="margin: 0 auto; width: 100%;">
+                <p class="text-center branchName" style="margin-bottom: 0;">{{branchName}}</p>
+            </div>
 
             <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
