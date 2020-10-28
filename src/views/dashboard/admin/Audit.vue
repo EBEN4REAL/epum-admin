@@ -174,12 +174,19 @@ export default {
                     });
                     res.data.forEach(el => {
                         el.index = ++index;
-                        el.pmsVariance = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
-                        el.agoVariance = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
+                        // el.pmsVariance = this.convertThousand((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS))))
+                        // el.agoVariance = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
+                        let pumpSales = parseFloat(el.pumpPMS)  + parseFloat(el.pumpAGO)
+                        let pmsVariance = (((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS)))) / pumpSales) * 100
+                        el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+
+                        let agoVariance = (((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO)))) / pumpSales) * 100
+                        el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
                         el.pumpPMS =  this.convertThousand(el.pumpPMS)
                         el.tankPMS =  this.convertThousand(el.tankPMS)
                         el.pumpAGO =  this.convertThousand(el.pumpAGO)
                         el.tankAGO =  this.convertThousand(el.tankAGO)
+
                         el.date = this.$moment(el.date).format(
                         "MM-DD-YYYY"
                         );
