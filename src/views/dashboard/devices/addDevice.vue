@@ -1,5 +1,5 @@
 <template>
-  <masterLayout>
+  <masterLayout :branchName="branchName">
     <section class="mt-3 full__row_section banner-gradient"  :style="[
             {
               backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">ADD A DEVICE</h5>
+            <h5 class="title">Add Device</h5>
           </div>
         </div>
       </div>
@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       backgroundUrl,
+      branchName: '',
       comapanyBranchObj: {},
       selected: [],
       selectedDevice: 'selectADevice',
@@ -144,7 +145,7 @@ export default {
     this.companyBranchId = this.$route.query.companyBranchId
     let ml = sessionStorage.getItem(this.companyBranchId)
     if (!ml){
-        let allData = localStorage.getItem("companyBranchesList")
+        let allData = localStorage.getItem("branchesList")
         let dt = JSON.parse(allData)
         dt.forEach((my, index) =>{
             if(my.id === this.companyBranchId){
@@ -155,6 +156,7 @@ export default {
     }
     let companyBranchDetails = JSON.parse(ml)
     this.comapanyBranchObj = companyBranchDetails
+    this.branchName = companyBranchDetails.name
   },
   methods: {
     toggleIsDemo() {

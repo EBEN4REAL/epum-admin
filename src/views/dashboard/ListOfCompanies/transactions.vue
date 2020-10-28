@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row align-items-center" style="height: 100%">
@@ -106,6 +106,22 @@ export default {
     },
     mounted() {
         this.getTransactions();
+
+        const companyBranchId = this.$route.query.companyBranchId
+        let ml = sessionStorage.getItem(companyBranchId)
+        if (!ml){
+            let allData = localStorage.getItem("branchesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === companyBranchId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(companyBranchId, ml)
+                }
+            })
+        }
+        let companyBranchDetails = JSON.parse(ml)
+        this.branchName = companyBranchDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -128,6 +144,7 @@ export default {
     },
     data() {
         return {
+            branchName: '',
             transactionCount: 0,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },

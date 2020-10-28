@@ -439,13 +439,14 @@ export default {
           this.refreshGrid();
         })
         .catch(error => {
+          this.showLoader = false;
           if(error.message && error.message === 'Network Error') {
             this.$toast("Network Error, Please Check Your Internet Connection", {
                 type: "error",
                 timeout: 3000
             });
           }else {
-            this.$toast("An Error Occured", {
+            this.$toast(error.response.data.message, {
                 type: "error",
                 timeout: 3000
             });

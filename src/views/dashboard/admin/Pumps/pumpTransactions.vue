@@ -1,6 +1,6 @@
 <template>
   <div>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
       <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row align-items-center" style="height: 100%">
@@ -89,12 +89,9 @@
       </section>
        <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <span class="pl-3 "> Retail Outlet pump transactions between <strong>{{ startDate }} </strong> and
-                     <strong>{{ endDate }} </strong></span>
-                </div>
-                <div class="col-md-4 text-right">
-                    
+                     <strong>{{ endDate }} </strong> for <strong>{{pumpName}}</strong></span>
                 </div>
             </div>
       </section>
@@ -181,6 +178,8 @@ export default {
         toolbar: ["ExcelExport", "PdfExport", "Search"],
         search: { operator: "contains", ignoreCase: true },
         showLoader: false,
+        branchName: '',
+        pumpName: ''
     };
   },
   watch: {
@@ -200,6 +199,36 @@ export default {
   mounted() {
     this.showLoader = true
     this.getPumpTransactions()
+
+    this.pumpId = this.$route.query.id
+    let ml = sessionStorage.getItem(this.pumpId)
+    if (!ml){
+        let allData = localStorage.getItem("pumpsList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === this.pumpId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(this.pumpId, ml)
+            }
+        })
+    }
+
+    this.pumpName = (JSON.parse(ml)).name
+
+    const companyBranchId = this.$route.query.companyBranchId
+    let info = sessionStorage.getItem(companyBranchId)
+    if (!info){
+        let allData = localStorage.getItem("branchesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === companyBranchId){
+                info = JSON.stringify(my)
+                sessionStorage.setItem(companyBranchId, info)
+            }
+        })
+    }
+    let companyBranchDetails = JSON.parse(info)
+    this.branchName = companyBranchDetails.name
 
     $(".e-input").keyup(function(e) {
       searchFun(e);

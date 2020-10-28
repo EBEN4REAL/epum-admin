@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
          <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
@@ -8,7 +8,7 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by managing your branch mail recipient here</p>
+                            <p>Get started with epump company admin platform by managing your branch mail recipients</p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
                         </div>
@@ -133,6 +133,7 @@ export default {
     },
     data() {
         return {
+            branchName: '',
             phone: null,
             email: null,
             backgroundUrl,
@@ -154,6 +155,22 @@ export default {
     },
     mounted() {
         this.getMailRecp()
+
+        const companyBranchId = this.$route.query.companyBranchId
+        let ml = sessionStorage.getItem(companyBranchId)
+        if (!ml){
+            let allData = localStorage.getItem("branchesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === companyBranchId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(companyBranchId, ml)
+                }
+            })
+        }
+        let companyBranchDetails = JSON.parse(ml)
+        this.branchName = companyBranchDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -203,7 +220,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                         return a.email.toLowerCase() > b.email.toLowerCase() ? 1 : b.email.toLowerCase() > a.email.toLowerCase() ? -1 : 0;

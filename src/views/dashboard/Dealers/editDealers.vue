@@ -11,7 +11,7 @@
         <div class="row align-items-center justify-content-center hundred-percent-height">
             <div class="col-md-12 ">
             <div class="text-center ">
-                <h5 class="title">Edit Dealer</h5>
+                <h5 class="title">Edit Dealer for <span class="branchName">{{companyName}}</span></h5>
             </div>
             </div>
         </div>
@@ -137,10 +137,12 @@ export default {
 
         let dealerDetails = JSON.parse(ml)
         this.dealerObj = dealerDetails
+        this.companyName = dealerDetails.companyName
     },
     data() {
         return {
           backgroundUrl,
+          companyName: '',
           dealerId: '',
           dealerObj: {},
           states: [],
