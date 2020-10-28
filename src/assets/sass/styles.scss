@@ -961,6 +961,15 @@ h6.dashboard__card__header {
 }
 }
 
+.audit-sales-card {
+  height: 271px;
+    margin-left: -12px !important;
+}
+
+.product_details_card.audit-sales {
+  background: #290C53;
+  height: 112px !important;
+}
 
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {

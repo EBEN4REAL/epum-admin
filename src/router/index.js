@@ -39,6 +39,7 @@ import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
 import DetailsDealer from "../views/dashboard/Dealers/detailsDealer";
 import AuditSales from "../views/dashboard/admin/Audit.vue";
+import BranchAuditSales from "../views/dashboard/admin/branchAuditSales.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
 import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import PumpTransactions from "../views/dashboard/admin/Pumps/pumpTransactions";
@@ -593,6 +594,15 @@ let routes = [
   path: "/newCompanyDetails",
   name: "newCompanyDetails",
   component: NewCompanyDetails,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/branchAuditSales",
+  name: "branchAuditSales",
+  component: BranchAuditSales,
   meta: {
       authorize: true,
       authRoles: ['Admin']
