@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">EDIT BRANCH INFORMATION</h5>
+            <h5 class="title">EDIT OUTLET INFORMATION</h5>
           </div>
         </div>
       </div>
@@ -22,11 +22,11 @@
           <div class="text-center">
             <div class="row align-items-center mt-3">
               <div class="col-md-4 text-left">
-                <label> Branch Name</label>
+                <label> Outlet Name</label>
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="text" placeholder="Branch Name" class="" v-model="comapanyBranchObj.name" />
+                  <input type="text" placeholder="Outlet Name" class="" v-model="comapanyBranchObj.name" />
                 </div>
               </div>
             </div>

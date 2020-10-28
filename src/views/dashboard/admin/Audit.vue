@@ -39,7 +39,7 @@
         <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">Pump Variance Report on <strong>{{startDate}}</strong></span>
+                    <span class="pl-3 ">Pump Variance Report on <strong>{{startDate}}</strong> for <strong>{{companyName}}</strong></span>
                 </div>
                 <div class="col-md-4 text-right">
                    
@@ -131,6 +131,7 @@ export default {
                     template: AuditSalesTemplate
                 };
             },
+            companyName: ''
         }
     },
     watch: {
@@ -147,6 +148,23 @@ export default {
     mounted() {
         this.dateRange = this.pluginStartDate;
         this.getPumpTankSale()
+
+        this.companyId = this.$route.query.companyId
+        let ml = sessionStorage.getItem(this.companyId)
+        if (!ml){
+            let allData = localStorage.getItem("companiesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.companyId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.companyId, ml)
+                }
+            })
+        }
+
+        let companyDetails = JSON.parse(ml)
+        this.companyName = companyDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
