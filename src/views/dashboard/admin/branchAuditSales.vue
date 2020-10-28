@@ -9,7 +9,7 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by getting to know your branch audit pump salesy</p>
+                            <p>Get started with epump company admin platform by getting to know your Retail Outlet Pump Audit</p>
                         </div>
                         <div class="col-md-4">
                             
@@ -30,7 +30,7 @@
                         :autoClose="true"
                         :custom-shortcuts="customShortcuts"
                         color="#290C53"
-                        format="DDMMYYYY"
+                        format="YYYY-MM-DDTHH:mm:ss"
                         formatted="DD/MM/YYYY"
                         label="Select a date range"
                     />
@@ -49,7 +49,7 @@
                       <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
-                        width="35px"
+                        width="15px"
                         class="ml-3 loader"
                       />
                     </button>
@@ -136,18 +136,11 @@ export default {
         { key: "last30Days", label: "Last 30 Days", value: 30 },
         { key: "lastMonth", label: "Last Month", value: "-month" }
       ],
-      startDate: this.$moment().format("MMMM D, YYYY"),  
-      endDate: this.$moment().format("MMMM D, YYYY"),
-      pluginStartDate: this.$moment().format("D-M-YYYY"),
-      pluginEndDate: this.$moment().format("D-M-YYYY"),
-      dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+      dateRange: {},
       isButtonDisabled: false
     };
   },
   mounted() {
-    this.dateRange.start = this.pluginStartDate;
-    this.dateRange.end = this.pluginEndDate;
-
     const companyBranchId = this.$route.query.companyBranchId;
     let ml = sessionStorage.getItem(companyBranchId);
     if (!ml) {
@@ -172,7 +165,7 @@ export default {
   methods: {
     download() {
       console.log(this.dateRange)
-      if(!this.dateRange) {
+      if(!this.dateRange.start || !this.dateRange.end) {
           this.$toast("Please select a date range", {
               type: "error", 
               timeout: 3000
@@ -180,25 +173,18 @@ export default {
           return;
       }
 
-      
-      const data = {
-        branchId: this.$route.query.companyBranchId
-      }
-      return
-
 
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.post(`${configObject.apiBaseUrl}/Company/AddDevice`,data, configObject.authConfig)
-          .then(res => {
+       this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
+          .then(res => {console.log(res.data)
                 this.$toast("Successfully Downloaded", {
                     type: "success",
                     timeout: 3000
                 });
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-                // this.$router.push({name: 'branchDetails', query: { companyBranchId: this.$route.query.companyBranchId}})
           })
           .catch(error => {
               this.isButtonDisabled = false;
