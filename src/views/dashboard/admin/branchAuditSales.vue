@@ -9,7 +9,7 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by creating and managing your company here</p>
+                            <p>Get started with epump company admin platform by getting to know your branch audit pump sales</p>
                         </div>
                         <div class="col-md-4">
                             
@@ -65,7 +65,7 @@
         <div class="branch_card audit-sales-card" style="width: 100%; display: flex; flex-direction: column; justify-content: space-around;">
             <div class="row align-items-center mt-3">
               <div class="col-md-6 mt-2 text-left">
-                <p>Branch Name</p>
+                <p>Outlet Name</p>
               </div>
               <div class="col-md-6">
                 <div class="">
