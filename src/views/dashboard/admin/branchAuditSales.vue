@@ -9,7 +9,7 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by getting to know your branch audit pump sales</p>
+                            <p>Get started with epump company admin platform by getting to know your branch audit pump salesy</p>
                         </div>
                         <div class="col-md-4">
                             
@@ -30,7 +30,7 @@
                         :autoClose="true"
                         :custom-shortcuts="customShortcuts"
                         color="#290C53"
-                        format="YYYY-MM-DDTHH:mm:ss.sssZ"
+                        format="DDMMYYYY"
                         formatted="DD/MM/YYYY"
                         label="Select a date range"
                     />
@@ -136,7 +136,7 @@ export default {
         { key: "last30Days", label: "Last 30 Days", value: 30 },
         { key: "lastMonth", label: "Last Month", value: "-month" }
       ],
-      startDate: this.$moment().format("MMMM D, YYYY"),
+      startDate: this.$moment().format("MMMM D, YYYY"),  
       endDate: this.$moment().format("MMMM D, YYYY"),
       pluginStartDate: this.$moment().format("D-M-YYYY"),
       pluginEndDate: this.$moment().format("D-M-YYYY"),
