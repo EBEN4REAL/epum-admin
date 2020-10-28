@@ -251,11 +251,15 @@ export default {
                 el.volumeSold = this.convertThousand(el.volumeSold);
                 el.volumeFilled = this.convertThousand(el.volumeFilled);
                 el.openingDip = this.convertThousand(el.openingDip);
-                el.closingDip = this.convertThousand(el.closingDip);
-                this.tankSales.forEach(el => {
-                    // if(el.tankName === el.)
-                })
+                // this.totalPumpSales.forEach(sale => {
+                //     console.log(sale.tankName)
+                //     if(sale.tankName === el.tankName) {
+                //         el.tankVolume = sale.volumeSold
+                //     }
+                // })
             })
+            
+            console.log(this.totalPumpSales)
             this.$refs.tankSalesdataGrid.ej2Instances.setProperties({
                 dataSource: data
             });
@@ -314,9 +318,10 @@ export default {
                                 return acc += cur.volumeSold
                             },0)
                         }
-                    })
-                    this.parseTankSales(res.data.tankSales)
+                    }) 
                     this.totalPumpSales = pumpTankSales
+                    this.parseTankSales(res.data.tankSales)
+                   
                     console.log(this.totalPumpSales)
                     this.showLoader = false
                 })

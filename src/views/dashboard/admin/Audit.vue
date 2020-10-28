@@ -180,7 +180,7 @@ export default {
                 arging.row.children[5].innerHTML = arging.data.pmsVarianceActual
                 arging.row.children[8].innerHTML = arging.data.agoVarianceActual
             });
-
+            
             arging.row.addEventListener("mouseleave", args => {
                 arging.row.children[5].innerHTML = arging.data.pmsVariance
                 arging.row.children[8].innerHTML = arging.data.agoVariance
