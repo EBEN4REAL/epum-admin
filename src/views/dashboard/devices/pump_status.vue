@@ -68,7 +68,7 @@
                 :columns="tableProps.columns"
                 >
                 <e-columns>
-                    <e-column width="80" field="index" headerText="#"></e-column>
+                    <!-- <e-column width="80" field="index" headerText="#"></e-column> -->
                     <e-column width="200" field="station" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
@@ -115,11 +115,11 @@ export default {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     mounted() {
-        this.getPumpStatus('showAll')
+        this.getPumpStatus('notOkay')
         this.$nextTick(function () {
             window.setInterval(() => {
-                this.getPumpStatus('showAll');
-                this.selected = "showAll"
+                this.getPumpStatus('notOkay');
+                this.selected = "notOkay"
             },60000);
         })
         $(".e-input").keyup(function(e) {
@@ -142,10 +142,10 @@ export default {
     },
     data() {
         return {
-            selected: 'showAll',
+            selected: 'notOkay',
             options: [
-                { text: 'show All', value: 'showAll' },
-                { text: 'Not Okay', value: 'notOkay' }
+                { text: 'Not Okay', value: 'notOkay' },
+                { text: 'show All', value: 'showAll' }
             ],
             searchText: '',
             showLoader: false,
@@ -279,7 +279,7 @@ export default {
                         el.todayOpening = this.convertThousand(el.todayOpening)
                         el.yesterdayClosing = this.convertThousand(el.yesterdayClosing)
                         el.todayClosing = this.convertThousand(el.todayClosing)
-                        el.index = ++index;
+                        // el.index = ++index;
                     })
                     this.allPumps = res.data
                     this.okPumps = res.data.filter(el => el.status === "Ok")
