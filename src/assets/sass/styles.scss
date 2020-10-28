@@ -968,6 +968,11 @@ h6.dashboard__card__header {
   padding-right: 20px;
 }
 
+.image_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .product_details_card.audit-sales {
   background: #290C53;
   height: 112px !important;

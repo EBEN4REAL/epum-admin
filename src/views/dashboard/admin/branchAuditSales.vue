@@ -60,6 +60,10 @@
             </div>
           </div>
         </div>
+        <div class="image_container mt-4">
+          <img src="@/assets/img/auditsale.png" alt="" width="50%" />
+        </div>
+
       </div>
 
       <div class="col-lg-5 col-md-6">
