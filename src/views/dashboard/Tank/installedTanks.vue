@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
         <div class="row mt-3 ml-1">
             <div class="col-lg-4 col-md-3 remove_padding-right">
                  <div class="new_row_section">
@@ -178,11 +178,10 @@
                   </div> -->
                   <div class="mt-3 pb-3 tanks_probe">
                     <div class="mb-4 mt-4">
-                      <router-link :to="{ name: 'tankTransaction', query: { id: tank.id }}"
+                      <router-link :to="{ name: 'tankTransaction', query: { id: tank.id, companyBranchId: $route.query.companyBranchId }}"
                         class="transactions__btn remove_text_decoration"
                         style="text-decoration: none; padding: 12px 9px;"
                       >Probe Transactions</router-link>
-                      <!-- <router-link :to="{ name: 'tankDipping'}" -->
                       <router-link :to="{ name: 'tankDipping', query: {tankId: tank.id, branchId: $route.query.companyBranchId}}"
                         class="probe_transactions_btn remove_text_decoration ml-4"
                         style="text-decoration: none"
@@ -221,16 +220,31 @@ export default {
     TableLoader
   },
 
-  mounted() {},
+  mounted() {
+    this.getTanks()
+
+    const companyBranchId = this.$route.query.companyBranchId
+    let ml = sessionStorage.getItem(companyBranchId)
+    if (!ml){
+        let allData = localStorage.getItem("branchesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === companyBranchId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(companyBranchId, ml)
+            }
+        })
+    }
+    let companyBranchDetails = JSON.parse(ml)
+    this.branchName = companyBranchDetails.name
+  },
   data() {
     return {
       tanksCount: 0,
       tanks: [],
-      showLoader: false
+      showLoader: false, 
+      branchName: ''
     };
-  },
-  mounted() {
-    this.getTanks()
   },
   methods: {
     convertThousand(request) {

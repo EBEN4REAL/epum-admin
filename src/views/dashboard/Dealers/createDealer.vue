@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Create New Dealer</h5>
+            <h5 class="title">Create New Dealer for <span class="branchName">{{companyName}}</span></h5>
           </div>
         </div>
       </div>
@@ -136,10 +136,27 @@ export default {
 
   mounted() {
     this.getStates()
+
+    this.companyId = this.$route.query.companyId
+    let ml = sessionStorage.getItem(this.companyId)
+    if (!ml){
+        let allData = localStorage.getItem("companiesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === this.companyId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(this.companyId, ml)
+            }
+        })
+    }
+
+    let companyDetails = JSON.parse(ml)
+    this.companyName = companyDetails.name
   },
   data() {
     return {
       backgroundUrl,
+      companyName: '',
       dealerName: null,
       phone: null,
       email: null,

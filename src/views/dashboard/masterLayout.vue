@@ -9,6 +9,8 @@
                 </span>
             </b-navbar-brand>
 
+            {{branchName}}
+
             <b-collapse id="nav-collapse" is-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
@@ -354,6 +356,7 @@
 
     export default {
         name: "MasterLayout",
+        props: ['branchName'],
         components: {
         },
         data() {

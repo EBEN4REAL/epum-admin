@@ -1,5 +1,5 @@
 <template>
-  <masterLayout>
+  <masterLayout :branchName="branchName">
     <section
       class="mt-3 full__row_section banner-gradient"
       :style="[
@@ -121,7 +121,6 @@ export default {
     masterLayout,
   },
 
-  mounted() {},
   data() {
     return {
       backgroundUrl,
@@ -132,11 +131,27 @@ export default {
       currentVolume: null,
       sellingPrice: null,
       isButtonDisabled: false,
-      hasATG: false
+      hasATG: false,
+      branchName: ''
     };
   },
   mounted() {
     this.getProducts()
+
+    const companyBranchId = this.$route.query.companyBranchId
+    let ml = sessionStorage.getItem(companyBranchId)
+    if (!ml){
+        let allData = localStorage.getItem("branchesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === companyBranchId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(companyBranchId, ml)
+            }
+        })
+    }
+    let companyBranchDetails = JSON.parse(ml)
+    this.branchName = companyBranchDetails.name
   },
   methods: {
     toggleATG() {

@@ -1,5 +1,5 @@
 <template>
-    <masterLayout>
+    <masterLayout :branchName="branchName">
          <section class="mt-3 full__row_section banner-gradient"  :style="[
             {
               backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
@@ -192,7 +192,8 @@ export default {
           pumpCalibration: null,
           volumeMultiplier: null,
           amountMultiplier: null,
-          totalMultiplier: null
+          totalMultiplier: null,
+          branchName: ''
         }
     },
     mounted(){
@@ -214,6 +215,22 @@ export default {
         }
 
         this.pumpDetails = JSON.parse(ml)
+
+
+        const companyBranchId = this.$route.query.companyBranchId
+        let info = sessionStorage.getItem(companyBranchId)
+        if (!info){
+            let allData = localStorage.getItem("branchesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === companyBranchId){
+                    info = JSON.stringify(my)
+                    sessionStorage.setItem(companyBranchId, info)
+                }
+            })
+        }
+        let companyBranchDetails = JSON.parse(info)
+        this.branchName = companyBranchDetails.name
     },
     methods: {
         getTanks() {

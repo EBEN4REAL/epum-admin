@@ -52,11 +52,11 @@
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device ID"></e-column>
+                    <e-column width="200" field="branchName" headerText="Branch Name"></e-column>
                     <e-column width="200" field="firmWareVersion" headerText="Firmware Version"></e-column>
                     <e-column width="200" field="firmWareDate" headerText="Firmware Date"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
                     <e-column width="200" field="lastEp2Date" headerText="Last Ep2"></e-column>
-                    <e-column width="200" field="branchName" headerText="Branch Name"></e-column>
                     <e-column width="350" field="address" headerText="Address"></e-column>
                     <e-column width="10"></e-column>
                 </e-columns>

@@ -8,7 +8,7 @@
                         <div class="row">
                         <div class="col-md-8 card_inner_wrapper">
                             <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by creating and managing your dealer here</p>
+                            <p>Get started with epump company admin platform by creating and managing your dealers for <span class="branchName">{{companyName}}</span></p>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
                            <router-link :to="{name: 'createDealer', query: {companyId: this.$route.query.companyId}}" class="btn create_btn primary_btn">Create Dealer</router-link>
@@ -81,6 +81,23 @@ export default {
     },
     mounted() {
         this.getDealers()
+
+        this.companyId = this.$route.query.companyId
+        let ml = sessionStorage.getItem(this.companyId)
+        if (!ml){
+            let allData = localStorage.getItem("companiesList")
+            let dt = JSON.parse(allData)
+            dt.forEach((my, index) =>{
+                if(my.id === this.companyId){
+                    ml = JSON.stringify(my)
+                    sessionStorage.setItem(this.companyId, ml)
+                }
+            })
+        }
+
+        let companyDetails = JSON.parse(ml)
+        this.companyName = companyDetails.name
+
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -93,6 +110,7 @@ export default {
     },
     data() {
         return {
+            companyName: '',
             showLoader: false,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             dealersCount: 0, 
