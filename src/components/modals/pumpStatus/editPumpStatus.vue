@@ -136,17 +136,19 @@ export default {
         return;
       }
       this.showSpinner = true
+      this.isButtonDisabled = true
       let data = {
         "id": this.pumpStatusObj.id,
-        "opening": this.pumpStatusObj.todayOpening,
-        "closing": this.pumpStatusObj.todayOpening,
-        "yesterdayClosing": this.pumpStatusObj.yesterdayClosing,
+        "opening": parseFloat(this.pumpStatusObj.todayOpening),
+        "closing": parseFloat(this.pumpStatusObj.todayOpening),
+        "yesterdayClosing": parseFloat(this.pumpStatusObj.yesterdayClosing),
         "multiplier":  parseFloat(this.pumpStatusObj.totalMultiplier),
       }
       this.axios
         .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
         .then(response => {
           this.showSpinner = false
+           this.isButtonDisabled = false
           this.$toast('Successfully Updated Pump Status', {
             type: "success",
             timeout: 3000
@@ -154,6 +156,7 @@ export default {
         })
         .catch(error => {
           this.showSpinner = false
+          this.isButtonDisabled = false
           this.$toast(error.response.data.message, {
             type: "error",
             timeout: 3000

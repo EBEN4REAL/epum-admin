@@ -72,14 +72,14 @@
                     <e-column width="200" field="station" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
                     <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
+                     <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
                     <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
-                    <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
                     <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
                     <e-column width="200" field="difference" headerText="Difference"></e-column>
+                     <e-column width="200" :template="pumpStatus" field="status" headerText="Status" ></e-column>
+                      <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
                     <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
                     <e-column width="200" field="totalVolumeToday" headerText="Volume Today"></e-column>
-                    <e-column width="200" :template="pumpStatus" field="status" headerText="Status" ></e-column>
-                    <e-column width="200" field="lastHit" headerText="Last Hit"></e-column>
                     <e-column :template="pumpStatusTemplate" headerText="Action" width="200"></e-column>
                     pumpStatus
                 </e-columns>
@@ -260,7 +260,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig)
                 .then(res => {
-
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.branchName && b.branchName) {
@@ -270,16 +269,24 @@ export default {
                     } else { 
                         return 1
                     }
-                        
                     });
+                    
                     res.data.forEach(el => {
                         el.lastTransaction = this.timeSince(new Date(el.lastTransaction))
                         el.lastHit = this.timeSince(new Date(el.lastHit))
-                        el.lastEp2Date = this.$moment(el.lastEp2Date).format("MM/DD/YYYY hh:mm A");
-                        el.todayOpening = this.convertThousand(el.todayOpening)
-                        el.yesterdayClosing = this.convertThousand(el.yesterdayClosing)
-                        el.todayClosing = this.convertThousand(el.todayClosing)
-                        // el.index = ++index;
+                        if(el.lastEp2Date) {
+                            el.lastEp2Date = this.$moment(el.lastEp2Date).format("MM/DD/YYYY hh:mm A");
+                        }
+                        if(el.todayOpening) {
+                           el.todayOpening=  this.convertThousand(el.todayOpening)
+                        }
+                        if(el.yesterdayClosing) {
+                           el.yesterdayClosing = this.convertThousand(el.yesterdayClosing)
+                        }
+                        if(el.todayClosing) {
+                           el.todayClosing =  this.convertThousand(el.todayClosing)
+                        }
+                       
                     })
                     this.allPumps = res.data
                     this.okPumps = res.data.filter(el => el.status === "Ok")
