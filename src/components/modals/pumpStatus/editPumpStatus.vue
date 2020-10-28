@@ -107,9 +107,6 @@ export default {
       obj.yesterdayClosing =  parseFloat(obj.yesterdayClosing.replace(/,/g, ''))
     }
   },
-  mounted(){
-    console.log(this.pumpStatusObj)
-  },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH
       ? MODAL_WIDTH / 2

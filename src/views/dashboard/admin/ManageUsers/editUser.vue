@@ -107,7 +107,6 @@ export default {
         }
     });
     }
-    console.log(JSON.parse(ml))
     const userObject = JSON.parse(ml);
     this.userRoles = userObject.roles.split(',')
   },

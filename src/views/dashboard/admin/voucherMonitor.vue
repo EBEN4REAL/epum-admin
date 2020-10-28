@@ -223,7 +223,6 @@ export default {
           configObject.authConfig
         )
         .then((res) => {
-          console.log(res.data)
           this.$toast("Successfully verified voucher", {
             type: "success",
             timeout: 3000,
@@ -249,7 +248,6 @@ export default {
 
       this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
           .then(res => {
-            console.log(res)
                 this.$toast("Successfully Cancelled Voucher", {
                     type: "success",
                     timeout: 3000
@@ -258,7 +256,6 @@ export default {
                 $('.loader').hide();
           })
           .catch(error => {
-            console.log(error.response)
               this.isButtonDisabled = false;
               $('.loader').hide();
               this.$toast(error.response.data.message, {
@@ -273,7 +270,6 @@ export default {
 
       this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
           .then(res => {
-            console.log(res)
                 this.$toast("Successfully Cancelled Voucher", {
                     type: "success",
                     timeout: 3000
@@ -282,7 +278,6 @@ export default {
                 $('.loader2').hide();
           })
           .catch(error => {
-            console.log(error.response)
               this.isButtonDisabled2 = false;
               $('.loader2').hide();
               this.$toast(error.response.data.message, {

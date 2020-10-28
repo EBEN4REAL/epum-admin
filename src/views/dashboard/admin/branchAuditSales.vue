@@ -21,7 +21,7 @@
 
           <div class="small_card product_details_card audit-sales mt-3">
               <div class="row p-4 align-items-center">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="start-date input__block">
                     <vue-ctk-date-time-picker
                         v-model="dateRange"
@@ -36,6 +36,7 @@
                     />
                 </div>
             </div>
+            <div class="col-md-3"></div>
             <div class="col-md-4">
                 <div class="text-center">
                     <button class="btn btn-success text-white" @click="download"
@@ -154,7 +155,6 @@ export default {
       });
     }
     let companyBranchDetails = JSON.parse(ml);
-    console.log(companyBranchDetails)
     this.comapanyBranchObj = companyBranchDetails;
   },
   computed: {
@@ -164,7 +164,6 @@ export default {
     },
   methods: {
     download() {
-      console.log(this.dateRange)
       if(!this.dateRange.start || !this.dateRange.end) {
           this.$toast("Please select a date range", {
               type: "error", 
@@ -178,8 +177,8 @@ export default {
       this.isButtonDisabled = true;
 
        this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
-          .then(res => {console.log(res.data)
-                this.$toast("Successfully Downloaded", {
+          .then(res => {
+                this.$toast("Download Successful", {
                     type: "success",
                     timeout: 3000
                 });

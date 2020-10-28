@@ -115,7 +115,6 @@ export default {
   watch: {
       companyId: function(newId, oldId) {
           if (newId !== oldId) {
-              console.log(newId)
               this.getSalesRep();
           }
       },
@@ -140,7 +139,6 @@ export default {
                 res.data.sort((a, b) => {
                     return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
                 });
-                console.log(res.data)
                 this.salesRep = res.data
             })
             .catch(error => {
