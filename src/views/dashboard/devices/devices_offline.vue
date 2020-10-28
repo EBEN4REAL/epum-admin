@@ -60,6 +60,7 @@
         :dataSource="tableProps.tableData"
         v-cloak
         :columns="tableProps.columns"
+         :rowDataBound='rowDataBound'
       >
         <e-columns>
           <e-column width="80" field="index" headerText="#"></e-column>
@@ -182,6 +183,17 @@ export default {
     },
   },
   methods: {
+     rowDataBound: function(arging) {
+       let text
+       arging.row.addEventListener("mouseover", args => {
+        text = arging.row.children[3].innerHTML
+        arging.row.children[3].innerHTML = 'thankful'
+      });
+
+      arging.row.addEventListener("mouseleave", args => {
+        arging.row.children[3].innerHTML = text
+      });
+    },
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
