@@ -161,6 +161,7 @@ export default {
             stationsCount: 0,
             backgroundUrl,
             totalPumpSales: [],
+            tankSales: [],
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
                 customShortcuts: [
                 { key: "Today", label: "Today", value: "day" },
@@ -242,6 +243,7 @@ export default {
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         parseTankSales(data) {
+            this.tankSales = data
             console.log(data)
             let index = 0
             data.forEach(el => {
@@ -250,6 +252,9 @@ export default {
                 el.volumeFilled = this.convertThousand(el.volumeFilled);
                 el.openingDip = this.convertThousand(el.openingDip);
                 el.closingDip = this.convertThousand(el.closingDip);
+                this.tankSales.forEach(el => {
+                    // if(el.tankName === el.)
+                })
             })
             this.$refs.tankSalesdataGrid.ej2Instances.setProperties({
                 dataSource: data
