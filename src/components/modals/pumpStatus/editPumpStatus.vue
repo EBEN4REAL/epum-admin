@@ -146,7 +146,6 @@ export default {
         "yesterdayClosing": this.pumpStatusObj.yesterdayClosing,
         "multiplier":  parseFloat(this.pumpStatusObj.totalMultiplier),
       }
-      console.log(data)
       this.axios
         .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
         .then(response => {
