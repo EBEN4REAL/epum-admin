@@ -56,6 +56,7 @@ import MakePayments from "../views/dashboard/outstandingPayments/outstandingPaym
 import WalletTransactions from "../views/dashboard/outstandingPayments/walletTransactions";
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
+import Devices from "../views/dashboard/devices/devices";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
@@ -148,7 +149,15 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
-
+  {
+    path: "/devices",
+    name: "devices",
+    component: Devices,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
   {
     path: "/map_user_to_role",
     name: "map_user_to_role",
