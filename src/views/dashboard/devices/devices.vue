@@ -38,7 +38,6 @@
                 ref="dataGrid"
                 :created="refreshGrid"
                 :allowPaging="false"
-                :actionBegin='actionHandler'
                 :allowSorting="true"
                 :pageSettings="tableProps.pageSettings"
                 :toolbar="tableProps.toolbar"
@@ -48,10 +47,14 @@
                 :toolbarClick="toolbarClick"
                 >
                 <e-columns>
-                    <e-column width="200" field="devices" headerText="Devices"></e-column>
+                    <e-column width="200" field="index" headerText="#"></e-column>
+                    <e-column width="200" field="devices" headerText="Device"></e-column>
                     <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
                     <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
+                    
+                    <e-column width="200" field="state" headerText="State"></e-column>
+                    <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="state" headerText="State"></e-column>
                     <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
@@ -59,17 +62,6 @@
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
-            <div class="mt-3" style="margin:  0 auto">
-                <Paginator 
-                    v-show="!showLoader"
-                    :total-pages="totalPages"
-                    :per-page="pageSize"
-                    :current-page="currentPage"
-                    @pagechanged="onPageChange"
-                    @getPageSize="getPageSize"
-                    :pageSize="pageSize"
-                />
-            </div> 
             <DropDown :details="details"/>
         </div>
     </masterLayout>
@@ -144,6 +136,10 @@ export default {
         }
     },
     mounted() {
+        this.$refs.dataGrid.ej2Instances.setProperties({
+            dataSource: this.tableProps.tableData
+        });
+        this.refreshGrid();
     },
     computed: {
         userName() {
@@ -151,7 +147,23 @@ export default {
         }
     },
     methods: {
-        
+        refreshGrid() {
+            this.$refs.dataGrid.refresh();
+        },
+        toolbarClick(args) {
+            switch (args.item.text) {
+                case "PDF Export":
+                let pdfExportProperties = {
+                    pageOrientation: 'Landscape',
+                    fileName: "branches.pdf"
+                }
+                    this.$refs.dataGrid.pdfExport(pdfExportProperties);
+                break;
+                case "Excel Export":
+                    this.$refs.dataGrid.excelExport();
+                break;
+            }
+        },
     }
 }
 </script>
