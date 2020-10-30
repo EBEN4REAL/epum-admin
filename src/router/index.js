@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 import Login from "../views/login";
 import AdminDashboard from "../views/dashboard/index";
-import CompanyDashboard from "../views/dashboard/companyDashboard";
 import ResolvePayment from "../views/dashboard/admin/resolvePayment";
 import ResolveUssd from "../views/dashboard/admin/resolveUssd";
 import VoucherMonitor from "../views/dashboard/admin/voucherMonitor";
@@ -57,6 +56,9 @@ import WalletTransactions from "../views/dashboard/outstandingPayments/walletTra
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
+import DumpedData from "../views/dashboard/devices/dumpedData";
+import EditDevices from "../views/dashboard/devices/editDevices";
+import DeviceDetails from "../views/dashboard/devices/deviceDetails";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
@@ -159,6 +161,33 @@ let routes = [
     },
   },
   {
+    path: "/editDevices",
+    name: "editDevices",
+    component: EditDevices,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/dumpedData",
+    name: "dumpedData",
+    component: DumpedData,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/deviceDetails",
+    name: "deviceDetails",
+    component: DeviceDetails,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
     path: "/map_user_to_role",
     name: "map_user_to_role",
     component: MapUserToRole,
@@ -234,15 +263,6 @@ let routes = [
     path: "/company_details",
     name: "company_details",
     component: CompanyDetails,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/companyDashboard",
-    name: "companyDashboard",
-    component: CompanyDashboard,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

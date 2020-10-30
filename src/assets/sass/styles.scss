@@ -468,6 +468,9 @@ textarea {
   height: 600px;
   padding: 9px;
   width: 23%;
+  &.dashboard_branch_card {
+    height: auto;
+  }
 }
 
 .branch_card {
@@ -973,6 +976,14 @@ h6.dashboard__card__header {
   justify-content: flex-end;
 }
 
+.dumped_data {
+  margin-left: -10px;
+  input::placeholder {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
 .product_details_card.audit-sales {
   background: #290c53;
   height: 112px !important;
@@ -1004,9 +1015,10 @@ h6.dashboard__card__header {
     .map-device-company {
       background: $primaryColor;
       border-radius: 10px;
+      width: 100%;
       p {
-        font-size: 11px;
-        margin-right: 39px;
+        font-size: 16px;
+        margin-right: 5px;
         margin-top: 5px;
         text-align: left;
         margin-left: 11px;
@@ -1014,12 +1026,12 @@ h6.dashboard__card__header {
         font-weight: 800;
       }
       span {
-        font-size: 9px;
+        font-size: 12px;
         margin-left: 11px;
       }
       .map-device-company-btn {
         background: $goldColor;
-        font-size: 9px;
+        font-size: 13px;
         text-align: center;
         margin-top: 14px;
         margin-right: 13px;
@@ -1034,7 +1046,7 @@ h6.dashboard__card__header {
       font-size: 12px;
     }
   }
-  .offline-pump-card {
+  .offline-pump-card {  
     background: $whiteColor;
     box-shadow: 0px 3px 26px #00000017;
     border-radius: 4px;
@@ -1053,7 +1065,7 @@ h6.dashboard__card__header {
         color: $primaryColor;
       }
       small {
-        font-size: 7px;
+        font-size: 12px;
         color: #575656;
       }
     }
@@ -1068,6 +1080,25 @@ h6.dashboard__card__header {
   }
 }
 
+.toggler-card {
+  margin-left: 13px;
+    width: 97% !important;
+    p {
+      color: $greyTextColor;
+      margin-bottom: 0;
+      font-size: 11px;
+     margin-top: 4px;
+    }
+    .toggler-button {
+      float: right;
+      margin-top: -34px;
+      display: flex;
+    margin-right: 35px;
+  }
+}
+.dark-mode {
+  background-color: black; 
+}
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {

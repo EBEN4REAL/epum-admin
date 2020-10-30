@@ -3,12 +3,12 @@
     <!-- <router-link :to="{name:'edit_companies',  query: {companyId: data.id}}" class="btn details_btn mr-3">
       Edit
     </router-link> -->
-    <router-link :to="{name:'company_details', query: {companyId: data.id}}" class="btn details_btn mr-3">
+    <router-link :to="{name:'deviceDetails', query: {companyId: data.id}}" class="btn details_btn mr-3">
       Details
     </router-link>
 
-    <router-link :to="{name:'dealers',  query: {companyId: data.id}}" class="btn dealers_btn mr-3">
-     Console
+    <router-link :to="{name:'editDevices',  query: {companyId: data.id}}" class="btn dealers_btn mr-3">
+     Edit
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
