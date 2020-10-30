@@ -52,13 +52,9 @@
                     <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
                     <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
-                    
                     <e-column width="200" field="state" headerText="State"></e-column>
                     <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
-                    <e-column width="200" field="name" headerText="Name"></e-column>
-                    <e-column width="200" field="state" headerText="State"></e-column>
-                    <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
-                    <e-column :template="list_of_device" headerText="Action" width="500"></e-column>
+                    <e-column :template="list_of_device" headerText="Action" width="300"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -107,7 +103,7 @@ export default {
             tableCount: 0, 
             details: {
                 queryStrings: { companyId: '' }, 
-                info: [{ name: 'Edit', link: '' }, { name: 'Shut Down', link: 'mail_recipient' }], 
+                info: [{ name: '', link: '' }, { name: 'Shut Down', link: '' }], 
                 delete: { hasDelete: false, deleteName: 'deleteCompany' }
                 // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
             }, 
@@ -134,6 +130,22 @@ export default {
                 };
             }
         }
+    },
+      created() {
+        this.$eventHub.$on('showExtra', (data) => { 
+            this.details.queryStrings.companyId = data.id
+            const option = document.getElementById('myDropdown')
+            option.classList.add("show")
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                const num = this.details.delete.hasDelete ? 1 : 0
+                option.style.top = `${(((52 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+            } else {
+                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+            }
+        })
+        this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
+            this._deleteCompany(id)
+        })
     },
     mounted() {
         this.$refs.dataGrid.ej2Instances.setProperties({

@@ -973,6 +973,14 @@ h6.dashboard__card__header {
   justify-content: flex-end;
 }
 
+.dumped_data {
+  margin-left: -10px;
+  input::placeholder {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
 .product_details_card.audit-sales {
   background: #290c53;
   height: 112px !important;
@@ -1068,6 +1076,25 @@ h6.dashboard__card__header {
   }
 }
 
+.toggler-card {
+  margin-left: 13px;
+    width: 97% !important;
+    p {
+      color: $greyTextColor;
+      margin-bottom: 0;
+      font-size: 11px;
+     margin-top: 4px;
+    }
+    .toggler-button {
+      float: right;
+      margin-top: -34px;
+      display: flex;
+    margin-right: 35px;
+  }
+}
+.dark-mode {
+  background-color: black; 
+}
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {

@@ -57,6 +57,9 @@ import WalletTransactions from "../views/dashboard/outstandingPayments/walletTra
 import PumpStatus from "../views/dashboard/devices/pump_status";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
+import DumpedData from "../views/dashboard/devices/dumpedData";
+import EditDevices from "../views/dashboard/devices/editDevices";
+import DeviceDetails from "../views/dashboard/devices/deviceDetails";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
 import DevicesNotPushingEp2 from "../views/dashboard/devices/devices_not_pushing_ep2";
@@ -153,6 +156,33 @@ let routes = [
     path: "/devices",
     name: "devices",
     component: Devices,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/editDevices",
+    name: "editDevices",
+    component: EditDevices,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/dumpedData",
+    name: "dumpedData",
+    component: DumpedData,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/deviceDetails",
+    name: "deviceDetails",
+    component: DeviceDetails,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
