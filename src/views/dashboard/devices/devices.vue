@@ -55,7 +55,7 @@
                     <e-column width="200" field="name" headerText="Name"></e-column>
                     <e-column width="200" field="state" headerText="State"></e-column>
                     <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
-                    <e-column :template="list_of_companies_templates" headerText="Action" width="500"></e-column>
+                    <e-column :template="list_of_device" headerText="Action" width="500"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -78,9 +78,8 @@
 
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
-import Temp from '@/components/list_of_companies_template.vue';
+import Temp from '@/components/list_of_device.vue';
 import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
-import Templates from '@/components/Templates/imageTemplates/companies_image.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import Paginator from '@/components/Paginator.vue';
@@ -112,7 +111,7 @@ export default {
             pageSize: 10,
             totalPages: 1,
             searchTotalPages: 1,
-            showLoader: true,
+            showLoader: false,
             tableCount: 0, 
             details: {
                 queryStrings: { companyId: '' }, 
@@ -124,15 +123,22 @@ export default {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
+                tableData: [
+                    {
+                        index: 1,
+                        devices: 11111111111,
+                        lastUpdate: "> 1 month ago",
+                        fwVersion: 20403,
+                        memoryUsage: 0.00,
+                        name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
+                        state: "",
+                        firmwareUpdate: "",
+                    }
+            ],
             },
-            list_of_companies_templates: function() {
+            list_of_device: function() {
                 return {
                     template: Temp
-                };
-            },
-            companies_image: function() {
-                return {
-                    template: Templates
                 };
             }
         }
