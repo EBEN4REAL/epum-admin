@@ -60,6 +60,10 @@
             </div>
           </div>
         </div>
+        <div class="image_container mt-4">
+          <img src="@/assets/img/auditsale.png" alt="" width="50%" />
+        </div>
+
       </div>
 
       <div class="col-lg-5 col-md-6">
@@ -178,6 +182,7 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
+            console.log(res.data)
                 this.$toast("Download Successful", {
                     type: "success",
                     timeout: 3000

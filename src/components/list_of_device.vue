@@ -8,11 +8,7 @@
     </router-link>
 
     <router-link :to="{name:'dealers',  query: {companyId: data.id}}" class="btn dealers_btn mr-3">
-      Dealers {{data.numberOfDealers}}
-    </router-link>
-
-    <router-link :to="{name:'branches', query: {companyId: data.id}}" class="btn branches_btn mr-3">
-      Retail Outlets {{data.numberOfBranches}}
+     Console
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
