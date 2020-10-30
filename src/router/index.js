@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 import Login from "../views/login";
 import AdminDashboard from "../views/dashboard/index";
-import CompanyDashboard from "../views/dashboard/companyDashboard";
 import ResolvePayment from "../views/dashboard/admin/resolvePayment";
 import ResolveUssd from "../views/dashboard/admin/resolveUssd";
 import VoucherMonitor from "../views/dashboard/admin/voucherMonitor";
@@ -234,15 +233,6 @@ let routes = [
     path: "/company_details",
     name: "company_details",
     component: CompanyDetails,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/companyDashboard",
-    name: "companyDashboard",
-    component: CompanyDashboard,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
