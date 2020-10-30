@@ -178,6 +178,7 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
+            console.log(res.data)
                 this.$toast("Download Successful", {
                     type: "success",
                     timeout: 3000
