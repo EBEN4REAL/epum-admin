@@ -170,7 +170,7 @@ let routes = [
     },
   },
   {
-    path: "/dumpedData",
+    path: "/dumped-data",
     name: "dumpedData",
     component: DumpedData,
     meta: {
