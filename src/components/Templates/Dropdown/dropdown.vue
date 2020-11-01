@@ -4,7 +4,7 @@
             {{ link.name }}
         </router-link>
         <button class="text-center" @click="deleteNow" v-if="details.delete.hasDelete">
-            Delete
+            <p style="margin-bottom: 0">{{details.delete.name}}</p>
         </button>
     </div>
 </template>
@@ -16,8 +16,7 @@ export default {
     }, 
     methods: {
         deleteNow() {
-            this.$eventHub.$emit(this.details.delete.deleteName, this.details.queryStrings.companyId)
-            // this.$eventHub.$emit(this.details.delete.deleteName, this.details.queryStrings[this.details.delete.arg])
+            this.$eventHub.$emit(this.details.delete.deleteName, this.details.queryStrings[this.details.delete.query])
         }
     },
 }

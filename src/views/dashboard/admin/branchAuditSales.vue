@@ -180,24 +180,37 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
-          .then(res => {
-            console.log(res.data)
-                this.$toast("Download Successful", {
-                    type: "success",
-                    timeout: 3000
-                });
-                this.isButtonDisabled = false;
-                $('.loader').hide();
-          })
-          .catch(error => {
-              this.isButtonDisabled = false;
-              $('.loader').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
-          });
+        
+      this.axios({
+          url: `${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`,
+          method: 'GET',
+          headers: configObject.authConfig.headers,
+          responseType: 'blob',
+      }).then((response) => {
+            var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+            var fileLink = document.createElement('a');
+
+            fileLink.href = fileURL;
+            fileLink.setAttribute('download', 'file.xls');
+            document.body.appendChild(fileLink);
+
+            fileLink.click();
+
+            this.$toast("Download Successful", {
+                type: "success",
+                timeout: 3000
+            });
+            this.isButtonDisabled = false;
+            $('.loader').hide();
+      })
+      .catch(error => {
+        this.isButtonDisabled = false;
+        $('.loader').hide();
+        this.$toast(error.response.data.message, {
+            type: "error",
+            timeout: 3000
+        });
+      })
     }
   },
 };

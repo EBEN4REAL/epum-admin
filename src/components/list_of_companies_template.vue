@@ -47,7 +47,7 @@ export default {
   },
   methods: {
       dropdownOption() {
-        this.$eventHub.$emit('showExtra', this.data)
+        this.$eventHub.$emit('showExtraCompanyButtons', this.data)
       },
   },
 };

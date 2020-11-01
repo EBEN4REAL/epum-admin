@@ -115,7 +115,7 @@ export default {
             details: {
                 queryStrings: { companyId: '' }, 
                 info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }, { name: 'Audit Sales', link: 'audit_sales' }], 
-                delete: { hasDelete: true, deleteName: 'deleteCompany' }
+                delete: { hasDelete: true, deleteName: 'deleteCompany', name: 'Delete', query: 'companyId' }
                 // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
             }, 
             tableProps: {
@@ -136,7 +136,7 @@ export default {
         }
     },
     created() {
-        this.$eventHub.$on('showExtra', (data) => { 
+        this.$eventHub.$on('showExtraCompanyButtons', (data) => {
             this.details.queryStrings.companyId = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
@@ -152,6 +152,7 @@ export default {
         })
     },
     beforeDestroy() { 
+        this.$eventHub.$off('showExtraCompanyButtons');
         this.$eventHub.$off(this.details.delete.deleteName);
     },
     mounted() {
@@ -203,30 +204,30 @@ export default {
             }
         },
         _deleteCompany(id) {
-        let resp = confirm("Are you sure want to delete this company?");
-        if (resp) {
-            $(".loader").show();
-            this.axios
-            .delete(
-                `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
-                configObject.authConfig
-            )
-            .then((res) => {
-                this.$toast("Company Deleted Successfully", {
-                type: "success",
-                timeout: 3000,
+            let resp = confirm("Are you sure want to delete this company?");
+            if (resp) {
+                $(".loader").show();
+                this.axios
+                .delete(
+                    `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
+                    configObject.authConfig
+                )
+                .then((res) => {
+                    this.$toast("Company Deleted Successfully", {
+                        type: "success",
+                        timeout: 3000,
+                    });
+                    $(".loader").hide();
+                    this.$eventHub.$emit("refreshCompaniesList");
+                })
+                .catch((error) => {
+                    $(".loader").hide();
+                    this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000,
+                    });
                 });
-                $(".loader").hide();
-                this.$eventHub.$emit("refreshCompaniesList");
-            })
-            .catch((error) => {
-                $(".loader").hide();
-                this.$toast(error.response.data.message, {
-                type: "error",
-                timeout: 3000,
-                });
-            });
-        }
+            }
         },
         refreshGrid() {
             this.$refs.dataGrid.refresh();

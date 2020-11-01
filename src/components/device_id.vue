@@ -1,8 +1,9 @@
 <template>
-  <div class="">
-    <router-link :to="{name:'pump_variance_report',  query: {branchId: data.branchId, varianceId: data.index, companyId: this.$route.query.companyId}}" class="btn details_btn mr-3">
-      Details
+   <div class="">
+    <router-link :to="{name:'dumpedData', query: {id: data.deviceId}}" style="text-decoration: none;">
+      {{data.deviceId}}
     </router-link>
+
   </div>
 </template>
 
@@ -18,5 +19,4 @@ export default {
     };
   },
 };
-
 </script>

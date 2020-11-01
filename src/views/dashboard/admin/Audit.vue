@@ -87,7 +87,6 @@ import backgroundUrl from "@/assets/img/Tankimage.png";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import Paginator from '@/components/Paginator.vue';
-import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 import AuditSalesTemplate from '@/components/Templates/Audit_sales_template.vue';
 
 
@@ -100,7 +99,6 @@ export default {
         masterLayout,
         TableLoader,
         Paginator,
-        DropDown
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -131,7 +129,7 @@ export default {
                     template: AuditSalesTemplate
                 };
             },
-            companyName: ''
+            companyName: '' 
         }
     },
     watch: {
