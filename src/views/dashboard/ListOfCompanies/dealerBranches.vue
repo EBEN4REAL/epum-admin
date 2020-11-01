@@ -87,17 +87,22 @@ export default {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     created() {
-        this.$eventHub.$on('showExtra', (data) => { // this is needed for the blahblah
+        this.$eventHub.$on('showExtraBranchesButtons', (data, that) => { 
             this.details.queryStrings.companyBranchId = data.id
+            const drop = that.$parent.ej2Instances.pageSettings.pageSize
+            const indent = data.index - (Math.floor((data.index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+            if ((data.index == this.branchesCount && this.branchesCount > 1) || (data.index == (this.branchesCount - 1) && this.branchesCount > 1)) {
                 const num = this.details.delete.hasDelete ? 1 : 0
-                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+                option.style.top = `${(((62 * (indent - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
             } else {
-                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+                option.style.top = `${((62 * indent) + (100 - (indent * 2))).toString()}px`
             }
         })
+    },
+    beforeDestroy() { 
+        this.$eventHub.$off('showExtraBranchesButtons');
     },
     mounted() {
         this.getBranches();

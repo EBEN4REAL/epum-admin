@@ -1,14 +1,11 @@
 <template>
    <div class="">
-    <!-- <router-link :to="{name:'edit_companies',  query: {companyId: data.id}}" class="btn details_btn mr-3">
-      Edit
-    </router-link> -->
-    <router-link :to="{name:'deviceDetails', query: {companyId: data.id}}" class="btn details_btn mr-3">
+    <router-link :to="{name:'deviceDetails', query: {id: data.deviceId}}" class="btn details_btn mr-3">
       Details
     </router-link>
 
-    <router-link :to="{name:'editDevices',  query: {companyId: data.id}}" class="btn dealers_btn mr-3">
-     Edit
+    <router-link :to="{name:'editDevices',  query: {id: data.deviceId}}" class="btn dealers_btn mr-3">
+     Console
     </router-link>
 
     <i class="fa-li fa fa-ellipsis-v dropbtn" @click="dropdownOption()"></i>
@@ -43,7 +40,7 @@ export default {
   },
   methods: {
       dropdownOption() {
-        this.$eventHub.$emit('showExtra', this.data)
+        this.$eventHub.$emit('showExtraDeviceButtons', this.data, this)
       },
   },
 };

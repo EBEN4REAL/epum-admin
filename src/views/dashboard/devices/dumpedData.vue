@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-4">
                 <div class="text-center">
-                    <button class="btn btn-success text-white" @click="download"
+                    <button class="btn btn-success text-white" @click="search"
                       :disabled="isButtonDisabled ? true : null"
                       :style="[
                         isButtonDisabled
@@ -63,77 +63,9 @@
 
             </div>
           </div>
-          <!-- <div class="small_card product_details_card audit-sales mt-3">
-              <div class="row p-4 align-items-center">
-            <div class="col-md-4">
-            <div class="input__block">
-                <input type="text" placeholder="Device ID" class="" />
-            </div>
-            </div>
-            <div class="col-md-4">
-            <div class="input__block">
-                <input type="text" placeholder="Device Timestamp" class="" />
-            </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <button class="btn btn-success text-white" @click="download"
-                      :disabled="isButtonDisabled ? true : null"
-                      :style="[
-                        isButtonDisabled
-                          ? { cursor: 'not-allowed' }
-                          : { cursor: 'pointer' }
-                      ]"
-                    ><i class="fa fa-angle-double-right mr-2"></i>Convert
-                      <img
-                        src="@/assets/img/git_loader.gif"
-                        style="display:none"
-                        width="15px"
-                        class="ml-3 loader"
-                      />
-                    </button>
-                </div>
-            </div>
-            </div>
-          </div> -->
-        </div>
-        <div class="image_container justify-content-center mt-4">
-          <img src="@/assets/img/auditsale.png" alt="" width="30%" />
         </div>
       </div>
       <div class="col-lg-5 col-md-6">
-        <div class="branch_card audit-sales-card" style="width: 100%; display: flex; flex-direction: column; justify-content: space-around;">
-            <div class="row align-items-center">
-              <div class="col-md-6 mt-2 text-left">
-                <p>Company Name</p>
-              </div>
-              <div class="col-md-6">
-                <div class="">
-                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.companyName}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-md-6 mt-2 text-left">
-                <p>State</p>
-              </div>
-              <div class="col-md-6">
-                <div class="">
-                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.city}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-md-6 mt-2 text-left">
-                <p>Country</p>
-              </div>
-              <div class="col-md-6">
-                <div class="">
-                  <p style="font-size: 16px; font-weight: bold;">{{comapanyBranchObj.country}}</p>
-                </div>
-              </div>
-            </div>
-        </div>
         <div class="small_card product_details_card audit-sales dumped_data mt-3">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
@@ -143,15 +75,15 @@
             </div>
             <div class="col-md-4">
             <div class="input__block">
-                <input type="text" placeholder="Device Timestamp" class="input_holder" />
+                <input type="number" placeholder="Device Timestamp" v-model="timeStamp" class="input_holder" />
             </div>
             </div>
             <div class="col-md-4">
                 <div class="text-center">
-                    <button class="btn btn-success text-white" @click="download"
-                      :disabled="isButtonDisabled ? true : null"
+                    <button class="btn btn-success text-white" @click="convert"
+                      :disabled="isButtonDisabled2 ? true : null"
                       :style="[
-                        isButtonDisabled
+                        isButtonDisabled2
                           ? { cursor: 'not-allowed' }
                           : { cursor: 'pointer' }
                       ]"
@@ -160,7 +92,7 @@
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
                         width="15px"
-                        class="ml-3 loader"
+                        class="ml-3 loader2"
                       />
                     </button>
                 </div>
@@ -169,6 +101,24 @@
           </div>
       </div>
     </div>
+    <div class="new_row_section mt-3">
+          <ejs-grid
+            v-show="!showLoader"
+            ref="dataGrid"
+            :created="refreshGrid"
+            :allowPaging="true"
+            :allowSorting="true"
+            :pageSettings="tableProps.pageSettings"
+            :allowTextWrap='true'
+            >
+            <e-columns>
+                <e-column width="80" field="index" headerText="#"></e-column>
+                <e-column width="100" field="date" headerText="Date"></e-column>
+                <e-column width="400" field="dData" headerText="DData"></e-column>
+            </e-columns>
+        </ejs-grid>
+        <TableLoader :showLoader="showLoader"/>
+    </div>
   </masterLayout>
 </template>
 
@@ -176,21 +126,26 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
-// import { VueperSlides, VueperSlide } from 'vueperslides'
-// import 'vueperslides/dist/vueperslides.css'
+import TableLoader from "@/components/tableLoader/index";
+import {Page,Sort} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
 
 export default {
   components: {
     masterLayout,
+    TableLoader,
   },
- 
+  provide: {
+      grid: [Page, Sort]
+  },
   data() {
     return {
       userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-      comapanyBranchObj: {},
       maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
+      tableProps: {
+          pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
+      },
       customShortcuts: [
         { key: "Today", label: "Today", value: "day" },
         { key: "yesterday", label: "Yesterday", value: "-day" },
@@ -200,32 +155,24 @@ export default {
         { key: "lastMonth", label: "Last Month", value: "-month" }
       ],
       dateRange: {},
-      isButtonDisabled: false
+      isButtonDisabled: false,
+      isButtonDisabled2: false,
+      showLoader: false,
+      timeStamp: null
     };
   },
   mounted() {
-    const companyBranchId = this.$route.query.companyBranchId;
-    let ml = sessionStorage.getItem(companyBranchId);
-    if (!ml) {
-      let allData = localStorage.getItem("branchesList");
-     let dt = JSON.parse(allData);
-      dt.forEach((my, index) => {
-        if (my.id === companyBranchId) {
-          ml = JSON.stringify(my);
-          sessionStorage.setItem(companyBranchId, ml);
-        }
-      });
-    }
-    let companyBranchDetails = JSON.parse(ml);
-    this.comapanyBranchObj = companyBranchDetails;
   },
   computed: {
-        userName() {
-            return `${this.userDetails.firstName} ${this.userDetails.lastName}`
-        }
-    },
+    userName() {
+        return `${this.userDetails.firstName} ${this.userDetails.lastName}`
+    }
+  },
   methods: {
-    download() {
+    refreshGrid() {
+      this.$refs.dataGrid.refresh();
+    },
+    search() {
       if(!this.dateRange.start || !this.dateRange.end) {
           this.$toast("Please select a date range", {
               type: "error", 
@@ -238,15 +185,19 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.$route.query.id}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
-                this.$toast("Download Successful", {
-                    type: "success",
-                    timeout: 3000
-                });
+                let index = 0;
+                res.data.forEach(el => {
+                    el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
+                    el.index = ++index;
+                })
                 this.isButtonDisabled = false;
                 $('.loader').hide();
+                this.$refs.dataGrid.ej2Instances.setProperties({
+                  dataSource: res.data
+                });
+                this.refreshGrid();
           })
           .catch(error => {
               this.isButtonDisabled = false;
@@ -256,7 +207,38 @@ export default {
                   timeout: 3000
               });
           });
-    }
+    },
+    convert() {
+      if(!this.timeStamp) {
+          this.$toast("Please input a timestamp", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
+      $('.loader2').show();
+      this.isButtonDisabled2 = true;
+      return
+
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.$route.query.id}/${this.timeStamp}`, configObject.authConfig)
+          .then(res => {
+            this.isButtonDisabled2 = false;
+            $('.loader2').hide();
+            this.$toast("Successfully converted device timestamp", {
+                type: "success",
+                timeout: 3000,
+            });
+          })
+          .catch(error => {
+              this.isButtonDisabled2 = false;
+              $('.loader2').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    },
   },
 };
 </script>

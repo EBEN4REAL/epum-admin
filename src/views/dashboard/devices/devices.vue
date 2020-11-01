@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="">
                                 <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >50</small>
+                                >{{devicesCount}}</small>
                                 </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                 v-show="!showLoader"
                 ref="dataGrid"
                 :created="refreshGrid"
-                :allowPaging="false"
+                :allowPaging="true"
                 :allowSorting="true"
                 :pageSettings="tableProps.pageSettings"
                 :toolbar="tableProps.toolbar"
@@ -45,12 +45,14 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
+                :allowTextWrap='false'
                 >
                 <e-columns>
-                    <e-column width="200" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="devices" headerText="Device"></e-column>
-                    <e-column width="200" field="lastUpdate" headerText="Last Update"></e-column>
-                    <e-column width="200" field="fwVersion" headerText="FW Version"></e-column>
+                    <e-column width="80" field="index" headerText="#"></e-column>
+                    <e-column width="150" :template="device_id" headerText="Device"></e-column>
+                    <e-column width="300" field="name" headerText="name"></e-column>
+                    <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
+                    <e-column width="200" field="firmWareVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
                     <e-column width="200" field="state" headerText="State"></e-column>
                     <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
@@ -67,10 +69,10 @@
 import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_device.vue';
+import DeviceId from '@/components/device_id.vue';
 import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
-import Paginator from '@/components/Paginator.vue';
 import configObject from "@/config";
 
 import Jquery from 'jquery';
@@ -80,7 +82,6 @@ export default {
     components: {
         masterLayout,
         TableLoader,
-        Paginator,
         DropDown
     },
     provide: {
@@ -88,70 +89,67 @@ export default {
     },
     data() {
         return {
-            companiesCount: 0,
+            devicesCount: 0,
             searchLoader: false,
-            sortingTable: false,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
-            sortType: '',
-            sortColumn: '',
-            searchValue: '',
-            currentPage: 1,
-            pageSize: 10,
-            totalPages: 1,
-            searchTotalPages: 1,
             showLoader: false,
             tableCount: 0, 
             details: {
-                queryStrings: { companyId: '' }, 
-                info: [{ name: '', link: '' }, { name: 'Shut Down', link: '' }], 
-                delete: { hasDelete: false, deleteName: 'deleteCompany' }
-                // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
+                queryStrings: { id: '' }, 
+                info: [{ name: 'Edit', link: 'editDevices' }], 
+                delete: { hasDelete: true, deleteName: 'shutDown', name: 'Shut Down', query: 'id' }
             }, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
-                tableData: [
-                    {
-                        index: 1,
-                        devices: 11111111111,
-                        lastUpdate: "> 1 month ago",
-                        fwVersion: 20403,
-                        memoryUsage: 0.00,
-                        name: "Eterna Sales (ETERNA SERVICE STATION ILARA MOKIN-08032704382) : AKURE",
-                        state: "",
-                        firmwareUpdate: "",
-                    }
-            ],
+            },
+            device_id: function() {
+                return {
+                    template: DeviceId
+                };
             },
             list_of_device: function() {
                 return {
                     template: Temp
                 };
-            }
+            },
         }
     },
       created() {
-        this.$eventHub.$on('showExtra', (data) => { 
-            this.details.queryStrings.companyId = data.id
+        this.$eventHub.$on('showExtraDeviceButtons', (data, that) => { 
+            this.details.queryStrings.id = data.deviceId
+            const drop = that.$parent.ej2Instances.pageSettings.pageSize
+            const indent = data.index - (Math.floor((data.index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
             if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
                 const num = this.details.delete.hasDelete ? 1 : 0
-                option.style.top = `${(((52 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+                option.style.top = `${(((52 * (indent - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
             } else {
-                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+                option.style.top = `${((62 * indent) + (100 - (indent * 2))).toString()}px`
             }
+            
         })
         this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
-            this._deleteCompany(id)
+            this.shutDown(id)
         })
     },
+    beforeDestroy() { 
+        this.$eventHub.$off('showExtraDeviceButtons');
+        this.$eventHub.$off(this.details.delete.deleteName);
+    },
     mounted() {
-        this.$refs.dataGrid.ej2Instances.setProperties({
-            dataSource: this.tableProps.tableData
-        });
         this.refreshGrid();
+        this.getDevices()
+        $(".e-input").keyup(function (e) {
+            searchFun(e);
+        });
+        function searchFun(event) {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            var value = event.target.value;
+            grid.search(value);
+        }
     },
     computed: {
         userName() {
@@ -175,6 +173,63 @@ export default {
                     this.$refs.dataGrid.excelExport();
                 break;
             }
+        },
+        shutDown(id) {
+            let resp = confirm("Are you sure want to shut down this device?");
+            if (resp) {
+                return
+                this.axios
+                .delete(
+                    `${configObject.apiBaseUrl}/Devices/ShutDownDevice/${id}`,
+                    configObject.authConfig
+                )
+                .then((res) => {
+                    this.$toast("Successfully shut down device", {
+                    type: "success",
+                    timeout: 3000,
+                    });
+                })
+                .catch((error) => {
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000,
+                    });
+                });
+            }
+        },
+        getDevices() {
+            this.showLoader = true
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
+                .then(res => {
+                    let index = 0;
+                    res.data.sort((a, b) => {
+                    if (a.companyName && b.companyName) {
+                        return a.companyName.toLowerCase() > b.companyName.toLowerCase() ? 1 : b.companyName.toLowerCase() > a.companyName.toLowerCase() ? -1 : 0;
+                    } else if (a.companyName && !b.companyName) {
+                        return -1
+                    } else { 
+                        return 1
+                    }
+                        
+                    });
+                    res.data.forEach(el => {
+                        el.lastDate = this.$moment(el.lastDate).format("MM/DD/YYYY hh:mm A");
+                        el.index = ++index;
+                        el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
+                    })
+                    this.devicesCount = res.data.length
+                    this.tableCount = res.data.length
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false;
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
         },
     }
 }

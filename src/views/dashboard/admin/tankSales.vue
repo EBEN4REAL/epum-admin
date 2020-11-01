@@ -83,7 +83,6 @@ import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vu
 import TableLoader from "@/components/tableLoader/index";
 import Paginator from '@/components/Paginator.vue';
 import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
-import AuditSalesTemplate from '@/components/Templates/Audit_sales_template.vue';
 
 
 import Jquery from 'jquery';

@@ -260,7 +260,6 @@ export default {
                 this.offlineDevices = newArray
             })
             .catch(error => {
-              console.log(error)
             });
     },
   },
