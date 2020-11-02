@@ -45,16 +45,16 @@
                 :allowExcelExport="true"
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
-                :allowTextWrap='false'
+                :allowTextWrap='true'
                 >
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="150" :template="device_id" headerText="Device"></e-column>
                     <e-column width="300" field="name" headerText="name"></e-column>
                     <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
-                    <e-column width="200" field="firmWareVersion" headerText="FW Version"></e-column>
+                    <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
-                    <e-column width="200" field="state" headerText="State"></e-column>
+                    <e-column width="150" field="state" headerText="State"></e-column>
                     <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
                     <e-column :template="list_of_device" headerText="Action" width="300"></e-column>
                 </e-columns>
@@ -70,7 +70,7 @@ import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_device.vue';
 import DeviceId from '@/components/device_id.vue';
-import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
+import DropDown from '@/components/Templates/Dropdown/devicesDropdown.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
@@ -95,9 +95,9 @@ export default {
             showLoader: false,
             tableCount: 0, 
             details: {
+                data: {},
                 queryStrings: { id: '' }, 
                 info: [{ name: 'Edit', link: 'editDevices' }], 
-                delete: { hasDelete: true, deleteName: 'shutDown', name: 'Shut Down', query: 'id' }
             }, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -119,6 +119,7 @@ export default {
       created() {
         this.$eventHub.$on('showExtraDeviceButtons', (data, that) => { 
             this.details.queryStrings.id = data.deviceId
+            this.details.data = data
             const drop = that.$parent.ej2Instances.pageSettings.pageSize
             const indent = data.index - (Math.floor((data.index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
@@ -131,13 +132,17 @@ export default {
             }
             
         })
-        this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
+        this.$eventHub.$on('shutDown', (id) => { 
             this.shutDown(id)
+        })
+        this.$eventHub.$on('restart', (id) => { 
+            this.restart(id)
         })
     },
     beforeDestroy() { 
         this.$eventHub.$off('showExtraDeviceButtons');
-        this.$eventHub.$off(this.details.delete.deleteName);
+        this.$eventHub.$off('shutDown');
+        this.$eventHub.$off('restart');
     },
     mounted() {
         this.refreshGrid();
@@ -177,14 +182,35 @@ export default {
         shutDown(id) {
             let resp = confirm("Are you sure want to shut down this device?");
             if (resp) {
-                return
                 this.axios
-                .delete(
+                .get(
                     `${configObject.apiBaseUrl}/Devices/ShutDownDevice/${id}`,
                     configObject.authConfig
                 )
                 .then((res) => {
                     this.$toast("Successfully shut down device", {
+                    type: "success",
+                    timeout: 3000,
+                    });
+                })
+                .catch((error) => {
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000,
+                    });
+                });
+            }
+        },
+        restart(id) {
+            let resp = confirm("Are you sure want to restart this device?");
+            if (resp) {
+                this.axios
+                .get(
+                    `${configObject.apiBaseUrl}/Devices/ReleaseDevice/${id}`,
+                    configObject.authConfig
+                )
+                .then((res) => {
+                    this.$toast("Successfully restarted device", {
                     type: "success",
                     timeout: 3000,
                     });
@@ -203,6 +229,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.companyName && b.companyName) {

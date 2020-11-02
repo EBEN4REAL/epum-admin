@@ -23,7 +23,7 @@
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block">
-                <input type="text" placeholder="Device ID" class="" />
+                <input type="text" placeholder="Device ID" class="" v-model="deviceId1" />
             </div>
             </div>
             <div class="col-md-4">
@@ -70,7 +70,7 @@
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block">
-                <input type="text" placeholder="Device ID" class="" />
+                <input type="text" placeholder="Device ID" class="" v-model="deviceId2" />
             </div>
             </div>
             <div class="col-md-4">
@@ -158,7 +158,9 @@ export default {
       isButtonDisabled: false,
       isButtonDisabled2: false,
       showLoader: false,
-      timeStamp: null
+      timeStamp: null,
+      deviceId1: null,
+      deviceId2: null
     };
   },
   mounted() {
@@ -181,11 +183,12 @@ export default {
           return;
       }
 
+      const id = this.deviceId1 ? this.deviceId1 : this.$route.query.id
 
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.$route.query.id}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${id}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
                 let index = 0;
                 res.data.forEach(el => {
@@ -217,12 +220,14 @@ export default {
           return;
       }
 
+      const id = this.deviceId2 ? this.deviceId2 : this.$route.query.id
+
       $('.loader2').show();
       this.isButtonDisabled2 = true;
-      return
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.$route.query.id}/${this.timeStamp}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${id}/${this.timeStamp}`, configObject.authConfig)
           .then(res => {
+            console.log(res.data)
             this.isButtonDisabled2 = false;
             $('.loader2').hide();
             this.$toast("Successfully converted device timestamp", {
@@ -231,6 +236,8 @@ export default {
             });
           })
           .catch(error => {
+            console.log(error)
+            console.log(error.response)
               this.isButtonDisabled2 = false;
               $('.loader2').hide();
               this.$toast(error.response.data.message, {
