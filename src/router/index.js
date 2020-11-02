@@ -57,7 +57,7 @@ import PumpStatus from "../views/dashboard/devices/pump_status";
 import StatusPump from "../views/dashboard/devices/pumpStatus";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
-import DumpedData from "../views/dashboard/devices/dumpedData";
+import DumpData from "../views/dashboard/devices/dumpData";
 import EditDevices from "../views/dashboard/devices/editDevices";
 import DeviceDetails from "../views/dashboard/devices/deviceDetails";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
@@ -171,9 +171,9 @@ let routes = [
     },
   },
   {
-    path: "/dumpedData",
-    name: "dumpedData",
-    component: DumpedData,
+    path: "/dump-data",
+    name: "dumpData",
+    component: DumpData,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
