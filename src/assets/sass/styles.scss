@@ -12,7 +12,10 @@
 html {
   overflow-x: hidden;
 }
-
+.active_pump_status {
+  background: $primaryColor !important;
+  cursor: text;
+}
 .branchName {
   font-size: 20px;
   font-weight: bold;
@@ -1109,6 +1112,7 @@ h6.dashboard__card__header {
 }
 
 .pump-status {
+  cursor: pointer;
  height: 135px;
   p, small {
     color: $primaryColor;

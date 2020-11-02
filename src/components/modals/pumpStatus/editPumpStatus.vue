@@ -2,7 +2,7 @@
 <modal class="editPumpStat" name="editPumpStatusModal" transition="pop-out" :width="650" :height="600" >
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="50" height="60"></span>
-      <h4>Edit Punmp status</h4>
+      <h4>Edit Pump status</h4>
   </div>
    <div >
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 50%">

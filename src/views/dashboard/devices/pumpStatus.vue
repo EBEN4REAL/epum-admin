@@ -4,53 +4,33 @@
     <masterLayout>
         <section>
             <div class="row mt-3 ml-1">
-            <div class="col-lg-2 col-md-3 remove_padding-right">
+                 <div class="col-lg-2 col-md-3 remove_padding-right">
                  <div class="new_row_section">
                 <div
-                  class="small__card_content_wrapper small_card pumpstatus_card"
+                  class="small__card_content_wrapper small_card pump-status "
                 >
-                  <p class="dashboard__card__header text-white">Refresh in</p>
-                  <div
-                    class="icon_wrapper centralize icon_div_big text-center"
-                  >
-                    <img src="@/assets/img/oil-tank.png" width="40px" />
-                  </div>
-                  <div class="">
-                    <small
-                      class="dashboard__card__header_bottom font-weight-bold text-white" id="countDown"
-                    >
-                    </small>
-                  </div>
-                </div>
-            </div>
-            </div>
-            <div class="col-lg-2 col-md-3 remove_padding-right">
-                 <div class="new_row_section">
-                <div
-                  class="small__card_content_wrapper small_card pump-status"
-                >
-                  <p class="dashboard__card__header mb-0">Not Okay</p>
+                  <p class="dashboard__card__header mb-0">Refresh In</p>
                   <div
                     class="icon_wrapper centralize icon_div_big empty_bg text-center"
                   >
-                    <img src="@/assets/img/oil-tank-1.png" width="40px" />
+                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
                   </div>
                   <div class="mt-1">
-                    <small
+                    <small id="countDown"
                       class="dashboard__card__header_bottom font-weight-bold"
                     >
-                      123
+
                     </small>
                   </div>
                 </div>
             </div>
             </div>
-            <div class="col-lg-2 col-md-3 remove_padding-right">
+             <div class="col-lg-2 col-md-3 remove_padding-right">
                  <div class="new_row_section">
                 <div
-                  class="small__card_content_wrapper small_card pump-status"
+                  class="small__card_content_wrapper small_card pump-status" :class="selected === 'notOkay' ? 'active_pump_status' : null" @click="selected = 'notOkay'"
                 >
-                  <p class="dashboard__card__header mb-0">All Pumps</p>
+                  <p class="dashboard__card__header mb-0"  :class="selected === 'notOkay' ? 'text-white' : null">Not Okay</p>
                   <div
                     class="icon_wrapper centralize icon_div_big text-center"
                   >
@@ -58,9 +38,30 @@
                   </div>
                   <div class="mt-1">
                     <small
-                      class="dashboard__card__header_bottom font-weight-bold"
+                      class="dashboard__card__header_bottom font-weight-bold"  :class="selected === 'notOkay' ? 'text-white' : null"
                     >
-                      123
+                      {{notOkPumps.length}}
+                    </small>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-2 col-md-3 remove_padding-right">
+                 <div class="new_row_section">
+                <div
+                  class="small__card_content_wrapper small_card pump-status" :class="selected === 'showAll' ? 'active_pump_status' : null" @click="selected = 'showAll'"
+                >
+                  <p class="dashboard__card__header mb-0" :class="selected === 'showAll' ? 'text-white' : null">All Pumps</p>
+                  <div
+                    class="icon_wrapper centralize icon_div_big text-center"
+                  >
+                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                  </div>
+                  <div class="mt-1">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold" :class="selected === 'showAll' ? 'text-white' : null"
+                    >
+                      {{allPumps.length}}
                     </small>
                   </div>
                 </div>
@@ -80,9 +81,9 @@
                 <h4> Hi, admin search for pumps here</h4>
                 
                     <div class="text-center pt-3">
-                            <div class="input__block">
-                            <input type="text" class=""  />
-                            </div>
+                        <div class="input__block">
+                            <input type="text" class=""  @input="searchChange" />
+                        </div>
                     </div>
                 </div>
         </div>       
@@ -191,6 +192,8 @@ export default {
             pumpStatusObj:{},
             backgroundUrl,
             pumpStatus: '',
+            notOkPumps: [],
+            allPumps:[],
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -216,8 +219,9 @@ export default {
     },
     methods: {
         searchChange($e) {
-            $e.preventDefault();
-            this.getPumpStatus(this.selected, this.searchText)
+            $e.target.value
+            console.log($e.target.value)
+            this.getPumpStatus(this.selected, $e.target.value)
         },
         refreshGrid() {
             this.$refs.dataGrid.refresh();

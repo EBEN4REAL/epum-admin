@@ -2,55 +2,95 @@
     <div>
         <EditPumpStatusModal :pumpStatusObj="pumpStatusObj" />
     <masterLayout>
-        <section class=" mt-3 full__row_section">
-            <div class="banner">
-            <div class="row">
-                <div class="col-lg-12">
-                        <div class="dashboard__card large_card"  :style="[
-                                    {
-                                    backgroundImage: `linear-gradient(rgb(37, 37, 37 , 0.9), rgb(37, 37, 37 , 0.9)), url(${backgroundUrl})`,
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'cover'
-                                    }
-                                ]">
-                                <div class="row align-items-center justify-content-center hundred-percent-height">
-                                     <div class="col-md-2">
-                                    <h5 class="text-white ">Refresh in
-                                      <span id="countDown"></span>
-                                    </h5>
-                                    </div>
-                                    <div class="col-md-4">
-                                         <div class="small__card_content_wrapper align-items-center"    >
-                                            <p class="dashboard__card__header text-white">PUMP STATUS</p>
-                                        </div>
-                                    </div>
-                                    <b-form-group label="Radios using options">
-                                        <b-form-radio-group
-                                            id="radio-group-1"
-                                            class="pumpstatus"
-                                            v-model="selected"
-                                            :options="options"
-                                            name="radio-options"
-                                        ></b-form-radio-group>
-                                    </b-form-group>
-                                    <div class="col-md-3">
-                                         <div class="search-container">
-                                            <form action="">
-                                                <input type="text" placeholder="Search.." name="search" class="input__block"  v-model="searchText">
-                                                <button type="submit" class="search_button" @click="searchChange"><i class="fa fa-search"></i></button>
-                                            </form>
-                                    </div>
-                                </div>
+        <section>
+            <div class="row mt-3 ml-1">
+                 <div class="col-lg-2 col-md-3 remove_padding-right">
+                 <div class="new_row_section">
+                <div
+                  class="small__card_content_wrapper small_card pump-status "
+                >
+                  <p class="dashboard__card__header mb-0">Refresh In</p>
+                  <div
+                    class="icon_wrapper centralize icon_div_big empty_bg text-center"
+                  >
+                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                  </div>
+                  <div class="mt-1">
+                    <small id="countDown"
+                      class="dashboard__card__header_bottom font-weight-bold"
+                    >
+
+                    </small>
+                  </div>
+                </div>
+            </div>
+            </div>
+             <div class="col-lg-2 col-md-3 remove_padding-right">
+                 <div class="new_row_section">
+                <div
+                  class="small__card_content_wrapper small_card pump-status" :class="selected === 'notOkay' ? 'active_pump_status' : null" @click="selected = 'notOkay'"
+                >
+                  <p class="dashboard__card__header mb-0"  :class="selected === 'notOkay' ? 'text-white' : null">Not Okay</p>
+                  <div
+                    class="icon_wrapper centralize icon_div_big text-center"
+                  >
+                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                  </div>
+                  <div class="mt-1">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold"  :class="selected === 'notOkay' ? 'text-white' : null"
+                    >
+                      {{notOkPumps.length}}
+                    </small>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-2 col-md-3 remove_padding-right">
+                 <div class="new_row_section">
+                <div
+                  class="small__card_content_wrapper small_card pump-status" :class="selected === 'showAll' ? 'active_pump_status' : null" @click="selected = 'showAll'"
+                >
+                  <p class="dashboard__card__header mb-0" :class="selected === 'showAll' ? 'text-white' : null">All Pumps</p>
+                  <div
+                    class="icon_wrapper centralize icon_div_big text-center"
+                  >
+                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                  </div>
+                  <div class="mt-1">
+                    <small
+                      class="dashboard__card__header_bottom font-weight-bold" :class="selected === 'showAll' ? 'text-white' : null"
+                    >
+                      {{allPumps.length}}
+                    </small>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-6 col-md-3 remove_padding-right">
+                 <div class="new_row_section installed_card small_card" :style="[
+                    {
+                    backgroundImage: `linear-gradient(rgb(37, 37, 37 , 0.9), rgb(37, 37, 37 , 0.9)), url(${backgroundUrl})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    height: '135px'
+                    }
+               ]">
+            <div class="text-center px-5 pt-4 text-white">
+                <h4> Hi, Admin search for pumps here</h4>
+                
+                    <div class="text-center pt-3">
+                        <div class="input__block">
+                            <input type="text" class=""  @input="searchChange" />
                         </div>
                     </div>
-              </div>
-              <div class="col-lg-8 remove-padding-left padding_div">
+                </div>
+        </div>       
+    </div>
+</div>
+   </section>
 
-            </div>
-        </div>
-        </div>
-        </section>
         <div class="new_row_section mt-3">
             <ejs-grid
                 v-show="!showLoader"
@@ -81,7 +121,6 @@
                     <e-column width="200" field="lastTransaction" headerText="Last Transaction"></e-column>
                     <e-column width="200" field="totalVolumeToday" headerText="Volume Today"></e-column>
                     <e-column :template="pumpStatusTemplate" headerText="Action" width="200"></e-column>
-                    pumpStatus
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"  />
@@ -152,6 +191,8 @@ export default {
             pumpStatusObj:{},
             backgroundUrl,
             pumpStatus: '',
+            notOkPumps: [],
+            allPumps:[],
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -177,8 +218,9 @@ export default {
     },
     methods: {
         searchChange($e) {
-            $e.preventDefault();
-            this.getPumpStatus(this.selected, this.searchText)
+            $e.target.value
+            console.log($e.target.value)
+            this.getPumpStatus(this.selected, $e.target.value)
         },
         refreshGrid() {
             this.$refs.dataGrid.refresh();

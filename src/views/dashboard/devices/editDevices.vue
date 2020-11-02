@@ -32,7 +32,7 @@
                         </div>
                         <div class="row align-items-center mt-3">
                             <div class="col-md-4 text-left">
-                <label>Device Type</label>
+                            <label>Device Type</label>
                         </div>
                         <div class="col-md-8">
                         <div class="input__block">

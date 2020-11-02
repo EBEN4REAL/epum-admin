@@ -246,6 +246,8 @@ export default {
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
                     })
+                    sessionStorage.clear()
+                    localStorage.setItem("devicesList", JSON.stringify(res.data))
                     this.devicesCount = res.data.length
                     this.tableCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({
