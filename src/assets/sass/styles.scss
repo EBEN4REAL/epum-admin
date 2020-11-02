@@ -1099,6 +1099,22 @@ h6.dashboard__card__header {
 .dark-mode {
   background-color: black; 
 }
+
+.pumpstatus_card {
+  background: $primaryColor;
+  height: 134px;
+  .dashboard__card__header {
+    margin-bottom: 0;
+  }
+}
+
+.pump-status {
+ height: 135px;
+  p, small {
+    color: $primaryColor;
+  }
+}
+
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {
