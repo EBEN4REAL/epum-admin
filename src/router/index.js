@@ -54,6 +54,7 @@ import OutstandingPayments from "../views/dashboard/outstandingPayments/index";
 import MakePayments from "../views/dashboard/outstandingPayments/outstandingPayments";
 import WalletTransactions from "../views/dashboard/outstandingPayments/walletTransactions";
 import PumpStatus from "../views/dashboard/devices/pump_status";
+import StatusPump from "../views/dashboard/devices/pumpStatus";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
 import DumpedData from "../views/dashboard/devices/dumpedData";
@@ -444,6 +445,15 @@ let routes = [
     path: "/pump_status",
     name: "pump_status",
     component: PumpStatus,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/statusPump",
+    name: "statusPump",
+    component: StatusPump,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
