@@ -203,6 +203,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.companyName && b.companyName) {
@@ -219,6 +220,8 @@ export default {
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
                     })
+                    sessionStorage.clear()
+                    localStorage.setItem("devicesList", JSON.stringify(res.data))
                     this.devicesCount = res.data.length
                     this.tableCount = res.data.length
                     this.$refs.dataGrid.ej2Instances.setProperties({

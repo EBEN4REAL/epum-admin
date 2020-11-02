@@ -11,12 +11,64 @@
         <div class="row align-items-center justify-content-center hundred-percent-height">
             <div class="col-md-12 ">
             <div class="text-center ">
-                <h5 class="title">Edit Device</h5>
+                <h5 class="title">Device  Details</h5>
             </div>
             </div>
         </div>
         </section>
-        <div class="small_card product_details_card toggler-card mt-3">
+        <div class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
+            <div class="">
+                <form>
+                    <div class="text-center">
+                        <div class="row align-items-center mt-3">
+                            <div class="col-md-4 text-left">
+                                <label>Epump Branches</label >
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="input__block">
+                                    <input type="text" placeholder="" class="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mt-3">
+                            <div class="col-md-4 text-left">
+                            <label>Device Type</label>
+                        </div>
+                        <div class="col-md-8">
+                        <div class="input__block">
+                            <select class="form-control">
+                                <option value="Pump">POS</option>
+                                <option value="Pump">Pump</option>
+                                <option value="Tank">Gateway</option>
+                            </select>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="row align-items-center mt-3">
+                            <div class="col-md-4 text-left">
+                                <label>User ID</label>
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="input__block">
+                                    <input type="text" placeholder="" class="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mt-3">
+                            <div class="col-md-4 text-left">
+                                <label>Device Pass</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input__block">
+                                 <input type="password" placeholder="" class="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="small_card product_details_card toggler-card mt-3">
            <div class="console-details">
                 <div class="pt-3 px-4">
                 <p>0188373193</p>
@@ -32,7 +84,7 @@
                  </div>
               <hr />
            </div>
-            </div>
+            </div> -->
   </masterLayout>
 </template>
 
@@ -51,12 +103,31 @@ export default {
   data() {
     return {
       backgroundUrl,
+      deviceObj: {}
     };
+  },
+  mounted() {
+    this.deviceId = this.$route.query.deviceId
+    let ml = sessionStorage.getItem(this.deviceId)
+    if (!ml){
+        let allData = localStorage.getItem("devicesList")
+        let dt = JSON.parse(allData)
+        dt.forEach((my, index) =>{
+            if(my.id === this.deviceId){
+                ml = JSON.stringify(my)
+                sessionStorage.setItem(this.deviceId, ml)
+            }
+        })
+    }
+
+    let deviceDetails = JSON.parse(ml)
+    this.deviceObj = deviceDetails
+    console.log(this.deviceObj)
   },
   methods: {
     toggler() {
-        var element = document.body;
-   element.classList.toggle("dark-mode");
+      var element = document.body;
+      element.classList.toggle("dark-mode");
     }
   }
 };
