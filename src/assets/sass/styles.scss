@@ -884,6 +884,7 @@ h6.dashboard__card__header {
       padding-top: 6px;
       border-radius: 5px;
       padding-bottom: 3px;
+      cursor: pointer;
       i.fa.fa-camera {
         font-size: 28px;
         color: $primaryColor;
@@ -896,7 +897,8 @@ h6.dashboard__card__header {
         position: absolute;
         top: -48px;
         left: 0;
-        width: 100px;
+        width: 103px;
+        height: 97px;
       }
     }
     .account_Settings_profile_details_section_second_row {

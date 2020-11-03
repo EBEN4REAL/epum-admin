@@ -1,6 +1,6 @@
 <template>
    <div class="">
-    <router-link :to="{name:'deviceDetails', query: {deviceId: data.id}}" class="btn details_btn mr-3">
+    <router-link :to="{name:'deviceDetails', query: {deviceId: data.deviceId}}" class="btn details_btn mr-3">
       Details
     </router-link>
 
