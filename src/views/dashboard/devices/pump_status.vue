@@ -82,7 +82,7 @@
                 
                     <div class="text-center pt-3">
                         <div class="input__block">
-                            <input type="text" class=""  @input="searchChange" />
+                            <input type="text" class=""  @input="searchChange" placeholder="Search for pumps here..."/>
                         </div>
                     </div>
                 </div>
