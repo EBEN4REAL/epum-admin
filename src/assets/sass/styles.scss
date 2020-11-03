@@ -1051,7 +1051,7 @@ h6.dashboard__card__header {
       font-size: 12px;
     }
   }
-  .offline-pump-card {  
+  .offline-pump-card {
     background: $whiteColor;
     box-shadow: 0px 3px 26px #00000017;
     border-radius: 4px;
@@ -1066,7 +1066,7 @@ h6.dashboard__card__header {
       .pump-name {
         font-size: 12px;
         margin-top: 2px;
-        font-weight: 300; 
+        font-weight: 300;
         color: $primaryColor;
       }
       small {
@@ -1074,35 +1074,27 @@ h6.dashboard__card__header {
         color: #575656;
       }
     }
-    .resolve-btn {
-      background:#e5fcf3;
-      box-shadow: 0px 3px 26px #00000017;
-      border-radius: 7px;
-      font-size: 11px;
-      padding: 8px;
-      color: #00e38c;
-    }
   }
 }
 
 .toggler-card {
   margin-left: 13px;
-    width: 97% !important;
-    p {
-      color: $greyTextColor;
-      margin-bottom: 0;
-      font-size: 11px;
-     margin-top: 4px;
-    }
-    .toggler-button {
-      float: right;
-      margin-top: -34px;
-      display: flex;
+  width: 97% !important;
+  p {
+    color: $greyTextColor;
+    margin-bottom: 0;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .toggler-button {
+    float: right;
+    margin-top: -34px;
+    display: flex;
     margin-right: 35px;
   }
 }
 .dark-mode {
-  background-color: black; 
+  background-color: black;
 }
 
 .pumpstatus_card {
@@ -1115,9 +1107,78 @@ h6.dashboard__card__header {
 
 .pump-status {
   cursor: pointer;
- height: 135px;
-  p, small {
+  height: 135px;
+  p,
+  small {
     color: $primaryColor;
+  }
+}
+
+.devices-card {
+  .device-header {
+    h5 {
+      color: $primaryColor;
+      font-size: 16px;
+    }
+    p {
+      color: $goldColor;
+      font-style: italic;
+      font-size: 10px;
+      margin-top: 25px;
+    }
+  }
+  .transactionc_card {
+    background: $primaryColor;
+    border-radius: 10px;
+    p {
+      color: $goldColor;
+      font-weight: 600;
+    }
+  }
+}
+
+.device_details_card {
+  .small_card {
+    height: auto;
+    .card_border {
+      box-shadow: 0px 3px 3px #57565640;
+      border: 1px solid #575656;
+      border-radius: 10px;
+      opacity: 1;
+      h5 {
+        margin-top: 22px;
+        color: $primaryColor;
+      }
+      p {
+        color: $goldColor;
+        margin-top: 30px;
+        font-size: 16px;
+        font-style: italic;
+        margin-bottom: 0;
+      }
+      .flex_card {
+        display: flex;
+        justify-content: space-between;
+        h5 {
+          margin-top: 19px;
+          font-size: 16px;
+          font-style: italic;
+        }
+        .resolve-btn {
+          height: 32px;
+          width: 100px;
+          background: #e5fcf3;
+          box-shadow: 0px 3px 26px #00000017;
+          text-align: center;
+          border-radius: 10px;
+          font-size: 11px;
+          padding: 8px;
+          margin-right: 52px;
+          margin-top: 14px;
+          color: #00e38c;
+        }
+      }
+    }
   }
 }
 

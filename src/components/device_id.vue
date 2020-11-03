@@ -1,6 +1,6 @@
 <template>
    <div class="">
-    <router-link :to="{name:'dumpedData', query: {id: data.deviceId}}" style="text-decoration: none;">
+    <router-link :to="{name:'dumpData', query: {id: data.deviceId}}" style="text-decoration: none;">
       {{data.deviceId}}
     </router-link>
 

@@ -230,14 +230,9 @@ export default {
             console.log(res.data)
             this.isButtonDisabled2 = false;
             $('.loader2').hide();
-            this.$toast("Successfully converted device timestamp", {
-                type: "success",
-                timeout: 3000,
-            });
+            alert(`The timestamp is: ${res.data.date}`)
           })
           .catch(error => {
-            console.log(error)
-            console.log(error.response)
               this.isButtonDisabled2 = false;
               $('.loader2').hide();
               this.$toast(error.response.data.message, {
