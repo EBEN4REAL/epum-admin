@@ -3,7 +3,7 @@
     <!-- <router-link :to="{name:'edit_companies',  query: {companyId: data.id}}" class="btn details_btn mr-3">
       Edit
     </router-link> -->
-    <router-link :to="{name:'company_details', query: {companyId: data.id}}" class="btn details_btn mr-3">
+    <router-link :to="{name:'newCompanyDetails', query: {companyId: data.id}}" class="btn details_btn mr-3">
       Details
     </router-link>
 

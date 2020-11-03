@@ -114,7 +114,7 @@ export default {
             tableCount: 0, 
             details: {
                 queryStrings: { companyId: '' }, 
-                info: [{ name: 'Edit', link: 'edit_companies' }, { name: 'Mail Receipient', link: 'mail_recipient' }, { name: 'Audit Sales', link: 'audit_sales' }], 
+                info: [ { name: 'Mail Receipient', link: 'mail_recipient' }, { name: 'Audit Sales', link: 'audit_sales' }], 
                 delete: { hasDelete: true, deleteName: 'deleteCompany', name: 'Delete', query: 'companyId' }
                 // delete: { hasDelete: true, deleteName: 'deleteCompany', arg: 'companyId'}
             }, 

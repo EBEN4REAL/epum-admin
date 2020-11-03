@@ -1,97 +1,113 @@
 <template>
-  <masterLayout>
-    <section class="mt-3 full__row_section banner-gradient"  :style="[
-                {
-                backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-                }
-            ]">
-        <div class="row align-items-center justify-content-center hundred-percent-height">
-            <div class="col-md-12 ">
-            <div class="text-center ">
-                <h5 class="title">Device  Details</h5>
-            </div>
-            </div>
-        </div>
-        </section>
-        <div class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
-            <div class="">
-                <form>
-                    <div class="text-center">
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>Epump Branches</label >
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                            <label>Device Type</label>
-                        </div>
-                        <div class="col-md-8">
-                        <div class="input__block">
-                            <select class="form-control">
-                                <option value="Pump">POS</option>
-                                <option value="Pump">Pump</option>
-                                <option value="Tank">Gateway</option>
-                            </select>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>User ID</label>
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>Device Pass</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="input__block">
-                                 <input type="password" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
+    <masterLayout>
+        <section class=" mt-3 full__row_section">
+           <div class="devices-card">
+                <div class="row px-5">
+                <div class="col-lg-6">
+                    <div class="device-header">
+                        <h5>{{deviceDetailObj.branchName}} DEVICE DATAILS</h5>
+                        <p>Synced Transactions: {{deviceDetailObj.syncedTransaction}}, Un-Synced Transactions: {{deviceDetailObj.unsynced}} </p>
                     </div>
-                </form>
-            </div>
-        </div>
-        <!-- <div class="small_card product_details_card toggler-card mt-3">
-           <div class="console-details">
-                <div class="pt-3 px-4">
-                <p>0188373193</p>
-                <p>Memory Usage:</p>
-                <p>Firmware Version:</p>
                 </div>
-                 <div class="toggler-button">
-                     <label class="mr-2">Light</label>
-                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1" @click="toggler">
-                        <label class="custom-control-label" for="customSwitch1">Dark</label>
+                <div class="col-lg-4">
+                    <div class="transactionc_card p-1 text-white text-center">
+                        <h6>TOTAL DEVICE TRANSACTIONS</h6>
+                        <p>{{deviceDetailObj.totalTransaction}}</p>
                     </div>
-                 </div>
-              <hr />
+                </div>
+            </div>
            </div>
-            </div> -->
-  </masterLayout>
+        </section>
+        
+        <div class="mt-3 full__row_section device_details_card">
+            <div class="small_card p-3">
+               <div class="row mt-4">
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>BRANCH NAME</h6>
+                           <h5>{{deviceDetailObj.branchName}}</h5>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>FIRMWARE VERSION</h6>
+                           <div class="flex_card">
+                               <h5>{{!deviceDetailObj.canUpdate ? 'Device Can Not Update' : 'Device Can Update' }}  </h5>
+                               <button class="resolve-btn">Reset</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row mt-4">
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>PHONE NUMBER</h6>
+                           <h5>{{deviceDetailObj.phone}}</h5>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>SHOULD DEVICE RESTART?</h6>
+                           <div class="flex_card">
+                               <h5>Device is Not Set for Restart</h5>
+                               <router-link :to="{name: ''}" class="resolve-btn">Set to restart</router-link>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row mt-4">
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>BRANCH EMAIL</h6>
+                           <h5>{{deviceDetailObj.email}}</h5>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>MEMORY USAGE</h6>
+                           <div class="flex_card">
+                               <h5>Device is Not Set for Memory Reset</h5>
+                               <router-link :to="{name: ''}" class="resolve-btn">Set to restart</router-link>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row mt-4">
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>BRANCH ADDRESS</h6>
+                           <h5>{{deviceDetailObj.street}}, {{deviceDetailObj.state}}</h5>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6">
+                      <div class="card_border p-3">
+                           <h6>LAST UPDATE DOWNLOAD</h6>
+                           <p>Not Downloaded Yet</p>
+                       </div>
+                   </div>
+               </div>
+               <div class="row mt-4">
+                   <div class="col-lg-6 col-md-6">
+                       <div class="card_border p-3">
+                           <h6>DEVICE EVENTS</h6>
+                           <h5>Total Events:  {{deviceDetailObj.totalEvent}}</h5>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6">
+                      <div class="card_border p-3">
+                           <h6>DEVICE TYPE</h6>
+                           <h5>{{deviceDetailObj.deviceType}}</h5>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+    </masterLayout>
 </template>
 
-<script>
+i<script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
-import backgroundUrl from "@/assets/img/bg__card.png";
 import Jquery from 'jquery';
 let $ = Jquery;
 import configObject from "@/config";
@@ -102,33 +118,47 @@ export default {
   },
   data() {
     return {
-      backgroundUrl,
-      deviceObj: {}
+      deviceDetailObj: {}
     };
   },
   mounted() {
-    this.deviceId = this.$route.query.deviceId
-    let ml = sessionStorage.getItem(this.deviceId)
-    if (!ml){
-        let allData = localStorage.getItem("devicesList")
-        let dt = JSON.parse(allData)
-        dt.forEach((my, index) =>{
-            if(my.id === this.deviceId){
-                ml = JSON.stringify(my)
-                sessionStorage.setItem(this.deviceId, ml)
-            }
-        })
+    this.getDeviceDetails()
+  },
+  watch: {
+    deviceDetailObj(det) {
+      det.syncedTransaction = this.convertThousand(det.syncedTransaction)
+      det.totalTransaction = this.convertThousand(det.totalTransaction)
+      det.unsynced = this.convertThousand(parseFloat(det.totalTransaction.replace(/,/g, ''))  - parseFloat(det.syncedTransaction.replace(/,/g, '')))
     }
-
-    let deviceDetails = JSON.parse(ml)
-    this.deviceObj = deviceDetails
-    console.log(this.deviceObj)
+  },
+  computed: {
+    unsynced() {
+      if(this.deviceDetailObj !== {}) return  this.convertThousand(parseFloat(deviceDetailObj.totalTransaction.replace(/,/g, ''))  - parseFloat(deviceDetailObj.syncedTransaction.replace(/,/g, '')))
+    }
   },
   methods: {
-    toggler() {
-      var element = document.body;
-      element.classList.toggle("dark-mode");
-    }
+    convertThousand(request) {
+      if (!isFinite(request)) {
+          return "0.00";
+      }
+      return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    getDeviceDetails() {
+      this.axios.get(`${configObject.apiBaseUrl}/Devices/Details/${this.$route.query.deviceId}`, configObject.authConfig)
+          .then(res => {
+            console.log(res.data)
+            this.deviceDetailObj = res.data
+            $('.loader').hide();
+          })
+          .catch(error => {
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    },
   }
 };
 </script>
