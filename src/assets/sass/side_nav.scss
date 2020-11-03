@@ -413,6 +413,9 @@ img#mySidenav {
         display: block;
         margin-left: 250px !important;
     }
+    .dropup, .dropright, .dropdown, .dropleft {
+        margin-top: -42px !important;
+    }
     .wrapper_type_2 {
         .sidebar {
             &.collapsed {
