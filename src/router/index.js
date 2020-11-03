@@ -59,6 +59,7 @@ import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
 import DumpData from "../views/dashboard/devices/dumpData";
 import EditDevices from "../views/dashboard/devices/editDevices";
+import DeviceConsole from "../views/dashboard/devices/deviceConsole";
 import DeviceDetails from "../views/dashboard/devices/deviceDetails";
 import DevicesOffline from "../views/dashboard/devices/devices_offline";
 import DevicesOutOfReach from "../views/dashboard/devices/devices_out_of_reach";
@@ -183,6 +184,15 @@ let routes = [
     path: "/deviceDetails",
     name: "deviceDetails",
     component: DeviceDetails,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/deviceConsole",
+    name: "deviceConsole",
+    component: DeviceConsole,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
