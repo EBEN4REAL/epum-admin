@@ -1249,6 +1249,41 @@ h6.dashboard__card__header {
   .remove_pumps_margin {
     margin-right: 0 !important;
   }
+
+  .branch_card.dashboard_branch_card,
+  .mobile_responsiveness {
+    height: 100% !important;
+    width: 100%;
+  }
+  .mobile_responsiveness {
+    height: 80% !important;
+  }
+  .product_details_card.mt-3 {
+    margin-top: 5px !important;
+  }
+  .small__card_content_wrapper .map-device-company {
+    width: 80% !important;
+  }
+  .btn.purple-btn {
+    width: 46% !important;
+  }
+  .pumpstatus__card {
+    h4 {
+      font-size: 16px;
+    }
+  }
+  .border-right-card {
+    margin-top: 31px;
+  }
+  .branch_card .small_card {
+    width: 90% !important;
+  }
+  .small_card.inner_tank_card {
+    height: 116px;
+    margin-left: 0; 
+    margin-top: 17px;
+    margin-top: 32px !important;
+}
 }
 
 .product_sales_flex_card {

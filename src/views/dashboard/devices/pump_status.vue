@@ -68,7 +68,7 @@
             </div>
             </div>
             <div class="col-lg-6 col-md-3 remove_padding-right">
-                 <div class="new_row_section installed_card small_card" :style="[
+                 <div class="new_row_section installed_card pumpstatus__card" :style="[
                     {
                     backgroundImage: `linear-gradient(rgb(37, 37, 37 , 0.9), rgb(37, 37, 37 , 0.9)), url(${backgroundUrl})`,
                     backgroundPosition: 'center',

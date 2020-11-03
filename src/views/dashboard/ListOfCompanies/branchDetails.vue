@@ -126,7 +126,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-2 border-right">
+              <div class="col-lg-4 col-md-2 border-right border-right-card">
                 <div class="text-center mt-3">
                   <img src="@/assets/img/oil-truck (-1.png" width="40px" />
                 </div>
@@ -142,7 +142,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-2">
+              <div class="col-lg-4 col-md-2 border-right-card">
                 <div class="text-center">
                   <img src="@/assets/img/oil-truck (1).png" width="40px" />
                 </div>
@@ -254,7 +254,7 @@
       </div>
 
       <div class="col-lg-3 col-md-6">
-        <div class="branch_card position-fixed">
+        <div class="branch_card position-fixed mobile_responsiveness">
           <div class="">
             <div class="row align-items-center mt-3">
               <div class="col-md-6 mt-2 text-left">
