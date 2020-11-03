@@ -9,9 +9,7 @@ import VoucherMonitor from "../views/dashboard/admin/voucherMonitor";
 import PEFDashboard from "../views/dashboard/admin/pefDashboard";
 import BranchDetails from "../views/dashboard/ListOfCompanies/branchDetails";
 import ListOfCompanies from "../views/dashboard/ListOfCompanies/index";
-import EditCompanies from "../views/dashboard/ListOfCompanies/edit_companies";
 import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies";
-import CompanyDetails from "../views/dashboard/ListOfCompanies/companyDetails";
 import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_details";
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
 import UserDetails from "../views/dashboard/admin/ManageUsers/userDetails";
@@ -53,8 +51,7 @@ import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
 import OutstandingPayments from "../views/dashboard/outstandingPayments/index";
 import MakePayments from "../views/dashboard/outstandingPayments/outstandingPayments";
 import WalletTransactions from "../views/dashboard/outstandingPayments/walletTransactions";
-import PumpStatus from "../views/dashboard/devices/pump_status";
-import StatusPump from "../views/dashboard/devices/pumpStatus";
+import PumpStatus from "../views/dashboard/devices/pumpStatus";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
 import DumpData from "../views/dashboard/devices/dumpData";
@@ -271,24 +268,6 @@ let routes = [
     },
   },
   {
-    path: "/company_details",
-    name: "company_details",
-    component: CompanyDetails,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/edit_companies",
-    name: "edit_companies",
-    component: EditCompanies,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
     path: "/create_companies",
     name: "create_companies",
     component: CreateCompanies,
@@ -460,15 +439,7 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
-  {
-    path: "/statusPump",
-    name: "statusPump",
-    component: StatusPump,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
+ 
   {
     path: "/editPumpStatus",
     name: "editPumpStatus",
