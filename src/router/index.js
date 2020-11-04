@@ -21,7 +21,7 @@ import MapuserToDealer from "../views/dashboard/admin/ManageUsers/mapUserToDeale
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import MapUserToCompany from "../views/dashboard/admin/ManageUsers/mapUserToCompany";
 import MapUserToRole from "../views/dashboard/admin/ManageUsers/MapUserToRole";
-import RemoveUserRole from "../views/dashboard/admin/ManageUsers/RemoveUserRole";
+import RemoveUserRole from "../views/dashboard/admin/ManageUsers/removeUserRole";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
