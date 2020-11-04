@@ -22,12 +22,12 @@
           <div class="small_card product_details_card audit-sales mt-3">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
-            <div class="input__block">
+            <div class="input__block input_margin">
                 <input type="text" placeholder="Device ID" class="" v-model="deviceId1" />
             </div>
             </div>
             <div class="col-md-4">
-                <div class="start-date input__block">
+                <div class="input_margin start-date input__block">
                     <vue-ctk-date-time-picker
                         v-model="dateRange"
                         :max-date="maxDate"
@@ -69,12 +69,12 @@
         <div class="small_card product_details_card audit-sales dumped_data mt-3">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
-            <div class="input__block">
+            <div class="input__block input_margin">
                 <input type="text" placeholder="Device ID" class="" v-model="deviceId2" />
             </div>
             </div>
             <div class="col-md-4">
-            <div class="input__block">
+            <div class="input__block input_margin">
                 <input type="number" placeholder="Device Timestamp" v-model="timeStamp" class="input_holder" />
             </div>
             </div>

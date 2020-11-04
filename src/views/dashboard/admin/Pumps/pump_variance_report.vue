@@ -24,7 +24,7 @@
                                             <h6 class="grey_text">{{varianceObj.date}}</h6>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 tanksales">
                                         <vue-ctk-date-time-picker
                                             v-model="dateRange"
                                             :max-date="maxDate"

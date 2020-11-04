@@ -128,7 +128,7 @@ export default {
             currentPage: 1,
             pageSize: 10,
             totalPages: 1,
-            showLoader: false,
+            showLoader: true,
             usersCount: 0,
             query: '',
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
@@ -201,7 +201,7 @@ export default {
             this.getUsers()
         },
         getUsers() {
-            this.showLoader = true
+            // this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Admin/GetUsers?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)

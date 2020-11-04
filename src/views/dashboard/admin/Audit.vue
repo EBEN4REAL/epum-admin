@@ -18,7 +18,7 @@
                                             <p class="dashboard__card__header text-white">PUMP VARIANCE</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 tanksales">
                                          <vue-ctk-date-time-picker
                                             v-model="dateRange"
                                             :max-date="maxDate"
