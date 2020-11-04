@@ -228,7 +228,6 @@ export default {
                     this.showLoader = false;
                 })
                 .catch(error => {
-                    console.log(error.response.data)
                     this.showLoader = false
                 });
         },

@@ -26,7 +26,7 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="email" placeholder="Email" class="" />
+                  <input type="email" v-model="email" readonly class="" />
                 </div>
               </div>
             </div>
@@ -36,7 +36,7 @@
               </div>
               <div class="col-md-8">
                 <div class="input__block">
-                  <input type="number" placeholder="0.00" class="" />
+                  <input type="number" v-model="creditLimit" class="" readonly />
                 </div>
               </div>
             </div>
@@ -50,6 +50,7 @@
                     v-model="userRole"
                     :options="roles"
                     name="flavour-2a"
+                    disabled 
                   >
                   </b-form-checkbox-group>
               </div>
@@ -95,6 +96,7 @@ export default {
 
   mounted() {
     this.getRoles()
+    this.getUserDetails()
     this.id = this.$route.query.id;
     let ml = sessionStorage.getItem(this.id);
     if (!ml) {
@@ -108,7 +110,8 @@ export default {
     });
     }
     const userObject = JSON.parse(ml);
-    this.userRoles = userObject.roles.split(',')
+    this.email = userObject.userName
+    // this.userRoles = userObject.roles.split(',')
   },
   data() {
     return {
@@ -116,12 +119,23 @@ export default {
       id: '',
       userRoles: [],
       userRole: [],
-      roles: []
+      roles: [],
+      creditLimit: 0,
+      email: ''
     };
   },
   watch: {
     roles: function(roles) {
-      if (roles.length) {
+      if (roles.length && this.userRoles.length) {
+        this.roles.forEach(cur => {
+          if (this.userRoles.includes(cur.text)) {
+            this.userRole.push(cur.value)
+          }
+        })
+      }
+    },
+    userRoles: function(userRoles) {
+      if (userRoles.length && this.roles.length) {
         this.roles.forEach(cur => {
           if (this.userRoles.includes(cur.text)) {
             this.userRole.push(cur.value)
@@ -146,6 +160,21 @@ export default {
                   }
 
                 })
+            })
+            .catch(error => {
+            });
+    },
+    getUserDetails() {
+        this.axios
+        .get(
+            `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig)
+            .then(res => {
+                if (res.data.roles == "") {
+                    this.userRoles = []
+                } else {
+                    this.userRoles = res.data.roles.split(',')
+                }
+                this.creditLimit = res.data.creditLimit
             })
             .catch(error => {
             });

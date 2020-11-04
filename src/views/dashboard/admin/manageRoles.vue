@@ -53,7 +53,7 @@
              <e-column :template="rolesTemplates" headerText="Action" width="300"></e-column>
           </e-columns>
       </ejs-grid>
-    <TableLoader :showLoader="showLoader"  />
+    <TableLoader :showLoader="showLoader"  /> 
   </div>
   </masterLayout>
 </template>
@@ -74,6 +74,11 @@ export default {
   },
   provide: {
       grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+  },
+  created() {
+      this.$eventHub.$on('refreshRolesList', (id) => { 
+          this.getRoles()
+      })
   },
   mounted() {
     this.getRoles()
