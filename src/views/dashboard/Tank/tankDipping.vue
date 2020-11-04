@@ -23,7 +23,7 @@
                                         <h4 class="yellow_text">Tank Dippings for ({{tankDetailsObj.name}})</h4>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 tank_dip">
                                     <vue-ctk-date-time-picker
                                         v-model="dateRange"
                                         :range="true"
