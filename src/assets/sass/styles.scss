@@ -956,10 +956,14 @@ h6.dashboard__card__header {
   }
   .details_input {
     input {
+      width: 60%;
       border: none;
       color: $primaryColor !important;
       &:focus {
         outline: none !important;
+      }
+      &.check {
+        width: 20px !important;
       }
     }
   }

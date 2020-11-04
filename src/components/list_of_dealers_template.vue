@@ -1,6 +1,5 @@
 <template>
   <div class="">
-    
     <router-link :to="{name:'dealerDetails',  query: {dealerId: data.id}}" class="btn dealers_btn mr-3">
       Details
     </router-link>

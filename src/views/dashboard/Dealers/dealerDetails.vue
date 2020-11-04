@@ -146,7 +146,7 @@
           <button class="btn btn_theme enable_edit" @click="enableEdit" v-if="formMode === 'details'">Enable Edit</button>
           <button class="btn  cancel_edit" @click="cancel_edit" v-if="formMode === 'edit'">Cancel</button>
         </div>
-        </div>
+    </div>
   </masterLayout>
 </template>
 
