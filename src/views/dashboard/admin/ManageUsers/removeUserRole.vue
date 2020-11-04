@@ -28,12 +28,12 @@
                 <div class="input__block">
                   <select class="form-control" v-model="role">
                       <option disabled value="selectRole">Select Role</option>
-                      <option v-for="(aRole, index) in roles" :value="aRole.name" :key="index">{{ aRole.name }}</option>
+                      <option v-for="(aRole, index) in roles" :value="aRole" :key="index">{{ aRole }}</option>
                       
                   </select>
                 </div>
                 <div class="text-center mt-3">
-                  <button class="btn btn_theme" @click="addUserToRole"
+                  <button class="btn btn_theme" @click="removeUserFromRole"
                     :disabled="isButtonDisabled ? true : null"
                     :style="[
                       isButtonDisabled
@@ -73,32 +73,42 @@ export default {
   },
 
   mounted() {
-    this.getRoles()
+    this.getUserDetails()
   },
   data() {
     return {
       backgroundUrl,
       role: 'selectRole',
       roles: [],
+      managing: {},
       isButtonDisabled: false,
     };
   },
   
   methods: {
-    getRoles() {
+    getUserDetails() {
         this.axios
-          .get(
-              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
-              .then(res => {
-                  res.data.sort((a, b) => {
-                      return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
-                  });
-                  this.roles = res.data
-              })
-              .catch(error => {
-              });
+        .get(
+            `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig)
+            .then(res => {
+                let roles
+                if (res.data.roles == "") {
+                    roles = []
+                } else {
+                    roles = res.data.roles.split(',')
+                }
+
+                roles.sort((a, b) => {
+                  return a.toLowerCase() > b.toLowerCase() ? 1 : a.toLowerCase() < b.toLowerCase() ? -1 : 0
+                })
+
+                this.roles = roles
+                this.manaigng = res.data.managing
+            })
+            .catch(error => {
+            });
     },
-    addUserToRole(event) {
+    removeUserFromRole(event) {
       event.preventDefault();
 
       if(this.role == 'selectRole') {
@@ -115,10 +125,13 @@ export default {
         id: ''
       }
 
+      console.log(data)
+      return
+
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/RemoveUserFromRole`, data, configObject.authConfig)
           .then(res => {
                 this.$toast("Successfully Added User", {
                     type: "success",

@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Edit User To Role</h5>
+            <h5 class="title">Edit User</h5>
           </div>
         </div>
       </div>
@@ -72,6 +72,9 @@
                 <i class="fa fa-map-o mr-1" aria-hidden="true"></i>
           </router-link> -->
            <router-link v-b-tooltip.hover title="Map User To Role" :to="{name:'map_user_to_role', query: { id: this.$route.query.id }}" class="btn btn-primary" >
+                <i class="fa fa-refresh mr-1" aria-hidden="true"></i>
+          </router-link>
+          <router-link v-b-tooltip.hover title="Remove User From Role" :to="{name:'removeUserRole', query: { id: this.$route.query.id }}" class="btn btn-primary" >
                 <i class="fa fa-refresh mr-1" aria-hidden="true"></i>
           </router-link>
 
