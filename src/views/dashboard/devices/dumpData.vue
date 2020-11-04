@@ -253,7 +253,6 @@ export default {
             $('.loader2').hide();
             this.timestampDetails = res.data.date
             this.$modal.show('timestampModal')
-            // alert(`The timestamp is: ${res.data.date}`)
           })
           .catch(error => {
               this.isButtonDisabled2 = false;
