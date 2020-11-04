@@ -2,10 +2,10 @@
 <modal class="editPumpStat" name="timestampModal" transition="pop-out" :width="400" :height="300" >
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="40" height="40"></span>
-      <h6>TimeStamp Details</h6>
+      <h4>Timestamp Details</h4>
   </div>
-   <div class="py-5">
-       <h3>TIMESTAMP</h3>
+   <div class="py-5 text-center">
+       <h4>{{timestamp}}</h4>
   </div>
 
   
