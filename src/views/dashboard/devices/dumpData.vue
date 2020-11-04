@@ -1,5 +1,7 @@
 <template>
-  <masterLayout>
+<div>
+    <TimestampModal :timestamp="timestampDetails" />
+    <masterLayout>
     <div class="row">
       <div class="col-lg-7 col-md-6">
         <div class="new_row_section">
@@ -120,6 +122,8 @@
         <TableLoader :showLoader="showLoader"/>
     </div>
   </masterLayout>
+</div>
+
 </template>
 
 <script>
@@ -128,6 +132,7 @@ import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort} from "@syncfusion/ej2-vue-grids";
+import TimestampModal from '@/components/modals/timestamp.vue';
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -135,6 +140,7 @@ export default {
   components: {
     masterLayout,
     TableLoader,
+    TimestampModal
   },
   provide: {
       grid: [Page, Sort]
@@ -160,7 +166,8 @@ export default {
       showLoader: false,
       timeStamp: null,
       deviceId1: null,
-      deviceId2: null
+      deviceId2: null,
+      timestampDetails: ''
     };
   },
   mounted() {
@@ -230,7 +237,9 @@ export default {
             console.log(res.data)
             this.isButtonDisabled2 = false;
             $('.loader2').hide();
-            alert(`The timestamp is: ${res.data.date}`)
+            this.timestampDetails = res.data.date
+            this.$modal.show('timestampModal')
+            // alert(`The timestamp is: ${res.data.date}`)
           })
           .catch(error => {
               this.isButtonDisabled2 = false;
