@@ -11,7 +11,7 @@
       <div class="row align-items-center justify-content-center hundred-percent-height">
         <div class="col-md-12 ">
           <div class="text-center ">
-            <h5 class="title">Map User To Dealer</h5>
+            <h5 class="title">Map User To Dealer ({{email}})</h5>
           </div>
         </div>
       </div>
@@ -100,6 +100,20 @@ export default {
 
   mounted() {
     this.getCompanies()
+    this.id = this.$route.query.id;
+    let ml = sessionStorage.getItem(this.id);
+    if (!ml) {
+    let allData = localStorage.getItem("usersList");
+    let dt = JSON.parse(allData);
+    dt.forEach((my, index) => {
+        if (my.id === this.id) {
+            ml = JSON.stringify(my);
+            sessionStorage.setItem(this.id, ml);
+        }
+    });
+    }
+    const userObject = JSON.parse(ml);
+    this.email = userObject.userName
   },
   data() {
     return {
@@ -110,6 +124,7 @@ export default {
       dealerId: 'selectDealer',
       role: 'dealers',
       isButtonDisabled: false,
+      email: ''
     };
   },
   watch: {
