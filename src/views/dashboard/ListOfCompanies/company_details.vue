@@ -141,9 +141,8 @@
                             v-model="newCompObj.state"
                             disabled
                             v-show="formMode === 'details'"
-                            name="Company.State"
                           />
-                          <select v-model="newCompObj.state" class="form-control" v-show="formMode === 'edit'">
+                          <select v-model="newCompObj.state" class="form-control" name="Company.State"  v-show="formMode === 'edit'">
                               <option disabled selected value="select state">select state</option>
                               <option :value="st.name" v-for="(st,i) in states" :key='i'>{{st.name}}</option>
                           </select>
@@ -155,22 +154,21 @@
             </div>
           </div>
           <div class="text-center mt-3">
-          <button class="btn btn_theme update_info"   @click="update" :style="[
-              isButtonDisabled
-                ? { cursor: 'not-allowed' }
-                : { cursor: 'pointer' }
-            ]" v-if="formMode === 'edit'">Save 
-              <img
-                src="@/assets/img/git_loader.gif"
-                style="display:none"
-                width="35px"
-                class="ml-3 loader"
-            />
-        </button>
+            <button class="btn btn_theme update_info"   @click="update" :style="[
+                isButtonDisabled
+                  ? { cursor: 'not-allowed' }
+                  : { cursor: 'pointer' }
+              ]" v-if="formMode === 'edit'">Save 
+                <img
+                  src="@/assets/img/git_loader.gif"
+                  style="display:none"
+                  width="35px"
+                  class="ml-3 loader"
+              />
+          </button>
           <button class="btn btn_theme enable_edit" @click="enableEdit" v-if="formMode === 'details'">Enable Edit</button>
           <button class="btn  cancel_edit" @click="cancel_edit" v-if="formMode === 'edit'">Cancel</button>
-          
-          </div>
+        </div>
     </div>
   </masterLayout>
 </template>
@@ -218,7 +216,7 @@ export default {
       
   },
   methods: {
-    getStates() {
+      getStates() {
       this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
           .then(res => {
               this.states = res.data
@@ -253,21 +251,21 @@ export default {
       },
       update(event){
         event.preventDefault()
-        if(!this.companyObj.name) {
+        if(!this.newCompObj.name) {
             this.$toast("Company Name Field cannot be blank", {
                 type: "error", 
                 timeout: 3000
             });
             return;
         }
-        if(!this.companyObj.email) {
+        if(!this.newCompObj.email) {
             this.$toast("Email Field cannot be blank", {
                 type: "error", 
                 timeout: 3000
             });
             return;
         }else {
-            if(!this.validateEmail(this.companyObj.email)) {
+            if(!this.validateEmail(this.newCompObj.email)) {
             this.$toast("Invalid Email Format", {
                 type: "error", 
                 timeout: 3000
@@ -275,28 +273,28 @@ export default {
             return;
             }
         }
-        if(!this.companyObj.street) {
+        if(!this.newCompObj.street) {
             this.$toast("Street Field cannot be blank", {
                 type: "error", 
                 timeout: 3000
             });
             return;
         }
-        if(!this.companyObj.city) {
+        if(!this.newCompObj.city) {
             this.$toast("City Field cannot be blank", {
                 type: "error", 
                 timeout: 3000
             });
             return;
         }
-        if(!this.companyObj.country) {
+        if(!this.newCompObj.country) {
             this.$toast("Select a valid country", {
                 type: "error", 
                 timeout: 3000
             });
             return;
         }
-        if(!this.companyObj.state) {
+        if(!this.newCompObj.state) {
             this.$toast("State Field cannot be blank", {
                 type: "error", 
                 timeout: 3000

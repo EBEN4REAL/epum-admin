@@ -5,7 +5,7 @@
                 <div class="row px-5">
                 <div class="col-lg-6">
                     <div class="device-header">
-                        <h5>{{deviceDetailObj.branchName}} DEVICE DATAILS</h5>
+                        <h5>{{deviceDetailObj.branchName}} Device details</h5>
                         <p>Synced Transactions: {{deviceDetailObj.syncedTransaction}}, Un-Synced Transactions: {{deviceDetailObj.unsynced}} </p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                            <h6>FIRMWARE VERSION</h6>
                            <div class="flex_card">
                                <h5>{{!deviceDetailObj.canUpdate ? 'Device Can Not Update' : 'Device Can Update' }}  </h5>
-                               <button class="resolve-btn">Reset</button>
+                               <button class="btn resolve-btn"  @click="toggleCanUpdate">Revert</button>
                            </div>
                        </div>
                    </div>
@@ -49,8 +49,7 @@
                        <div class="card_border p-3">
                            <h6>SHOULD DEVICE RESTART?</h6>
                            <div class="flex_card">
-                               <h5>Device is Not Set for Restart</h5>
-                               <router-link :to="{name: ''}" class="resolve-btn">Set to restart</router-link>
+                               <h5>{{!deviceDetailObj.restart ? 'Device is not set for restart' : 'Device is set for  restart' }}  </h5>
                            </div>
                        </div>
                    </div>
@@ -66,8 +65,7 @@
                        <div class="card_border p-3">
                            <h6>MEMORY USAGE</h6>
                            <div class="flex_card">
-                               <h5>Device is Not Set for Memory Reset</h5>
-                               <router-link :to="{name: ''}" class="resolve-btn">Set to restart</router-link>
+                               <h5>{{!deviceDetailObj.memoryReset ? 'Device is Not Set for Memory Reset' : 'Device is Set for  Memory Reset' }}  </h5>
                            </div>
                        </div>
                    </div>
@@ -82,7 +80,7 @@
                    <div class="col-lg-6 col-md-6">
                       <div class="card_border p-3">
                            <h6>LAST UPDATE DOWNLOAD</h6>
-                           <p>Not Downloaded Yet</p>
+                           <p>{{!deviceDetailObj.firmwareUpdate ? 'Not Downloaded Yet' : deviceDetailObj.firmwareUpdate }}  </p>
                        </div>
                    </div>
                </div>
@@ -143,10 +141,35 @@ export default {
       }
       return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    toggleCanUpdate() {
+        let resp = confirm("Are you sure want to revert this device?");
+        if (resp) {
+            let update = 0
+            if(!this.deviceDetailObj.canUpdate) {
+              update = 1
+            }
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Devices/ToggleCanUpdate/${this.$route.query.deviceId}/${update}`,
+                configObject.authConfig
+            )
+            .then((res) => {
+                this.$toast("Successfully Reverted Device", {
+                type: "success",
+                timeout: 3000,
+                });
+            })
+            .catch((error) => {
+                this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000,
+                });
+            });
+        }
+    },
     getDeviceDetails() {
       this.axios.get(`${configObject.apiBaseUrl}/Devices/Details/${this.$route.query.deviceId}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
             this.deviceDetailObj = res.data
             $('.loader').hide();
           })

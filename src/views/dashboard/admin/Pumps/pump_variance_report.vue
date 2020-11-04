@@ -192,6 +192,9 @@ export default {
                 this.getSales();
             }
         },
+        varianceObj(obj) {
+            this.startDate = this.$moment(new Date(obj.date)).format("MMMM D, YYYY")
+        }
     },
     mounted() {
         this.getSales()
@@ -201,9 +204,9 @@ export default {
         let allData = localStorage.getItem("pumpsVarianceList");
         let dt = JSON.parse(allData);
         dt.forEach((my, index) => {
-            if (my.index === this.varianceId) {
-            ml = JSON.stringify(my);
-            sessionStorage.setItem(this.varianceId, ml);
+            if (my.index == this.varianceId) {
+                ml = JSON.stringify(my);
+                sessionStorage.setItem(this.varianceId, ml);
             }
         });
         }

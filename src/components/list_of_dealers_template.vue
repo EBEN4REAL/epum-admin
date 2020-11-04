@@ -1,9 +1,5 @@
 <template>
   <div class="">
-    <router-link :to="{name:'editDealers', query: {dealerId: data.id}}" class="btn details_btn mr-3">
-      Edit
-    </router-link>
-
     <router-link :to="{name:'dealerDetails',  query: {dealerId: data.id}}" class="btn dealers_btn mr-3">
       Details
     </router-link>

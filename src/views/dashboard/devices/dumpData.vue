@@ -1,5 +1,7 @@
 <template>
-  <masterLayout>
+<div>
+    <TimestampModal :timestamp="timestampDetails" />
+    <masterLayout>
     <div class="row">
       <div class="col-lg-7 col-md-6">
         <div class="new_row_section">
@@ -23,7 +25,7 @@
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block input_margin">
-                <input type="text" placeholder="Device ID" class="" v-model="deviceId1" />
+                <input type="number" placeholder="Device ID" class="" v-model="deviceId1" />
             </div>
             </div>
             <div class="col-md-4">
@@ -70,7 +72,7 @@
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block input_margin">
-                <input type="text" placeholder="Device ID" class="" v-model="deviceId2" />
+                <input type="number" placeholder="Device ID" class="" v-model="deviceId2" />
             </div>
             </div>
             <div class="col-md-4">
@@ -120,6 +122,8 @@
         <TableLoader :showLoader="showLoader"/>
     </div>
   </masterLayout>
+</div>
+
 </template>
 
 <script>
@@ -128,6 +132,7 @@ import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort} from "@syncfusion/ej2-vue-grids";
+import TimestampModal from '@/components/modals/timestamp.vue';
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -135,6 +140,7 @@ export default {
   components: {
     masterLayout,
     TableLoader,
+    TimestampModal
   },
   provide: {
       grid: [Page, Sort]
@@ -160,10 +166,13 @@ export default {
       showLoader: false,
       timeStamp: null,
       deviceId1: null,
-      deviceId2: null
+      deviceId2: null,
+      timestampDetails: ''
     };
   },
   mounted() {
+    this.deviceId1 = this.$route.query.id
+    this.deviceId2 = this.$route.query.id
   },
   computed: {
     userName() {
@@ -175,6 +184,14 @@ export default {
       this.$refs.dataGrid.refresh();
     },
     search() {
+      if(!this.deviceId1) {
+          this.$toast("Please input a device ID", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
       if(!this.dateRange.start || !this.dateRange.end) {
           this.$toast("Please select a date range", {
               type: "error", 
@@ -183,12 +200,10 @@ export default {
           return;
       }
 
-      const id = this.deviceId1 ? this.deviceId1 : this.$route.query.id
-
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${id}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
                 let index = 0;
                 res.data.forEach(el => {
@@ -212,6 +227,14 @@ export default {
           });
     },
     convert() {
+      if(!this.deviceId2) {
+          this.$toast("Please input a device ID", {
+              type: "error", 
+              timeout: 3000
+          });
+          return;
+      }
+
       if(!this.timeStamp) {
           this.$toast("Please input a timestamp", {
               type: "error", 
@@ -220,17 +243,16 @@ export default {
           return;
       }
 
-      const id = this.deviceId2 ? this.deviceId2 : this.$route.query.id
-
       $('.loader2').show();
       this.isButtonDisabled2 = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${id}/${this.timeStamp}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.deviceId2}/${this.timeStamp}`, configObject.authConfig)
           .then(res => {
             console.log(res.data)
             this.isButtonDisabled2 = false;
             $('.loader2').hide();
-            alert(`The timestamp is: ${res.data.date}`)
+            this.timestampDetails = res.data.date
+            this.$modal.show('timestampModal')
           })
           .catch(error => {
               this.isButtonDisabled2 = false;
