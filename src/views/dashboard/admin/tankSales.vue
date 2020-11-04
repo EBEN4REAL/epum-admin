@@ -18,7 +18,7 @@
                                             <p class="dashboard__card__header text-white">TANK SALES</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 tanksales">
                                         <vue-ctk-date-time-picker
                                             v-model="dateRange"
                                             :max-date="maxDate"

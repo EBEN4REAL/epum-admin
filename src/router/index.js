@@ -21,6 +21,7 @@ import MapuserToDealer from "../views/dashboard/admin/ManageUsers/mapUserToDeale
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import MapUserToCompany from "../views/dashboard/admin/ManageUsers/mapUserToCompany";
 import MapUserToRole from "../views/dashboard/admin/ManageUsers/MapUserToRole";
+import RemoveUserRole from "../views/dashboard/admin/ManageUsers/RemoveUserRole";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
@@ -642,6 +643,15 @@ let routes = [
   path: "/detailsDealer",
   name: "detailsDealer",
   component: DetailsDealer,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/removeUserRole",
+  name: "removeUserRole",
+  component: RemoveUserRole,
   meta: {
       authorize: true,
       authRoles: ['Admin']

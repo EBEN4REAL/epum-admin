@@ -40,7 +40,9 @@
             </div>
             <div class="col-md-8">
               <div class="input__block">
-                <select v-model="tankDetailsObj.productId" >
+                <select 
+                class="input__block"
+                v-model="tankDetailsObj.productId" >
                     <option value="select product" disabled selected>select product</option>
                     <option :value="prod.id" v-for="(prod, index) in prodList"
                   :key="index">{{prod.name}}</option>

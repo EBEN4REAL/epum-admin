@@ -77,7 +77,7 @@
                     height: '135px'
                     }
                ]">
-            <div class="text-center px-5 pt-4 text-white">
+            <div class="text-center px-5 pt-4 text-white pump_search">
                 <h4> Hi, admin search for pumps here</h4>
                 
                     <div class="text-center pt-3">

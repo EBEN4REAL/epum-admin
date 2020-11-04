@@ -1222,6 +1222,7 @@ h6.dashboard__card__header {
   a.create_btn {
     margin-top: 0 !important;
     margin-left: 25px;
+    margin-bottom: 30px;
   }
   .mail_card {
     margin: 12px;
@@ -1239,7 +1240,7 @@ h6.dashboard__card__header {
     margin-top: 10px;
   }
   .dashboard__card.small_card.align-center {
-    height: 265px;
+    height: auto;
   }
   .large_card {
     margin-top: 19px;
@@ -1261,7 +1262,8 @@ h6.dashboard__card__header {
     height: 80% !important;
   }
   .product_details_card.mt-3 {
-    margin-top: 5px !important;
+    margin-top: 20px !important;
+    height: auto !important;
   }
   .small__card_content_wrapper .map-device-company {
     width: 80% !important;
@@ -1282,9 +1284,48 @@ h6.dashboard__card__header {
   }
   .small_card.inner_tank_card {
     height: 116px;
-    margin-left: 0; 
+    margin-left: 0;
     margin-top: 17px;
     margin-top: 32px !important;
+    margin: 0 auto;
+  }
+  .details_form {
+    padding-right: 0px !Important;
+  }
+  .account_Settings_profile_details_section_row {
+    margin-top: 19px;
+}
+  .tanksales {
+    width: 80% !important;
+    text-align: center;
+    margin-top: -50px !important;
+    margin: 0 auto;
+  }
+  .input_margin {
+    margin-bottom: 15px;
+}
+.card_border {
+  margin-bottom: 20px;
+}
+.transactionc_card {
+  height: 94px !important;
+}
+.wallet__transaction {
+  height: 200px !important;
+  margin: 0 auto;
+    width: 100%;
+    padding: 25px;
+}
+.voucher_container {
+  height: 300px;
+}
+.pump_search h4{
+  font-size: 15px;
+}
+.tank_dip {
+  width: 80% !important;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
 }
 
