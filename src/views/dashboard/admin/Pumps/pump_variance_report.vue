@@ -205,16 +205,13 @@ export default {
         let dt = JSON.parse(allData);
         dt.forEach((my, index) => {
             if (my.index == this.varianceId) {
-                console.log(my)
                 ml = JSON.stringify(my);
                 sessionStorage.setItem(this.varianceId, ml);
             }
         });
         }
         let pumpVarianceDetailsObj = JSON.parse(ml);
-        console.log(pumpVarianceDetailsObj)
         this.varianceObj = pumpVarianceDetailsObj;
-        console.log(this.varianceObj)
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });

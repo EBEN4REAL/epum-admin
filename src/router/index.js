@@ -35,7 +35,6 @@ import Dealers from "../views/dashboard/Dealers/dealers";
 import CreateDealer from "../views/dashboard/Dealers/createDealer";
 import EditDealers from "../views/dashboard/Dealers/editDealers";
 import DealerDetails from "../views/dashboard/Dealers/dealerDetails";
-import DetailsDealer from "../views/dashboard/Dealers/detailsDealer";
 import AuditSales from "../views/dashboard/admin/Audit.vue";
 import BranchAuditSales from "../views/dashboard/admin/branchAuditSales.vue";
 import InstalledPumps from "../views/dashboard/admin/Pumps/installedPumps";
@@ -638,17 +637,8 @@ let routes = [
       authRoles: ['Admin']
   }
 },
-{
-  path: "/detailsDealer",
-  name: "detailsDealer",
-  component: DetailsDealer,
-  meta: {
-      authorize: true,
-      authRoles: ['Admin']
-  }
-},
-];
 
+];
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,

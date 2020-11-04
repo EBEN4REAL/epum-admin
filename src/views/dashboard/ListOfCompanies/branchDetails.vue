@@ -54,54 +54,6 @@
                 </div>
               </router-link>
             </div>
-            <!-- <div class="col-lg-3 col-md-3 remove_padding-right">
-              <router-link
-                :to="{ name: 'installedPumps' }"
-                class="router_link__text"
-              >
-                <div
-                  class="small__card_content_wrapper small_card"
-                  style="height: 100%"
-                >
-                  <p class="dashboard__card__header">Truck arrivals</p>
-                  <div
-                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
-                  >
-                    <img src="@/assets/img/oil-truck (2).png" width="40px" />
-                  </div>
-                  <div class="mt-3">
-                    <small
-                      class="dashboard__card__header_bottom font-weight-bold"
-                      >0</small
-                    >
-                  </div>
-                </div>
-              </router-link>
-            </div>
-            <div class="col-lg-3 col-md-3 remove_padding-right">
-              <router-link
-                :to="{ name: 'reFilledTanks' }"
-                class="router_link__text"
-              >
-                <div
-                  class="small__card_content_wrapper small_card"
-                  style="height: 100%"
-                >
-                  <p class="dashboard__card__header">Tank re-fill</p>
-                  <div
-                    class="icon_wrapper inner_border_radius centralize icon_div_big text-center"
-                  >
-                    <img src="@/assets/img/barrel.png" width="30px" />
-                  </div>
-                  <div class="mt-3">
-                    <small
-                      class="dashboard__card__header_bottom font-weight-bold"
-                      >0</small
-                    >
-                  </div>
-                </div>
-              </router-link>
-            </div> -->
           </div>
 
           <div class="small_card product_details_card mt-3">

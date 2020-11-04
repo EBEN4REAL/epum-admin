@@ -5,7 +5,7 @@
                 <div class="row px-5">
                 <div class="col-lg-6">
                     <div class="device-header">
-                        <h5>{{deviceDetailObj.branchName}} DEVICE DATAILS</h5>
+                        <h5>{{deviceDetailObj.branchName}} Device details</h5>
                         <p>Synced Transactions: {{deviceDetailObj.syncedTransaction}}, Un-Synced Transactions: {{deviceDetailObj.unsynced}} </p>
                     </div>
                 </div>
@@ -50,7 +50,6 @@
                            <h6>SHOULD DEVICE RESTART?</h6>
                            <div class="flex_card">
                                <h5>{{!deviceDetailObj.restart ? 'Device is not set for restart' : 'Device is set for  restart' }}  </h5>
-                               <!-- <button class="btn resolve-btn">set to restart</button> -->
                            </div>
                        </div>
                    </div>
@@ -171,7 +170,6 @@ export default {
     getDeviceDetails() {
       this.axios.get(`${configObject.apiBaseUrl}/Devices/Details/${this.$route.query.deviceId}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
             this.deviceDetailObj = res.data
             $('.loader').hide();
           })
