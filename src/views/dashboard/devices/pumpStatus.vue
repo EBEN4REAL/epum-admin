@@ -220,7 +220,6 @@ export default {
     methods: {
         searchChange($e) {
             $e.target.value
-            console.log($e.target.value)
             this.getPumpStatus(this.selected, $e.target.value)
         },
         refreshGrid() {

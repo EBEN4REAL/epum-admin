@@ -248,7 +248,6 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.deviceId2}/${this.timeStamp}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
             this.isButtonDisabled2 = false;
             $('.loader2').hide();
             this.timestampDetails = res.data.date
