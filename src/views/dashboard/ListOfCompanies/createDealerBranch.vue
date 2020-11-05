@@ -132,7 +132,11 @@
                   <input class="form-check-input" type="checkbox" id="" value="LPG" @change="checkIfOnline"> Status
                 </div>
                 <div class="text-center mt-3">
-                  <button class="btn btn_theme" @click="createBranch">Create
+                  <button class="btn btn_theme" @click="createBranch" :style="[
+                      isButtonDisabled
+                        ? { cursor: 'not-allowed' }
+                        : { cursor: 'pointer' }
+                    ]">Create
                      <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
@@ -185,6 +189,7 @@ export default {
       branchUserId: "string",
       date: "2020-10-09T15:35:33.494Z",
       sendReportMail: null,
+      isButtonDisabled: false
     };
   },
   mounted() {
@@ -316,7 +321,7 @@ export default {
           online: this.online,
           sendReportMail: this.sendReportMail,
       }
-
+      this.isButtonDisabled = true
       $('.loader').show();
        this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
           .then(res => {
@@ -324,6 +329,7 @@ export default {
                     type: "success",
                     timeout: 3000
                 });
+                this.isButtonDisabled = false
                 $('.loader').hide();
                 this.$router.push({name: 'dealer_branches', query: {dealerId: this.$route.query.dealerId}})
           })
