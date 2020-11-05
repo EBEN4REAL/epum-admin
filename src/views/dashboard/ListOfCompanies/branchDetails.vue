@@ -174,7 +174,7 @@
                        
                       </div>
                     </div>
-                     <div class="clearfix mt-3" style="width: 70%; margin: 0 auto;">
+                     <div class="clearfix mt-3" style="width: 90%; margin: 0 auto;">
                             <div class="left_div">
                                 <span class="left">Current Volume:</span>
                             </div>
@@ -184,7 +184,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="clearfix pb-4 mt-2" style="width: 70%; margin: 0 auto;">
+                        <div class="clearfix pb-4 mt-2" style="width: 90%; margin: 0 auto;">
                             <div class="left_div">
                                 <span class="left">Max Capacity:</span>
                             </div>

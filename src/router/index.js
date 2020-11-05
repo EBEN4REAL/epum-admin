@@ -13,6 +13,7 @@ import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies
 import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_details";
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
 // import UserDetails from "../views/dashboard/admin/ManageUsers/userDetails";
+import UsersEdit from "../views/dashboard/admin/ManageUsers/usersEdit";
 import UserDetails from "../views/dashboard/admin/ManageUsers/user_details";
 import EditUser from "../views/dashboard/admin/ManageUsers/editUser";
 import SalesRep from "../views/dashboard/ListOfCompanies/sales_rep";
@@ -643,6 +644,15 @@ let routes = [
   path: "/removeUserRole",
   name: "removeUserRole",
   component: RemoveUserRole,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/usersEdit",
+  name: "usersEdit",
+  component: UsersEdit,
   meta: {
       authorize: true,
       authRoles: ['Admin']
