@@ -1,8 +1,10 @@
 <template>
     <div class="dropdown-content" id="myDropdown">
-        <router-link v-for="(link, i) in details.info" :key="i" :to="{ name: link.link, query: { ...details.queryStrings } }">
+        <!-- <router-link v-for="(link, i) in details.info" :key="i" :to="{ name: $route.name, query: { ...details.queryStrings } }"> -->
+        <router-link v-for="(link, i) in details.info" :key="i" :to="{name: $route.name}">
             {{ link.name }}
         </router-link>
+        
         <button class="text-center" @click="shutDown" v-if="(details.data.deviceType == 'Pump' || details.data.deviceType == 'Gateway') && (details.data.shutdownStatus == false || details.data.shutdownStatus == null)">
             <p style="margin-bottom: 0">Shut Down</p>
         </button>
