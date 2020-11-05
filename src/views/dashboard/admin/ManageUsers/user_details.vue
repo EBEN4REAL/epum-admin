@@ -4,7 +4,7 @@
           <div class="new_row_section mb-3">
           <div class="small_card product_details_card mt-3">
             <div class="row">
-              <div class="col-lg-4 col-md-2 border-right">
+              <div class="col-lg-4 col-md-2 user_contact border-right">
                 <div class="d-flex justify-content-between">
                     <div class="image">
                         <img src="@/assets/img/company_icon.png" width="60px" />
@@ -16,13 +16,13 @@
                     </div>
                 </div>
               </div>
-               <div class="col-lg-3 col-md-2 border-right">
+               <div class="col-lg-3 col-md-2 credit_limit border-right">
                 <div class="text-center">
                 <button class="btn create_btn primary_btn">Credit limit</button>
                 <h6 class="mt-2">{{userObject2.creditLimit}}</h6>
             </div>
               </div>
-              <div class="col-lg-3 col-md-2 border-right">
+              <div class="col-lg-3 col-md-2 number_roles border-right">
                 <div class="text-center">
                 <button class="btn create_btn primary_btn">Number of roles</button>
                 <h6 class="mt-2">{{numberOfRoles}}</h6>
@@ -30,7 +30,7 @@
               </div>
               <div class="col-lg-2 col-md-2">
                <div class="mt-4 mx-auto text-center">
-              <button class="btn btn_theme">Edit User</button>
+              <router-link :to="{ name: 'usersEdit', query: {id: this.$route.query.id} }" class="p-2 btn btn_theme">Edit User</router-link>
             </div>
               </div>
             </div>
@@ -56,39 +56,44 @@
                     </button> -->
                 </div>
             </div>
+            <div v-if="!roles.length && !loading" class="no_managing">
+              <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
+              <h5>No Role for this user</h5>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="card border-0">
           <div class="card-body branch">
-            <div  class="card-title">
-              <h5>{{managingName}} Managed</h5>
-            </div>
-          <div v-if="managing.length && !loading">
-              <div class="card-text p-2 pl-4 pr-4 d-flex justify-content-between border-bottom" v-for="(manage, index) in managing" :key="index">
-                <h6>{{getName(manage)}}:</h6>
-                <p>{{managingObject[manage]}}</p>
-                <button class="btn red-btn" @click="removeUser"
-                    :disabled="isButtonDisabled ? true : null"
-                    :style="[
-                      isButtonDisabled
-                        ? { cursor: 'not-allowed' }
-                        : { cursor: 'pointer' }
-                    ]"
-                  >Remove
-                    <img
-                      src="@/assets/img/git_loader.gif"
-                      style="display:none"
-                      width="35px"
-                      class="ml-3 loader"
-                    />
-                </button>
+              <div class="card-title">
+                <h5>{{managingName}} Managed</h5>
               </div>
-          </div>
-          <div v-if="managing.length == 0 && !loading">
-            <p>No Company or Branch Managed</p>
-          </div>
+              <div v-if="managing.length && !loading">
+                <div class="card-text p-2 pl-4 pr-4 d-flex justify-content-between border-bottom" v-for="(manage, index) in managing" :key="index">
+                  <h6>{{getName(manage)}}:</h6>
+                  <p>{{managingObject[manage]}}</p>
+                  <button class="btn red-btn" @click="removeUser"
+                      :disabled="isButtonDisabled ? true : null"
+                      :style="[
+                        isButtonDisabled
+                          ? { cursor: 'not-allowed' }
+                          : { cursor: 'pointer' }
+                      ]"
+                    >Remove
+                      <img
+                        src="@/assets/img/git_loader.gif"
+                        style="display:none"
+                        width="35px"
+                        class="ml-3 loader"
+                      />
+                  </button>
+                </div>
+            </div>
+            <div v-if="!managing.length && !loading" class="no_managing">
+              <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
+              <h5>No Company or Branch Managed</h5>
+            </div>
           </div>
         </div>
       </div>

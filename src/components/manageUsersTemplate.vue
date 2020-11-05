@@ -7,10 +7,6 @@
     <router-link :to="{name: 'user_details',  query: {id: data.id}}" class="btn dealers_btn mr-3">
       Details
     </router-link>
-
-    <!-- <router-link :to="{name:''}" class="btn branches_btn mr-3">
-     Delete
-    </router-link>  -->
    </div>
 </template>
 
