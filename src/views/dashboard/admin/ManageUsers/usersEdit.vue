@@ -37,7 +37,7 @@
                    <div class="icon_wrapper centralize icon_div_big mx-auto text-center">
                     <img src="@/assets/img/truck.svg" width="60px" />
               </div>
-              <router-link :to="{name:'removeUserRole'}" class="btn mx-auto create_btn primary_btn colour_three" > Remove User Role
+              <router-link :to="{name:'removeUserRole'}" class="btn mx-auto create_btn primary_btn colour_two" > Remove User Role
           </router-link>
             </div>
               </div>
