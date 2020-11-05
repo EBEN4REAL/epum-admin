@@ -1195,11 +1195,17 @@ h6.dashboard__card__header {
   p {
     color: $primaryColor;
   }
+  .image {
+    margin-top: 27px;
+}
   .primary_btn {
     border-radius: 7px !important;
     width: 53%;
     background: #EDF6FF !important;
     color: #290C53 !important;
+}
+.btn_theme {
+  color: $goldColor !important;
 }
   .card {
     border-radius: 30px;
@@ -1222,12 +1228,12 @@ h6.dashboard__card__header {
         color: #00e38c;
       }
       .red-btn {
-        background: #e30017 0% 0% no-repeat padding-box;
+        background: rgba(227, 0, 23, 0.1);
         box-shadow: 0px 3px 26px #00000017;
-        color: black;
+        color: #E30017;
         text-align: center;
         border-radius: 10px;
-        opacity: 0.3;
+        font-size: 15px;
       }
       .btn.disabled {
         background: #E7E7E8 0% 0% no-repeat padding-box;
@@ -1258,9 +1264,38 @@ h6.dashboard__card__header {
         width: 58%;
         position: absolute;
         left: 120px;
-        top: 219px;
+        top: 236px;
+      }
+      .user-name {
+        color: #0B2257;
       }
     }
+  }
+}
+
+.users_edit {
+  .product_details_card {
+    padding: 50px 12px;
+  }
+  .primary_btn {
+    margin-top: 33px !important;
+     border-radius: 8px !important;
+}
+  .icon_wrapper {
+    border-radius: 100px;
+    padding: 45px;
+  }
+  .colour_one {
+    background: #EDF6FF !important;
+    color: $primaryColor;
+  }
+  .colour_two {
+    background: #F4E7C7 !important;
+    color: $primaryColor,
+  }
+  .colour_three {
+    background: rgba(226, 255, 220, 0.1) !important;
+    color: #E2FFDC !important;
   }
 }
 
@@ -1408,6 +1443,36 @@ h6.dashboard__card__header {
     width: 80% !important;
     margin: 0 auto;
     margin-bottom: 10px;
+  }
+
+  .user_details {
+    .border-bottom-verical {
+      display: none;
+    }
+    .branch-list {
+      margin-top: 20px;
+    }
+    .card {
+      .roles {
+        height: auto !important;
+      }
+      .branch {
+        text-align: center;
+      }
+    }
+    .card-text {
+      display: block !important;
+      .mobile_resposive__list {
+        margin-left: 29px;
+        margin-top: 30px;
+      }
+      .mobile_btn {
+        margin-right: 43px !important;
+      }
+    }
+    .user-contact {
+      text-align: center;
+    }
   }
 }
 
