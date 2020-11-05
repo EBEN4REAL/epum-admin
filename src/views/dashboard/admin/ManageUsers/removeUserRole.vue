@@ -140,9 +140,6 @@ export default {
         id: ''
       }
 
-      console.log(data)
-      return
-
       $('.loader').show();
       this.isButtonDisabled = true;
 

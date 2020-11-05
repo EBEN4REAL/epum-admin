@@ -9,6 +9,10 @@
 @import "tank.scss";
 @import "editDetailsModal";
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   overflow-x: hidden;
 }
@@ -1210,10 +1214,10 @@ h6.dashboard__card__header {
   .card {
     border-radius: 30px;
     .branch {
-      height: 360px !important;
+      min-height: 360px !important;
     }
     .roles {
-      height: 429px !important;
+      min-height: 360px !important;
     }
     .card-body {
       padding: 0 !important;
@@ -1244,6 +1248,7 @@ h6.dashboard__card__header {
         padding: 8px;
         font-size: 12px;
         width: 69px;
+        cursor: not-allowed;
     }
       .card-title {
         border-radius: 30px 30px 0 0;
@@ -1251,12 +1256,27 @@ h6.dashboard__card__header {
         text-align: center;
         padding: 20px;
         color: $primaryColor;
+        margin-bottom: 0 !important;
         transform: titlecase;
       }
       .card-text {
-        margin-bottom: 0;
-        // border-bottom: 1px solid gray;
-        margin-top: 26px;
+        height: 78px;
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        &.card-text-center {
+          justify-content: center;
+        }
+        &.card-text-border-left {
+          border-right: 1px solid #dee2e6;
+          border-left: 1px solid #dee2e6
+        }
+        h6 {
+          margin-bottom: 0;
+        }
+        p {
+          margin-bottom: 0;
+        }
       }
       .border-bottom-verical {
         transform: rotate(90deg);
@@ -1268,6 +1288,15 @@ h6.dashboard__card__header {
       }
       .user-name {
         color: #0B2257;
+      }
+      .no_managing {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        h5 {
+          color: #cecece
+        }
       }
     }
   }
@@ -1294,8 +1323,9 @@ h6.dashboard__card__header {
     color: $primaryColor,
   }
   .colour_three {
-    background: rgba(226, 255, 220, 0.1) !important;
-    color: #E2FFDC !important;
+    background: rgb(226, 255, 220);
+    color:#25ED00 !important;
+    border: 1px solid #86DC76 !important;
   }
 }
 

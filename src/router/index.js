@@ -12,10 +12,8 @@ import ListOfCompanies from "../views/dashboard/ListOfCompanies/index";
 import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies";
 import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_details";
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
-// import UserDetails from "../views/dashboard/admin/ManageUsers/userDetails";
 import UsersEdit from "../views/dashboard/admin/ManageUsers/usersEdit";
 import UserDetails from "../views/dashboard/admin/ManageUsers/user_details";
-import EditUser from "../views/dashboard/admin/ManageUsers/editUser";
 import SalesRep from "../views/dashboard/ListOfCompanies/sales_rep";
 import MailRecipient from "../views/dashboard/ListOfCompanies/mail_recipient";
 import MapuserToBranch from "../views/dashboard/admin/ManageUsers/mapUserToBranch";
@@ -23,7 +21,6 @@ import MapuserToDealer from "../views/dashboard/admin/ManageUsers/mapUserToDeale
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import MapUserToCompany from "../views/dashboard/admin/ManageUsers/mapUserToCompany";
 import MapUserToRole from "../views/dashboard/admin/ManageUsers/MapUserToRole";
-import RemoveUserRole from "../views/dashboard/admin/ManageUsers/removeUserRole";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
@@ -237,15 +234,6 @@ let routes = [
     path: "/map_user_branch",
     name: "map_user_branch",
     component: MapuserToBranch,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/edit_user",
-    name: "edit_user",
-    component: EditUser,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
@@ -635,15 +623,6 @@ let routes = [
   path: "/branchAuditSales",
   name: "branchAuditSales",
   component: BranchAuditSales,
-  meta: {
-      authorize: true,
-      authRoles: ['Admin']
-  }
-},
-{
-  path: "/removeUserRole",
-  name: "removeUserRole",
-  component: RemoveUserRole,
   meta: {
       authorize: true,
       authRoles: ['Admin']
