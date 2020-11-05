@@ -141,7 +141,7 @@ export default {
                 });
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-                this.$router.push({name: 'manage_users'})
+                this.$router.push({name: 'usersEdit', query: {id: this.$route.query.id}})
           })
           .catch(error => {
               this.isButtonDisabled = false;
