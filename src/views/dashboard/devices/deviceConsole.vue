@@ -122,7 +122,6 @@ export default {
 
     let deviceDetails = JSON.parse(ml)
     this.deviceObj = deviceDetails
-    console.log(this.deviceObj)
   },
   methods: {
     toggler() {

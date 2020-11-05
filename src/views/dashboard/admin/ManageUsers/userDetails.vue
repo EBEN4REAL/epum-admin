@@ -166,6 +166,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     this.userObject2 = res.data
                     if (res.data.roles == "") {
                         this.roles = []
