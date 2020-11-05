@@ -3,6 +3,7 @@
       <div class="users_edit">
           <div class="new_row_section mb-3">
           <div class="small_card product_details_card mt-3">
+             <h4 class="text-center py-3">{{userObject.email}}</h4>
             <div class="row">
               <div class="col-lg-3 col-md-2 user_contact border-right">
                 <div class="text-center">
@@ -15,6 +16,7 @@
               </div>
                <div class="col-lg-3 col-md-2 credit_limit border-right">
                 <div class="text-center">
+                 
               <div class="icon_wrapper centralize icon_div_big mx-auto text-center mt-3">
                     <img src="@/assets/img/truck.svg" width="60px" />
               </div>
@@ -77,9 +79,23 @@ export default {
   },
 
   mounted() {
+    this.id = this.$route.query.id;
+    let ml = sessionStorage.getItem(this.id);
+    if (!ml) {
+    let allData = localStorage.getItem("usersList");
+    let dt = JSON.parse(allData);
+    dt.forEach((my, index) => {
+        if (my.id === this.id) {
+            ml = JSON.stringify(my);
+            sessionStorage.setItem(this.id, ml);
+        }
+    });
+    }
+    this.userObject = JSON.parse(ml);
   },
   data() {
     return {
+      userObject: {}
     };
   },
   
