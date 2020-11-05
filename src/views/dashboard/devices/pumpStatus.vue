@@ -188,7 +188,7 @@ export default {
                 { text: 'show All', value: 'showAll' }
             ],
             searchText: '',
-            showLoader: false,
+            showLoader: true,
             pumpStatusObj:{},
             backgroundUrl,
             pumpStatus: '',
@@ -297,7 +297,7 @@ export default {
             setInterval(timer, 1000);
         },
         getPumpStatus(status, searchText ='') {
-            this.showLoader = true
+            // this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig)
