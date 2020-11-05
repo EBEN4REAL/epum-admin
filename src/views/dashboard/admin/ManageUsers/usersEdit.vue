@@ -29,7 +29,7 @@
                     <img src="@/assets/img/car-parking.svg" width="60px" />
               </div>
                 <router-link :to="{name:'map_user_to_comapny', query: { id: this.$route.query.id } }" class="btn mx-auto create_btn primary_btn colour_three" >Map User To Company
-          </router-link>
+            </router-link>
               </div>
               </div>
               <div class="col-lg-3 col-md-2">
@@ -37,10 +37,20 @@
                    <div class="icon_wrapper centralize icon_div_big mx-auto text-center">
                     <img src="@/assets/img/truck.svg" width="60px" />
               </div>
-              <router-link :to="{name:'removeUserRole', query: { id: this.$route.query.id } }" class="btn mx-auto create_btn primary_btn colour_three" > Remove User Role
-          </router-link>
+            <router-link :to="{name:'map_user_to_role', query: { id: this.$route.query.id } }" class="btn mx-auto create_btn primary_btn colour_two" > Map User To Role
+            </router-link>
             </div>
               </div>
+
+              <!-- <div class="col-lg-3 col-md-2">
+               <div class="text-center">
+                   <div class="icon_wrapper centralize icon_div_big mx-auto text-center">
+                    <img src="@/assets/img/truck.svg" width="60px" />
+              </div>
+            <router-link :to="{name:'map_user_sales_rep', query: { id: this.$route.query.id } }" class="btn mx-auto create_btn primary_btn colour_two" > Map User To Sales Rep
+            </router-link>
+            </div>
+              </div> -->
             </div>
           </div>
         </div>

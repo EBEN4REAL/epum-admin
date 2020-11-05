@@ -14,7 +14,6 @@ import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_detail
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
 import UsersEdit from "../views/dashboard/admin/ManageUsers/usersEdit";
 import UserDetails from "../views/dashboard/admin/ManageUsers/user_details";
-import EditUser from "../views/dashboard/admin/ManageUsers/editUser";
 import SalesRep from "../views/dashboard/ListOfCompanies/sales_rep";
 import MailRecipient from "../views/dashboard/ListOfCompanies/mail_recipient";
 import MapuserToBranch from "../views/dashboard/admin/ManageUsers/mapUserToBranch";
@@ -235,15 +234,6 @@ let routes = [
     path: "/map_user_branch",
     name: "map_user_branch",
     component: MapuserToBranch,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/edit_user",
-    name: "edit_user",
-    component: EditUser,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

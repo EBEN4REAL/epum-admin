@@ -1323,8 +1323,9 @@ h6.dashboard__card__header {
     color: $primaryColor,
   }
   .colour_three {
-    background: rgba(226, 255, 220, 0.1) !important;
-    color: #E2FFDC !important;
+    background: rgb(226, 255, 220);
+    color:#25ED00 !important;
+    border: 1px solid #86DC76 !important;
   }
 }
 

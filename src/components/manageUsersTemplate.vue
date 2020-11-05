@@ -1,6 +1,6 @@
 <template>
    <div>
-     <router-link :to="{name: 'edit_user', query: {id: data.id}}" class="btn details_btn mr-3">
+     <router-link :to="{name: 'usersEdit', query: {id: data.id}}" class="btn details_btn mr-3">
       Edit
     </router-link>
 
