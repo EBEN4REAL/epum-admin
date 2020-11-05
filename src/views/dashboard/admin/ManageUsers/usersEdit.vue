@@ -33,8 +33,8 @@
               </div>
               </div>
               <div class="col-lg-3 col-md-2">
-               <div class="mt-4 mx-auto text-center">
-                   <div class="icon_wrapper centralize icon_div_big mx-auto text-center mt-3">
+               <div class="text-center">
+                   <div class="icon_wrapper centralize icon_div_big mx-auto text-center">
                     <img src="@/assets/img/truck.svg" width="60px" />
               </div>
               <router-link :to="{name:'removeUserRole'}" class="btn mx-auto create_btn primary_btn colour_three" > Remove User Role
@@ -46,7 +46,9 @@
         </div>
 
  <div class="new_row_section mb-3">
-
+     <div class="bg_image">
+         <img src="@/assets/img/backimage.svg" alt="" height="30%">
+     </div>
       </div>
       </div>    
   </masterLayout>
