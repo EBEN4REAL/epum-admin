@@ -13,7 +13,7 @@
                   <div
                     class="icon_wrapper centralize icon_div_big empty_bg text-center"
                   >
-                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                    <img src="@/assets/img/clock (3).svg" width="40px" />
                   </div>
                   <div class="mt-1">
                     <small id="countDown"
@@ -34,7 +34,7 @@
                   <div
                     class="icon_wrapper centralize icon_div_big text-center"
                   >
-                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                    <img src="@/assets/img/cable.svg" width="40px" />
                   </div>
                   <div class="mt-1">
                     <small
@@ -55,7 +55,7 @@
                   <div
                     class="icon_wrapper centralize icon_div_big text-center"
                   >
-                    <img src="@/assets/img/oil-tank-2.png" width="40px" />
+                    <img src="@/assets/img/clock (4).svg" width="40px" />
                   </div>
                   <div class="mt-1">
                     <small

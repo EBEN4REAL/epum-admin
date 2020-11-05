@@ -11,8 +11,8 @@
                             <h3>Hi, {{userName}}</h3>
                             <p>Get started with epump company admin platform by getting to know your Retail Outlet Pump Audit</p>
                         </div>
-                        <div class="col-md-4">
-                            
+                        <div class="col-md-4 text-center">
+                            <img src="@/assets/img/audit.svg" class="mt-2" width="50%" />
                         </div>
                     </div>
                 </div>

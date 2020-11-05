@@ -13,15 +13,15 @@
                             <h3>Hi, {{userName}}</h3>
                             <p>Get started with epump company admin platform by getting to manage your dumped data</p>
                         </div>
-                        <div class="col-md-4">
-                            
+                        <div class="col-md-4 text-center">
+                            <img src="@/assets/img/audit.svg" class="mt-2" width="50%" />
                         </div>
                     </div>
                 </div>
              </div>
             </div>
 
-          <div class="small_card product_details_card audit-sales mt-3">
+          <div class="small_card product_details_card audit-sales dumpdata_card mt-3">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block input_margin">

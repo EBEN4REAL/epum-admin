@@ -980,6 +980,9 @@ h6.dashboard__card__header {
   padding-right: 20px;
 }
 
+.dumpdata_card {
+  height: 142px !important;
+}
 .image_container {
   display: flex;
   justify-content: flex-end;
@@ -992,6 +995,7 @@ h6.dashboard__card__header {
     font-weight: 400;
   }
 }
+
 
 .product_details_card.audit-sales {
   background: #290c53;
@@ -1409,6 +1413,9 @@ h6.dashboard__card__header {
   }
   .details_form {
     padding-right: 0px !important;
+  }
+  .dumped_data, .dumpdata_card {
+    width: 93% !important;
   }
   .account_Settings_profile_details_section_row {
     margin-top: 19px;
