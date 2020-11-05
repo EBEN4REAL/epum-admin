@@ -41,53 +41,53 @@
         <div class="row">
   <div class="col-sm-6">
     <div class="card border-0">
-      <div class="card-body">
+      <div class="card-body roles">
         <h5 class="card-title">List of roles for this user</h5>
         <div class="card-text p-2 d-flex justify-content-between border-bottom">
             <div class="d-flex justify-content-between">
-                <h6 class="ml-4">Customer</h6>
-                <button class="mr-5 btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="ml-4 mr-5">Customer</h6>
+                <button class="mr-5 btn disabled ml-4">Red</button>
             </div>
             <div class="">
                 <div class="d-flex justify-content-between">
-                <h6 class="mr-5">Customer</h6>
-                <button class="mr-5 btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="mr-5">Dealers</h6>
+                <button class="mr-3 btn resolve-btn ml-4">Details</button>
             </div>
             </div>
         </div>
          <div class="card-text p-2 d-flex justify-content-between border-bottom">
             <div class="d-flex justify-content-between">
-                <h6 class="ml-4">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="ml-4 mr-5">Working</h6>
+                <button class="btn resolve-btn ml-4">Red</button>
             </div>
             <div class="">
                 <div class="d-flex justify-content-between">
-                <h6 class="mr-5">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="mr-5">Developer</h6>
+                <button class="mr-4 btn resolve-btn ml-4">Red</button>
             </div>
             </div>
         </div>
          <div class="card-text p-2 d-flex justify-content-between border-bottom">
             <div class="d-flex justify-content-between">
-                <h6 class="ml-4">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="ml-4">Branch Manager</h6>
+                <button class="btn resolve-btn ml-4">Details</button>
             </div>
             <div class="">
                 <div class="d-flex justify-content-between">
                 <h6 class="mr-5">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <button class="mr-3 btn resolve-btn ml-4">Red</button>
             </div>
             </div>
         </div>
          <div class="card-text p-2 d-flex justify-content-between border-bottom">
             <div class="d-flex justify-content-between">
-                <h6 class="ml-4">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <h6 class="ml-4">Company Admin</h6>
+                <button class="btn resolve-btn ml-4">Details</button>
             </div>
             <div class="">
                 <div class="d-flex justify-content-between">
                 <h6 class="mr-5">Customer</h6>
-                <button class="btn resolve-btn disabled ml-4">Red</button>
+                <button class="mr-3 btn resolve-btn ml-4">Red</button>
             </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
   </div>
   <div class="col-sm-6">
     <div class="card border-0">
-      <div class="card-body">
+      <div class="card-body branch">
         <h5 class="card-title">List of companies or branch managed</h5>
        <div class="card-text p-2 d-flex justify-content-around border-bottom">
         <h6>Company name:</h6>
