@@ -84,7 +84,7 @@
                       <img
                         src="@/assets/img/git_loader.gif"
                         style="display:none"
-                        width="35px"
+                        width="20px"
                         class="ml-3 loader"
                       />
                   </button>
@@ -222,10 +222,10 @@ export default {
 
         this.axios.post(`${configObject.apiBaseUrl}/Admin/RemoveUserFromRole`, data, configObject.authConfig)
             .then(res => {
-                  this.$toast("Successfully Removed user from ", {
+                  this.$toast(`Successfully Removed user from ${data.role} role`, {
                       type: "success",
                       timeout: 3000
-                  });
+                  }); 
                   this.isButtonDisabled = false;
                   $('.loader').hide();
                   this.getUserDetails()
