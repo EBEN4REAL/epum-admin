@@ -7,7 +7,7 @@
               <div class="col-lg-4 col-md-2 user_contact border-right">
                 <div class="d-flex justify-content-between">
                     <div class="image">
-                        <img src="@/assets/img/company_icon.png" width="60px" />
+                        <img src="@/assets/img/user.svg" width="60px" />
                     </div>
                     <div class="">
                         <h5>{{userObject.userName}}</h5>
