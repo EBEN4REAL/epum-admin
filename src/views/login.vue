@@ -112,20 +112,27 @@ export default {
                 .post(
                 `${configObject.apiBaseUrl}/Account/login`, data)
                     .then(res => {
-                        this.$toast("Login Successful", {
-                            type: "success",
-                            timeout: 3000
-                        });
+                        
                         $('.loader').hide();
                         this.isButtonDisabled = false;
                         const roles = res.data.role.split(",");
                         res.data.roles = roles
-                        localStorage.setItem("adminUserDetails", JSON.stringify(res.data));
-                        configObject.authConfig = {
-                            headers: { Authorization: "bearer " + res.data.token }
-                        };
+                        
                         if(roles.includes("Super Admin") || roles.includes("Admin")) {
+                            localStorage.setItem("adminUserDetails", JSON.stringify(res.data));
+                            configObject.authConfig = {
+                                headers: { Authorization: "bearer " + res.data.token }
+                            };
                             this.$router.push({ name: "adminDashboard" });
+                            this.$toast("Login Successful", {
+                                type: "success",
+                                timeout: 3000
+                            });
+                        } else {
+                            this.$toast("You do not have any of the required roles to access this portal", {
+                                type: "error",
+                                timeout: 3000
+                            });
                         }
                 })
                 .catch(error => {
