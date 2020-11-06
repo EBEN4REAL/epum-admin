@@ -224,10 +224,6 @@ export default {
         )
         .then((res) => {
           if (res.data.deleted == true || res.data.isUsed == true) {
-            this.$toast("This voucher has either been used, or has been deleted", {
-              type: "error",
-              timeout: 3000,
-            });
             this.isButtonDisabled = false;
             $(".loader").hide();
             return
