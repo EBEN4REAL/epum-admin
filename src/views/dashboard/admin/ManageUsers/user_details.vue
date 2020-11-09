@@ -30,7 +30,7 @@
               </div>
               <div class="col-lg-2 col-md-2">
                <div class="mt-4 mx-auto text-center">
-              <router-link :to="{ name: 'usersEdit', query: {id: this.$route.query.id} }" class="p-2 btn btn_theme">Edit User</router-link>
+              <router-link :to="{ name: 'usersEdit', query: {id: this.$route.query.id} }" class="p-2 btn btn_theme">Map User</router-link>
             </div>
               </div>
             </div>

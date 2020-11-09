@@ -160,7 +160,7 @@
                                             ? { cursor: 'not-allowed' }
                                             : { cursor: 'pointer' }
                                         ]"
-                                    >Add User
+                                    >Map User
                                         <img
                                         src="@/assets/img/git_loader.gif"
                                         style="display:none"
