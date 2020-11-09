@@ -33,32 +33,35 @@
          </div>
         </section>
         <div class="new_row_section mt-3">
-             <ejs-grid
-                v-show="!showLoader"
-                ref="dataGrid"
-                :created="refreshGrid"
-                :allowPaging="true"
-                :allowSorting="true"
-                :pageSettings="tableProps.pageSettings"
-                :toolbar="tableProps.toolbar"
-                :searchSettings="tableProps.search"
-                :allowExcelExport="true"
-                :allowPdfExport="true"
-                :toolbarClick="toolbarClick"
-                :allowTextWrap='true'
-                >
-                <e-columns>
-                    <e-column width="80" field="index" headerText="#"></e-column>
-                    <e-column width="150" :template="device_id" headerText="Device"></e-column>
-                    <e-column width="300" field="name" headerText="name"></e-column>
-                    <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
-                    <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
-                    <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
-                    <e-column width="150" field="state" headerText="State"></e-column>
-                    <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
-                    <e-column :template="list_of_device" headerText="Action" width="300"></e-column>
-                </e-columns>
-            </ejs-grid>
+                <ejs-grid
+                    v-show="!showLoader"
+                    ref="dataGrid"
+                    :created="refreshGrid"
+                    :allowPaging="true"
+                    :allowSorting="true"
+                    :pageSettings="tableProps.pageSettings"
+                    :toolbar="tableProps.toolbar"
+                    :searchSettings="tableProps.search"
+                    :allowExcelExport="true"
+                    :allowPdfExport="true"
+                    :toolbarClick="toolbarClick"
+                    :allowTextWrap='true'
+                    :load="tooltipcontent"
+                    :dataSource="devicesData"
+                    :rowDataBound="rowDataBound"
+                    >
+                    <e-columns>
+                        <e-column width="80" field="index" headerText="#"></e-column>
+                        <e-column width="150" :template="device_id" headerText="Device"></e-column>
+                        <e-column width="300" field="name" headerText="name"></e-column>
+                        <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
+                        <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
+                        <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
+                        <e-column width="150" field="state" headerText="State"></e-column>
+                        <e-column width="200" field="firmwareUpdate" headerText="Firmware Update"></e-column>
+                        <e-column :template="list_of_device" headerText="Action" width="300"></e-column>
+                    </e-columns>
+                </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
             <DropDown :details="details"/>
         </div>
@@ -71,12 +74,18 @@ import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/list_of_device.vue';
 import DeviceId from '@/components/device_id.vue';
 import DropDown from '@/components/Templates/Dropdown/devicesDropdown.vue';
-import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
+import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport, groupAggregates} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
+import { TooltipPlugin } from "@syncfusion/ej2-vue-popups";
+import { GridPlugin } from "@syncfusion/ej2-vue-grids";
+
 
 import Jquery from 'jquery';
 let $ = Jquery;
+
+Vue.use(TooltipPlugin);
+Vue.use(GridPlugin);
 
 export default {
     components: {
@@ -89,6 +98,7 @@ export default {
     },
     data() {
         return {
+            devicesData: [],
             devicesCount: 0,
             searchLoader: false,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
@@ -223,6 +233,20 @@ export default {
                 });
             }
         },
+        rowDataBound: function(arging) {
+            arging.row.addEventListener("mouseover", args => {
+                if(arging.data.nozzles) {
+                    arging.row.children[1].children[0].children[0].innerHTML = arging.data.nozzles
+                }
+            });
+            
+            arging.row.addEventListener("mouseleave", args => {
+                if(arging.data.nozzles) {
+                    arging.row.children[1].children[0].children[0].innerHTML = arging.data.deviceId
+                }
+              
+            });
+        },
         getDevices() {
             this.showLoader = true
             this.axios
@@ -238,7 +262,6 @@ export default {
                     } else { 
                         return 1
                     }
-                        
                     });
                     res.data.forEach(el => {
                         el.index = ++index;
@@ -249,10 +272,7 @@ export default {
                     localStorage.setItem("devicesList", JSON.stringify(res.data))
                     this.devicesCount = res.data.length
                     this.tableCount = res.data.length
-                    this.$refs.dataGrid.ej2Instances.setProperties({
-                        dataSource: res.data
-                    });
-                    this.refreshGrid();
+                    this.devicesData = res.data;
                     this.showLoader = false;
                 })
                 .catch(error => {
