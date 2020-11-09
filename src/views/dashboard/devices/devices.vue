@@ -51,7 +51,7 @@
                     <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="150" :template="device_id" headerText="Device"></e-column>
                     <e-column width="300" field="name" headerText="name"></e-column>
-                    <e-column width="200" field="newDate" headerText="Last Update"></e-column>
+                    <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
                     <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
                     <e-column width="150" field="state" headerText="State"></e-column>
@@ -165,35 +165,6 @@ export default {
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
-        timeSince(date) {
-            var seconds = Math.floor((new Date() - date) / 1000);
-
-            var interval = Math.floor(seconds / 31536000);
-
-            if (interval > 1) {
-                return interval + " years";
-            }
-            interval = Math.floor(seconds / 2592000);
-            if (interval > 1) {
-                return interval + " months";
-            }
-            interval = Math.floor(seconds / 86400);
-            if (interval > 1) {
-                return interval + " days";
-            }
-            interval = Math.floor(seconds / 3600);
-            if (interval > 1) {
-                return interval + " hours";
-            }
-            interval = Math.floor(seconds / 60);
-            if (interval > 1) {
-                return interval + " minutes";
-            }
-            if(Math.floor(seconds)  < 0) {
-                return "now";
-            }
-            return Math.floor(seconds) + " seconds";
-        },
         toolbarClick(args) {
             switch (args.item.text) {
                 case "PDF Export":
@@ -271,13 +242,9 @@ export default {
                         
                     });
                     res.data.forEach(el => {
-                        // el.lastDate = this.$moment(el.lastDate).format("MM/DD/YYYY hh:mm A");
-                        el.lastDate = this.timeSince(new Date(el.lastDate))
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
-
-                        // lastDate
-                        el.newDate = this.timeSince(new Date(el.lastDate))
+                        el.lastDate = this.timeSince(new Date(el.lastDate))
                     })
                     sessionStorage.clear()
                     localStorage.setItem("devicesList", JSON.stringify(res.data))
