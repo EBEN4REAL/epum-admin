@@ -46,6 +46,7 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :allowTextWrap='true'
+                :rowDataBound='rowDataBound'
                 >
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
@@ -252,12 +253,26 @@ export default {
                 });
             }
         },
+        rowDataBound: function(arging) {
+            arging.row.addEventListener("mouseover", args => {
+                let pumps
+                if(arging.data.nozzles) {
+
+                }
+                arging.row.children[1].innerHTML = arging.data.branchName
+            });
+            
+            arging.row.addEventListener("mouseleave", args => {
+                arging.row.children[1].innerHTML = arging.data.branchName
+            });
+        },
         getDevices() {
             this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.companyName && b.companyName) {
@@ -267,10 +282,8 @@ export default {
                     } else { 
                         return 1
                     }
-                        
                     });
                     res.data.forEach(el => {
-                        // el.lastDate = this.$moment(el.lastDate).format("MM/DD/YYYY hh:mm A");
                         el.lastDate = this.timeSince(new Date(el.lastDate))
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
