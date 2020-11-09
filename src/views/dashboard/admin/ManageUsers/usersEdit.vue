@@ -65,7 +65,7 @@
                        <!-- MAP COMPANY -->                   
                         
 
-                        <!-- <div class="mb-3 tabs__lists">
+                        <div class="mb-3 tabs__lists">
                             <h5>Map user to branch by filling the form below</h5>
                         <form>
                     <div class="text-center">
@@ -111,7 +111,7 @@
                          </div>
                     </div>
                     </form>
-                     </div> -->
+                     </div>
 
                         <!-- MAP DEALERS  -->    
                      <!-- <div class="mb-3 tabs__lists">
