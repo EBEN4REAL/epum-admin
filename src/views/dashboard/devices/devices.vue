@@ -51,7 +51,7 @@
                     <e-column width="80" field="index" headerText="#"></e-column>
                     <e-column width="150" :template="device_id" headerText="Device"></e-column>
                     <e-column width="300" field="name" headerText="name"></e-column>
-                    <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
+                    <e-column width="200" field="newDate" headerText="Last Update"></e-column>
                     <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
                     <e-column width="200" field="memoryUsage" headerText="Memory Usage"></e-column>
                     <e-column width="150" field="state" headerText="State"></e-column>
@@ -229,6 +229,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
                 .then(res => {
+                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.companyName && b.companyName) {
@@ -244,6 +245,9 @@ export default {
                         el.lastDate = this.$moment(el.lastDate).format("MM/DD/YYYY hh:mm A");
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
+
+                        // lastDate
+                        el.newDate = this.timeSince(new Date(el.lastDate))
                     })
                     sessionStorage.clear()
                     localStorage.setItem("devicesList", JSON.stringify(res.data))
@@ -259,6 +263,34 @@ export default {
                     this.showLoader = false
                 });
         },
+
+        timeSince(date) {
+
+            var seconds = Math.floor((new Date() - date) / 1000);
+
+            var interval = seconds / 31536000;
+
+            if (interval > 1) {
+                return Math.floor(interval) + (Math.floor(interval) == 1 ? " year ago" : " years ago");
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + (Math.floor(interval) == 1 ? " month ago" : " months ago");
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + (Math.floor(interval) == 1 ? " day ago" : " days ago");
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + (Math.floor(interval) == 1 ? " hour ago" : " hours ago");
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + (Math.floor(interval) == 1 ? " minute ago" : " minutes ago");
+            }
+            return Math.floor(seconds) + (Math.floor(interval) == 1 ? " second ago" : " seconds ago");
+        }
     }
 }
 </script>
