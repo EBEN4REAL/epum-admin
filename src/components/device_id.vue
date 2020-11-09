@@ -1,8 +1,9 @@
 <template>
    <div class="">
-    <router-link :to="{name:'dumpData', query: {id: data.deviceId}}" style="text-decoration: none;">
+    <a :href="`/dump-data?id=${data.deviceId}`"  target="_blank">
       {{data.deviceId}}
-    </router-link>
+    </a>
+    <!-- <p style="display: none" class="nozzles_text">{{data.nozzles}}</p> -->
 
   </div>
 </template>
