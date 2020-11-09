@@ -57,11 +57,190 @@
           </div>
         </div>
 
- <div class="new_row_section mb-3">
-     <div class="bg_image">
-         <img src="@/assets/img/backimage.svg" alt="" height="30%">
-     </div>
-      </div>
+        <div  class="full__row_section mapusersdetails">
+            <div class="row">
+                <div class="col-lg-5 col-md-4 div ep_card mail_card card_height mb-5">
+                    <div class="pad_div">
+
+                       <!-- MAP COMPANY -->                   
+                        
+
+                        <!-- <div class="mb-3 tabs__lists">
+                            <h5>Map user to branch by filling the form below</h5>
+                        <form>
+                    <div class="text-center">
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Company</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="companyId">
+                                <option disabled value="selectCompany">Select Company</option>
+                                <option v-for="(company, index) in companies" :value="company.id" :key="index">{{ company.name }}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Branch</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="branchId">
+                                <option disabled value="selectBranch">Select Branch</option>
+                                <option v-for="(branch, index) in branches" :value="branch.id" :key="index">{{ branch.name }}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Role</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="role">
+                                  <option disabled value="selectRole">Select Role</option>
+                                  <option value="branch manager">Branch Manager</option>
+                                  <option value="branchtechadmin">Branch Tech Admin</option>
+                                  <option value="IndustryManager">Industry Manager</option>
+                                  <option value="sub branch manager">Sub Branch Manager</option>
+                                  <option value="supervisor">Supervisor</option>
+                              </select>
+                            </div>
+                        </div>
+                         <div class="text-center mt-3">
+                            <button class="btn btn_theme">Add User</button>
+                         </div>
+                    </div>
+                    </form>
+                     </div> -->
+
+                        <!-- MAP DEALERS  -->    
+                     <!-- <div class="mb-3 tabs__lists">
+                            <h5>Map user to Dealer by filling the form below</h5>
+                        <form>
+                    <div class="text-center">
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Company</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="companyId">
+                                <option disabled value="selectCompany">Select Company</option>
+                                <option v-for="(company, index) in companies" :value="company.id" :key="index">{{ company.name }}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Dealer</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="dealerId">
+                                <option disabled value="selectDealer">Select Dealer</option>
+                                <option v-for="(dealer, index) in dealers" :value="dealer.id" :key="index">{{ dealer.name }}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Role</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="role">
+                                  <option disabled value="selectRole">Select Role</option>
+                                  <option value="branch manager">Branch Manager</option>
+                                  <option value="branchtechadmin">Branch Tech Admin</option>
+                                  <option value="IndustryManager">Industry Manager</option>
+                                  <option value="sub branch manager">Sub Branch Manager</option>
+                                  <option value="supervisor">Supervisor</option>
+                              </select>
+                            </div>
+                        </div>
+                         <div class="text-center mt-3">
+                            <button class="btn btn_theme">Add User</button>
+                         </div>
+                    </div>
+                    </form>
+                     </div> -->
+
+
+                        <!-- MAP COMPANY -->                   
+                        <!-- <div class="mb-3 tabs__lists"> 
+                            <h5>Map user to Company by filling the form below</h5>
+                        <form>
+                    <div class="text-center">
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Company</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="companyId">
+                                <option disabled value="selectCompany">Select Company</option>
+                                <option v-for="(company, index) in companies" :value="company.id" :key="index">{{ company.name }}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Role</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="role">
+                                  <option disabled value="selectRole">Select Role</option>
+                                  <option value="branch manager">Branch Manager</option>
+                                  <option value="branchtechadmin">Branch Tech Admin</option>
+                                  <option value="IndustryManager">Industry Manager</option>
+                                  <option value="sub branch manager">Sub Branch Manager</option>
+                                  <option value="supervisor">Supervisor</option>
+                              </select>
+                            </div>
+                        </div>
+                         <div class="text-center mt-3">
+                            <button class="btn btn_theme">Add User</button>
+                         </div>
+                    </div>
+                    </form>
+                     </div> -->
+
+
+                      <!-- MAP ROLE -->                   
+                        <!-- <div class="mb-3 tabs__lists"> 
+                            <h5>Map user to Role by filling the form below</h5>
+                        <form>
+                    <div class="text-center">
+                        <div class="align-items-center mt-3">
+                            <div class="text-left">
+                                <label for="">Select Role</label>
+                            </div>
+                            <div class="input__block">
+                            <select class="form-control" v-model="role">
+                                  <option disabled value="selectRole">Select Role</option>
+                                  <option value="branch manager">Branch Manager</option>
+                                  <option value="branchtechadmin">Branch Tech Admin</option>
+                                  <option value="IndustryManager">Industry Manager</option>
+                                  <option value="sub branch manager">Sub Branch Manager</option>
+                                  <option value="supervisor">Supervisor</option>
+                              </select>
+                            </div>
+                        </div>
+                         <div class="text-center mt-3">
+                            <button class="btn btn_theme">Add User</button>
+                         </div>
+                    </div>
+                    </form>
+                     </div> -->
+
+                    </div>
+                </div>
+                <div class="col-lg-7 bg-section">
+                   <div class="new_row_section mb-3">
+                      <div class="bg_image">
+                          <img src="@/assets/img/backimage.svg" alt="" height="477px">
+                      </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+
       </div>    
   </masterLayout>
 </template>

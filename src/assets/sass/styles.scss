@@ -1333,6 +1333,19 @@ h6.dashboard__card__header {
   }
 }
 
+.mapusersdetails {
+  width: 94% !important;
+  .card_height {
+    height: 474px !important;
+    border-radius: 5px !important;
+}
+.bg-section {
+  background: #EDF6FF;
+  height: 478px;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+}
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {
