@@ -54,6 +54,16 @@
                      @click="showManaging(role)">
                       Details
                     </button> -->
+
+                    <button class="btn red-btn" @click="removeUser(role)"
+                      :disabled="isButtonDisabled ? true : null"
+                      :style="[
+                        isButtonDisabled
+                          ? { cursor: 'not-allowed' }
+                          : { cursor: 'pointer' }
+                      ]"
+                    >Remove
+                    </button>
                 </div>
             </div>
             <div v-if="!roles.length && !loading" class="no_managing">
@@ -70,24 +80,9 @@
                 <h5>{{managingName}} Managed</h5>
               </div>
               <div v-if="managing.length && !loading">
-                <div class="card-text p-2 pl-4 pr-4 d-flex justify-content-between border-bottom" v-for="(manage, index) in managing" :key="index">
+                <div class="card-text card-text-center p-2 pl-4 pr-4 d-flex border-bottom" v-for="(manage, index) in managing" :key="index">
                   <h6>{{getName(manage)}}:</h6>
                   <p>{{managingObject[manage]}}</p>
-                  <button class="btn red-btn" @click="removeUser"
-                      :disabled="isButtonDisabled ? true : null"
-                      :style="[
-                        isButtonDisabled
-                          ? { cursor: 'not-allowed' }
-                          : { cursor: 'pointer' }
-                      ]"
-                    >Remove
-                      <img
-                        src="@/assets/img/git_loader.gif"
-                        style="display:none"
-                        width="20px"
-                        class="ml-3 loader"
-                      />
-                  </button>
                 </div>
             </div>
             <div v-if="!managing.length && !loading" class="no_managing">
@@ -159,6 +154,7 @@ export default {
           .get(
               `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig)
               .then(res => {
+                console.log(res.data.roles)
                   this.userObject2 = res.data
                   if (res.data.roles == "") {
                       this.roles = []
@@ -208,16 +204,13 @@ export default {
       // showManaging(role) {
 
       // },
-      removeUser(event) {
-        event.preventDefault();
-
+      removeUser(role) {
         const data = {
             userId: this.$route.query.id,
-            role: this.managingObject.role,
-            id: this.managingObject[this.managingIdName]
+            role: role,
+            id: role == this.managingObject.role ? this.managingObject[this.managingIdName] : ''
         }
 
-        $('.loader').show();
         this.isButtonDisabled = true;
 
         this.axios.post(`${configObject.apiBaseUrl}/Admin/RemoveUserFromRole`, data, configObject.authConfig)
@@ -227,12 +220,10 @@ export default {
                       timeout: 3000
                   }); 
                   this.isButtonDisabled = false;
-                  $('.loader').hide();
                   this.getUserDetails()
             })
             .catch(error => {
                 this.isButtonDisabled = false;
-                $('.loader').hide();
                 this.$toast(error.response.data.message, {
                     type: "error",
                     timeout: 3000
