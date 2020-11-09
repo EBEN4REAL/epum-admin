@@ -253,7 +253,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0;
                     res.data.sort((a, b) => {
                     if (a.companyName && b.companyName) {

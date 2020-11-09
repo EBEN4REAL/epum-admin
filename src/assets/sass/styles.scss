@@ -1269,7 +1269,7 @@ h6.dashboard__card__header {
         align-items: center;
         justify-content: space-between;
         &.card-text-center {
-          justify-content: center;
+          justify-content: space-around;
         }
         &.card-text-border-left {
           border-right: 1px solid #dee2e6;
@@ -1308,7 +1308,7 @@ h6.dashboard__card__header {
 
 .users_edit {
   .product_details_card {
-    padding: 50px 12px;
+    padding: 15px 12px;
   }
   .primary_btn {
     margin-top: 33px !important;
@@ -1333,6 +1333,19 @@ h6.dashboard__card__header {
   }
 }
 
+.mapusersdetails {
+  width: 94% !important;
+  .card_height {
+    height: 474px !important;
+    border-radius: 5px !important;
+}
+.bg-section {
+  background: #EDF6FF;
+  height: 478px;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+}
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {

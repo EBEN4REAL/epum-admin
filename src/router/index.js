@@ -16,11 +16,7 @@ import UsersEdit from "../views/dashboard/admin/ManageUsers/usersEdit";
 import UserDetails from "../views/dashboard/admin/ManageUsers/user_details";
 import SalesRep from "../views/dashboard/ListOfCompanies/sales_rep";
 import MailRecipient from "../views/dashboard/ListOfCompanies/mail_recipient";
-import MapuserToBranch from "../views/dashboard/admin/ManageUsers/mapUserToBranch";
-import MapuserToDealer from "../views/dashboard/admin/ManageUsers/mapUserToDealer";
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
-import MapUserToCompany from "../views/dashboard/admin/ManageUsers/mapUserToCompany";
-import MapUserToRole from "../views/dashboard/admin/ManageUsers/MapUserToRole";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
@@ -195,45 +191,9 @@ let routes = [
     },
   },
   {
-    path: "/map_user_to_role",
-    name: "map_user_to_role",
-    component: MapUserToRole,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/map_user_to_comapny",
-    name: "map_user_to_comapny",
-    component: MapUserToCompany,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
     path: "/map_user_sales_rep",
     name: "map_user_sales_rep",
     component: MapUserToSalesRep,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/map_user_dealer",
-    name: "map_user_dealer",
-    component: MapuserToDealer,
-    meta: {
-      authorize: true,
-      authRoles: ["Admin"],
-    },
-  },
-  {
-    path: "/map_user_branch",
-    name: "map_user_branch",
-    component: MapuserToBranch,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
