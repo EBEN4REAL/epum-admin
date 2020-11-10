@@ -101,7 +101,6 @@ export default {
         }
         let tankDetails = JSON.parse(ml);
         this.tankDetailObj = tankDetails;
-        console.log(this.tankDetailObj)
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -142,7 +141,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Calibration/${this.$route.query.tankId}`, configObject.authConfig)
                 .then(res => {
-                    console.log(res.data)
                     let index = 0
                     res.data.forEach(el => {
                         el.index = ++index

@@ -117,7 +117,6 @@ export default {
         "recordPumpStatusFromEp1": this.recordPumpStatusFromEp1,
         "recordPumpTransactionFromEp1": this.recordPumpTransactionFromEp1
       }
-      console.log(data)
       this.axios
         .post(`${configObject.apiBaseUrl}/Devices/RecordFromEp1`, data ,  configObject.authConfig)
         .then(response => {

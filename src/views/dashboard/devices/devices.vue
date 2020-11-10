@@ -205,7 +205,6 @@ export default {
         },
         editDevice(deviceObj) {
             this.deviceObj = deviceObj
-            console.log(deviceObj)
             this.$modal.show('editDevicesModal')
         },
         updateFt(fTDeviceId) {

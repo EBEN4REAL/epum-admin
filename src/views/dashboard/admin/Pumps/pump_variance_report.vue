@@ -1,5 +1,7 @@
 <template>
-    <masterLayout>
+    <div>
+        <TankVolumeModal :tankId="tankId" />
+        <masterLayout>
          <section class=" mt-3 full__row_section">
             <div class="banner">
                 <div class="row hundred-percent-height align-items-center">
@@ -125,12 +127,13 @@
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
-                    <e-column :template="TankSalesTemp" headerText="Action" width="200"></e-column>
+                    <e-column :template="TankSalesTemp" headerText="Action" width="450"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
         </div>
     </masterLayout>
+    </div>
 </template>
 <script>
 
@@ -143,11 +146,13 @@ let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TankSalesTemplate from '@/components/Templates/tankSalesTemplate.vue';
+import TankVolumeModal from '@/components/modals/pumpSales/tankVolume.vue';
 
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        TankVolumeModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -161,6 +166,7 @@ export default {
             backgroundUrl,
             totalPumpSales: [],
             tankSales: [],
+            tankId: '',
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
                 customShortcuts: [
                 { key: "Today", label: "Today", value: "day" },
@@ -186,6 +192,18 @@ export default {
                 };
             },
         }
+    },
+    created() {
+        this.$eventHub.$on('showVolumeModal', (tankId) => { 
+            this.showVolumeModal(tankId)
+        })
+        this.$eventHub.$on('removeTankCalibration', (tankId) => { 
+            this.removeTankCalibration(tankId)
+        })
+    },
+    beforeDestroy() { 
+        this.$eventHub.$off('showVolumeModal');
+        this.$eventHub.$off('removeTankCalibration');
     },
     watch: {
         dateRange: function (newRange, oldRange) {
@@ -226,6 +244,10 @@ export default {
         }
     },
     methods: {
+        showVolumeModal(tankId) {
+            this.tankId = tankId
+            this.$modal.show('tankVolumeModal')
+        },
         refreshTankSalesGrid() {
             this.$refs.tankSalesdataGrid.refresh();
         },
@@ -250,7 +272,6 @@ export default {
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         parseTankSales(data) {
-            console.log(data)
             data.forEach(el => {
                 el.branchName = this.varianceObj.branchName
             })
@@ -337,6 +358,30 @@ export default {
                 })
                 .catch(error => {
                     this.showLoader = false
+                });
+        },
+        removeTankCalibration(tankId) {
+            let resp = confirm("Are you sure want to remove this tank calibration?");
+            if (!resp) {
+                return
+            }
+            this.axios
+                .delete(
+                    `${configObject.apiBaseUrl}/Calibration/RemoveTankCalibration/${tankId}`,
+                    configObject.authConfig
+                )
+                .then((res) => {
+                    this.$toast("Successfully Removed Tank Calibration", {
+                        type: "success",
+                        timeout: 3000,
+                    });
+                    // this.$eventHub.$emit("getSales");
+                })
+                .catch((error) => {
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000,
+                    });
                 });
         },
     }

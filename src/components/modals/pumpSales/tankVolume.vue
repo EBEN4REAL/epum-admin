@@ -1,29 +1,25 @@
 <template>
-<modal class="editPumpStat" name="updateFTModal" transition="pop-out" :width="650" :height="400" @before-close="beforeclose" >
+<modal class="editPumpStat" name="tankVolumeModal" transition="pop-out" :width="650" :height="400" @before-close="beforeclose" >
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="35" height="35"></span>
-      <h4>Update FT</h4>
+      <h4>Tank Volume</h4>
   </div>
    <div >
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 70%">
             <label class="required">
-            Number of days
+            Product Height
             </label>
             <div class="input__block" ref="target_input_div">
-                  <input type="number" class="form-control" v-model="days" />
+                  <input type="number" class="form-control" v-model="productHeight" />
             </div>
         </div>
         
         <div class="input__group__block mt-4" style="margin: 0 auto; width: 70%">
             <label class="required">
-            Status
+            Water Height
             </label>
             <div class="input__block" ref="target_input_div">
-                <select class="form-control" name="Country" v-model="status">
-                      <option value="selectStatus" disabled>Select a status</option>
-                      <option value="start">Start</option>
-                      <option value="stop">Stop</option>
-                  </select>
+                  <input type="number" class="form-control" v-model="waterHeight" />
             </div>
         </div>
         <div class="text-center py-3 mt-3" >
@@ -57,14 +53,14 @@ const MODAL_WIDTH = 850;
 import configObject from "@/config";
 
 export default {
-  name: 'updateFTModal',
-  props: ['fTDeviceId'], 
+  name: 'tankVolumeModal',
+  props: ['tankId'], 
   data () {
     return {
       isButtonDisabled:  false,
       showSpinner: false,
-      days: null,
-      status: 'selectStatus'
+      productHeight: null,
+      waterHeight: null
     }
   },
   created () {
@@ -74,39 +70,25 @@ export default {
   },
   methods: {
     update() {
-        if (!this.days) {
-            this.$toast('Please input number of days', {
+        if (!this.productHeight) {
+            this.$toast('Please input a product height', {
                 type: "error",
                 timeout: 3000,
             });
             return
         }
 
-        if (parseInt(this.days) > 60) {
-            this.$toast('Number of days cannot be greater than 60', {
+        if (!this.waterHeight) {
+            this.$toast('Please input a water height', {
                 type: "error",
                 timeout: 3000,
             });
             return
         }
 
-        if (this.status == 'selectStatus') {
-            this.$toast('Please select a status', {
-                type: "error",
-                timeout: 3000,
-            });
-            return
-        }
-
-
-        const data = {
-            numberOfDays: parseInt(this.days),
-            status: this.status,
-            deviceId: this. fTDeviceId
-        }
-
+        return
         this.axios
-            .put(`${configObject.apiBaseUrl}/Configuration/UpdateFTFromDevice`, data,  configObject.authConfig)
+            .get(`${configObject.apiBaseUrl}/Calibration/Volume/${this.tankId}/${parseInt(this.productHeight)}/${parseInt(this.waterHeight)}`, configObject.authConfig)
             .then(response => {
                 this.showSpinner = false
                 this.isButtonDisabled = false
@@ -125,8 +107,8 @@ export default {
             });
     },
     beforeclose() {
-      this.days = null
-      this.status = 'selectStatus'
+      this.productHeight = null
+      this.waterHeight = null
     }
   }
 }
