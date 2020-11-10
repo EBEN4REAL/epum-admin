@@ -1,5 +1,7 @@
 <template>
-    <masterLayout>
+    <div>
+        <EditDeviceModal :deviceObj="deviceObj" />
+        <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
@@ -65,6 +67,8 @@
             <DropDown :details="details"/>
         </div>
     </masterLayout>
+    </div>
+    
 </template>
 <script>
 
@@ -76,21 +80,19 @@ import DropDown from '@/components/Templates/Dropdown/devicesDropdown.vue';
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport, groupAggregates} from "@syncfusion/ej2-vue-grids";
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
-import { TooltipPlugin } from "@syncfusion/ej2-vue-popups";
-import { GridPlugin } from "@syncfusion/ej2-vue-grids";
+import EditDeviceModal from '@/components/modals/Devices/editDevice.vue';
 
 
 import Jquery from 'jquery';
 let $ = Jquery;
 
-Vue.use(TooltipPlugin);
-Vue.use(GridPlugin);
 
 export default {
     components: {
         masterLayout,
         TableLoader,
-        DropDown
+        DropDown,
+        EditDeviceModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -99,6 +101,7 @@ export default {
         return {
             devicesData: [],
             devicesCount: 0,
+            deviceObj: {},
             searchLoader: false,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             showLoader: false,
@@ -147,11 +150,15 @@ export default {
         this.$eventHub.$on('restart', (id) => { 
             this.restart(id)
         })
+        this.$eventHub.$on('editDevice', (deviceObj) => { 
+            this.editDevice(deviceObj)
+        })
     },
     beforeDestroy() { 
         this.$eventHub.$off('showExtraDeviceButtons');
         this.$eventHub.$off('shutDown');
         this.$eventHub.$off('restart');
+        this.$eventHub.$off('editDevice');
     },
     mounted() {
         this.refreshGrid();
@@ -187,6 +194,11 @@ export default {
                     this.$refs.dataGrid.excelExport();
                 break;
             }
+        },
+        editDevice(deviceObj) {
+            this.deviceObj = deviceObj
+            console.log(deviceObj)
+            this.$modal.show('editDevicesModal')
         },
         shutDown(id) {
             let resp = confirm("Are you sure want to shut down this device?");
