@@ -955,6 +955,9 @@ h6.dashboard__card__header {
       }
     }
   }
+  .remove_underline {
+    text-decoration: none !important;
+  }
   label {
     color: $greyTextColor;
   }

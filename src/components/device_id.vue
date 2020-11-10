@@ -1,6 +1,6 @@
 <template>
    <div class="">
-    <a :href="`/dump-data?id=${data.deviceId}`"  target="_blank">
+    <a :href="`/dump-data?id=${data.deviceId}`"  target="_blank" class="remove_underline" style="text-decoration: none !important"> 
       {{data.deviceId}}
     </a>
     <!-- <p style="display: none" class="nozzles_text">{{data.nozzles}}</p> -->

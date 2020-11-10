@@ -46,7 +46,6 @@
                     :allowPdfExport="true"
                     :toolbarClick="toolbarClick"
                     :allowTextWrap='true'
-                    :load="tooltipcontent"
                     :dataSource="devicesData"
                     :rowDataBound="rowDataBound"
                     >
