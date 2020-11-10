@@ -106,7 +106,7 @@ export default {
             details: {
                 data: {},
                 queryStrings: { id: '' }, 
-                info: [{ name: 'Edit', link: 'editDevices' }], 
+                info: [{ name: 'Edit', link: 'editDevices' }, { name: 'Update FT', link: 'updateFT' }], 
             }, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
