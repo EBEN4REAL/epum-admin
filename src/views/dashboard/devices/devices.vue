@@ -1,6 +1,7 @@
 <template>
     <div>
         <EditDeviceModal :deviceObj="deviceObj" />
+        <UpdateFTModal :fTDeviceId="fTDeviceId" />
         <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
@@ -81,6 +82,7 @@ import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport, groupAggregates} from "@
 import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import EditDeviceModal from '@/components/modals/Devices/editDevice.vue';
+import UpdateFTModal from '@/components/modals/Devices/updateFt.vue';
 
 
 import Jquery from 'jquery';
@@ -92,7 +94,8 @@ export default {
         masterLayout,
         TableLoader,
         DropDown,
-        EditDeviceModal
+        EditDeviceModal,
+        UpdateFTModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -102,6 +105,7 @@ export default {
             devicesData: [],
             devicesCount: 0,
             deviceObj: {},
+            fTDeviceId: '',
             searchLoader: false,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             showLoader: false,
@@ -109,7 +113,7 @@ export default {
             details: {
                 data: {},
                 queryStrings: { id: '' }, 
-                info: [{ name: 'Edit', link: 'editDevices' }, { name: 'Update FT', link: 'updateFT' }], 
+                // info: [{ name: 'Edit', link: 'editDevices' }, { name: 'Update FT', link: 'updateFT' }], 
             }, 
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
@@ -153,12 +157,16 @@ export default {
         this.$eventHub.$on('editDevice', (deviceObj) => { 
             this.editDevice(deviceObj)
         })
+        this.$eventHub.$on('updateFT', (fTDeviceId) => { 
+            this.updateFt(fTDeviceId)
+        })
     },
     beforeDestroy() { 
         this.$eventHub.$off('showExtraDeviceButtons');
         this.$eventHub.$off('shutDown');
         this.$eventHub.$off('restart');
         this.$eventHub.$off('editDevice');
+        this.$eventHub.$off('updateFT');
     },
     mounted() {
         this.refreshGrid();
@@ -199,6 +207,10 @@ export default {
             this.deviceObj = deviceObj
             console.log(deviceObj)
             this.$modal.show('editDevicesModal')
+        },
+        updateFt(fTDeviceId) {
+            this.fTDeviceId = fTDeviceId
+            this.$modal.show('updateFTModal')
         },
         shutDown(id) {
             let resp = confirm("Are you sure want to shut down this device?");
