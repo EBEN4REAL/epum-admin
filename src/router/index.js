@@ -38,6 +38,7 @@ import PumpDetails from "../views/dashboard/admin/Pumps/pumpDetails";
 import PumpTransactions from "../views/dashboard/admin/Pumps/pumpTransactions";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
 import AddTank from "../views/dashboard/Tank/addTank";
+import TankCalibration from "../views/dashboard/Tank/tankCalibration";
 import InstalledTanks from "../views/dashboard/Tank/installedTanks";
 import TankTransaction from "../views/dashboard/Tank/tankTransaction";
 import EditTank from "../views/dashboard/Tank/editTank";
@@ -103,6 +104,15 @@ let routes = [
     path: "/audit-sales",
     name: "audit_sales",
     component: AuditSales,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/tank-calibration",
+    name: "tank_calibration",
+    component: TankCalibration,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

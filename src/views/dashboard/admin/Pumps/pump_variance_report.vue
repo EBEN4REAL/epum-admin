@@ -125,6 +125,7 @@
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
+                    <e-column :template="TankSalesTemp" headerText="Action" width="200"></e-column>
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/>
@@ -141,9 +142,7 @@ import Jquery from 'jquery';
 let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
-
-
-
+import TankSalesTemplate from '@/components/Templates/tankSalesTemplate.vue';
 
 export default {
     components: {
@@ -180,6 +179,11 @@ export default {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true },
+            },
+            TankSalesTemp: () => {
+                return {
+                    template: TankSalesTemplate
+                };
             },
         }
     },
@@ -246,6 +250,12 @@ export default {
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         parseTankSales(data) {
+            console.log(data)
+            data.forEach(el => {
+                el.branchName = this.varianceObj.branchName
+            })
+            sessionStorage.clear()
+            localStorage.setItem("tankSalesList", JSON.stringify(data))
             this.tankSales = data
             let index = 0
             data.forEach(el => {

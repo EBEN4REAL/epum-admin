@@ -1,10 +1,11 @@
 <template>
-  <div class="">
-    <router-link :to="{name:'pump_variance_report',  query: {branchId: data.branchId, varianceId: data.index, companyId: this.$route.query.companyId}}" class="btn details_btn mr-3">
-      Details
+   <div class="">
+    <router-link :to="{name:'tank_calibration', query: {tankId: data.tankId}}" class="btn details_btn mr-3">
+      Check Calibration
     </router-link>
   </div>
 </template>
+
 <script>
 import configObject from "@/config";
 import Jquery from "jquery";
@@ -17,5 +18,4 @@ export default {
     };
   },
 };
-
 </script>
