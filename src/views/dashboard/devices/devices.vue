@@ -55,6 +55,7 @@
                     <e-columns>
                         <e-column width="80" field="index" headerText="#"></e-column>
                         <e-column width="150" :template="device_id" headerText="Device"></e-column>
+                        <e-column field="deviceId" :visible="false"></e-column>
                         <e-column width="300" field="name" headerText="name"></e-column>
                         <e-column width="200" field="lastDate" headerText="Last Update"></e-column>
                         <e-column width="100" field="firmWareVersion" headerText="FW Version"></e-column>
@@ -227,9 +228,10 @@ export default {
                     configObject.authConfig
                 )
                 .then((res) => {
+                    this.getDevices()
                     this.$toast("Successfully shut down device", {
-                    type: "success",
-                    timeout: 3000,
+                        type: "success",
+                        timeout: 3000,
                     });
                 })
                 .catch((error) => {
@@ -249,9 +251,10 @@ export default {
                     configObject.authConfig
                 )
                 .then((res) => {
+                    this.getDevices()
                     this.$toast("Successfully restarted device", {
-                    type: "success",
-                    timeout: 3000,
+                        type: "success",
+                        timeout: 3000,
                     });
                 })
                 .catch((error) => {
@@ -284,13 +287,13 @@ export default {
                 .then(res => {
                     let index = 0;
                     res.data.sort((a, b) => {
-                    if (a.companyName && b.companyName) {
-                        return a.companyName.toLowerCase() > b.companyName.toLowerCase() ? 1 : b.companyName.toLowerCase() > a.companyName.toLowerCase() ? -1 : 0;
-                    } else if (a.companyName && !b.companyName) {
-                        return -1
-                    } else { 
-                        return 1
-                    }
+                        if (a.companyName && b.companyName) {
+                            return a.companyName.toLowerCase() > b.companyName.toLowerCase() ? 1 : b.companyName.toLowerCase() > a.companyName.toLowerCase() ? -1 : 0;
+                        } else if (a.companyName && !b.companyName) {
+                            return -1
+                        } else { 
+                            return 1
+                        }
                     });
                     res.data.forEach(el => {
                         el.index = ++index;

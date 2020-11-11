@@ -9,10 +9,10 @@
         <div class="text-center" @click="updateFT">
             <p style="margin-bottom: 0">Update FT</p>
         </div>
-        <div class="text-center" @click="shutDown" v-if="(details.data.deviceType == 'Pump' || details.data.deviceType == 'Gateway') && (details.data.shutdownStatus == false || details.data.shutdownStatus == null)">
+        <div class="text-center" @click="shutDown" v-if="(details.data.deviceType == 'Pump' || details.data.deviceType == 'Gateway') && (details.data.shutdownPump == false || details.data.shutdownPump == null)">
             <p style="margin-bottom: 0">Shut Down</p>
         </div>
-        <div class="text-center" @click="restart" v-if="(details.data.deviceType == 'Pump' || details.data.deviceType == 'Gateway') && (details.data.shutdownStatus == true || details.data.shutdownStatus !== null)">
+        <div class="text-center" @click="restart" v-if="(details.data.deviceType == 'Pump' || details.data.deviceType == 'Gateway') && details.data.shutdownPump == true">
             <p style="margin-bottom: 0">Restart</p>
         </div>
        
