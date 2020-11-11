@@ -102,6 +102,7 @@ export default {
     },
     data() {
         return {
+            searchValue: '',
             devicesData: [],
             devicesCount: 0,
             deviceObj: {},
@@ -133,21 +134,25 @@ export default {
         }
     },
       created() {
-        this.$eventHub.$on('showExtraDeviceButtons', (data, that) => { 
+        this.$eventHub.$on('showExtraDeviceButtons', (data, that) => {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            const currentGrid = this.searchValue ? grid.currentViewData : []
+            
             this.details.queryStrings.id = data.deviceId
             this.details.data = data
             const drop = that.$parent.ej2Instances.pageSettings.pageSize
-            const indent = data.index - (Math.floor((data.index - 1) / drop) * drop)
+            let index 
+            if (currentGrid.length && (currentGrid.length !== this.tableCount)) {
+                index = currentGrid.findIndex((cur) => cur.index == data.index) + 1
+            } else {
+                index = data.index 
+            }
+            const indent = index - (Math.floor((index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
-                const num = this.details.delete.hasDelete ? 1 : 0
-                option.style.top = `${(((52 * (indent - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
-            } else {
-                option.style.top = `${((62 * indent) + (100 - (indent * 2))).toString()}px`
-            }
-            
+            option.style.top = `${((62 * indent) + (100 - (indent * 2))).toString()}px`
         })
+
         this.$eventHub.$on('shutDown', (id) => { 
             this.shutDown(id)
         })
@@ -174,9 +179,11 @@ export default {
         $(".e-input").keyup(function (e) {
             searchFun(e);
         });
-        function searchFun(event) {
+
+        const searchFun = (event) => {
             var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
+            this.searchValue = value
             grid.search(value);
         }
     },

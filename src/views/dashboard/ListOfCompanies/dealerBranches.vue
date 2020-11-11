@@ -87,13 +87,25 @@ export default {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
     },
     created() {
-        this.$eventHub.$on('showExtraBranchesButtons', (data, that) => { 
+        this.$eventHub.$on('showExtraBranchesButtons', (data, that) => {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            const currentGrid = this.searchValue ? grid.currentViewData : []
+            
             this.details.queryStrings.companyBranchId = data.id
             const drop = that.$parent.ej2Instances.pageSettings.pageSize
-            const indent = data.index - (Math.floor((data.index - 1) / drop) * drop)
+            let index 
+            if (currentGrid.length && (currentGrid.length !== this.branchesCount)) {
+                console.log('search')
+                index = currentGrid.findIndex((cur) => cur.index == data.index) + 1
+            } else {
+                console.log('no search')
+                index = data.index 
+            }
+            console.log(index)
+            const indent = index - (Math.floor((index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            if ((data.index == this.branchesCount && this.branchesCount > 1) || (data.index == (this.branchesCount - 1) && this.branchesCount > 1)) {
+            if ((index == this.branchesCount && this.branchesCount > 1) || (index == (this.branchesCount - 1) && this.branchesCount > 1)) {
                 const num = this.details.delete.hasDelete ? 1 : 0
                 option.style.top = `${(((62 * (indent - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
             } else {
@@ -109,15 +121,17 @@ export default {
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
-        function searchFun(event) {
+        
+        const searchFun = (event) => {
             var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
+            this.searchValue = value
             grid.search(value);
         }
-        
     },
     data() {
         return {
+            searchValue: '',
             showLoader: false,
             branchesCount: 0,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
