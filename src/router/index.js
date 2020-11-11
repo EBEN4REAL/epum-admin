@@ -39,9 +39,11 @@ import PumpTransactions from "../views/dashboard/admin/Pumps/pumpTransactions";
 import AddPump from "../views/dashboard/admin/Pumps/addPump";
 import AddTank from "../views/dashboard/Tank/addTank";
 import TankCalibration from "../views/dashboard/Tank/tankCalibration";
+import CalibrationVolume from "../views/dashboard/Tank/calibrationVolume";
 import InstalledTanks from "../views/dashboard/Tank/installedTanks";
 import TankTransaction from "../views/dashboard/Tank/tankTransaction";
 import EditTank from "../views/dashboard/Tank/editTank";
+import UpdateTankstatus from "../views/dashboard/Tank/updateTankStatus";
 import TankDipping from "../views/dashboard/Tank/tankDipping";
 import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
 import OutstandingPayments from "../views/dashboard/outstandingPayments/index";
@@ -122,6 +124,15 @@ let routes = [
     path: "/addDevice",
     name: "addDevice",
     component: AddDevice,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/update-tank-status",
+    name: "update_tank_status",
+    component: UpdateTankstatus,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
@@ -209,6 +220,16 @@ let routes = [
       authRoles: ["Admin"],
     },
   },
+  {
+    path: "/calibration-volume",
+    name: "calibrationVolume",
+    component: CalibrationVolume,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  
   {
     path: "/manage_users",
     name: "manage_users",

@@ -1,11 +1,11 @@
 <template>
    <div class="">
-    <router-link :to="{name:'tank_calibration', query: {id: data.id}}" class="btn details_btn mr-3">
+    <button class="btn details_btn mr-3" @click="editCalibration">
       Edit
-    </router-link>
-    <router-link :to="{name:'tank_calibration', query: {id: data.id}}" class="btn details_btn mr-3">
+    </button>
+    <button class="btn details_btn mr-3" @click="deleteCalibration">
       Delete
-    </router-link>
+    </button>
   </div>
 </template>
 
@@ -20,5 +20,13 @@ export default {
       data: {},
     };
   },
+  methods: {
+      editCalibration() {
+          this.$eventHub.$emit('editTankCalibration', this.data)
+      },
+      deleteCalibration() {
+          this.$eventHub.$emit('deleteCalibration', this.data.id)
+      }
+  }
 };
 </script>

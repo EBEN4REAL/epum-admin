@@ -138,6 +138,7 @@ import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
 import pumpTempStatus from '@/components/Templates/pump_status_template';
+
 import EditPumpStatusModal from '@/components/modals/pumpStatus/editPumpStatus.vue';
 
 
