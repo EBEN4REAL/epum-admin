@@ -100,18 +100,21 @@ export default {
       this.isButtonDisabled = true
       let data = {
         "id": this.calibrationObj.id,
-        "height": parseFloat(this.calibrationObj.height.replace(/,/g, '')),
-        "volume": parseFloat(this.calibrationObj.volume.replace(/,/g, ''))
+        "height": parseFloat(this.calibrationObj.height),
+        "volume": parseFloat(this.calibrationObj.volume),
       }
+      console.log(data)
       this.axios
         .put(`${configObject.apiBaseUrl}​/Calibration/UpdateCalibration`, data ,  configObject.authConfig)
         .then(response => {
           this.showSpinner = false
            this.isButtonDisabled = false
-          this.$toast('Successfully Updated Pump Status', {
+          this.$toast('Successfully Updated Calibration', {
             type: "success",
             timeout: 3000
           });
+          this.$modal.hide('editTankCalibration')
+          this.$eventHub.$emit('refreshcalibration')
         })
         .catch(error => {
           this.showSpinner = false

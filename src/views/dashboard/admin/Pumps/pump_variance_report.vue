@@ -1,6 +1,7 @@
 <template>
     <div>
         <TankVolumeModal :tankId="tankId" />
+        <UpdateTankStatusModal :tankObj="tankObj" />
         <masterLayout>
          <section class=" mt-3 full__row_section">
             <div class="banner">
@@ -127,9 +128,10 @@
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
-                    <e-column :template="TankSalesTemp" headerText="Action" width="450"></e-column>
+                    <e-column :template="TankSalesTemp" headerText="Action" width="750"></e-column>
                 </e-columns>
             </ejs-grid>
+            <DropDown :details="details"/>
             <TableLoader :showLoader="showLoader"/>
         </div>
     </masterLayout>
@@ -138,6 +140,7 @@
 <script>
 
 import Vue from 'vue';
+import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
@@ -147,12 +150,16 @@ import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TankSalesTemplate from '@/components/Templates/tankSalesTemplate.vue';
 import TankVolumeModal from '@/components/modals/pumpSales/tankVolume.vue';
+import UpdateTankStatusModal from '@/components/modals/pumpSales/updateTankStatus.vue';
+
 
 export default {
     components: {
         masterLayout,
         TableLoader,
-        TankVolumeModal
+        TankVolumeModal,
+        DropDown,
+        UpdateTankStatusModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -166,7 +173,13 @@ export default {
             backgroundUrl,
             totalPumpSales: [],
             tankSales: [],
+            tankObj: {},
             tankId: '',
+            details: {
+                queryStrings: { tankId: '' }, 
+                info: [ { name: 'Update Tank Status', link: 'mail_recipient' }], 
+                delete: { hasDelete: false }
+            }, 
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
                 customShortcuts: [
                 { key: "Today", label: "Today", value: "day" },
@@ -194,16 +207,32 @@ export default {
         }
     },
     created() {
+        this.$eventHub.$on('showExtraCompanyButtons', (data) => {
+            this.details.queryStrings.companyId = data.id
+            const option = document.getElementById('myDropdown')
+            option.classList.add("show")
+            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
+                const num = this.details.delete.hasDelete ? 1 : 0
+                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
+            } else {
+                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
+            }
+        })
         this.$eventHub.$on('showVolumeModal', (tankId) => { 
             this.showVolumeModal(tankId)
+        })
+        this.$eventHub.$on('updateTankStatusModal', (tankObj) => { 
+            this.updateTankStatusModal(tankObj)
         })
         this.$eventHub.$on('removeTankCalibration', (tankId) => { 
             this.removeTankCalibration(tankId)
         })
+       
     },
     beforeDestroy() { 
         this.$eventHub.$off('showVolumeModal');
         this.$eventHub.$off('removeTankCalibration');
+        this.$eventHub.$off('updateTankStatusModal');
     },
     watch: {
         dateRange: function (newRange, oldRange) {
@@ -248,6 +277,11 @@ export default {
             this.tankId = tankId
             this.$modal.show('tankVolumeModal')
         },
+        updateTankStatusModal(tankObj) {
+            this.tankObj = tankObj
+            console.log(this.tankObj)
+            this.$modal.show('updateTankStatus')
+        },
         refreshTankSalesGrid() {
             this.$refs.tankSalesdataGrid.refresh();
         },
@@ -271,6 +305,7 @@ export default {
             }
             return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+       
         parseTankSales(data) {
             data.forEach(el => {
                 el.branchName = this.varianceObj.branchName
@@ -375,7 +410,6 @@ export default {
                         type: "success",
                         timeout: 3000,
                     });
-                    // this.$eventHub.$emit("getSales");
                 })
                 .catch((error) => {
                     this.$toast(error.response.data.message, {

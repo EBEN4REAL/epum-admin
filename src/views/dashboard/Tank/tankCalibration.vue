@@ -146,10 +146,18 @@ export default {
         this.$eventHub.$on('deleteCalibration', (id) => { 
             this.deleteCalibration(id)
         })
+        this.$eventHub.$on('refreshcalibration', () => { 
+            this.getTankCalibration()
+        })
+
+         this.$eventHub.$on('refreshCalibrationList', () => { 
+            this.getTankCalibration(tankId)
+        })
     },
     beforeDestroy() { 
         this.$eventHub.$off('editTankCalibration');
         this.$eventHub.$off('deleteCalibration');
+        this.$eventHub.$off('refreshcalibration');
     },
     methods: {
         editcalibration(calibrationObj) {
@@ -159,11 +167,6 @@ export default {
         uploadCalibration() {
             this.$modal.show('uploadTankCalibration')
         },
-        deleteCalibration(id) {
-            this.calibrationObj = calibrationObj
-            this.$modal.show('editTankCalibration')
-        },
-
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -194,7 +197,7 @@ export default {
                 console.log( `/Calibration/RemoveCalibration/${id}`)
                 this.axios
                 .delete(
-                    `/Calibration/RemoveCalibration/${id}`,
+                    `${configObject.apiBaseUrl}/Calibration/RemoveCalibration/${id}`,
                     configObject.authConfig
                 )
                 .then((res) => {
@@ -203,7 +206,7 @@ export default {
                         timeout: 3000,
                     });
                     $(".loader").hide();
-                    this.$eventHub.$emit("refreshCalibrationList");
+                    // this.$eventHub.$emit("refreshCalibrationList");
                     this.getTankCalibration()
                 })
                 .catch((error) => {
