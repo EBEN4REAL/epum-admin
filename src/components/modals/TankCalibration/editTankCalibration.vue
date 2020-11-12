@@ -103,7 +103,6 @@ export default {
         "height": parseFloat(this.calibrationObj.height),
         "volume": parseFloat(this.calibrationObj.volume),
       }
-      console.log(data)
       this.axios
         .put(`${configObject.apiBaseUrl}​/Calibration/UpdateCalibration`, data ,  configObject.authConfig)
         .then(response => {

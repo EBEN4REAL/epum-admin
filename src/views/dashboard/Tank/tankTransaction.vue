@@ -110,20 +110,21 @@ export default {
     mounted() {
         this.getTankTransactions();
 
-        const companyBranchId = this.$route.query.companyBranchId
+        const companyBranchId = this.$route.query.branchId
         let ml = sessionStorage.getItem(companyBranchId)
+        let variable = localStorage.getItem("branchesList") ? 'id' : 'branchId'
         if (!ml){
-            let allData = localStorage.getItem("branchesList")
+            let allData = variable == 'id' ? localStorage.getItem("branchesList") : localStorage.getItem("pumpsVarianceList")
             let dt = JSON.parse(allData)
             dt.forEach((my, index) =>{
-                if(my.id === companyBranchId){
+                if(my[variable] === companyBranchId){
                     ml = JSON.stringify(my)
                     sessionStorage.setItem(companyBranchId, ml)
                 }
             })
         }
         let companyBranchDetails = JSON.parse(ml)
-        this.branchName = companyBranchDetails.name
+        this.branchName = variable == 'id' ? companyBranchDetails.name : companyBranchDetails.branchName
 
         $(".e-input").keyup(function(e) {
             searchFun(e);
@@ -193,7 +194,7 @@ export default {
             this.showLoader = true;
             this.axios
                 .get(
-                `${configObject.apiBaseUrl}/Tank/ProbeTransactions/${this.$route.query.id}?startDate=${this.startDate}&endDate=${this.endDate}`,
+                `${configObject.apiBaseUrl}/Tank/ProbeTransactions/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`,
                 configObject.authConfig
                 )
                 .then(response => {

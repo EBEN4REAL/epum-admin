@@ -178,7 +178,7 @@
                   </div> -->
                   <div class="mt-3 pb-3 tanks_probe">
                     <div class="mb-4 mt-4">
-                      <router-link :to="{ name: 'tankTransaction', query: { id: tank.id, companyBranchId: $route.query.companyBranchId }}"
+                      <router-link :to="{ name: 'tankTransaction', query: { tankId: tank.id, branchId: $route.query.companyBranchId }}"
                         class="transactions__btn remove_text_decoration"
                         style="text-decoration: none; padding: 12px 9px;"
                       >Probe Transactions</router-link>

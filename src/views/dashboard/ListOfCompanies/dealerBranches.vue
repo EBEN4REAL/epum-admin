@@ -95,13 +95,10 @@ export default {
             const drop = that.$parent.ej2Instances.pageSettings.pageSize
             let index 
             if (currentGrid.length && (currentGrid.length !== this.branchesCount)) {
-                console.log('search')
                 index = currentGrid.findIndex((cur) => cur.index == data.index) + 1
             } else {
-                console.log('no search')
                 index = data.index 
             }
-            console.log(index)
             const indent = index - (Math.floor((index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")

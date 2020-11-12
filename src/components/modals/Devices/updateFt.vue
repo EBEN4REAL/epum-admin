@@ -98,7 +98,8 @@ export default {
             return
         }
 
-
+        this.isButtonDisabled = true
+        this.showSpinner = true
         const data = {
             numberOfDays: parseInt(this.days),
             status: this.status,
@@ -114,6 +115,8 @@ export default {
                     type: "success",
                     timeout: 3000
                 });
+                this.$modal.hide('updateFTModal')
+                this.$eventHub.$emit("refreshDevicesList");
             })
             .catch(error => {
                 this.showSpinner = false

@@ -194,7 +194,6 @@ export default {
             let resp = confirm("Are you sure want to delete this calibration?");
             if (resp) {
                 $(".loader").show();
-                console.log( `/Calibration/RemoveCalibration/${id}`)
                 this.axios
                 .delete(
                     `${configObject.apiBaseUrl}/Calibration/RemoveCalibration/${id}`,

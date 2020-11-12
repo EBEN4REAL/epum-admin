@@ -166,6 +166,9 @@ export default {
         this.$eventHub.$on('updateFT', (fTDeviceId) => { 
             this.updateFt(fTDeviceId)
         })
+        this.$eventHub.$on('refreshDevicesList', () => { 
+            this.getDevices()
+        })
     },
     beforeDestroy() { 
         this.$eventHub.$off('showExtraDeviceButtons');

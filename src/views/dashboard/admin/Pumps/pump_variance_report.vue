@@ -1,6 +1,5 @@
 <template>
     <div>
-        <TankVolumeModal :tankId="tankId" />
         <UpdateTankStatusModal :tankObj="tankObj" />
         <masterLayout>
          <section class=" mt-3 full__row_section">
@@ -128,11 +127,11 @@
                     <e-column width="200" field="volumeFilled" headerText="Volume Filled (Ltrs)" ></e-column>
                     <e-column width="200" field="openingDip" headerText="Opening  Dip" textAlign="center"></e-column>
                     <e-column width="200" field="closingDip" headerText="Closing  Dip" textAlign="center"></e-column>
-                    <e-column :template="TankSalesTemp" headerText="Action" width="750"></e-column>
+                    <e-column :template="TankSalesTemp" headerText="Action" width="250"></e-column>
                 </e-columns>
             </ejs-grid>
             <DropDown :details="details"/>
-            <TableLoader :showLoader="showLoader"/>
+            <TableLoader :showLoader="showLoader"/> 
         </div>
     </masterLayout>
     </div>
@@ -149,7 +148,6 @@ let $ = Jquery;
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import TankSalesTemplate from '@/components/Templates/tankSalesTemplate.vue';
-import TankVolumeModal from '@/components/modals/pumpSales/tankVolume.vue';
 import UpdateTankStatusModal from '@/components/modals/pumpSales/updateTankStatus.vue';
 
 
@@ -157,7 +155,6 @@ export default {
     components: {
         masterLayout,
         TableLoader,
-        TankVolumeModal,
         DropDown,
         UpdateTankStatusModal
     },
@@ -166,6 +163,7 @@ export default {
     }, 
     data() {
         return {
+            searchValue: '',
             showLoader: false,
             varianceObj: {},
             companiesCount: 0,
@@ -174,11 +172,10 @@ export default {
             totalPumpSales: [],
             tankSales: [],
             tankObj: {},
-            tankId: '',
             details: {
-                queryStrings: { tankId: '' }, 
-                info: [ { name: 'Update Tank Status', link: 'mail_recipient' }], 
-                delete: { hasDelete: false }
+                queryStrings: { tankId: '', branchId: this.$route.query.branchId }, 
+                info: [ { name: 'Check Calibration', link: 'tank_calibration' }, { name: 'Calibration Volume', link: 'calibrationVolume' }, { name: 'Probe Transactions', link: 'tankTransaction' } ], 
+                delete: { hasDelete: true, deleteName: 'removeTankCalibration', name: 'Remove Calibration', query: 'tankId' }
             }, 
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
                 customShortcuts: [
@@ -207,32 +204,35 @@ export default {
         }
     },
     created() {
-        this.$eventHub.$on('showExtraCompanyButtons', (data) => {
-            this.details.queryStrings.companyId = data.id
+        this.$eventHub.$on('showExtraPumpVarianceButtons', (data, that) => {
+            var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+            const currentGrid = this.searchValue ? grid.currentViewData : []
+
+            this.details.queryStrings.tankId = data.tankId
+            const drop = that.$parent.ej2Instances.pageSettings.pageSize
+            let index 
+            if (currentGrid.length && (currentGrid.length !== this.branchesCount)) {
+                index = currentGrid.findIndex((cur) => cur.index == data.index) + 1
+            } else {
+                index = data.index 
+            }
+            const indent = index - (Math.floor((index - 1) / drop) * drop)
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            if ((data.index == this.tableCount && this.tableCount > 1) || (data.index == (this.tableCount - 1) && this.tableCount > 1)) {
-                const num = this.details.delete.hasDelete ? 1 : 0
-                option.style.top = `${(((62 * (data.index - 1))) + 108 - (32 * (num + this.details.info.length))).toString()}px`
-            } else {
-                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
-            }
-        })
-        this.$eventHub.$on('showVolumeModal', (tankId) => { 
-            this.showVolumeModal(tankId)
+            option.style.top = `${((62 * indent) + (100 - (indent * 2))).toString()}px`
         })
         this.$eventHub.$on('updateTankStatusModal', (tankObj) => { 
             this.updateTankStatusModal(tankObj)
         })
-        this.$eventHub.$on('removeTankCalibration', (tankId) => { 
-            this.removeTankCalibration(tankId)
+        this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
+            this.removeTankCalibration(id)
         })
        
     },
     beforeDestroy() { 
-        this.$eventHub.$off('showVolumeModal');
-        this.$eventHub.$off('removeTankCalibration');
+        this.$eventHub.$off(this.details.delete.deleteName);
         this.$eventHub.$off('updateTankStatusModal');
+        this.$eventHub.$off('showExtraPumpVarianceButtons');
     },
     watch: {
         dateRange: function (newRange, oldRange) {
@@ -266,20 +266,17 @@ export default {
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
-        function searchFun(event) {
+
+        const searchFun = (event) => {
             var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
             var value = event.target.value;
+            this.searchValue = value
             grid.search(value);
         }
     },
     methods: {
-        showVolumeModal(tankId) {
-            this.tankId = tankId
-            this.$modal.show('tankVolumeModal')
-        },
         updateTankStatusModal(tankObj) {
             this.tankObj = tankObj
-            console.log(this.tankObj)
             this.$modal.show('updateTankStatus')
         },
         refreshTankSalesGrid() {
