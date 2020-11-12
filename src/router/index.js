@@ -46,6 +46,7 @@ import EditTank from "../views/dashboard/Tank/editTank";
 import UpdateTankstatus from "../views/dashboard/Tank/updateTankStatus";
 import TankDipping from "../views/dashboard/Tank/tankDipping";
 import ReFilledTanks from "../views/dashboard/Tank/reFilledTanks";
+import TanksFilled from "../views/dashboard/Tank/tankFilled";
 import OutstandingPayments from "../views/dashboard/outstandingPayments/index";
 import MakePayments from "../views/dashboard/outstandingPayments/outstandingPayments";
 import WalletTransactions from "../views/dashboard/outstandingPayments/walletTransactions";
@@ -623,6 +624,15 @@ let routes = [
   path: "/usersEdit",
   name: "usersEdit",
   component: UsersEdit,
+  meta: {
+      authorize: true,
+      authRoles: ['Admin']
+  }
+},
+{
+  path: "/tanks-filled",
+  name: "tanksFilled",
+  component: TanksFilled,
   meta: {
       authorize: true,
       authRoles: ['Admin']
