@@ -174,7 +174,7 @@ export default {
             tankObj: {},
             details: {
                 queryStrings: { tankId: '', branchId: this.$route.query.branchId }, 
-                info: [ { name: 'Check Calibration', link: 'tank_calibration' }, { name: 'Calibration Volume', link: 'calibrationVolume' }, { name: 'Probe Transactions', link: 'tankTransaction' } ], 
+                info: [ { name: 'Check Calibration', link: 'tank_calibration' }, { name: 'Calibration Volume', link: 'calibrationVolume' }, { name: 'Probe Transactions', link: 'tankTransaction' }, { name: 'Tanks Filled', link: 'tanksFilled' } ], 
                 delete: { hasDelete: true, deleteName: 'removeTankCalibration', name: 'Remove Calibration', query: 'tankId' }
             }, 
             maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),

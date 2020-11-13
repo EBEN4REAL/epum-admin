@@ -6,7 +6,7 @@
                  <div class="col-lg-4">
                         <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
-                            <p class="dashboard__card__header text-white">Total Transactions</p>
+                            <p class="dashboard__card__header text-white">Total Tanks Filled</p>
                                 <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
                                 <img src="@/assets/img/wallet.svg" width="40px" />
                                 </div>
@@ -19,9 +19,9 @@
                     </div>
                 <div class="col-lg-8 remove-padding-left padding_div">
                     <div class="dashboard__card small_card align-center">
-                        <div class="row align-items-center justify-content-center" style="height: 100%">
-                        <div class="col-md-6 ">
-                            <h5>Tank Probe Transactions</h5>
+                        <div class="row align-items-center" style="height: 100%">
+                        <div class="col-md-5 text-center">
+                            <h5>Tanks Filled</h5>
                         </div>
                         <div class="col-md-4 mt-4">
                            <div class="drop_down_div align-items-center">
@@ -47,7 +47,7 @@
         <section class="top_section_row mt-3 ">
             <div class="row  mt-3 align-items-center py-3 ">
                 <div class="col-md-8">
-                    <span class="pl-3 ">  Tanks Filled between  <strong>{{ startDate }} </strong> and
+                    <span class="pl-3 ">  Retail Outlet tank probe transactions between  <strong>{{ startDate }} </strong> and
                      <strong>{{ endDate }} </strong></span>
                 </div>
                 <div class="col-md-4 text-right">
