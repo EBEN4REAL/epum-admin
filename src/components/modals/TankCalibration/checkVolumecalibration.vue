@@ -10,7 +10,7 @@
                <h4>Product Volume: </h4>
            </div>
            <div class="col-md-6">
-               <h4 class="">{{calibrationObj.productVolume}} Litres</h4>
+               <h4 class="">{{convertThousand(calibrationObj.productVolume)}} Litres</h4>
            </div>
        </div>
         <div class="row mt-4">
@@ -18,7 +18,7 @@
                <h4>Water Volume: </h4>
            </div>
            <div class="col-md-6">
-               <h4 class="">{{calibrationObj.waterVolume}} Litres</h4>
+               <h4 class="">{{convertThousand(calibrationObj.waterVolume)}} Litres</h4>
            </div>
        </div>
   </div>
@@ -46,7 +46,12 @@ export default {
       : MODAL_WIDTH
   },
   methods: {
-   
+      convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
   }
 }
 </script>

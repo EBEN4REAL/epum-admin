@@ -1,5 +1,5 @@
 <template>
-<modal class="editPumpStat" name="updateTankStatus" transition="pop-out" :width="650" :height="650" >
+<modal class="editPumpStat" name="updateTankStatus" transition="pop-out" :width="650" :height="600" >
   <div class="modal__header">
       <span class="mr-3"><img src="@/assets/img/building (1).svg" width="20" height="20"></span>
       <h4>Update Tank status</h4>
