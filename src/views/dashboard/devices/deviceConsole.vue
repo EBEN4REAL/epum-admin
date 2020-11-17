@@ -1,6 +1,6 @@
 <template>
   <masterLayout>
-    <section class="mt-3 full__row_section banner-gradient"  :style="[
+    <!-- <section class="mt-3 full__row_section banner-gradient"  :style="[
                 {
                 backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
                 backgroundPosition: 'center',
@@ -15,8 +15,8 @@
             </div>
             </div>
         </div>
-        </section>
-        <div class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
+        </section> -->
+        <!-- <div class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
             <div class="">
                 <form>
                     <div class="text-center">
@@ -67,8 +67,8 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <!-- <div class="small_card product_details_card toggler-card mt-3">
+        </div> -->
+        <div class="small_card product_details_card toggler-card mt-3">
            <div class="console-details">
                 <div class="pt-3 px-4">
                 <p>0188373193</p>
@@ -84,16 +84,18 @@
                  </div>
               <hr />
            </div>
-            </div> -->
+           <p>{{info}}</p>
+        </div>
   </masterLayout>
 </template>
 
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
-import backgroundUrl from "@/assets/img/bg__card.png";
 import Jquery from 'jquery';
-let $ = Jquery;
+// import signalR from "@aspnet/signalr";
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
+// let $ = Jquery;
 import configObject from "@/config";
 
 export default {
@@ -102,26 +104,41 @@ export default {
   },
   data() {
     return {
-      backgroundUrl,
-      deviceObj: {}
+      info: ''
     };
   },
   mounted() {
-    this.deviceId = this.$route.query.deviceId
-    let ml = sessionStorage.getItem(this.deviceId)
-    if (!ml){
-        let allData = localStorage.getItem("devicesList")
-        let dt = JSON.parse(allData)
-        dt.forEach((my, index) =>{
-            if(my.id === this.deviceId){
-                ml = JSON.stringify(my)
-                sessionStorage.setItem(this.deviceId, ml)
-            }
-        })
-    }
+    const currentdeviceId = this.$route.query.deviceId
 
-    let deviceDetails = JSON.parse(ml)
-    this.deviceObj = deviceDetails
+    // $(function () {
+            // Declare a proxy to reference the hub. 
+            $.connection.hub.url = 'https://app.epump.com.ng:1000/signalr';
+            // var chat = $.connection.chatHub;
+            var chat = $.connection.myHub;
+
+            // // Start the connection.
+            $.connection.hub.start().done(function () {
+                chat.server.connect('Connected from the Web');
+                // $('#sendmessage').click(function () {
+                //     // Call the Send method on the hub. 
+                //     chat.server.send($('#displayname').val(), $('#message').val());
+                //     // Clear text box and reset focus for next comment. 
+                //     $('#message').val('').focus();
+                // });
+            });
+
+            chat.client.onEpOneSent = (deviceId, data) => {
+                // console.log(data)
+                if (deviceId === currentdeviceId) {
+                    console.log(data)
+                    this.info = data
+                    //$('#epOneSentDate').append(data);
+                    
+                    // let nDiv = '<div class="consoleLine output"><div>' + data + '</div></div>';
+                    // $('.consoleResponse').append(nDiv).scrollTop($('.consoleResponse')[0].scrollHeight);
+                }
+            };
+        // });
   },
   methods: {
     toggler() {
