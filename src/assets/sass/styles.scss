@@ -1346,6 +1346,27 @@ h6.dashboard__card__header {
   border-bottom-right-radius: 5px !important;
 }
 }
+
+.console-content {
+  .fa-angle-left, .fa-angle-right {
+    margin: 3px;
+    font-size: 18px;
+  }
+  span {
+    margin: 10px;
+}
+textarea {
+  background: $whiteColor !important;
+  padding-top: 0;
+  padding-left: 26px !important;
+}
+span.icon-user {
+  position: absolute;
+  top: 225px;
+  left: 12px;
+}
+}
+
 // Mobile Responsiveness
 @media screen and (max-width: 575px) {
   .navbar-nav .dropdown-menu {

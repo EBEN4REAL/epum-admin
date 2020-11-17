@@ -84,7 +84,19 @@
                  </div>
               <hr />
            </div>
-           <p>{{info}}</p>
+          <div class="console-content">
+              <div class="icons px-2">
+                 <p> <i class="fa fa-angle-double-left fa-2x"></i>
+                  <span><i class="fa fa-angle-left fa-1x"></i>.<i class="fa fa-angle-right fa-1x"></i></span>
+                  Unknown Command
+                </p>
+              </div>
+                <hr />
+              <div class="form-group">
+                  <textarea name="" id="" cols="30" rows="10" class="px-2"> </textarea>
+                    <span class="icon-user"><i class="fa fa-angle-right fa-1x"></i></span>
+              </div>
+          </div>
         </div>
   </masterLayout>
 </template>
