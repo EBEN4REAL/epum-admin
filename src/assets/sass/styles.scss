@@ -338,19 +338,7 @@ body {
 .banner {
   margin: 0 auto;
 }
-textarea {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  outline-width: 0;
-  padding: 10px;
-  height: 100px;
-  border-radius: 5px;
-  background: rgb(251, 251, 251);
-  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16);
-}
+
 .input__block {
   input {
     width: 100%;
@@ -1092,17 +1080,69 @@ h6.dashboard__card__header {
 .toggler-card {
   margin-left: 13px;
   width: 97% !important;
-  p {
-    color: $greyTextColor;
-    margin-bottom: 0;
-    font-size: 11px;
-    margin-top: 4px;
+  .white_text_ev {
+    color: white !important;
   }
-  .toggler-button {
-    float: right;
-    margin-top: -34px;
+  &.dark_back {
+    background-color: #161616 
+  }
+  .console-details {
+    width: 100%;
     display: flex;
-    margin-right: 35px;
+    justify-content: space-between;
+    border-bottom: 1px solid #cccccc;
+    .console_header {
+      width: 50%;
+      h4 {
+        color: #9d9d9d;
+        margin-bottom: 10px;
+      }
+      p {
+        color: #9d9d9d;
+        margin-bottom: 5px;
+        font-size: 13px;
+      }
+    }
+    .toggler-button {
+      width: 50%;
+      margin-right: 35px;
+      display:flex;
+      align-items: center;  
+      justify-content: flex-end;
+      p {
+        margin-bottom: 0;
+      }
+      input {
+        position: absolute;
+        width: 46px;
+        height: 25px;
+        z-index: -10
+    }
+      .dark_check {
+        background-color: $greyTextColor;
+        &.light_check {
+          background-color: gainsboro;
+          border: 1px solid gainsboro;
+        }
+        border-radius: 15px;
+        border: 1px solid $greyTextColor;
+        height: 25px;
+        width: 46px;
+        padding: 3px 2px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .dark_check_inner {
+          transition: 0.2s all;
+          background-color: white;
+          height: 19px;
+          width: 19px;
+          border-radius: 50%;
+          position: relative;
+          left: 0;
+        }
+    }    
+    }
   }
 }
 .dark-mode {
@@ -1348,23 +1388,57 @@ h6.dashboard__card__header {
 }
 
 .console-content {
+  .console_height {
+    min-height: 120px;
+    max-height: 350px;
+    overflow-y: scroll;
+    .console_info_holder {
+      display: flex; 
+      align-items: flex-start;
+      border-bottom: 1px solid #cccccc;
+      .info_icon {
+        margin-right: 20px;
+        color: #9d9d9d;
+        font-size: 25px;
+        line-height: 35px;
+      }
+      .console_info {
+        font-size: 15px;
+        color: #9d9d9d;
+        line-height: 35px;
+        font-weight: 300;
+      }
+    }
+  }
+  
   .fa-angle-left, .fa-angle-right {
     margin: 3px;
     font-size: 18px;
   }
   span {
     margin: 10px;
-}
-textarea {
-  background: $whiteColor !important;
-  padding-top: 0;
-  padding-left: 26px !important;
-}
-span.icon-user {
-  position: absolute;
-  top: 225px;
-  left: 12px;
-}
+  }
+
+  .console_text_area {
+    position: relative;
+    padding-top: 15px;
+    span.icon-user {
+      position: absolute;
+      top: 5px;
+      left: 1px;
+    }
+    textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      height: 100px;
+
+      color: #9d9d9d;
+      padding-left: 26px !important;
+      padding-top: 0;
+    }
+  }
 }
 
 // Mobile Responsiveness

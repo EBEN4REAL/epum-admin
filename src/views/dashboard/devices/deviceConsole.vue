@@ -1,100 +1,35 @@
 <template>
   <masterLayout>
-    <!-- <section class="mt-3 full__row_section banner-gradient"  :style="[
-                {
-                backgroundImage: `linear-gradient(rgb(12, 4, 31 , 0.7), rgb(12, 4, 31 , 0.7)), url(${backgroundUrl})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-                }
-            ]">
-        <div class="row align-items-center justify-content-center hundred-percent-height">
-            <div class="col-md-12 ">
-            <div class="text-center ">
-                <h5 class="title">Device  Details</h5>
-            </div>
-            </div>
-        </div>
-        </section> -->
-        <!-- <div class="full__row_section mt-3 center_div margin-top-center-div ep_card mb-5">
-            <div class="">
-                <form>
-                    <div class="text-center">
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>Epump Branches</label >
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                            <label>Device Type</label>
-                        </div>
-                        <div class="col-md-8">
-                        <div class="input__block">
-                            <select class="form-control">
-                                <option value="Pump">POS</option>
-                                <option value="Pump">Pump</option>
-                                <option value="Tank">Gateway</option>
-                            </select>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>User ID</label>
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="input__block">
-                                    <input type="text" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-3">
-                            <div class="col-md-4 text-left">
-                                <label>Device Pass</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="input__block">
-                                 <input type="password" placeholder="" class="" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
-        <div class="small_card product_details_card toggler-card mt-3">
+        <div class="small_card product_details_card toggler-card mt-3" :class="mode ? 'dark_back' : null">
            <div class="console-details">
-                <div class="pt-3 px-4">
-                <p>0188373193</p>
-                <p>Memory Usage:</p>
-                <p>Firmware Version:</p>
+                <div class="pt-3 px-4 console_header">
+                    <h4 :class="darkClass">{{deviceId}}</h4>
+                    <p :class="darkClass">Memory Usage: {{this.$route.query.usage}}</p>
+                    <p :class="darkClass">Firmware Version: {{this.$route.query.version}}</p>
                 </div>
-                 <div class="toggler-button">
-                     <label class="mr-2">Light</label>
-                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1" @click="toggler">
-                        <label class="custom-control-label" for="customSwitch1">Dark</label>
+                <div class="custom-control custom-switch toggler-button">
+                    <p style="margin-right:8px;" :class="darkClass">Light</p>
+                    <input type="checkbox" value="isChecked" v-model="mode" style="display: none;" />
+                    <div class="dark_check" :class="!mode ? 'light_check' : null" @click="toggleCheck">
+                        <div class="dark_check_inner" :style="[mode ? {left: '21px'} : null]"></div>
                     </div>
-                 </div>
+                    <p style="margin-left:8px;" :class="darkClass">Dark</p>
+                </div>
               <hr />
            </div>
           <div class="console-content">
-              <div class="icons px-2">
-                 <p> <i class="fa fa-angle-double-left fa-2x"></i>
-                  <span><i class="fa fa-angle-left fa-1x"></i>.<i class="fa fa-angle-right fa-1x"></i></span>
-                  Unknown Command
-                </p>
+              <div class="console_height">
+                  <div class="icons px-2 console_info_holder" v-for="(command, i) in info" :key="i">
+                    <p><i class="fa fa-angle-double-left fa-2x info_icon" :class="darkClass"></i></p>
+                    <p class="console_info" :class="darkClass"> 
+                    <!-- <span><i class="fa fa-angle-left fa-1x"></i>.<i class="fa fa-angle-right fa-1x"></i></span> -->
+                    {{command}}
+                    </p>
+                  </div>
               </div>
-                <hr />
-              <div class="form-group">
-                  <textarea name="" id="" cols="30" rows="10" class="px-2"> </textarea>
-                    <span class="icon-user"><i class="fa fa-angle-right fa-1x"></i></span>
+              <div class="console_text_area">
+                  <textarea name="" id="" cols="30" rows="10" class="px-2" :class="darkClass"> </textarea>
+                    <span class="icon-user"><i class="fa fa-angle-right fa-1x" :class="darkClass"></i></span>
               </div>
           </div>
         </div>
@@ -116,46 +51,86 @@ export default {
   },
   data() {
     return {
-      info: ''
+      info: [],
+      mode: false,
+      darkClass: '',
+      chat: null,
+      deviceId: ''
     };
   },
+  updated() {
+    $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
+  },
   mounted() {
-    const currentdeviceId = this.$route.query.deviceId
+    this.deviceId = this.$route.query.deviceId
 
-    // $(function () {
-            // Declare a proxy to reference the hub. 
-            $.connection.hub.url = 'https://app.epump.com.ng:1000/signalr';
-            // var chat = $.connection.chatHub;
-            var chat = $.connection.myHub;
+    let memData = []
+    let memIndex = 0
+ 
+    $.connection.hub.url = 'https://app.epump.com.ng:1000/signalr';
+    var chat = $.connection.myHub;
+    this.chat = chat
 
-            // // Start the connection.
-            $.connection.hub.start().done(function () {
-                chat.server.connect('Connected from the Web');
-                // $('#sendmessage').click(function () {
-                //     // Call the Send method on the hub. 
-                //     chat.server.send($('#displayname').val(), $('#message').val());
-                //     // Clear text box and reset focus for next comment. 
-                //     $('#message').val('').focus();
-                // });
-            });
+    chat.client.onEpOneSent = (deviceId, data) => {
+        if (deviceId === this.deviceId) {
+            this.info.push(data)
+            $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
+        }
+    };
 
-            chat.client.onEpOneSent = (deviceId, data) => {
-                // console.log(data)
-                if (deviceId === currentdeviceId) {
-                    console.log(data)
-                    this.info = data
-                    //$('#epOneSentDate').append(data);
-                    
-                    // let nDiv = '<div class="consoleLine output"><div>' + data + '</div></div>';
-                    // $('.consoleResponse').append(nDiv).scrollTop($('.consoleResponse')[0].scrollHeight);
+
+    // Start the connection.
+    $.connection.hub.start().done(() => {
+        chat.server.connect('Connected from the Web');
+
+        window.addEventListener("keydown", (e) => {
+            let targettedElement = $(event.target)[0].nodeName.toLowerCase();
+            if (targettedElement === 'textarea') {
+                if (e.keyCode === 13) {
+                    // Enter pressed
+                    e.preventDefault();
+                    let entry = $('textarea').val();
+                    memData.push({ cmd: entry, response: '' });
+                    $('textarea').val('');
+                    $('textarea').text('');
+                    memIndex = 0;	// Reset index to 0
+                    this.info.push(entry)
+                    $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
+
+                    this.pushToSignalR(this.deviceId, entry);
                 }
-            };
-        // });
+                else if (e.keyCode === 38) {
+                    // Up arrow pressed
+                    e.preventDefault();
+                    if (memIndex < memData.length) {
+                        $('textarea').val(memData[memData.length - 1 - memIndex].cmd).text(memData[memData.length - 1 - memIndex].cmd);
+                        if (memIndex < memData.length - 1)
+                            memIndex++;
+                    }
+                }
+                else if (e.keyCode === 40) {
+                    // Down arrow pressed
+                    e.preventDefault();
+                    if (memIndex > 0) {
+                        memIndex--;
+                        $('textarea').val(memData[memData.length - 1 - memIndex].cmd).text(memData[memData.length - 1 - memIndex].cmd);
+                    }
+                    else {
+                        $('#textarea').val('').text('');
+                    }
+                }
+            }
+        }, false);
+
+    });
   },
   methods: {
-    toggler() {
-      var element = document.body;
-      element.classList.toggle("dark-mode");
+    toggleCheck() {
+        this.mode = !this.mode
+        this.darkClass = this.darkClass == 'white_text_ev' ? '' : 'white_text_ev'
+    },
+    pushToSignalR(deviceId, value) {
+        this.chat.server.webConsoleSent(deviceId, value);
     }
   }
 };
