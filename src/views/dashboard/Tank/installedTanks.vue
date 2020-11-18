@@ -188,6 +188,17 @@
                       >Tank Dipping
                       </router-link>
                     </div>
+                     <div class="mb-4 mt-2">
+                      <router-link :to="{ name: '', query: { tankId: tank.id, branchId: $route.query.companyBranchId }}"
+                        class="transactions__btn remove_text_decoration"
+                        style="text-decoration: none; background: #d8991c; padding: 12px 9px;"
+                      >Add Title</router-link>
+                      <button
+                        class="transactions__btn remove_text_decoration ml-4"
+                        style="text-decoration: none; padding: 7px; border: none;"
+                      >New too
+                      </button>
+                    </div>
                     <div class="mb-3">
                       <router-link
                         :to="{ name: 'editTank', query: {tankId: tank.id, branchId: $route.query.companyBranchId}}"
