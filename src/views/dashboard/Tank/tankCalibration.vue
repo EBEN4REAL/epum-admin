@@ -114,19 +114,31 @@ export default {
     mounted() {
         this.getTankCalibration()
         this.tankId = this.$route.query.tankId;
-        let ml = sessionStorage.getItem(this.tankId);
+
+        let ml = sessionStorage.getItem(this.tankId); 
+        let variable = localStorage.getItem("tankSalesList") ? 'tankId' : 'id'
         if (!ml) {
-        let allData = localStorage.getItem("tankSalesList");
-        let dt = JSON.parse(allData);
-        dt.forEach((my, index) => {
-            if (my.tankId == this.tankId) {
-            ml = JSON.stringify(my);
-            sessionStorage.setItem(this.tankId, ml);
-            }
-        });
+            let allData = variable == 'tankId' ? localStorage.getItem("tankSalesList") : localStorage.getItem("tanksList")
+            let dt = JSON.parse(allData);
+            dt.forEach((my, index) => {
+                if (my[variable] == this.tankId) {
+                    ml = JSON.stringify(my);
+                    sessionStorage.setItem(this.tankId, ml);
+                }
+            });
         }
         let tankDetails = JSON.parse(ml);
-        this.tankDetailObj = tankDetails;
+        if (sessionStorage.getItem(this.tankId)) {
+            if (!tankDetails.tankId) {
+                tankDetails.tankId = tankDetails.id
+            }
+            if (!tankDetails.tankName) {
+                tankDetails.tankName = tankDetails.name
+            }
+            this.tankDetailObj = tankDetails
+        } else {
+            this.tankDetailObj = variable == 'tankId' ? tankDetails : { ...tankDetails, tankId: tankDetails.id, tankName: tankDetails.name };
+        }
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });

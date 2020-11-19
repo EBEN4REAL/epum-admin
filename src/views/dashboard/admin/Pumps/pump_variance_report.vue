@@ -306,9 +306,13 @@ export default {
         parseTankSales(data) {
             data.forEach(el => {
                 el.branchName = this.varianceObj.branchName
+                // el.tankName = el.name
             })
             sessionStorage.clear()
             localStorage.setItem("tankSalesList", JSON.stringify(data))
+            if (localStorage.getItem("tanksList")) {
+               localStorage.removeItem("tanksList")
+            }
             this.tankSales = data
             let index = 0
             data.forEach(el => {

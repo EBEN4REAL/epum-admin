@@ -233,8 +233,6 @@ export default {
   },
 
   mounted() {
-    this.getTanks()
-
     const companyBranchId = this.$route.query.companyBranchId
     let ml = sessionStorage.getItem(companyBranchId)
     if (!ml){
@@ -249,6 +247,8 @@ export default {
     }
     let companyBranchDetails = JSON.parse(ml)
     this.branchName = companyBranchDetails.name
+
+    this.getTanks()
   },
   data() {
     return {
@@ -282,6 +282,8 @@ export default {
                   return a.name > b.name ? 1 : -1;
               });
               response.data.forEach(element => {
+                element.branchName = this.branchName
+                // element.tankName = element.name
                 element.height = parseInt(
                   150 - (element.currentVolume / element.maxCapacity) * 140
                 );
@@ -325,6 +327,9 @@ export default {
               this.tanks = response.data;
               sessionStorage.clear();
               localStorage.setItem("tanksList", JSON.stringify(response.data))
+              if (localStorage.getItem("tankSalesList")) {
+                localStorage.removeItem("tankSalesList")
+              }
               this.tanksCount = response.data.length
           })
           .catch(error => {
