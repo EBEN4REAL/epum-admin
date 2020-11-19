@@ -4,8 +4,7 @@
       Details
     </router-link>
 
-    <!-- <router-link :to="{name:'editDevices',  query: {deviceId: data.deviceId}}" class="btn dealers_btn mr-3"> -->
-    <router-link :to="{name: this.$route.name}" class="btn dealers_btn mr-3">
+    <router-link :to="{ name:'deviceConsole',  query: {deviceId: data.deviceId, usage: data.memoryUsage, version: data.firmWareVersion }}" class="btn dealers_btn mr-3">
      Console
     </router-link>
 
