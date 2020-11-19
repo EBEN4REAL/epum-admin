@@ -173,16 +173,35 @@ export default {
     };
   },
   created() {
-    this.dateRange.start = `${this.pluginStartDate.substring(0, this.pluginStartDate.length - 8)}00:00:00`
-    this.dateRange.end = this.pluginEndDate;
+    if (this.$route.query.startDate && this.$route.query.endDate) {
+      this.dateRange.start = this.$route.query.startDate
+      this.dateRange.end = this.$route.query.endDate
+    } else {
+      this.dateRange.start = `${this.pluginStartDate.substring(0, this.pluginStartDate.length - 8)}00:00:00`
+      this.dateRange.end = this.pluginEndDate;
+      this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: this.dateRange.start, endDate: this.dateRange.end } })
+    }
+    
     this.deviceId1 = this.$route.query.id
     this.deviceId2 = this.$route.query.id
     this.search()
   },
   mounted() {
-    // this.deviceId1 = this.$route.query.id
-    // this.deviceId2 = this.$route.query.id
-    // this.search()
+  },
+  watch: {
+    dateRange: function (newRange, oldRange) {
+      if ( newRange.start!== null && newRange.end !== null) {
+        this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: newRange.start, endDate: newRange.end } })
+      }
+    },
+    '$route' (to, from){
+      if ((from.query.startDate && ((from.query.startDate !== to.query.startDate) || (from.query.endDate !== to.query.endDate))) && ((this.dateRange.start !== to.query.startDate) || (this.dateRange.end !== to.query.endDate))) {
+        this.dateRange.start = to.query.startDate
+        this.dateRange.end = to.query.endDate
+        
+        this.search()
+      }
+    }
   },
   computed: {
     userName() {
