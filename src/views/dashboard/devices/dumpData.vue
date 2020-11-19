@@ -160,7 +160,9 @@ export default {
         { key: "last30Days", label: "Last 30 Days", value: 30 },
         { key: "lastMonth", label: "Last Month", value: "-month" }
       ],
-      dateRange: {},
+      pluginStartDate: this.$moment().format("YYYY-MM-DDTHH:mm:ss"),
+      pluginEndDate: this.$moment().format("YYYY-MM-DDTHH:mm:ss"),
+      dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
       isButtonDisabled: false,
       isButtonDisabled2: false,
       showLoader: false,
@@ -170,9 +172,17 @@ export default {
       timestampDetails: ''
     };
   },
-  mounted() {
+  created() {
+    this.dateRange.start = `${this.pluginStartDate.substring(0, this.pluginStartDate.length - 8)}00:00:00`
+    this.dateRange.end = this.pluginEndDate;
     this.deviceId1 = this.$route.query.id
     this.deviceId2 = this.$route.query.id
+    this.search()
+  },
+  mounted() {
+    // this.deviceId1 = this.$route.query.id
+    // this.deviceId2 = this.$route.query.id
+    // this.search()
   },
   computed: {
     userName() {
@@ -202,28 +212,31 @@ export default {
 
       $('.loader').show();
       this.isButtonDisabled = true;
+      this.showLoader = true
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
-                let index = 0;
-                res.data.forEach(el => {
-                    el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
-                    el.index = ++index;
-                })
-                this.isButtonDisabled = false;
-                $('.loader').hide();
-                this.$refs.dataGrid.ej2Instances.setProperties({
-                  dataSource: res.data
-                });
-                this.refreshGrid();
+            let index = 0;
+            res.data.forEach(el => {
+                el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
+                el.index = ++index;
+            })
+            this.isButtonDisabled = false;
+            $('.loader').hide();
+            this.$refs.dataGrid.ej2Instances.setProperties({
+              dataSource: res.data
+            });
+            this.showLoader = false
+            this.refreshGrid();
           })
           .catch(error => {
-              this.isButtonDisabled = false;
-              $('.loader').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
+            this.showLoader = false
+            this.isButtonDisabled = false;
+            $('.loader').hide();
+            this.$toast(error.response.data.message, {
+                type: "error",
+                timeout: 3000
+            });
           });
     },
     convert() {
