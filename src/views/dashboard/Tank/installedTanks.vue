@@ -189,14 +189,15 @@
                       </router-link>
                     </div>
                      <div class="mb-4 mt-2">
-                      <router-link :to="{ name: '', query: { tankId: tank.id, branchId: $route.query.companyBranchId }}"
+                      <router-link :to="{ name: 'tank_calibration', query: { tankId: tank.id, branchId: $route.query.companyBranchId }}"
                         class="transactions__btn remove_text_decoration"
                         style="text-decoration: none; background: #d8991c; padding: 12px 9px;"
-                      >Add Title</router-link>
+                      >Check Calibration</router-link>
                       <button
                         class="transactions__btn remove_text_decoration ml-4"
                         style="text-decoration: none; padding: 7px; border: none;"
-                      >New too
+                        @click="removeTankCalibration(tank.id)"
+                      >Remove Calibration
                       </button>
                     </div>
                     <div class="mb-3">
@@ -329,6 +330,29 @@ export default {
           .catch(error => {
             this.showLoader = false
           });
+      },
+      removeTankCalibration(tankId) {
+          let resp = confirm("Are you sure want to remove this tank calibration?");
+          if (!resp) {
+              return
+          }
+          this.axios
+              .delete(
+                  `${configObject.apiBaseUrl}/Calibration/RemoveTankCalibration/${tankId}`,
+                  configObject.authConfig
+              )
+              .then((res) => {
+                  this.$toast("Successfully Removed Tank Calibration", {
+                      type: "success",
+                      timeout: 3000,
+                  });
+              })
+              .catch((error) => {
+                  this.$toast(error.response.data.message, {
+                      type: "error",
+                      timeout: 3000,
+                  });
+              });
       },
   }
 };
