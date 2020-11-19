@@ -145,7 +145,8 @@ export default {
       changeTab(tab) {
         this.tab = tab;
       },
-      resolveFlutterWavePayment() {
+      resolveFlutterWavePayment(e) {
+        e.preventDefault();
          if(!this.email) {
           this.$toast("Email  Field cannot be blank", {
               type: "error", 
@@ -225,7 +226,8 @@ export default {
         //     });
         //   });
       },
-      resolveMonifyPayment() {
+      resolveMonifyPayment(e) {
+         e.preventDefault();
          if(!this.mfEmail) {
           this.$toast("Email  Field cannot be blank", {
               type: "error", 
