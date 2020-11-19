@@ -12,7 +12,15 @@
 * {
   box-sizing: border-box;
 }
-
+.tabs__lists .tab_link {
+  text-decoration: none ;
+  color: rgb(228,228,228);
+  padding: 5px;
+}
+.active__tab__link {
+  border-bottom: 3px solid $primaryColor;
+  color: $primaryColor !important;
+}
 .active_pump_status {
   background: $primaryColor !important;
   cursor: text;
@@ -270,19 +278,20 @@ body {
   margin: 0 auto;
   position: relative;
   width: 60%;
-  height: 500px;
+  // height: 500px;
+  margin-top: 54px !important;
   -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.16);
 }
 .margin-top-center-div {
-  margin-top: 120px;
+  // margin-top: 120px;
 }
 .pattern_sec {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 150px;
+  height: 100px;
 }
 
 .pad_div {
@@ -294,12 +303,19 @@ body {
   padding: 65px;
 }
 
+// .tabs__lists {
+//   list-style-type: none;
+//   display: inline;
+//   padding: 15px;
+//   text-align: center;
+//   color: $primaryColor;
+// }
 .tabs__lists {
   list-style-type: none;
-  display: inline;
   padding: 15px;
-  text-align: center;
-  color: $primaryColor;
+  li {
+      display: inline;
+  }
 }
 
 .pay_header {
@@ -1448,6 +1464,9 @@ h6.dashboard__card__header {
   .navbar-nav .dropdown-menu {
     margin-left: -54px;
   }
+  .active__tab__link {
+    font-size: 14px!important;
+  }
   section.image_section.col-md-7 {
     display: none;
   }
@@ -1490,9 +1509,10 @@ h6.dashboard__card__header {
   }
   .center_div {
     width: 90% !important;
+    margin-top: 54px !important;
   }
   .margin-top-center-div {
-    margin-top: 54px;
+    margin-top: 100px;
   }
   .pattern_sec {
     height: 117px;

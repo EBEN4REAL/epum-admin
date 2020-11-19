@@ -1,89 +1,92 @@
 <template>
-    <masterLayout :branchName="branchName">
-        <section class=" mt-3 full__row_section">
-            <div class="banner">
-            <div class="row align-items-center" style="height: 100%">
-                 <div class="col-lg-4">
-                        <div class="dashboard__card large_card">
-                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
-                            <p class="dashboard__card__header text-white">Total Tanks Filled</p>
-                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
-                                <img src="@/assets/img/wallet.svg" width="40px" />
-                                </div>
-                                <div class="">
-                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
-                                >{{transactionCount}}</small>
+    <div>
+        <EditTanksFilledModal :tankFillInfo="tankFillInfo" />
+        <masterLayout :branchName="branchName">
+            <section class=" mt-3 full__row_section">
+                <div class="banner">
+                <div class="row align-items-center" style="height: 100%">
+                    <div class="col-lg-4">
+                            <div class="dashboard__card large_card">
+                            <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                                <p class="dashboard__card__header text-white">Total Tanks Filled</p>
+                                    <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                    <img src="@/assets/img/wallet.svg" width="40px" />
+                                    </div>
+                                    <div class="">
+                                    <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                    >{{tankFillsCount}}</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <div class="col-lg-8 remove-padding-left padding_div">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row align-items-center" style="height: 100%">
-                        <div class="col-md-5 text-center">
-                            <h5>Tanks Filled</h5>
+                    <div class="col-lg-8 remove-padding-left padding_div">
+                        <div class="dashboard__card small_card align-center">
+                            <div class="row align-items-center" style="height: 100%">
+                            <div class="col-md-5 text-center">
+                                <h5>Tanks Filled</h5>
+                            </div>
+                            <div class="col-md-4 mt-4">
+                            <div class="drop_down_div align-items-center">
+                                    <vue-ctk-date-time-picker
+                                        v-model="dateRange"
+                                        :max-date="maxDate"
+                                        :range="true"
+                                        :autoClose="true"
+                                        :custom-shortcuts="customShortcuts"
+                                        color="#290C53"
+                                        format="DDMMYYYY"
+                                        formatted="DD/MM/YYYY"
+                                        label="Select a date range"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mt-4">
-                           <div class="drop_down_div align-items-center">
-                                <vue-ctk-date-time-picker
-                                    v-model="dateRange"
-                                    :max-date="maxDate"
-                                    :range="true"
-                                    :autoClose="true"
-                                    :custom-shortcuts="customShortcuts"
-                                    color="#290C53"
-                                    format="DDMMYYYY"
-                                    formatted="DD/MM/YYYY"
-                                    label="Select a date range"
-                                />
-                              </div>
                         </div>
-                    </div>
                     </div>
                 </div>
-            </div>
+                    </div>
+            </section>
+            <section class="top_section_row mt-3 ">
+                <div class="row  mt-3 align-items-center py-3 ">
+                    <div class="col-md-8">
+                        <span class="pl-3 ">  Retail Outlet tank probe transactions between  <strong>{{ startDate }} </strong> and
+                        <strong>{{ endDate }} </strong></span>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        
+                    </div>
                 </div>
         </section>
-        <section class="top_section_row mt-3 ">
-            <div class="row  mt-3 align-items-center py-3 ">
-                <div class="col-md-8">
-                    <span class="pl-3 ">  Retail Outlet tank probe transactions between  <strong>{{ startDate }} </strong> and
-                     <strong>{{ endDate }} </strong></span>
-                </div>
-                <div class="col-md-4 text-right">
-                    
-                </div>
+            <div class="new_row_section mt-3">
+                <ejs-grid
+                    ref="dataGrid"
+                    v-show="!showLoader"
+                    :created="refreshGrid"
+                    :allowPaging="true"
+                    :allowSorting="true"
+                    :pageSettings="tableProps.pageSettings"
+                    :toolbar="tableProps.toolbar"
+                    :searchSettings="tableProps.search"
+                    :allowExcelExport="true"
+                    :allowPdfExport="true"
+                    :toolbarClick="toolbarClick"
+                    :dataSource="tableProps.tableData"  v-cloak
+                    >
+                    <e-columns>
+                        <e-column width="80" field="index" headerText="#"></e-column>
+                        <e-column width="200" field="date" headerText="Date"></e-column>
+                        <e-column width="200" field="volumeFilled" headerText="Volume Filled"></e-column>
+                        <e-column width="200" field="openingDeep" headerText="Opening Deep"></e-column>
+                        <e-column width="200" field="closingDeep" headerText="Closing Deep"></e-column>
+                        <e-column width="200" field="startDate" headerText="Start Date"></e-column>
+                        <e-column width="200" field="endDate" headerText="End Date"></e-column>
+                        <e-column :template="tanksFilledTemp" width="250px" headerText="Action"></e-column>
+                    </e-columns>
+                </ejs-grid>
+                <TableLoader :showLoader="showLoader"/> 
             </div>
-      </section>
-        <div class="new_row_section mt-3">
-            <ejs-grid
-                ref="dataGrid"
-                v-show="!showLoader"
-                :created="refreshGrid"
-                :allowPaging="true"
-                :allowSorting="true"
-                :pageSettings="tableProps.pageSettings"
-                :toolbar="tableProps.toolbar"
-                :searchSettings="tableProps.search"
-                :allowExcelExport="true"
-                :allowPdfExport="true"
-                :toolbarClick="toolbarClick"
-                :dataSource="tableProps.tableData"  v-cloak
-                >
-                <e-columns>
-                    <e-column width="80" field="index" headerText="#"></e-column>
-                    <e-column width="200" field="date" headerText="Date"></e-column>
-                    <e-column width="200" field="productHeight" headerText="Product Height"></e-column>
-                    <e-column width="200" field="productVolume" headerText="Product Volume"></e-column>
-                    <e-column width="200" field="temprature" headerText="Temperature"></e-column>
-                    <e-column width="200" field="waterHeight" headerText="Water Height"></e-column>
-                    <e-column width="200" field="waterVolume" headerText="Water Volume"></e-column>
-                    <e-column width="10"></e-column>
-                </e-columns>
-            </ejs-grid>
-            <TableLoader :showLoader="showLoader"/> 
-        </div>
-    </masterLayout>
+        </masterLayout>
+    </div>
 </template>
 <script>
 
@@ -94,11 +97,16 @@ import configObject from "@/config";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import Jquery from 'jquery';
 let $ = Jquery;
+import Temp from '@/components/Templates/tanksFilledTemplates';
+import EditTanksFilledModal from '@/components/modals/tanksFilled/editTanksFilled.vue';
+
+
 
 export default {
     components: {
         masterLayout,
-        TableLoader
+        TableLoader,
+        EditTanksFilledModal
     },
      provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -106,10 +114,15 @@ export default {
     created() {
         this.dateRange.start = this.pluginStartDate;
         this.dateRange.end = this.pluginEndDate;
+        this.$eventHub.$on('editTankFills' , (data) => {
+            this._editTankFill(data)
+        })
+        this.$eventHub.$on('refreshTankFillTable', () => {
+            this.getTanksFilled()
+        })
     },
     mounted() {
-        this.getTankTransactions();
-
+        this.getTanksFilled();
         const companyBranchId = this.$route.query.branchId
         let ml = sessionStorage.getItem(companyBranchId)
         let variable = localStorage.getItem("branchesList") ? 'id' : 'branchId'
@@ -142,13 +155,14 @@ export default {
                 this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
                 this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
 
-                this.getTankTransactions();
+                this.getTanksFilled();
             }
         },
     },
     data() {
         return {
-            transactionCount: 0,
+            tankFillInfo:{},
+            tankFillsCount: 0,
             tableProps: {
                 pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
@@ -169,10 +183,20 @@ export default {
             pluginStartDate: this.$moment().format("D-M-YYYY"),
             pluginEndDate: this.$moment().format("D-M-YYYY"),
             dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
-            branchName: ''
+            branchName: '',
+            tanksFilledTemp: function() {
+                return {
+                    template: Temp
+                };
+            },
         }
     },
     methods: {
+        _editTankFill(data) {
+            this.tankFillInfo = data;
+            console.log(this.tankFillInfo)
+            this.$modal.show('editTankFill');
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -190,14 +214,15 @@ export default {
                 break;
             }
         },
-        getTankTransactions() {
+        getTanksFilled() {
             this.showLoader = true;
             this.axios
                 .get(
-                `${configObject.apiBaseUrl}/Tank/ProbeTransactions/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`,
+                `${configObject.apiBaseUrl}/Audit/TankFills/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`,
                 configObject.authConfig
                 )
                 .then(response => {
+                    console.log(response.data)
                     this.showLoader = false;
                     let index = 0;
                     response.data
@@ -207,16 +232,22 @@ export default {
                             }
                     })
                     response.data.forEach(element => {
+                        console.log(response.data);
                         element.index = ++index;
                         element.date = this.$moment(element.date).format(
-                        "MM/DD/YYYY hh:mm A"
+                            "MM/DD/YYYY hh:mm A"
                         );
-                        element.productVolume = this.convertThousand(element.productVolume);
-                        element.waterVolume = this.convertThousand(element.waterVolume);
-                        element.productHeight = this.convertThousand(element.productHeight);
-                        element.waterHeight = this.convertThousand(element.waterHeight);
+                        element.startDate = this.$moment(element.startDate).format(
+                            "MM/DD/YYYY hh:mm A"
+                        );
+                        element.endDate = this.$moment(element.endDate).format(
+                            "MM/DD/YYYY hh:mm A"
+                        );
+                        element.volumeFilled = this.convertThousand(element.volumeFilled)
+                        element.openingDeep = this.convertThousand(element.openingDeep)
+                        element.closingDeep = this.convertThousand(element.closingDeep)
                     });
-                    this.transactionCount = response.data.length;
+                    this.tankFillsCount = response.data.length;
                     this.$refs.dataGrid.ej2Instances.setProperties({
                         dataSource: response.data
                     });
