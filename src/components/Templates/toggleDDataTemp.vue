@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <button class="text-center var_btn">
+    <button class="text-center var_btn eye_holder">
         <i class="fa fa-eye"></i>
     </button>
   </div>
