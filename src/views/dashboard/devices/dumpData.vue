@@ -112,6 +112,7 @@
             :allowSorting="true"
             :pageSettings="tableProps.pageSettings"
             :allowTextWrap='true'
+            :rowDataBound='rowDataBound'
             >
             <e-columns>
                 <e-column width="80" field="index" headerText="#"></e-column>
@@ -135,6 +136,7 @@ import {Page,Sort} from "@syncfusion/ej2-vue-grids";
 import TimestampModal from '@/components/modals/timestamp.vue';
 import Jquery from 'jquery';
 let $ = Jquery;
+import ToggleDumpDataTemp from '@/components/Templates/toggleDDataTemp.vue';
 
 export default {
   components: {
@@ -212,6 +214,15 @@ export default {
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
+     rowDataBound: function(arging) {
+          arging.row.addEventListener("mouseover", args => {
+              arging.row.children[2].innerHTML = 'Eben'
+          });
+          
+          arging.row.addEventListener("mouseleave", args => {
+              arging.row.children[2].innerHTML = arging.data.dData
+          });
+    },
     search() {
       if(!this.deviceId1) {
           this.$toast("Please input a device ID", {
@@ -235,10 +246,12 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
+            console.log(res.data)
             let index = 0;
             res.data.forEach(el => {
-                el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
-                el.index = ++index;
+              console.log(él.dData)
+              el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
+              el.index = ++index;
             })
             this.isButtonDisabled = false;
             $('.loader').hide();
