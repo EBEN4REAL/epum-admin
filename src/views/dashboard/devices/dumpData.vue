@@ -117,7 +117,9 @@
             <e-columns>
                 <e-column width="80" field="index" headerText="#"></e-column>
                 <e-column width="100" field="date" headerText="Date"></e-column>
-                <e-column width="400" field="dData" headerText="DData"></e-column>
+                <e-column width="400" field="string" headerText="DData"></e-column>
+                <e-column width="200" headerText="Toggle Dump Data"  :template="toggleDumpData"></e-column>
+
             </e-columns>
         </ejs-grid>
         <TableLoader :showLoader="showLoader"/>
@@ -163,25 +165,30 @@ export default {
         { key: "lastMonth", label: "Last Month", value: "-month" }
       ],
       pluginStartDate: this.$moment().format("YYYY-MM-DDTHH:mm:ss"),
-      pluginEndDate: this.$moment().format("YYYY-MM-DDTHH:mm:ss"),
-      dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
+      pluginEndData: this.$moment().format("YYYY-MM-DDTHH:mm:ss"),
+      dateRange: { "start": this.pluginStartDate, "end":this.pluginEndData },
       isButtonDisabled: false,
       isButtonDisabled2: false,
       showLoader: false,
       timeStamp: null,
       deviceId1: null,
       deviceId2: null,
-      timestampDetails: ''
+      timestampDetails: '',
+      toggleDumpData: function() {
+          return {
+              template: ToggleDumpDataTemp
+          };
+      }
     };
   },
   created() {
-    if (this.$route.query.startDate && this.$route.query.endDate) {
+    if (this.$route.query.startDate && this.$route.query.endData) {
       this.dateRange.start = this.$route.query.startDate
-      this.dateRange.end = this.$route.query.endDate
+      this.dateRange.end = this.$route.query.endData
     } else {
       this.dateRange.start = `${this.pluginStartDate.substring(0, this.pluginStartDate.length - 8)}00:00:00`
-      this.dateRange.end = this.pluginEndDate;
-      this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: this.dateRange.start, endDate: this.dateRange.end } })
+      this.dateRange.end = this.pluginEndData;
+      this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: this.dateRange.start, endData: this.dateRange.end } })
     }
     
     this.deviceId1 = this.$route.query.id
@@ -189,17 +196,18 @@ export default {
     this.search()
   },
   mounted() {
+      // this.search()
   },
   watch: {
     dateRange: function (newRange, oldRange) {
       if ( newRange.start!== null && newRange.end !== null) {
-        this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: newRange.start, endDate: newRange.end } })
+        this.$router.push({ name: this.$route.name, query: { ...this.$route.query, startDate: newRange.start, endData: newRange.end } })
       }
     },
     '$route' (to, from){
-      if ((from.query.startDate && ((from.query.startDate !== to.query.startDate) || (from.query.endDate !== to.query.endDate))) && ((this.dateRange.start !== to.query.startDate) || (this.dateRange.end !== to.query.endDate))) {
+      if ((from.query.startDate && ((from.query.startDate !== to.query.startDate) || (from.query.endData !== to.query.endData))) && ((this.dateRange.start !== to.query.startDate) || (this.dateRange.end !== to.query.endData))) {
         this.dateRange.start = to.query.startDate
-        this.dateRange.end = to.query.endDate
+        this.dateRange.end = to.query.endData
         
         this.search()
       }
@@ -214,16 +222,63 @@ export default {
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
-     rowDataBound: function(arging) {
-          arging.row.addEventListener("mouseover", args => {
-              arging.row.children[2].innerHTML = 'Eben'
-          });
-          
-          arging.row.addEventListener("mouseleave", args => {
-              arging.row.children[2].innerHTML = arging.data.dData
-          });
-    },
+    rowDataBound(arging){
+      arging.row.addEventListener("click", args => {
+        console.log(args)
+        if (!args.target.classList.includes('fa-eye')) {
+          console.log('not eye')
+          return
+        }
+        console.log('eye')
+        // console.log(arging)
+        if(arging.row.children[2].innerHTML == arging.data.dData) {
+          arging.row.children[2].innerHTML = arging.data.string
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn"><!----><i class="fa fa-eye"></i></button></div>'
+        }else {
+          arging.row.children[2].innerHTML = arging.data.dData
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn"><!----><i class="fa fa-eye-slash "></i></button></div>'
+        }
+      });
+  },
     search() {
+      //  let data = [
+      //  {
+      //   index: 1,
+      //   dData:  '{"ep":1,"di":"862273049189251","tk":1956521865,"pumps":[{"st":255,"tz":197257.641,"ft":197124.656,"nm":"P4"},{"st":255,"tz":0.000,"ft":0.000,"nm":"P40"}],"tm":48708176,"fv":20412,"sl":"i"}',
+      //   date: '11/19/2020 07:41 PM',
+      //   string: "",
+      //  },
+      //  {
+      //   index: 1,
+      //   dData:  '{"ep":1,"di":"862273049189251","tk":1956521865,"pumps":[{"st":255,"tz":197257.641,"ft":197124.656,"nm":"P4"},{"st":255,"tz":0.000,"ft":0.000,"nm":"P40"}],"tm":48708176,"fv":20412,"sl":"i"}',
+      //   date: '11/19/2020 07:41 PM',
+      //   string: "",
+      //  },
+      // ]
+      // data.forEach(el => {
+      //   let pumpsArr = parseDData.pumps.map(el => {
+      //     return el.nm
+      //   })
+      //   let pumps = pumpsArr.join(', ')
+      //   const pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
+      //   const info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
+      //   if(parseDData.ep == 0) {
+      //     el.string = `${info} booting`
+      //   }else if(parseDData.ep == 1) {
+      //     el.string = `${info} connected`
+      //   }else if(parseDData.ep == 2) {
+      //     el.string = `${info} just processed a transaction`
+      //   }else if(parseDData.ep == 9) {
+      //     el.string = `Status check on ${pumpLabel} ${pumps}`
+      //   }
+      // })
+      // this.$refs.dataGrid.ej2Instances.setProperties({
+      //   dataSource: data
+      // });
+      // this.refreshGrid();
+
+      // return;
+
       if(!this.deviceId1) {
           this.$toast("Please input a device ID", {
               type: "error", 
@@ -244,14 +299,42 @@ export default {
       this.isButtonDisabled = true;
       this.showLoader = true
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
-            console.log(res.data)
             let index = 0;
             res.data.forEach(el => {
-              console.log(él.dData)
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
               el.index = ++index;
+              el.dData = el.dData.includes("}{") ? el.dData.split("}{")[0] + "}" : el.dData
+              el.dData = el.dData.replace(/'/g, '"')
+              const parseDData = JSON.parse(el.dData)
+              let info
+              let pumpLabel
+              let pumps
+              if(parseDData.pumps) {
+                let pumpsArr = parseDData.pumps.map(el => {
+                  return el.nm
+                })
+                pumps = pumpsArr.join(', ')
+                pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
+                info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
+                
+              } else if(parseDData.pm) {
+                pumpLabel = 'Pump'
+                pumps = parseDData.pm
+                info = `Pump ${parseDData.pm} is`
+              }
+
+              if(parseDData.ep == 0) {
+                el.string = `${info} booting`
+              } else if(parseDData.ep == 1) {
+                el.string = `${info} connected`
+               }else if(parseDData.ep == 2) {
+                el.string = `${pumpLabel} ${pumps} just processed a transaction`
+               }else if(parseDData.ep == 9) {
+                el.string = `Status check on ${pumpLabel} ${pumps}`
+              }
+             
             })
             this.isButtonDisabled = false;
             $('.loader').hide();
@@ -262,6 +345,8 @@ export default {
             this.refreshGrid();
           })
           .catch(error => {
+            console.log(error)
+            console.log(error.response)
             this.showLoader = false
             this.isButtonDisabled = false;
             $('.loader').hide();
@@ -310,3 +395,7 @@ export default {
   },
 };
 </script>
+
+
+
+

@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <button class="text-center var_btn" @click="toggledData()">
+    <button class="text-center var_btn">
         <i class="fa fa-eye"></i>
     </button>
   </div>
@@ -18,7 +18,6 @@ export default {
     };
   },
   methods: {
-
   },
 };
 
