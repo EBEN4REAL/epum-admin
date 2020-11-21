@@ -225,9 +225,9 @@ export default {
     rowDataBound(arging){
       arging.row.addEventListener("click", args => {
         console.log(args)
-        if (!args.target.classList.includes('fa-eye')) {
+        if (!args.target.classList.contains('fa-eye')) {
           console.log('not eye')
-          return
+          return;
         }
         console.log('eye')
         // console.log(arging)
