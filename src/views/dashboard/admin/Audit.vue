@@ -67,10 +67,10 @@
                     <e-column width="200" field="branchName" headerText="Branch"></e-column>
                     <e-column width="200" field="pumpPMS" headerText="Pump PMS (Ltrs)"></e-column>
                     <e-column width="200" field="tankPMS" headerText="Tank PMS (Ltrs)"></e-column>
-                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (Ltrs)"></e-column>
+                    <e-column width="200" field="pmsVariance" headerText="PMS Variance (%)"></e-column>
                     <e-column width="200" field="pumpAGO" headerText="Pump AGO (Ltrs)"></e-column>
                     <e-column width="200" field="tankAGO" headerText="Tank AGO (Ltrs)"></e-column>
-                    <e-column width="200" field="agoVariance" headerText="AGO Variance (Ltrs)"></e-column>
+                    <e-column width="200" field="agoVariance" headerText="AGO Variance (%)"></e-column>
                     <e-column :template="AuditSalesTemplate" headerText="Action" width="200"></e-column>
                 </e-columns>
             </ejs-grid>
@@ -175,8 +175,8 @@ export default {
     methods: {
         rowDataBound: function(arging) {
             arging.row.addEventListener("mouseover", args => {
-                arging.row.children[5].innerHTML = arging.data.pmsVarianceActual
-                arging.row.children[8].innerHTML = arging.data.agoVarianceActual
+                arging.row.children[5].innerHTML = `${arging.data.pmsVarianceActual} ltrs`
+                arging.row.children[8].innerHTML = `${arging.data.agoVarianceActual} ltrs`
             });
             
             arging.row.addEventListener("mouseleave", args => {
@@ -207,10 +207,12 @@ export default {
                         el.agoVarianceActual = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
                         let pumpSales = parseFloat(el.pumpPMS)  + parseFloat(el.pumpAGO)
                         let pmsVariance = (((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS)))) / pumpSales) * 100
-                        el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+                        // el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+                        el.pmsVariance = parseFloat(pmsVariance.toFixed(2))
 
                         let agoVariance = (((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO)))) / pumpSales) * 100
-                        el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
+                        // el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
+                        el.agoVariance = parseFloat(agoVariance.toFixed(2)) 
                         el.pumpPMS =  this.convertThousand(el.pumpPMS)
                         el.tankPMS =  this.convertThousand(el.tankPMS)
                         el.pumpAGO =  this.convertThousand(el.pumpAGO)
