@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5 col-md-6">
+      <div class="col-lg-5 col-md-6" style="position: relative">
         <div class="small_card product_details_card audit-sales dumped_data mt-3">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
@@ -101,6 +101,9 @@
             </div>
             </div>
           </div>
+           <button class="mt-4 btn btn-success text-white togled_all_ddata" @click="toggleAll"
+          > Toggle All Data
+          </button>
       </div>
     </div>
     <div class="new_row_section mt-3">
@@ -118,6 +121,7 @@
                 <e-column width="80" field="index" headerText="#"></e-column>
                 <e-column width="100" field="date" headerText="Date"></e-column>
                 <e-column width="400" field="string" headerText="DData"></e-column>
+                <e-column width="400" field="dData" headerText="DData" :visible="false"></e-column>
                 <e-column width="80" headerText="Toggle Dump Data"  :template="toggleDumpData"></e-column>
 
             </e-columns>
@@ -222,6 +226,11 @@ export default {
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
+    toggleAll() {
+      this.$refs.dataGrid.getColumns()[3].visible = !this.$refs.dataGrid.getColumns()[3].visible
+      this.$refs.dataGrid.getColumns()[2].visible = !this.$refs.dataGrid.getColumns()[2].visible
+      this.refreshGrid();
+    },
     rowDataBound(arging){
       arging.row.addEventListener("click", args => {
         if (!(args.target.classList.contains('fa-eye') || args.target.classList.contains('fa-eye-slash') || args.target.classList.contains('eye_holder'))) {
@@ -229,10 +238,12 @@ export default {
         }
         if(arging.row.children[2].innerHTML == arging.data.dData) {
           arging.row.children[2].innerHTML = arging.data.string
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye"></i></button></div>'
+          arging.row.children[3].innerHTML = arging.data.dData
+          arging.row.children[4].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye"></i></button></div>'
         }else {
           arging.row.children[2].innerHTML = arging.data.dData
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye-slash "></i></button></div>'
+          arging.row.children[3].innerHTML = arging.data.string
+          arging.row.children[4].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye-slash "></i></button></div>'
         }
       });
   },
@@ -332,6 +343,7 @@ export default {
               }
              
             })
+            this.dumpData = res.data
             this.isButtonDisabled = false;
             $('.loader').hide();
             this.$refs.dataGrid.ej2Instances.setProperties({
