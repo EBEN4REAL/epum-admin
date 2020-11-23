@@ -118,7 +118,7 @@
                 <e-column width="80" field="index" headerText="#"></e-column>
                 <e-column width="100" field="date" headerText="Date"></e-column>
                 <e-column width="400" field="string" headerText="DData"></e-column>
-                <e-column width="200" headerText="Toggle Dump Data"  :template="toggleDumpData"></e-column>
+                <e-column width="80" headerText="Toggle Dump Data"  :template="toggleDumpData"></e-column>
 
             </e-columns>
         </ejs-grid>
@@ -224,19 +224,15 @@ export default {
     },
     rowDataBound(arging){
       arging.row.addEventListener("click", args => {
-        console.log(args)
-        if (!args.target.classList.contains('fa-eye')) {
-          console.log('not eye')
-          return;
+        if (!(args.target.classList.contains('fa-eye') || args.target.classList.contains('fa-eye-slash') || args.target.classList.contains('eye_holder'))) {
+          return
         }
-        console.log('eye')
-        // console.log(arging)
         if(arging.row.children[2].innerHTML == arging.data.dData) {
           arging.row.children[2].innerHTML = arging.data.string
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn"><!----><i class="fa fa-eye"></i></button></div>'
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye"></i></button></div>'
         }else {
           arging.row.children[2].innerHTML = arging.data.dData
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn"><!----><i class="fa fa-eye-slash "></i></button></div>'
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye-slash "></i></button></div>'
         }
       });
   },
@@ -345,8 +341,6 @@ export default {
             this.refreshGrid();
           })
           .catch(error => {
-            console.log(error)
-            console.log(error.response)
             this.showLoader = false
             this.isButtonDisabled = false;
             $('.loader').hide();

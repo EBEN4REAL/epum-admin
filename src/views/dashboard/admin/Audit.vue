@@ -207,10 +207,12 @@ export default {
                         el.agoVarianceActual = this.convertThousand((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO))))
                         let pumpSales = parseFloat(el.pumpPMS)  + parseFloat(el.pumpAGO)
                         let pmsVariance = (((parseFloat(el.pumpPMS) - (parseFloat(el.tankPMS)))) / pumpSales) * 100
-                        el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+                        // el.pmsVariance = this.convertThousand(pmsVariance) + ' ' + '%'
+                        el.pmsVariance = parseFloat(pmsVariance.toFixed(2));
 
                         let agoVariance = (((parseFloat(el.pumpAGO) - (parseFloat(el.tankAGO)))) / pumpSales) * 100
-                        el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
+                        // el.agoVariance = this.convertThousand(agoVariance) + ' ' + '%'
+                        el.agoVariance = parseFloat(agoVariance.toFixed(2))
                         el.pumpPMS =  this.convertThousand(el.pumpPMS)
                         el.tankPMS =  this.convertThousand(el.tankPMS)
                         el.pumpAGO =  this.convertThousand(el.pumpAGO)

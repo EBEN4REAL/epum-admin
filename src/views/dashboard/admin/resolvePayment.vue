@@ -63,9 +63,9 @@
                               <div class="col-sm-8">
                                 <input type="number" class="form-control form__input" id="inputAmount" placeholder="Amount" v-model="amount">
                                 <div class="mt-4 mx-auto text-center">
-                                  <button class="btn btn_theme" @click="resolveFlutterWavePayment" :disabled="isButtonDisabled ? true : null"
+                                  <button class="btn btn_theme" @click="resolveFlutterWavePayment" :disabled="isButtonDisabled_second ? true : null"
                                     :style="[
-                                      isButtonDisabled
+                                      isButtonDisabled_second
                                         ? { cursor: 'not-allowed' }
                                         : { cursor: 'pointer' }
                                     ]">Resolve Payment</button>
@@ -129,6 +129,7 @@ export default {
           amount: null,
           remis: "isRemis",
           isButtonDisabled:  false,
+          isButtonDisabled_second: false,
           showLoader: false,
           showSpinner: false,
           mfEmail: null,
@@ -191,7 +192,7 @@ export default {
           return;
         }
         this.showSpinner = true
-        this.isButtonDisabled = true
+        this.isButtonDisabled_second = true
 
         if(this.remis === 'true') {
           this.remis = true
@@ -211,7 +212,7 @@ export default {
         //   .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Flutterwave`, data ,  configObject.authConfig)
         //   .then(response => {
         //     this.showSpinner = false
-        //     this.isButtonDisabled = false
+        //     this.isButtonDisabled_second = false
         //     this.$toast('Successfully resolved flutterwave payment', {
         //       type: "success",
         //       timeout: 3000
@@ -219,7 +220,7 @@ export default {
         //   })
         //   .catch(error => {
         //     this.showSpinner = false
-        //     this.isButtonDisabled = false
+        //     this.isButtonDisabled_second = false
         //     this.$toast(error.response.data.message, {
         //       type: "error",
         //       timeout: 3000
@@ -249,7 +250,7 @@ export default {
               timeout: 3000
           });
           return;
-        }
+      }
         this.showSpinner = true
         this.isButtonDisabled = true
         let data = {
@@ -257,24 +258,24 @@ export default {
           "transactionReference": this.transactionRef
         }
         console.log(data)
-        this.axios
-          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig)
-          .then(response => {
-            this.showSpinner = false
-            this.isButtonDisabled = false
-            this.$toast('Successfully resolved Monify payment', {
-              type: "success",
-              timeout: 3000
-            });
-          })
-          .catch(error => {
-            this.showSpinner = false
-            this.isButtonDisabled = false
-            this.$toast(error.response.data.message, {
-              type: "error",
-              timeout: 3000
-            });
-          });
+        // this.axios
+        //   .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig)
+        //   .then(response => {
+        //     this.showSpinner = false
+        //     this.isButtonDisabled = false
+        //     this.$toast('Successfully resolved Monify payment', {
+        //       type: "success",
+        //       timeout: 3000
+        //     });
+        //   })
+        //   .catch(error => {
+        //     this.showSpinner = false
+        //     this.isButtonDisabled = false
+        //     this.$toast(error.response.data.message, {
+        //       type: "error",
+        //       timeout: 3000
+        //     });
+        //   });
       },
     }
 }
