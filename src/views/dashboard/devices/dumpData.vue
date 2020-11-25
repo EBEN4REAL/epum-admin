@@ -233,17 +233,17 @@ export default {
     },
     rowDataBound(arging){
       arging.row.addEventListener("click", args => {
-        if (!(args.target.classList.contains('fa-eye') || args.target.classList.contains('fa-eye-slash') || args.target.classList.contains('eye_holder'))) {
+        if (!(args.target.classList.contains('fa-plus') || args.target.classList.contains('fa-minus') || args.target.classList.contains('eye_holder'))) {
           return
         }
         if(arging.row.children[1].innerHTML == arging.data.dData) {
           arging.row.children[1].innerHTML = arging.data.string
           arging.row.children[2].innerHTML = arging.data.dData
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye"></i></button></div>'
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-plus"></i></button></div>'
         }else {
           arging.row.children[1].innerHTML = arging.data.dData
           arging.row.children[2].innerHTML = arging.data.string
-          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye-slash "></i></button></div>'
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-minus"></i></button></div>'
         }
       });
   },
