@@ -90,23 +90,23 @@
           </div>
       </div>
     </div>
-    <div class="toggler-button ml-3">
-          <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="">
-                 Show all P1
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="">
-                 Show all P2
-                </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="checkbox" id="">
-                 Show ep 9
-                </div>
-             <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
-               Toggle All Data
-          </button>
-           </div>
+    <!-- <div class="toggler-button ml-3">
+      <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="">
+              Show all P1
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="">
+              Show all P2
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="">
+              Show ep 9
+            </div>
+          <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
+            Toggle All Data
+      </button>
+    </div> -->
     <div class="new_row_section mt-3">
           <ejs-grid
             v-show="!showLoader"
@@ -248,43 +248,7 @@ export default {
       });
   },
     search() {
-      //  let data = [
-      //  {
-      //   index: 1,
-      //   dData:  '{"ep":1,"di":"862273049189251","tk":1956521865,"pumps":[{"st":255,"tz":197257.641,"ft":197124.656,"nm":"P4"},{"st":255,"tz":0.000,"ft":0.000,"nm":"P40"}],"tm":48708176,"fv":20412,"sl":"i"}',
-      //   date: '11/19/2020 07:41 PM',
-      //   string: "",
-      //  },
-      //  {
-      //   index: 1,
-      //   dData:  '{"ep":1,"di":"862273049189251","tk":1956521865,"pumps":[{"st":255,"tz":197257.641,"ft":197124.656,"nm":"P4"},{"st":255,"tz":0.000,"ft":0.000,"nm":"P40"}],"tm":48708176,"fv":20412,"sl":"i"}',
-      //   date: '11/19/2020 07:41 PM',
-      //   string: "",
-      //  },
-      // ]
-      // data.forEach(el => {
-      //   let pumpsArr = parseDData.pumps.map(el => {
-      //     return el.nm
-      //   })
-      //   let pumps = pumpsArr.join(', ')
-      //   const pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
-      //   const info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
-      //   if(parseDData.ep == 0) {
-      //     el.string = `${info} booting`
-      //   }else if(parseDData.ep == 1) {
-      //     el.string = `${info} connected`
-      //   }else if(parseDData.ep == 2) {
-      //     el.string = `${info} just processed a transaction`
-      //   }else if(parseDData.ep == 9) {
-      //     el.string = `Status check on ${pumpLabel} ${pumps}`
-      //   }
-      // })
-      // this.$refs.dataGrid.ej2Instances.setProperties({
-      //   dataSource: data
-      // });
-      // this.refreshGrid();
-
-      // return;
+    
 
       if(!this.deviceId1) {
           this.$toast("Please input a device ID", {
@@ -319,7 +283,6 @@ export default {
               let pumps
               if(parseDData.pumps) {
                 let pumpInfo = parseDData.pumps.map(el => {
-                  console.log(parseDData.ep)
                   if(parseDData.ep == 1) {
                     if(el.st && el.st == 255) {
                       return `${el.nm} is online but disconnected `
@@ -330,7 +293,7 @@ export default {
                   if(parseDData.ep == 0) {
                     return `${el.nm} is booting`
                   }
-                  if(parseDData.ep == 0) {
+                  if(parseDData.ep == 2) {
                     return `${el.nm} just processed a transaction`
                   }
                   if(parseDData.ep == 4) {
@@ -341,29 +304,22 @@ export default {
                   return el.nm
                 })
                 el.string = pumpInfo
-                pumps = pumpsArr.join(', ')
-                pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
-                info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
-                
               } else if(parseDData.pm) {
-                pumpLabel = 'Pump'
-                pumps = parseDData.pm
-                info = `Pump ${parseDData.pm} is`
+                if(parseDData.ep == 0) {
+                 el.string = `${parseDData.pm} is online`
+                }
+                if(parseDData.ep == 1) {
+                  el.string =  `${parseDData.pm} is booting`
+                }
+                if(parseDData.ep == 2) {
+                  el.string =  `${parseDData.pm} just processed a transaction`
+                }
+                if(parseDData.ep == 4) {
+                  el.string =  `${parseDData.pm} just got restarted`
+                }
               }
-              
-              // if(parseDData.ep == 0) {
-              //   el.string = `${info} booting`
-              // } else if(parseDData.ep == 1) {
-              //   el.string = `${info} connected`
-              //  }else if(parseDData.ep == 2) {
-              //   el.string = `${pumpLabel} ${pumps} just processed a transaction`
-              //  }else if(parseDData.ep == 4) {
-              //   el.string = `${pumpLabel} ${pumps} just restarted`
-              //  }else if(parseDData.ep == 9) {
-              //   el.string = `Status check on ${pumpLabel} ${pumps}`
-              // }
-              if(parseDData) {
-                console.log(parseDData)
+              if(parseDData.ep == 9) {
+                el.string =  'Configuration Check'
               }
             })
             
