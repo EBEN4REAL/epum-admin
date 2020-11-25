@@ -5,27 +5,13 @@
     <div class="row">
       <div class="col-lg-7 col-md-6">
         <div class="new_row_section">
-          <div class="row mt-3">
+          <div class="row">
             <div class="col-lg-12 remove-padding-left padding_div pr-0">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-8 card_inner_wrapper">
-                            <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by getting to manage your dumped data</p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <img src="@/assets/img/audit.svg" class="mt-2" width="50%" />
-                        </div>
-                    </div>
-                </div>
-             </div>
-            </div>
-
-          <div class="small_card product_details_card audit-sales dumpdata_card mt-3">
+              <div class="small_card product_details_card audit-sales dumpdata_card">
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block input_margin">
-                <input type="number" placeholder="Device ID" class="" v-model="deviceId1" />
+                <input type="text" placeholder="Device ID" class="" v-model="deviceId1" />
             </div>
             </div>
             <div class="col-md-4">
@@ -61,12 +47,13 @@
                       />
                     </button>
                 </div>
-            </div>
-
+              </div>
             </div>
           </div>
         </div>
-      </div>
+    </div>
+ </div>
+</div>
       <div class="col-lg-5 col-md-6" style="position: relative">
         <div class="small_card product_details_card audit-sales dumped_data mt-3">
               <div class="row p-4 align-items-center">
@@ -101,27 +88,40 @@
             </div>
             </div>
           </div>
-           <button class="mt-4 btn btn-success text-white togled_all_ddata" @click="toggleAll"
-          > Toggle All Data
-          </button>
       </div>
     </div>
+    <div class="toggler-button ml-3">
+          <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show all P1
+                </div>
+                <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show all P2
+                </div>
+                <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show ep 9
+                </div>
+             <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
+               Toggle All Data
+          </button>
+           </div>
     <div class="new_row_section mt-3">
           <ejs-grid
             v-show="!showLoader"
             ref="dataGrid"
             :created="refreshGrid"
-            :allowPaging="true"
+            :allowPaging="false"
             :allowSorting="true"
             :pageSettings="tableProps.pageSettings"
             :allowTextWrap='true'
             :rowDataBound='rowDataBound'
             >
             <e-columns>
-                <e-column width="80" field="index" headerText="#"></e-column>
-                <e-column width="100" field="date" headerText="Date"></e-column>
-                <e-column width="400" field="string" headerText="DData"></e-column>
-                <e-column width="400" field="dData" headerText="DData" :visible="false"></e-column>
+                <e-column width="100" field="date" headerText="Date" text-align="left"></e-column>
+                <e-column width="400" field="string" headerText="DData" text-align="left"></e-column>
+                <e-column width="400" field="dData" headerText="DData" :visible="false" text-align="left"></e-column>
                 <e-column width="80" headerText="Toggle Dump Data"  :template="toggleDumpData"></e-column>
 
             </e-columns>
@@ -227,23 +227,23 @@ export default {
       this.$refs.dataGrid.refresh();
     },
     toggleAll() {
-      this.$refs.dataGrid.getColumns()[3].visible = !this.$refs.dataGrid.getColumns()[3].visible
       this.$refs.dataGrid.getColumns()[2].visible = !this.$refs.dataGrid.getColumns()[2].visible
+      this.$refs.dataGrid.getColumns()[1].visible = !this.$refs.dataGrid.getColumns()[1].visible
       this.refreshGrid();
     },
     rowDataBound(arging){
       arging.row.addEventListener("click", args => {
-        if (!(args.target.classList.contains('fa-eye') || args.target.classList.contains('fa-eye-slash') || args.target.classList.contains('eye_holder'))) {
+        if (!(args.target.classList.contains('fa-plus') || args.target.classList.contains('fa-minus') || args.target.classList.contains('eye_holder'))) {
           return
         }
-        if(arging.row.children[2].innerHTML == arging.data.dData) {
-          arging.row.children[2].innerHTML = arging.data.string
-          arging.row.children[3].innerHTML = arging.data.dData
-          arging.row.children[4].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye"></i></button></div>'
-        }else {
+        if(arging.row.children[1].innerHTML == arging.data.dData) {
+          arging.row.children[1].innerHTML = arging.data.string
           arging.row.children[2].innerHTML = arging.data.dData
-          arging.row.children[3].innerHTML = arging.data.string
-          arging.row.children[4].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-eye-slash "></i></button></div>'
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-plus"></i></button></div>'
+        }else {
+          arging.row.children[1].innerHTML = arging.data.dData
+          arging.row.children[2].innerHTML = arging.data.string
+          arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-minus"></i></button></div>'
         }
       });
   },
@@ -308,20 +308,39 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
-            let index = 0;
             res.data.forEach(el => {
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
-              el.index = ++index;
               el.dData = el.dData.includes("}{") ? el.dData.split("}{")[0] + "}" : el.dData
+              
               el.dData = el.dData.replace(/'/g, '"')
               const parseDData = JSON.parse(el.dData)
               let info
               let pumpLabel
               let pumps
               if(parseDData.pumps) {
+                let pumpInfo = parseDData.pumps.map(el => {
+                  console.log(parseDData.ep)
+                  if(parseDData.ep == 1) {
+                    if(el.st && el.st == 255) {
+                      return `${el.nm} is online but disconnected `
+                    }else {
+                      return `${el.nm} is online`
+                    }
+                  }
+                  if(parseDData.ep == 0) {
+                    return `${el.nm} is booting`
+                  }
+                  if(parseDData.ep == 0) {
+                    return `${el.nm} just processed a transaction`
+                  }
+                  if(parseDData.ep == 4) {
+                    return `${el.nm} just got restarted`
+                  }
+                }).join(', ')
                 let pumpsArr = parseDData.pumps.map(el => {
                   return el.nm
                 })
+                el.string = pumpInfo
                 pumps = pumpsArr.join(', ')
                 pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
                 info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
@@ -331,18 +350,23 @@ export default {
                 pumps = parseDData.pm
                 info = `Pump ${parseDData.pm} is`
               }
-
-              if(parseDData.ep == 0) {
-                el.string = `${info} booting`
-              } else if(parseDData.ep == 1) {
-                el.string = `${info} connected`
-               }else if(parseDData.ep == 2) {
-                el.string = `${pumpLabel} ${pumps} just processed a transaction`
-               }else if(parseDData.ep == 9) {
-                el.string = `Status check on ${pumpLabel} ${pumps}`
+              
+              // if(parseDData.ep == 0) {
+              //   el.string = `${info} booting`
+              // } else if(parseDData.ep == 1) {
+              //   el.string = `${info} connected`
+              //  }else if(parseDData.ep == 2) {
+              //   el.string = `${pumpLabel} ${pumps} just processed a transaction`
+              //  }else if(parseDData.ep == 4) {
+              //   el.string = `${pumpLabel} ${pumps} just restarted`
+              //  }else if(parseDData.ep == 9) {
+              //   el.string = `Status check on ${pumpLabel} ${pumps}`
+              // }
+              if(parseDData) {
+                console.log(parseDData)
               }
-             
             })
+            
             this.dumpData = res.data
             this.isButtonDisabled = false;
             $('.loader').hide();
