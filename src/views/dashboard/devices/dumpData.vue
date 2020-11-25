@@ -11,7 +11,7 @@
               <div class="row p-4 align-items-center">
             <div class="col-md-4">
             <div class="input__block input_margin">
-                <input type="number" placeholder="Device ID" class="" v-model="deviceId1" />
+                <input type="text" placeholder="Device ID" class="" v-model="deviceId1" />
             </div>
             </div>
             <div class="col-md-4">
@@ -90,7 +90,19 @@
           </div>
       </div>
     </div>
-    <div class="toggler-button">
+    <div class="toggler-button ml-3">
+          <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show all P1
+                </div>
+                <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show all P2
+                </div>
+                <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="checkbox" id="">
+                 Show ep 9
+                </div>
              <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
                Toggle All Data
           </button>
@@ -100,7 +112,7 @@
             v-show="!showLoader"
             ref="dataGrid"
             :created="refreshGrid"
-            :allowPaging="true"
+            :allowPaging="false"
             :allowSorting="true"
             :pageSettings="tableProps.pageSettings"
             :allowTextWrap='true'
@@ -296,20 +308,39 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig)
           .then(res => {
-            let index = 0;
             res.data.forEach(el => {
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
-              el.index = ++index;
               el.dData = el.dData.includes("}{") ? el.dData.split("}{")[0] + "}" : el.dData
+              
               el.dData = el.dData.replace(/'/g, '"')
               const parseDData = JSON.parse(el.dData)
               let info
               let pumpLabel
               let pumps
               if(parseDData.pumps) {
+                let pumpInfo = parseDData.pumps.map(el => {
+                  console.log(parseDData.ep)
+                  if(parseDData.ep == 1) {
+                    if(el.st && el.st == 255) {
+                      return `${el.nm} is online but disconnected `
+                    }else {
+                      return `${el.nm} is online`
+                    }
+                  }
+                  if(parseDData.ep == 0) {
+                    return `${el.nm} is booting`
+                  }
+                  if(parseDData.ep == 0) {
+                    return `${el.nm} just processed a transaction`
+                  }
+                  if(parseDData.ep == 4) {
+                    return `${el.nm} just got restarted`
+                  }
+                }).join(', ')
                 let pumpsArr = parseDData.pumps.map(el => {
                   return el.nm
                 })
+                el.string = pumpInfo
                 pumps = pumpsArr.join(', ')
                 pumpLabel = pumpsArr.length < 1 ? 'Pump' : 'Pumps'
                 info = `${pumpLabel} ${pumps} ${pumpsArr < 1 ? 'is' : 'are'}`
@@ -319,18 +350,23 @@ export default {
                 pumps = parseDData.pm
                 info = `Pump ${parseDData.pm} is`
               }
-
-              if(parseDData.ep == 0) {
-                el.string = `${info} booting`
-              } else if(parseDData.ep == 1) {
-                el.string = `${info} connected`
-               }else if(parseDData.ep == 2) {
-                el.string = `${pumpLabel} ${pumps} just processed a transaction`
-               }else if(parseDData.ep == 9) {
-                el.string = `Status check on ${pumpLabel} ${pumps}`
+              
+              // if(parseDData.ep == 0) {
+              //   el.string = `${info} booting`
+              // } else if(parseDData.ep == 1) {
+              //   el.string = `${info} connected`
+              //  }else if(parseDData.ep == 2) {
+              //   el.string = `${pumpLabel} ${pumps} just processed a transaction`
+              //  }else if(parseDData.ep == 4) {
+              //   el.string = `${pumpLabel} ${pumps} just restarted`
+              //  }else if(parseDData.ep == 9) {
+              //   el.string = `Status check on ${pumpLabel} ${pumps}`
+              // }
+              if(parseDData) {
+                console.log(parseDData)
               }
-             
             })
+            
             this.dumpData = res.data
             this.isButtonDisabled = false;
             $('.loader').hide();
