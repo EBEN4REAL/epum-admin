@@ -148,11 +148,13 @@ export default {
         .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
         .then(response => {
           this.showSpinner = false
-           this.isButtonDisabled = false
+          this.isButtonDisabled = false
           this.$toast('Successfully Updated Pump Status', {
             type: "success",
             timeout: 3000
           });
+          this.$modal.hide('editPumpStatusModal')
+          this.$eventHub.$emit('refreshPumpStatusList')
         })
         .catch(error => {
           this.showSpinner = false

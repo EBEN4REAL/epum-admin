@@ -141,25 +141,27 @@ export default {
             "closingDeep": this.tankObj.closingDip
         }
         this.isButtonDisabled = true
+        console.log(data)
         this.axios
-            .put(`${configObject.apiBaseUrl}/Audit/UpdateTankStatus`,data, configObject.authConfig)
-            .then(response => {
-                this.showSpinner = false
-                this.isButtonDisabled = false
-                this.$toast('Successfully Updated Tank Status', {
-                    type: "success",
-                    timeout: 3000
-                });
-                this.$modal.hide('updateTankStatus')
-            })
-            .catch(error => {
-                this.showSpinner = false
-                this.isButtonDisabled = false
-                this.$toast(error.response.data.message, {
-                    type: "error",
-                    timeout: 3000
-                });
-            });
+          .put(`${configObject.apiBaseUrl}/Audit/UpdateTankStatus`,data, configObject.authConfig)
+          .then(response => {
+              this.showSpinner = false
+              this.isButtonDisabled = false
+              this.$toast('Successfully Updated Tank Status', {
+                  type: "success",
+                  timeout: 3000
+              });
+              this.$modal.hide('updateTankStatus')
+              this.$eventHub.$emit('refreshTankStatusList')
+          })
+          .catch(error => {
+              this.showSpinner = false
+              this.isButtonDisabled = false
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
     },
   }
 }

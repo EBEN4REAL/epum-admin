@@ -177,7 +177,7 @@ export default {
           });
           return;
         }
-        if (this.isRemis === 'isRemis') {
+        if (this.isRemis == 'isRemis') {
           this.$toast('isRemis  option is required', {
               type: "error",
               timeout: 3000
@@ -207,25 +207,29 @@ export default {
           "amount": parseFloat(this.amount),
           "remis": true
         }
-        console.log(data)
-        // this.axios
-        //   .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Flutterwave`, data ,  configObject.authConfig)
-        //   .then(response => {
-        //     this.showSpinner = false
-        //     this.isButtonDisabled_second = false
-        //     this.$toast('Successfully resolved flutterwave payment', {
-        //       type: "success",
-        //       timeout: 3000
-        //     });
-        //   })
-        //   .catch(error => {
-        //     this.showSpinner = false
-        //     this.isButtonDisabled_second = false
-        //     this.$toast(error.response.data.message, {
-        //       type: "error",
-        //       timeout: 3000
-        //     });
-        //   });
+        this.axios
+          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Flutterwave`, data ,  configObject.authConfig)
+          .then(response => {
+            this.showSpinner = false
+            this.isButtonDisabled_second = false
+            this.$toast('Successfully resolved  payment', {
+              type: "success",
+              timeout: 3000
+            });
+            this.email = null
+            this.transactionID = null
+            this.paymentRef = null
+            this.amount = null
+            this.remis = 'isRemis'
+          })
+          .catch(error => {
+            this.showSpinner = false
+            this.isButtonDisabled_second = false
+            this.$toast(error.response.data.message, {
+              type: "error",
+              timeout: 3000
+            });
+          });
       },
       resolveMonifyPayment(e) {
          e.preventDefault();
@@ -257,25 +261,24 @@ export default {
           "email": this.mfEmail,
           "transactionReference": this.transactionRef
         }
-        console.log(data)
-        // this.axios
-        //   .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig)
-        //   .then(response => {
-        //     this.showSpinner = false
-        //     this.isButtonDisabled = false
-        //     this.$toast('Successfully resolved Monify payment', {
-        //       type: "success",
-        //       timeout: 3000
-        //     });
-        //   })
-        //   .catch(error => {
-        //     this.showSpinner = false
-        //     this.isButtonDisabled = false
-        //     this.$toast(error.response.data.message, {
-        //       type: "error",
-        //       timeout: 3000
-        //     });
-        //   });
+        this.axios
+          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig)
+          .then(response => {
+            this.showSpinner = false
+            this.isButtonDisabled = false
+            this.$toast('Successfully resolved payment', {
+              type: "success",
+              timeout: 3000
+            });
+          })
+          .catch(error => {
+            this.showSpinner = false
+            this.isButtonDisabled = false
+            this.$toast(error.response.data.message, {
+              type: "error",
+              timeout: 3000
+            });
+          });
       },
     }
 }

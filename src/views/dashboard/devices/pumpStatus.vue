@@ -180,6 +180,9 @@ export default {
         this.$eventHub.$on("pumpStatusObj", (data) => {
             this.pumpStatusObj = data
         });
+        this.$eventHub.$on("refreshPumpStatusList", () => {
+            this.getPumpStatus()
+        });
     },
     data() {
         return {
