@@ -15,10 +15,12 @@
             />
             </div>
         </div>
-    <div class="new_row_section mt-3">
-        <div class="pumps_diagnostics">
-            <div class="row mt-3">
-                <div class="col-md-3">
+    <div class="new_row_section pb-4 mt-3">
+           <div class="row">
+               <div class="col-md-6">
+                  <div class="pumps_diagnostics">
+                      <div class="row mt-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -27,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -36,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -45,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -54,10 +56,14 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
+           </div> 
+        </div>
+
+               <div class="col-md-6">
+                    <div class="pumps_diagnostics">
+                        <div class="row mt-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -70,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -87,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -100,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
@@ -114,9 +120,11 @@
                     </div>
                 </div>
             </div>
+           </div> 
+         </div>
         </div>
-    </div>
-    <div class="new_row_section mt-3">
+    </div
+    <section class="new_row_section mt-3">
         <ejs-grid
           v-show="!showLoader"
           ref="dataGrid"
@@ -137,7 +145,7 @@
           </e-columns>
       </ejs-grid>
     <TableLoader :showLoader="showLoader"  /> 
-  </div>
+    </section>
   </masterLayout>
 </template>
 <script>
