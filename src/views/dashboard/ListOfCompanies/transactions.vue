@@ -67,6 +67,8 @@
                 :allowPdfExport="true"
                 :toolbarClick="toolbarClick"
                 :dataSource="tableProps.tableData"  v-cloak
+                :allowTextWrap='true'
+                :rowDataBound="rowDataBound"
                 >
                 <e-columns>
                     <e-column width="80" field="index" headerText="#"></e-column>
@@ -75,7 +77,9 @@
                     <e-column width="200" field="walletBalance" headerText="Wallet Balance"></e-column>
                     <e-column width="200" field="source" headerText="Source"></e-column>
                     <e-column width="200" field="status" headerText="Status"></e-column>
-                    <e-column width="10"></e-column>
+                    <e-column width="200" field="responseCode" headerText="Response Code"></e-column>
+                    <e-column width="200" field="transactionId" headerText="Transaction ID"></e-column>
+                    <e-column width="200" field="sessionId" headerText="Session ID"></e-column> 
                 </e-columns>
             </ejs-grid>
             <TableLoader :showLoader="showLoader"/> 
@@ -186,6 +190,14 @@ export default {
                 break;
             }
         },
+        rowDataBound: function(args) {
+            if (args.data['status'] == "Debit") {
+                args.row.cells[5].style.color = "red";
+            } 
+            if (args.data['status'] == "Credit") {
+                args.row.cells[5].style.color = "green";
+            } 
+        },
         getTransactions() {
             this.showLoader = true;
             this.axios
@@ -194,9 +206,11 @@ export default {
                 configObject.authConfig
                 )
                 .then(response => {
+                console.log(response.data)
                 this.showLoader = false;
                 let index = 0;
                 response.data.forEach(element => {
+                    element.status = element.status == 'Add' ? 'Credit' : 'Debit'
                     element.index = ++index;
                     element.date = this.$moment(element.date).format(
                     "MM/DD/YYYY hh:mm A"
@@ -224,3 +238,4 @@ export default {
     }
 }
 </script>
+

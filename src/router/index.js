@@ -12,6 +12,7 @@ import ListOfCompanies from "../views/dashboard/ListOfCompanies/index";
 import CreateCompanies from "../views/dashboard/ListOfCompanies/create_companies";
 import NewCompanyDetails from "../views/dashboard/ListOfCompanies/company_details";
 import ManageUsers from "../views/dashboard/admin/ManageUsers/manageUsers";
+import CheckPumpSales from "../views/dashboard/admin/check_pump_sales";
 import UsersEdit from "../views/dashboard/admin/ManageUsers/usersEdit";
 import UserDetails from "../views/dashboard/admin/ManageUsers/user_details";
 import SalesRep from "../views/dashboard/ListOfCompanies/sales_rep";
@@ -80,6 +81,15 @@ let routes = [
     path: "/tank-sales",
     name: "tank_sales",
     component: TankSales,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/check-pump-sales",
+    name: "check_pump_sales",
+    component: CheckPumpSales,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

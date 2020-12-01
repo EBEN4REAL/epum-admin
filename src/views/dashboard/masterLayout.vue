@@ -337,6 +337,11 @@
                                         Devices
                                     </router-link>
                                 </li>
+                                 <!-- <li>
+                                    <router-link :to="{ name: 'check_pump_sales' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
+                                        Audit Pump Sales
+                                    </router-link>
+                                </li> -->
                             </ul>
                             
                             <li>
