@@ -30,7 +30,6 @@
                         label="Select a date range"
                     />
                 </div>
-               
               </div>
         </div>
       </div>
@@ -106,6 +105,10 @@
                                     <option value="Nigeria">branch 1</option>
                                     <option value="Kenya">branch 2</option>
                                 </select>
+                                <select v-model="companyId" class="form-control">
+                                    <option disabled selected value="select company">select company</option>
+                                    <option :value="cp.id" v-for="(cp,i) in companies" :key='i'>{{cp.name}}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -170,38 +173,11 @@ export default {
     masterLayout,
     TableLoader
   },
-  provide: {
-      grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
-  },
-  created() {
-      this.$eventHub.$on('refreshRolesList', (id) => { 
-          this.getRoles()
-      })
-  },
-  watch: {
-    dateRange: function (newRange, oldRange) {
-        if ( newRange.start!== null && newRange.end !== null) {
-            this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
-            this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
-
-            // this.getTransactions();
-        }
-    },
-},
-  mounted() {
-    this.getRoles()
-    $(".e-input").keyup(function(e) {
-        searchFun(e);
-    });
-    function searchFun(event) {
-        var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
-        var value = event.target.value;
-        grid.search(value);
-    }
-  },
-  data() {
+   data() {
     return {
         showLoader: false,
+        companyId: null,
+        companies: [],
         userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
         rolesCount: 0,
         tableProps: {
@@ -223,13 +199,38 @@ export default {
         pluginStartDate: this.$moment().format("D-M-YYYY"),
         pluginEndDate: this.$moment().format("D-M-YYYY"),
         dateRange: { "start": this.pluginStartDate, "end":this.pluginEndDate },
-        rolesTemplates: function() {
-            return {
-                template: Temp
-            };
-        }
     };
   },
+  provide: {
+      grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
+  },
+  created() {
+      this.$eventHub.$on('refreshRolesList', (id) => { 
+          this.getRoles()
+      })
+  },
+  watch: {
+    dateRange: function (newRange, oldRange) {
+        if ( newRange.start!== null && newRange.end !== null) {
+            this.startDate = this.$moment(newRange.start, "DD-MM-YYYY").format("MMMM D, YYYY")
+            this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
+
+            // this.getTransactions();
+        }
+    },
+},
+  mounted() {
+    this.getCompanies()
+    $(".e-input").keyup(function(e) {
+        searchFun(e);
+    });
+    function searchFun(event) {
+        var grid = document.getElementsByClassName("e-grid")[0].ej2_instances[0];
+        var value = event.target.value;
+        grid.search(value);
+    }
+  },
+ 
   
   computed: {
       userName() {
@@ -237,6 +238,20 @@ export default {
       }
   },
   methods: {
+    getCompanies() {
+        this.axios
+        .get(
+            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig)
+            .then(res => {
+                console.log(res.data.data)
+                res.data.data.forEach(el => {
+                    el.index = ++index;
+                })
+                this.companies = res.data.data
+        })
+        .catch(error => {
+        });
+    },
     refreshGrid() {
         this.$refs.dataGrid.refresh();
     },
@@ -254,30 +269,6 @@ export default {
             break;
         }
     },
-    getRoles() {
-          this.showLoader = true
-          this.axios
-          .get(
-              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
-              .then(res => {
-                  let index = 0;
-                  res.data.sort((a, b) => {
-                      return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
-                  });
-                  res.data.forEach(el => {
-                      el.index = ++index
-                  })
-                  this.rolesCount = res.data.length
-                  this.$refs.dataGrid.ej2Instances.setProperties({
-                      dataSource: res.data
-                  });
-                  this.refreshGrid();
-                  this.showLoader = false;
-              })
-              .catch(error => {
-                  this.showLoader = false
-              });
-      },
   }
 };
 </script>
