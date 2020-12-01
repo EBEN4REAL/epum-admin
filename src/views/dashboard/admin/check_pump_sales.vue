@@ -123,7 +123,7 @@
            </div> 
          </div>
         </div>
-    </div
+    </div>
     <section class="new_row_section mt-3">
         <ejs-grid
           v-show="!showLoader"
