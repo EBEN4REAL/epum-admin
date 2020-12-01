@@ -13,30 +13,6 @@
                 formatted="DD/MM/YYYY"
                 label="Select a date range"
             />
-        </div>
-    </div>
-    <div class="new_row_section row">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input__block">
-                    <input type="text" placeholder="Lower" class="" name="Name" v-model="lower" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input__block">
-                    <input type="text" placeholder="Higher" class="" name="Name" v-model="higher"  />
-                </div>
-            </div>
-            <div class="row">
-            <div class="col-md-6">
-                <div class="input__block">
-                    <input type="text" placeholder="Branch Name" class="" name="City"  />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input__block">
-                    <input type="text" placeholder="Higher" class="" name="Name" v-model="higher"  />
-                </div>
             </div>
         </div>
     <div class="new_row_section pb-4 mt-3">
@@ -48,7 +24,7 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <input type="text" placeholder="Lower" class="" name="Name" v-model="lower" />
+                            <input type="text" placeholder="Lower" class="" name="Name" />
                             </div>
                         </div>
                     </div>
@@ -57,7 +33,7 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <input type="text" placeholder="Higher" class="" name="Name" v-model="higher"  />
+                            <input type="text" placeholder="Higher" class="" name="Name" />
                             </div>
                         </div>
                     </div>
@@ -66,7 +42,7 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <input type="text" placeholder="Branch Name" class="" name="City" v-model="branchName"  />
+                                <input type="text" placeholder="Branch Name" class="" name="City"  />
                             </div>
                         </div>
                     </div>
@@ -91,22 +67,10 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <select v-model="branchId" class="form-control">
-                                    <option disabled selected value="select company">select branch</option>
-                                    <option :value="cp.id" v-for="(cp,i) in branches" :key='i'>{{cp.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                <select v-model="companyId" class="form-control" @change="getBranchId">
-                                    <option disabled selected value="select company">select company</option>
-                                    <option :value="cp.id" v-for="(cp,i) in companies" :key='i'>{{cp.name}}</option>
-                                    {{companies}}
+                                 <select class="form-control" name="dealerId" >
+                                    <option value="select a branch" disabled>select a branch</option>
+                                    <option value="Nigeria">branch 1</option>
+                                    <option value="Kenya">branch 2</option>
                                 </select>
                             </div>
                         </div>
@@ -116,97 +80,9 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <select class="form-control" name="dealerId" >
-                                    <option value="select a dealer" disabled>select a dealer</option>
-                                    <option value="Nigeria">Dealer 1</option>
-                                    <option value="Kenya">Dealer 2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                <select class="form-control" name="dealerId" >
-                                    <option value="select a pump" disabled>select a pump</option>
-                                    <option value="Nigeria">Pump  1</option>
-                                    <option value="Kenya">Pump 2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-6">
-            
-        </div>
-    </div>
-    <div class="new_row_section mt-3">
-        <div class="pumps_diagnostics">
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                            <input type="text" placeholder="Lower" class="" name="Name" v-model="lower" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                            <input type="text" placeholder="Higher" class="" name="Name" v-model="higher"  />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                <input type="text" placeholder="Branch Name" class="" name="City"  />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                 <input type="text" placeholder="Device ID" class=""  />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                <select v-model="branchId" class="form-control">
-                                    <option disabled selected value="select company">select branch</option>
-                                    <option :value="cp.id" v-for="(cp,i) in branches" :key='i'>{{cp.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="row align-items-center mt-3">
-                        <div class="col-md-12">
-                            <div class="input__block">
-                                <select v-model="companyId" class="form-control" @change="getBranchId">
+                                <select v-model="companyId" class="form-control">
                                     <option disabled selected value="select company">select company</option>
                                     <option :value="cp.id" v-for="(cp,i) in companies" :key='i'>{{cp.name}}</option>
-                                    {{companies}}
                                 </select>
                             </div>
                         </div>
@@ -260,7 +136,6 @@
           <e-columns>
               <e-column width="80" field="index" headerText="#"></e-column>
               <e-column width="250" field="name" headerText="Role"></e-column>
-             <e-column :template="rolesTemplates" headerText="Action" width="300"></e-column>
           </e-columns>
       </ejs-grid>
     <TableLoader :showLoader="showLoader"  /> 
@@ -285,11 +160,8 @@ export default {
    data() {
     return {
         showLoader: false,
-        companyId: 'select company',
+        companyId: null,
         companies: [],
-        branches: [],
-        branchName: null,
-        deviceId: null,
         userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
         rolesCount: 0,
         tableProps: {
@@ -350,15 +222,15 @@ export default {
       }
   },
   methods: {
-    getBranchId(e) {
-        console.log(e.target.value)
-    },
     getCompanies() {
         this.axios
         .get(
             `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig)
             .then(res => {
                 console.log(res.data.data)
+                res.data.data.forEach(el => {
+                    el.index = ++index;
+                })
                 this.companies = res.data.data
         })
         .catch(error => {
