@@ -1,39 +1,20 @@
 <template>
   <masterLayout>
-    <section class="mt-3 full__row_section">
-      <div class="banner">
-        <div class="row align-items-center">
-            <div class="col-lg-8 remove-padding-left padding_div pr-0">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-8 card_inner_wrapper">
-                            <h3>Hi, {{userName}}</h3>
-                            <p>Audit your pump sales here :) </p>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                           <!-- <router-link :to="{name: 'create_roles'}" class="btn create_btn primary_btn">Create New</router-link> -->
-                        </div>
-                    </div>
-                </div>
-             </div>
-            <div class="col-lg-4">
-                <div class="pumps_diagnostics">
-                    <vue-ctk-date-time-picker
-                        v-model="dateRange"
-                        :max-date="maxDate"
-                        :range="true"
-                        :autoClose="true"
-                        :custom-shortcuts="customShortcuts"
-                        color="#290C53"
-                        format="DDMMYYYY"
-                        formatted="DD/MM/YYYY"
-                        label="Select a date range"
-                    />
-                </div>
-              </div>
+       <div class="buttons_section">
+            <div>
+                <vue-ctk-date-time-picker
+                v-model="dateRange"
+                :max-date="maxDate"
+                :range="true"
+                :autoClose="true"
+                :custom-shortcuts="customShortcuts"
+                color="#290C53"
+                format="DDMMYYYY"
+                formatted="DD/MM/YYYY"
+                label="Select a date range"
+            />
+            </div>
         </div>
-      </div>
-    </section>
     <div class="new_row_section mt-3">
         <div class="pumps_diagnostics">
             <div class="row mt-3">
@@ -59,11 +40,7 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <select class="form-control" name="dealerId" >
-                                    <option value="select a dealer" disabled>select a dealer</option>
-                                    <option value="Nigeria">Dealer 1</option>
-                                    <option value="Kenya">Dealer 2</option>
-                                </select>
+                                <input type="text" placeholder="Branch Name" class="" name="City"  />
                             </div>
                         </div>
                     </div>
@@ -72,15 +49,12 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <select class="form-control" name="dealerId" >
-                                    <option value="select a pump" disabled>select a pump</option>
-                                    <option value="Nigeria">Pump  1</option>
-                                    <option value="Kenya">Pump 2</option>
-                                </select>
+                                 <input type="text" placeholder="Device ID" class=""  />
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
             <div class="row mt-3">
                 <div class="col-md-3">
@@ -117,7 +91,11 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                <input type="text" placeholder="Branch Name" class="" name="City"  />
+                                <select class="form-control" name="dealerId" >
+                                    <option value="select a dealer" disabled>select a dealer</option>
+                                    <option value="Nigeria">Dealer 1</option>
+                                    <option value="Kenya">Dealer 2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -126,7 +104,11 @@
                     <div class="row align-items-center mt-3">
                         <div class="col-md-12">
                             <div class="input__block">
-                                 <input type="text" placeholder="Device ID" class=""  />
+                                <select class="form-control" name="dealerId" >
+                                    <option value="select a pump" disabled>select a pump</option>
+                                    <option value="Nigeria">Pump  1</option>
+                                    <option value="Kenya">Pump 2</option>
+                                </select>
                             </div>
                         </div>
                     </div>
