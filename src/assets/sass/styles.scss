@@ -1658,6 +1658,11 @@ h6.dashboard__card__header {
     display: block !important;
     margin-left: 18px;
     width: 53%;
+    .details_btn {
+      margin-top: 10px;
+      width: 101%;
+      margin-left: -1px !important;
+  }
   }
 }
 
@@ -1874,9 +1879,10 @@ h6.dashboard__card__header {
 }
 
 .buttons_section {
-  margin-right: 189px !important;
+  margin-right: 5px !important;
   margin-top: 29px;
   display: flex;
   justify-content: flex-end;
 }
+
 
