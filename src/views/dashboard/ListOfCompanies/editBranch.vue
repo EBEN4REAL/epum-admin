@@ -286,7 +286,7 @@ export default {
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(res => {
           this.states = res.data
@@ -304,7 +304,7 @@ export default {
     getDealers() {
       this.axios
       .get(
-          `${configObject.apiBaseUrl}/Company/Dealers/${this.companyBranchObj.companyId}`, configObject.authConfig)
+          `${configObject.apiBaseUrl}/Company/Dealers/${this.companyBranchObj.companyId}`, configObject.authConfig())
           .then(res => {
             this.companyDealers = res.data
           })
@@ -386,7 +386,7 @@ export default {
       }
 
       $('.loader').show();
-       this.axios.post(`${configObject.apiBaseUrl}/Branch/UpdateBranch`,data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Branch/UpdateBranch`,data, configObject.authConfig())
           .then(res => {
                 this.$toast("Branch Updated successfully", {
                     type: "success",

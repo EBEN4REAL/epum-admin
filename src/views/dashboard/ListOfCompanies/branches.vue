@@ -177,7 +177,7 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.companyId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/Branches/${this.$route.query.companyId}`, configObject.authConfig())
                 .then(res => {
                     let index = 0
                     res.data.sort((a, b) => {

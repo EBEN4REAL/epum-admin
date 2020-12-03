@@ -58,6 +58,7 @@
 <script>
 import cardBg from '@/assets/img/bg__card.png';
 import configObject from "@/config";
+import jwt_decode from "jwt-decode";
 import Jquery from 'jquery';
 let $ = Jquery;
 
@@ -120,10 +121,13 @@ export default {
                         
                         if(roles.includes("Super Admin") || roles.includes("Admin")) {
                             localStorage.setItem("adminUserDetails", JSON.stringify(res.data));
-                            configObject.authConfig = {
-                                headers: { Authorization: "bearer " + res.data.token }
-                            };
+
+                            const decoded = jwt_decode(res.data.token);
+                            const exp = decoded.exp * 1000;
+                            localStorage.setItem('jwtExpiry', exp)
+
                             this.$router.push({ name: "adminDashboard" });
+
                             this.$toast("Login Successful", {
                                 type: "success",
                                 timeout: 3000

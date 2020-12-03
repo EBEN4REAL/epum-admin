@@ -254,7 +254,7 @@ export default {
     getCompanies() {
         this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company?SortName=${'Ascending'}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company?SortName=${'Ascending'}`, configObject.authConfig())
                 .then(res => {
                     this.companies = res.data.data
             })
@@ -265,7 +265,7 @@ export default {
     getBranches() {
         this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/Branches/${this.companyId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/Branches/${this.companyId}`, configObject.authConfig())
                 .then(res => {
                     res.data.sort((a, b) => {
                         return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
@@ -279,7 +279,7 @@ export default {
     getDealers() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/Dealers/${this.companyId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/Dealers/${this.companyId}`, configObject.authConfig())
             .then(res => {
                 res.data.sort((a, b) => {
                     return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
@@ -293,7 +293,7 @@ export default {
     getRoles() {
         this.axios
           .get(
-              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
+              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig())
               .then(res => {
                   res.data.sort((a, b) => {
                       return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
@@ -354,7 +354,7 @@ export default {
         $('.loader').show();
         this.isButtonDisabled = true;
 
-        this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig)
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig())
             .then(res => {
                     this.$toast("Successfully Mapped User", {
                         type: "success",

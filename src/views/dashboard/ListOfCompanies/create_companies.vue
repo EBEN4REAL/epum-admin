@@ -274,7 +274,7 @@ export default {
       formData.append('Company.Email', this.Email)
       formData.append('Logo', this.Logo)
       $('.loader').show();
-      this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,formData, configObject.authConfigForUpload)
+      this.axios.post(`${configObject.apiBaseUrl}/Company/AddCompany`,formData, configObject.authConfigForUpload())
           .then(res => {
                 this.$toast("Company created successfully", {
                     type: "success",
@@ -297,7 +297,7 @@ export default {
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(res => {
           this.states = res.data

@@ -25,7 +25,7 @@ export default {
             this.axios
             .post(
                 `${configObject.apiBaseUrl}/Branch/RemoveMailRecipient`, {"id": id} ,
-                configObject.authConfig
+                configObject.authConfig()
             )
             .then((res) => {
                 this.$toast("Mail Recipient Deleted Successfully", {

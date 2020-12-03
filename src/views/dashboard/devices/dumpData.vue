@@ -270,7 +270,7 @@ export default {
       this.isButtonDisabled = true;
       this.showLoader = true
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig())
           .then(res => {
             res.data.forEach(el => {
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
@@ -362,7 +362,7 @@ export default {
       $('.loader2').show();
       this.isButtonDisabled2 = true;
 
-       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.deviceId2}/${this.timeStamp}`, configObject.authConfig)
+       this.axios.get(`${configObject.apiBaseUrl}/Devices/ConvertTimeStamp/${this.deviceId2}/${this.timeStamp}`, configObject.authConfig())
           .then(res => {
             this.isButtonDisabled2 = false;
             $('.loader2').hide();

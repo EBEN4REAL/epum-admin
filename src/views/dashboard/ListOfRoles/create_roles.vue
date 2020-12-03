@@ -88,7 +88,7 @@ export default {
        
 
         $('.loader').show();
-        this.axios.post(`${configObject.apiBaseUrl}/Admin/CreateRole?role=${this.role}`, {}, configObject.authConfig)
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/CreateRole?role=${this.role}`, {}, configObject.authConfig())
             .then(res => {
                 this.$toast("Role created successfully", {
                     type: "success",

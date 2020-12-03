@@ -234,7 +234,7 @@ export default {
     getBranches() {
       this.showLoader = true;
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig)
+        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=false`, configObject.authConfig())
         .then(response => {
             let amount = 0
             response.data.sort((a, b) => {

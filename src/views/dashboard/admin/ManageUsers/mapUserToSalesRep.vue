@@ -124,7 +124,7 @@ export default {
     getCompanies() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company?SortName=${'Ascending'}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company?SortName=${'Ascending'}`, configObject.authConfig())
             .then(res => {
                 this.companies = res.data.data
         })
@@ -134,7 +134,7 @@ export default {
     getSalesRep() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/SalesRep/${this.companyId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/SalesRep/${this.companyId}`, configObject.authConfig())
             .then(res => {
                 res.data.sort((a, b) => {
                     return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
@@ -171,7 +171,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/AddUserToRole`, data, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Added User", {
                     type: "success",

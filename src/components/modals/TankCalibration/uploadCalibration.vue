@@ -99,7 +99,7 @@ export default {
       let formData = new FormData()
       formData.append('file', this.file)
       $('.loader').show();
-      this.axios.post(`${configObject.apiBaseUrl}/Calibration/Upload/${this.tankId}`,formData, configObject.authConfigForUpload)
+      this.axios.post(`${configObject.apiBaseUrl}/Calibration/Upload/${this.tankId}`,formData, configObject.authConfigForUpload())
           .then(res => {
                 this.$toast("File  Upload successful", {
                     type: "success",

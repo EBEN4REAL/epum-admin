@@ -136,7 +136,7 @@ export default {
           this.showLoader = true
           this.axios
           .get(
-              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig)
+              `${configObject.apiBaseUrl}/Admin/GetRoles`, configObject.authConfig())
               .then(res => {
                   let index = 0;
                   res.data.sort((a, b) => {

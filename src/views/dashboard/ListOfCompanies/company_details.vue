@@ -217,7 +217,7 @@ export default {
   },
   methods: {
       getStates() {
-      this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
+      this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig())
           .then(res => {
               this.states = res.data
           })
@@ -306,7 +306,7 @@ export default {
         formData.append('Company.Id', this.$route.query.companyId)
         $('.loader').show();
         this.isButtonDisabled = true
-        this.axios.put(`${configObject.apiBaseUrl}/Company/EditCompany`, formData, configObject.authConfigForUpload)
+        this.axios.put(`${configObject.apiBaseUrl}/Company/EditCompany`, formData, configObject.authConfigForUpload())
             .then(res => {
                     this.$toast("Company updated successfully", {
                         type: "success",

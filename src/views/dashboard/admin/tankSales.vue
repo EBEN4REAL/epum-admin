@@ -163,7 +163,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `https://oh.epump.com.ng/Audit/DaySale/${this.$route.query.companyBranchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
+                `https://oh.epump.com.ng/Audit/DaySale/${this.$route.query.companyBranchId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig())
                 .then(res => {
                     let index = 0
                     res.data.productTankSales.forEach(el => {

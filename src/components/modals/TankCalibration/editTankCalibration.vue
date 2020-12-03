@@ -104,7 +104,7 @@ export default {
         "volume": parseFloat(this.calibrationObj.volume),
       }
       this.axios
-        .put(`${configObject.apiBaseUrl}​/Calibration/UpdateCalibration`, data ,  configObject.authConfig)
+        .put(`${configObject.apiBaseUrl}​/Calibration/UpdateCalibration`, data ,  configObject.authConfig())
         .then(response => {
           this.showSpinner = false
            this.isButtonDisabled = false

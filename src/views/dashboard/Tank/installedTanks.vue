@@ -270,7 +270,7 @@ export default {
           this.axios
           .get(
           `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
-          configObject.authConfig
+          configObject.authConfig()
           )
           .then(response => {
               this.showLoader = false
@@ -344,7 +344,7 @@ export default {
           this.axios
               .delete(
                   `${configObject.apiBaseUrl}/Calibration/RemoveTankCalibration/${tankId}`,
-                  configObject.authConfig
+                  configObject.authConfig()
               )
               .then((res) => {
                   this.$toast("Successfully Removed Tank Calibration", {

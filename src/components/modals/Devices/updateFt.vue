@@ -107,7 +107,7 @@ export default {
         }
 
         this.axios
-            .put(`${configObject.apiBaseUrl}/Configuration/UpdateFTFromDevice`, data,  configObject.authConfig)
+            .put(`${configObject.apiBaseUrl}/Configuration/UpdateFTFromDevice`, data,  configObject.authConfig())
             .then(response => {
                 this.showSpinner = false
                 this.isButtonDisabled = false

@@ -1353,6 +1353,12 @@ h6.dashboard__card__header {
       .user-name {
         color: #0b2257;
       }
+      .users_loader {
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+      }
       .no_managing {
         display: flex;
         flex-direction: column;
@@ -1873,3 +1879,4 @@ h6.dashboard__card__header {
   display: flex;
   justify-content: flex-end;
 }
+

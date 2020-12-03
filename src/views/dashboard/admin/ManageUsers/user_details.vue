@@ -45,15 +45,12 @@
             <div  class="card-title">
               <h5>List of roles for this user</h5>
             </div>
+            <div class="users_loader" v-if="loading">
+              <clip-loader :color="color" size="55px"></clip-loader>
+            </div>
             <div class="row" style="margin-left: 0; margin-right: 0" v-if="roles.length && !loading">
                 <div :class="column(roles, index)" class="card-text card-text-center border-bottom card-text-border-left" v-for="(role, index) in roles" :key="index">
                     <h6 class="ml-2">{{role}}</h6>
-                    <!-- <button class="mr-2 btn" 
-                    :class="checkRole(role) ? 'resolve-btn' : 'disabled'" 
-                    :disabled="checkRole(role) ? false : true"
-                     @click="showManaging(role)">
-                      Details
-                    </button> -->
 
                     <button class="btn red-btn" @click="removeUser(role)"
                       :disabled="isButtonDisabled ? true : null"
@@ -79,6 +76,9 @@
               <div class="card-title">
                 <h5>{{managingName}} Managed</h5>
               </div>
+              <div class="users_loader" v-if="loading">
+                <clip-loader :color="color" size="55px"></clip-loader>
+              </div>
               <div v-if="managing.length && !loading">
                 <div class="card-text card-text-center p-2 pl-4 pr-4 d-flex border-bottom" v-for="(manage, index) in managing" :key="index">
                   <h6>{{getName(manage)}}:</h6>
@@ -102,12 +102,14 @@
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
 import configObject from "@/config";
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 import Jquery from 'jquery';
 let $ = Jquery;
 
 export default {
   components: {
     masterLayout,
+    ClipLoader
   },
 
   mounted(){
@@ -129,16 +131,17 @@ export default {
   },
   data() {
     return {
-        userObject: {},
-        userObject2: {},
-        numberOfRoles: 0,
-        roles: [],
-        managingObject: {},
-        managing: [],
-        managingIdName: '',
-        managingName: 'Company or Branch',
-        loading: true,
-        isButtonDisabled: false
+      color: '#290C53',
+      userObject: {},
+      userObject2: {},
+      numberOfRoles: 0,
+      roles: [],
+      managingObject: {},
+      managing: [],
+      managingIdName: '',
+      managingName: 'Company or Branch',
+      loading: true,
+      isButtonDisabled: false
     }
   },
   
@@ -152,7 +155,7 @@ export default {
       getUserDetails() {
           this.axios
           .get(
-              `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig)
+              `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig())
               .then(res => {
                   this.userObject2 = res.data
                   if (res.data.roles == "") {
@@ -194,15 +197,6 @@ export default {
           this.managingName = `${managingName[0].toUpperCase()}${managingName.substring(1, managingName.length)}`
           return capName
       },
-      // checkRole(role) {
-      //   if (this.managingObject.role.includes(role)) {
-      //     return true
-      //   }
-      //   return false
-      // },
-      // showManaging(role) {
-
-      // },
       removeUser(role) {
         const data = {
             userId: this.$route.query.id,
@@ -212,7 +206,7 @@ export default {
 
         this.isButtonDisabled = true;
 
-        this.axios.post(`${configObject.apiBaseUrl}/Admin/RemoveUserFromRole`, data, configObject.authConfig)
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/RemoveUserFromRole`, data, configObject.authConfig())
             .then(res => {
                   this.$toast(`Successfully Removed user from ${data.role} role`, {
                       type: "success",

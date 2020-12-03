@@ -138,7 +138,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/DeviceOutOfReach`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/DeviceOutOfReach`, configObject.authConfig())
                 .then(res => {
                     let index = 0;
                     res.data.sort((a, b) => {

@@ -218,7 +218,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Branch/MailRecipients/${this.$route.query.companyBranchId}`, configObject.authConfig())
                 .then(res => {
                     let index = 0;
                     res.data.sort((a, b) => {
@@ -280,7 +280,7 @@ export default {
             this.isButtonDisabled = true;
             $('.loader').show();
             
-            this.axios.post(`${configObject.apiBaseUrl}/Branch/CreateMailRecipient`,data, configObject.authConfig)
+            this.axios.post(`${configObject.apiBaseUrl}/Branch/CreateMailRecipient`,data, configObject.authConfig())
                 .then(res => {
                     this.$toast("Mail Recipient created successfully", {
                         type: "success",

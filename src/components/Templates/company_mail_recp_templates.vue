@@ -24,7 +24,7 @@ export default {
             this.axios
             .delete(
                 `${configObject.apiBaseUrl}/Company/DeleteMailRecipient?id=${id}&companyId=${this.$route.query.companyId}`,
-                configObject.authConfig
+                configObject.authConfig()
             )
             .then((res) => {
                 this.$toast("Mail Recipient Deleted Successfully", {

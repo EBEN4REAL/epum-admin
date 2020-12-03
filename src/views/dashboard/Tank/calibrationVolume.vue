@@ -164,7 +164,7 @@ export default {
         }
         this.isButtonDisabled = true
         this.axios
-            .get(`${configObject.apiBaseUrl}/Calibration/Volume/${this.tankId}/${parseInt(this.productHeight)}/${parseInt(this.waterHeight)}`, configObject.authConfig)
+            .get(`${configObject.apiBaseUrl}/Calibration/Volume/${this.tankId}/${parseInt(this.productHeight)}/${parseInt(this.waterHeight)}`, configObject.authConfig())
             .then(res => {
                 this.showSpinner = false
                 this.isButtonDisabled = false

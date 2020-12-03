@@ -153,7 +153,7 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/Banks`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(response => { 
           response.data.unshift({bankName: 'Select a bank', bankCode: null})  
@@ -179,7 +179,7 @@ export default {
       }
       this.showSpinner = true
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig)
+        .get(`${configObject.apiBaseUrl}​/Transfers/GetAccount?accountNumber=${this.accountNumberValue}&bankCode=${this.bankDetail.bankCode}`, configObject.authConfig())
         .then(response => {
           this.accountNameValue = response.data.accountName
           this.verifyAccount = false
@@ -240,7 +240,7 @@ export default {
           .post(
             `${configObject.apiBaseUrl}/Branch/MAddBranchAccount`,
             data,
-            configObject.authConfig
+            configObject.authConfig()
           )
           .then((res) => {
             this.showSpinner = false

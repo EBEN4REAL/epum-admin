@@ -237,7 +237,7 @@ export default {
             this.axios
             .get(
             `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
-            configObject.authConfig
+            configObject.authConfig()
             )
             .then(response => {
                 this.tanks = response.data
@@ -248,7 +248,7 @@ export default {
             this.axios
                 .get(
                 `${configObject.apiBaseUrl}/Pumps/PumpCalibration/${this.$route.query.id}`,
-                configObject.authConfig
+                configObject.authConfig()
                 )
                 .then(response => {
                     this.pumpCalibration = response.data
@@ -261,7 +261,7 @@ export default {
             this.axios
                 .get(
                 `${configObject.apiBaseUrl}/Branch/Pumps/Detail/${this.$route.query.id}`,
-                configObject.authConfig
+                configObject.authConfig()
                 )
                 .then(response => {
                     this.volumeMultiplier = response.data.volumeMultiplier
@@ -346,7 +346,7 @@ export default {
             this.isButtonDisabled = true
 
             $('.loader').show();
-            this.axios.put(`${configObject.apiBaseUrl}/Pumps/EditPump`, data, configObject.authConfig)
+            this.axios.put(`${configObject.apiBaseUrl}/Pumps/EditPump`, data, configObject.authConfig())
                 .then(res => {
                         this.$toast("Successfully updated pump", {
                             type: "success",

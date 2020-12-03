@@ -220,7 +220,7 @@ export default {
             configObject.apiBaseUrl
           }/Admin/VoucherMonitor?pin=${this.voucherPin.toString()}`,
           {},
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then((res) => {
           if (res.data.deleted == true || res.data.isUsed == true) {
@@ -251,7 +251,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Cancelled Voucher", {
                     type: "success",
@@ -273,7 +273,7 @@ export default {
       $('.loader2').show();
       this.isButtonDisabled2 = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Cancelled Voucher", {
                     type: "success",

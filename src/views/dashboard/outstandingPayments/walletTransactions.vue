@@ -208,7 +208,7 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/WalletTransactions/${this.$route.query.branchId}?startDate=${this.startDate}&endDate=${this.endDate}`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(response => {
           let index = 0

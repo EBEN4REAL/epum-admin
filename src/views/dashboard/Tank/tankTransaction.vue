@@ -195,7 +195,7 @@ export default {
             this.axios
                 .get(
                 `${configObject.apiBaseUrl}/Tank/ProbeTransactions/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`,
-                configObject.authConfig
+                configObject.authConfig()
                 )
                 .then(response => {
                     this.showLoader = false;

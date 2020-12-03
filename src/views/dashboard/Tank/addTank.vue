@@ -163,7 +163,7 @@ export default {
       this.axios
         .get(
           `https://testapi.epump.com.ng/Products`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(response => {
           this.prodList = response.data
@@ -221,7 +221,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Tank/AddTank`, data, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Tank/AddTank`, data, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully added tank", {
                     type: "success",

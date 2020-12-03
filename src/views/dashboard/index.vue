@@ -191,7 +191,7 @@ export default {
     getCompanyCount() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/Count`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/Count`, configObject.authConfig())
             .then(res => {
                 this.companyCount = res.data
             })
@@ -202,7 +202,7 @@ export default {
     getBranchCount() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/BranchCount`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/BranchCount`, configObject.authConfig())
             .then(res => {
                 this.branchCount = res.data
             })
@@ -213,7 +213,7 @@ export default {
     getDealerCount() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/DealerCount`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/DealerCount`, configObject.authConfig())
             .then(res => {
                 this.dealerCount = res.data
             })
@@ -225,7 +225,7 @@ export default {
       this.showLoader = true
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=5&Search=&Order=&SortName=`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=5&Search=&Order=&SortName=`, configObject.authConfig())
             .then(res => {
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: res.data.data
@@ -240,7 +240,7 @@ export default {
     getOfflineDevices() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Admin/OfflinePump`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Admin/OfflinePump`, configObject.authConfig())
             .then(res => {
                 res.data.sort((a, b) => {
                   if (a.branchName && b.branchName) {
