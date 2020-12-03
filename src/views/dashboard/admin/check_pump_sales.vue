@@ -290,7 +290,7 @@ export default {
      getPumps() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Branch/Pumps/${this.branchId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Branch/Pumps/${this.branchId}`, configObject.authConfig())
             .then(response => {
                 response.data.sort((a, b) =>
                     a.displayName.toLowerCase() < b.displayName.toLowerCase()
@@ -308,7 +308,7 @@ export default {
     getCompanies() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig())
+            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig(()))
             .then(res => {
                 this.companies = res.data.data
         })
@@ -319,7 +319,7 @@ export default {
     getDealers() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/Dealers/${this.companyId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/Dealers/${this.companyId}`, configObject.authConfig())
             .then(res => {
                 let index = 0
                 res.data.sort((a, b) => {
@@ -343,7 +343,7 @@ export default {
     getBranches() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/Branches/${this.companyId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/Branches/${this.companyId}`, configObject.authConfig())
             .then(res => {
                 res.data.sort((a, b) => {
                     return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0;
@@ -362,8 +362,8 @@ export default {
         this.axios
             .delete(
                 `${configObject.apiBaseUrl}/Audit/RemovePumpStatus?id=${id}`,
-                configObject.authConfig
-            )
+                configObject.authConfig(
+)            )
             .then((res) => {
                 this.$toast("Successfully Deleted Pump  sale", {
                     type: "success",
@@ -394,7 +394,7 @@ export default {
         }
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`, configObject.authConfig())
             .then(res => {
                 res.data.forEach(el => {
                     el.price = this.convertThousand(el.price)
