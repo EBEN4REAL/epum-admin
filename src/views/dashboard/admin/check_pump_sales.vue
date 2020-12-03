@@ -3,9 +3,9 @@
       <EditCheckPumpSales :pumpSale="pumpSale" />
       <masterLayout>
         <div class="new_row_section mt-3">
-        <div class="row">
-                <div class="col-md-3">
-                    <vue-ctk-date-time-picker
+        <div class="buttons_section">
+            <div>
+                 <vue-ctk-date-time-picker
                         v-model="dateRange"
                         :max-date="maxDate"
                         :range="true"
@@ -16,13 +16,11 @@
                         formatted="DD/MM/YYYY"
                         label="Select a date range"
                     />
-                </div>
-                <div class="col-md-3">
-                    <div class="">
-                        <button  class="btn create_btn primary_btn" @click="checkPumpSales" style="margin-top: 0px !important">Check Sales</button>
-                    </div>
-                </div>
+            </div>
+        <div class="">
+            <button  class="btn details_btn px-5 ml-4" @click="checkPumpSales">Check Sales</button>
         </div>
+       </div>
         </div>
         <div class="new_row_section pb-4 mt-3">
             <div class="row">

@@ -18,8 +18,8 @@
   padding: 25px;
 }
 .tabs__lists .tab_link {
-  text-decoration: none ;
-  color: rgb(228,228,228);
+  text-decoration: none;
+  color: rgb(228, 228, 228);
   padding: 5px;
 }
 .active__tab__link {
@@ -319,7 +319,7 @@ body {
   list-style-type: none;
   padding: 15px;
   li {
-      display: inline;
+    display: inline;
   }
 }
 
@@ -1009,7 +1009,6 @@ h6.dashboard__card__header {
   }
 }
 
-
 .product_details_card.audit-sales {
   background: #290c53;
   height: 140px !important;
@@ -1105,7 +1104,7 @@ h6.dashboard__card__header {
     color: white !important;
   }
   &.dark_back {
-    background-color: #161616 
+    background-color: #161616;
   }
   .console-details {
     width: 100%;
@@ -1127,8 +1126,8 @@ h6.dashboard__card__header {
     .toggler-button {
       width: 50%;
       margin-right: 35px;
-      display:flex;
-      align-items: center;  
+      display: flex;
+      align-items: center;
       justify-content: flex-end;
       p {
         margin-bottom: 0;
@@ -1137,8 +1136,8 @@ h6.dashboard__card__header {
         position: absolute;
         width: 46px;
         height: 25px;
-        z-index: -10
-    }
+        z-index: -10;
+      }
       .dark_check {
         background-color: $greyTextColor;
         &.light_check {
@@ -1162,7 +1161,7 @@ h6.dashboard__card__header {
           position: relative;
           left: 0;
         }
-    }    
+      }
     }
   }
 }
@@ -1266,16 +1265,16 @@ h6.dashboard__card__header {
   }
   .image {
     margin-top: 27px;
-}
+  }
   .primary_btn {
     border-radius: 7px !important;
     width: 53%;
-    background: #EDF6FF !important;
-    color: #290C53 !important;
-}
-.btn_theme {
-  color: $goldColor !important;
-}
+    background: #edf6ff !important;
+    color: #290c53 !important;
+  }
+  .btn_theme {
+    color: $goldColor !important;
+  }
   .card {
     border-radius: 30px;
     .branch {
@@ -1299,13 +1298,13 @@ h6.dashboard__card__header {
       .red-btn {
         background: rgba(227, 0, 23, 0.1);
         box-shadow: 0px 3px 26px #00000017;
-        color: #E30017;
+        color: #e30017;
         text-align: center;
         border-radius: 10px;
         font-size: 15px;
       }
       .btn.disabled {
-        background: #E7E7E8 0% 0% no-repeat padding-box;
+        background: #e7e7e8 0% 0% no-repeat padding-box;
         box-shadow: 0px 3px 26px #00000017;
         border-radius: 10px;
         opacity: 0.5;
@@ -1314,7 +1313,7 @@ h6.dashboard__card__header {
         font-size: 12px;
         width: 69px;
         cursor: not-allowed;
-    }
+      }
       .card-title {
         border-radius: 30px 30px 0 0;
         background: #edf6ff;
@@ -1326,7 +1325,7 @@ h6.dashboard__card__header {
       }
       .card-text {
         height: 78px;
-        display: flex; 
+        display: flex;
         align-items: center;
         justify-content: space-between;
         &.card-text-center {
@@ -1334,7 +1333,7 @@ h6.dashboard__card__header {
         }
         &.card-text-border-left {
           border-right: 1px solid #dee2e6;
-          border-left: 1px solid #dee2e6
+          border-left: 1px solid #dee2e6;
         }
         h6 {
           margin-bottom: 0;
@@ -1352,7 +1351,7 @@ h6.dashboard__card__header {
         top: 236px;
       }
       .user-name {
-        color: #0B2257;
+        color: #0b2257;
       }
       .users_loader {
         display: flex; 
@@ -1366,7 +1365,7 @@ h6.dashboard__card__header {
         justify-content: space-around;
         align-items: center;
         h5 {
-          color: #cecece
+          color: #cecece;
         }
       }
     }
@@ -1379,24 +1378,24 @@ h6.dashboard__card__header {
   }
   .primary_btn {
     margin-top: 33px !important;
-     border-radius: 8px !important;
-}
+    border-radius: 8px !important;
+  }
   .icon_wrapper {
     border-radius: 100px;
     padding: 45px;
   }
   .colour_one {
-    background: #EDF6FF !important;
+    background: #edf6ff !important;
     color: $primaryColor;
   }
   .colour_two {
-    background: #F4E7C7 !important;
-    color: $primaryColor,
+    background: #f4e7c7 !important;
+    color: $primaryColor;
   }
   .colour_three {
     background: rgb(226, 255, 220);
-    color:#25ED00 !important;
-    border: 1px solid #86DC76 !important;
+    color: #25ed00 !important;
+    border: 1px solid #86dc76 !important;
   }
 }
 
@@ -1405,13 +1404,13 @@ h6.dashboard__card__header {
   .card_height {
     height: 474px !important;
     border-radius: 5px !important;
-}
-.bg-section {
-  background: #EDF6FF;
-  height: 478px;
-  border-top-right-radius: 5px !important;
-  border-bottom-right-radius: 5px !important;
-}
+  }
+  .bg-section {
+    background: #edf6ff;
+    height: 478px;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+  }
 }
 
 .console-content {
@@ -1420,7 +1419,7 @@ h6.dashboard__card__header {
     max-height: 350px;
     overflow-y: scroll;
     .console_info_holder {
-      display: flex; 
+      display: flex;
       align-items: flex-start;
       border-bottom: 1px solid #cccccc;
       .info_icon {
@@ -1439,8 +1438,9 @@ h6.dashboard__card__header {
       }
     }
   }
-  
-  .fa-angle-left, .fa-angle-right {
+
+  .fa-angle-left,
+  .fa-angle-right {
     margin: 3px;
     font-size: 18px;
   }
@@ -1476,7 +1476,7 @@ h6.dashboard__card__header {
     margin-left: -54px;
   }
   .active__tab__link {
-    font-size: 14px!important;
+    font-size: 14px !important;
   }
   section.image_section.col-md-7 {
     display: none;
@@ -1584,7 +1584,8 @@ h6.dashboard__card__header {
   .details_form {
     padding-right: 0px !important;
   }
-  .dumped_data, .dumpdata_card {
+  .dumped_data,
+  .dumpdata_card {
     width: 93% !important;
   }
   .account_Settings_profile_details_section_row {
@@ -1651,6 +1652,17 @@ h6.dashboard__card__header {
     .user-contact {
       text-align: center;
     }
+  }
+
+  .buttons_section {
+    display: block !important;
+    margin-left: 18px;
+    width: 53%;
+    .details_btn {
+      margin-top: 10px;
+      width: 101%;
+      margin-left: -1px !important;
+  }
   }
 }
 
@@ -1866,10 +1878,11 @@ h6.dashboard__card__header {
   }
 }
 
-
 .buttons_section {
-  // margin-right: 189px !important;
-  // margin-top: 29px;
-  // display: flex;
-  // justify-content: flex-end;
+  margin-right: 5px !important;
+  margin-top: 29px;
+  display: flex;
+  justify-content: flex-end;
 }
+
+
