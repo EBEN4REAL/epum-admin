@@ -327,7 +327,7 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/branchwallet/${this.$route.query.companyBranchId}`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then((res) => {
           this.walletBalance = this.convertThousand(res.data.balance);
@@ -338,7 +338,7 @@ export default {
       this.axios
         .get(
         `${configObject.apiBaseUrl}/Dashboard/Branch/PumpCount/${this.$route.query.companyBranchId}`,
-        configObject.authConfig
+        configObject.authConfig()
         )
         .then(response => {
             this.pumpCount = response.data.pumpCount
@@ -350,7 +350,7 @@ export default {
           this.axios
           .get(
           `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
-          configObject.authConfig
+          configObject.authConfig()
           )
           .then(response => {
             this.showLoader = false;

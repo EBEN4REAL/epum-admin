@@ -225,7 +225,7 @@ export default {
     getCompanies() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig())
             .then(res => {
                 console.log(res.data.data)
                 res.data.data.forEach(el => {

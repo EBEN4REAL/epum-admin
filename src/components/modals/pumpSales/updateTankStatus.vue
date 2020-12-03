@@ -143,7 +143,7 @@ export default {
         this.isButtonDisabled = true
         console.log(data)
         this.axios
-          .put(`${configObject.apiBaseUrl}/Audit/UpdateTankStatus`,data, configObject.authConfig)
+          .put(`${configObject.apiBaseUrl}/Audit/UpdateTankStatus`,data, configObject.authConfig())
           .then(response => {
               this.showSpinner = false
               this.isButtonDisabled = false

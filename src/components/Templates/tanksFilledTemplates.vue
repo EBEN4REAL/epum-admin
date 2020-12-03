@@ -51,7 +51,7 @@ export default {
             this.axios
             .delete(
                 `${configObject.apiBaseUrl}/Audit/RemoveTankFills/${this.data.id}`,
-                configObject.authConfig
+                configObject.authConfig()
             )
             .then((res) => {
                 this.$toast("Tank Fill Deleted Successfully", {

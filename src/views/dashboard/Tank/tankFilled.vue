@@ -219,7 +219,7 @@ export default {
             this.axios
                 .get(
                 `${configObject.apiBaseUrl}/Audit/TankFills/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`,
-                configObject.authConfig
+                configObject.authConfig()
                 )
                 .then(response => {
                     console.log(response.data)

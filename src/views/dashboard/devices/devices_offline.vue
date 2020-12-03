@@ -204,7 +204,7 @@ export default {
           return 
         }
         
-        this.axios.post(`${configObject.apiBaseUrl}/Admin/ResolveOffline?id=${parseInt(data.deviceId)}`, {}, configObject.authConfig)
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/ResolveOffline?id=${parseInt(data.deviceId)}`, {}, configObject.authConfig())
             .then(res => {
                 this.$toast("Successfully resolved device", {
                     type: "success",
@@ -223,7 +223,7 @@ export default {
         this.showLoader = true
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Admin/OfflinePump`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Admin/OfflinePump`, configObject.authConfig())
             .then(res => {
                 let index = 0;
                 res.data.sort((a, b) => {

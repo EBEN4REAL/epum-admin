@@ -193,7 +193,7 @@ export default {
   },
    methods: {
       getStates() {
-        this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig)
+        this.axios.get( `https://api.epump.com.ng/Branch/States`, configObject.authConfig())
             .then(res => {
                 this.states = res.data
             })
@@ -250,7 +250,7 @@ export default {
             id: this.$route.query.dealerId,
         }
         $('.loader').show();
-        this.axios.put(`${configObject.apiBaseUrl}/Company/UpdateDealer`, data, configObject.authConfig)
+        this.axios.put(`${configObject.apiBaseUrl}/Company/UpdateDealer`, data, configObject.authConfig())
             .then(res => {
                 this.$toast("Successfully edited dealer", {
                     type: "success",

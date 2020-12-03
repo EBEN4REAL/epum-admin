@@ -170,7 +170,7 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`, configObject.authConfig())
                 .then(response => {
                     sessionStorage.clear()
                     localStorage.setItem("pumpsList", JSON.stringify(response.data))

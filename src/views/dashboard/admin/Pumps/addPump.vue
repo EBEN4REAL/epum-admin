@@ -162,7 +162,7 @@ export default {
         this.axios
         .get(
         `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
-        configObject.authConfig
+        configObject.authConfig()
         )
         .then(response => {
             this.tanks = response.data
@@ -232,7 +232,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.post(`${configObject.apiBaseUrl}/Pumps/AddPump`, data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Pumps/AddPump`, data, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Added Pump", {
                     type: "success",

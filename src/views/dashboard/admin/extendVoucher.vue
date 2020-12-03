@@ -107,7 +107,7 @@ export default {
         $('.loader').show();
         this.isButtonDisabled = true;
 
-        this.axios.put(`${configObject.apiBaseUrl}/Admin/ExtendVoucher?Pin=${this.pin}&Expiry=${this.expiry}`, {}, configObject.authConfig)
+        this.axios.put(`${configObject.apiBaseUrl}/Admin/ExtendVoucher?Pin=${this.pin}&Expiry=${this.expiry}`, {}, configObject.authConfig())
             .then(res => {
                   this.$toast("Successfully Extended Voucher", {
                       type: "success",

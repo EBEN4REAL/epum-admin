@@ -123,7 +123,7 @@ export default {
       this.axios
         .get(
           `https://testapi.epump.com.ng/Products`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(response => {
           this.prodList = response.data
@@ -168,7 +168,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.put(`${configObject.apiBaseUrl}/Tank/EditTank`, data, configObject.authConfig)
+      this.axios.put(`${configObject.apiBaseUrl}/Tank/EditTank`, data, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Updated Tank", {
                     type: "success",

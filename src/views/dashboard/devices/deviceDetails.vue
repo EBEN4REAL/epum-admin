@@ -151,7 +151,7 @@ export default {
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Devices/ToggleCanUpdate/${this.$route.query.deviceId}/${update}`,
-                configObject.authConfig
+                configObject.authConfig()
             )
             .then((res) => {
                 this.$toast("Successfully Reverted Device", {
@@ -168,7 +168,7 @@ export default {
         }
     },
     getDeviceDetails() {
-      this.axios.get(`${configObject.apiBaseUrl}/Devices/Details/${this.$route.query.deviceId}`, configObject.authConfig)
+      this.axios.get(`${configObject.apiBaseUrl}/Devices/Details/${this.$route.query.deviceId}`, configObject.authConfig())
           .then(res => {
             this.deviceDetailObj = res.data
             $('.loader').hide();

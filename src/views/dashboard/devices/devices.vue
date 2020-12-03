@@ -228,7 +228,7 @@ export default {
                 this.axios
                 .get(
                     `${configObject.apiBaseUrl}/Devices/ShutDownDevice/${id}`,
-                    configObject.authConfig
+                    configObject.authConfig()
                 )
                 .then((res) => {
                     this.getDevices()
@@ -251,7 +251,7 @@ export default {
                 this.axios
                 .get(
                     `${configObject.apiBaseUrl}/Devices/ReleaseDevice/${id}`,
-                    configObject.authConfig
+                    configObject.authConfig()
                 )
                 .then((res) => {
                     this.getDevices()
@@ -286,7 +286,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Devices`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Devices`, configObject.authConfig())
                 .then(res => {
                     let index = 0;
                     res.data.sort((a, b) => {

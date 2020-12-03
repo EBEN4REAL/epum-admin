@@ -209,7 +209,7 @@ export default {
                 this.axios
                 .delete(
                     `${configObject.apiBaseUrl}/Calibration/RemoveCalibration/${id}`,
-                    configObject.authConfig
+                    configObject.authConfig()
                 )
                 .then((res) => {
                     this.$toast("Calibration Deleted Successfully", {
@@ -233,7 +233,7 @@ export default {
             this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Calibration/${this.$route.query.tankId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Calibration/${this.$route.query.tankId}`, configObject.authConfig())
                 .then(res => {
                     let index = 0
                     res.data.forEach(el => {

@@ -259,7 +259,7 @@ export default {
       }
 
       $('.loader').show();
-       this.axios.post(`${configObject.apiBaseUrl}/Company/PostDealer`,data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Company/PostDealer`,data, configObject.authConfig())
           .then(res => {
                 this.$toast("Dealer created successfully", {
                     type: "success",
@@ -284,7 +284,7 @@ export default {
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(res => {
           this.states = res.data

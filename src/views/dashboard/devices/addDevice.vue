@@ -166,7 +166,7 @@ export default {
         this.axios
         .get(
         `${configObject.apiBaseUrl}/Branch/Tanks/${this.$route.query.companyBranchId}`,
-        configObject.authConfig
+        configObject.authConfig()
         )
         .then(response => {
             this.tanks = response.data.map(cur => {
@@ -183,7 +183,7 @@ export default {
       this.axios
         .get(
         `${configObject.apiBaseUrl}/Branch/Pumps/${this.$route.query.companyBranchId}`,
-        configObject.authConfig
+        configObject.authConfig()
         )
         .then(response => {
             this.pumps = response.data.map(cur => {
@@ -256,7 +256,7 @@ export default {
       $('.loader').show();
       this.isButtonDisabled = true;
 
-       this.axios.post(`${configObject.apiBaseUrl}/Company/AddDevice`,data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Company/AddDevice`,data, configObject.authConfig())
           .then(res => {
                 this.$toast("Successfully Added Device", {
                     type: "success",

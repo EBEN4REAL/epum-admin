@@ -359,7 +359,7 @@ export default {
           .post(
             `${configObject.apiBaseUrl}/Branch/BulkSettlement`,
             data,
-            configObject.authConfig
+            configObject.authConfig()
           )
           .then((res) => {
             const errorArray = res.data.errors
@@ -419,7 +419,7 @@ export default {
     getBranches() {
       this.showLoader = true;
       this.axios
-        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=true`, configObject.authConfig)
+        .get(`${configObject.apiBaseUrl}​/Branch/AccountBalances?settlement=true`, configObject.authConfig())
         .then(response => {
           let amount = 0
           response.data.sort((a, b) => {

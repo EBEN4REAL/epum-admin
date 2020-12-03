@@ -145,7 +145,7 @@ export default {
         "multiplier":  parseFloat(this.pumpStatusObj.totalMultiplier),
       }
       this.axios
-        .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig)
+        .post(`${configObject.apiBaseUrl}​/Admin/UpdatePumpStatus`, data ,  configObject.authConfig())
         .then(response => {
           this.showSpinner = false
           this.isButtonDisabled = false

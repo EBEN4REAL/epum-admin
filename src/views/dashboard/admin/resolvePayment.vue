@@ -208,7 +208,7 @@ export default {
           "remis": true
         }
         this.axios
-          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Flutterwave`, data ,  configObject.authConfig)
+          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Flutterwave`, data ,  configObject.authConfig())
           .then(response => {
             this.showSpinner = false
             this.isButtonDisabled_second = false
@@ -262,7 +262,7 @@ export default {
           "transactionReference": this.transactionRef
         }
         this.axios
-          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig)
+          .post(`${configObject.apiBaseUrl}​/Admin/ResolvePayment/Monnify`, data ,  configObject.authConfig())
           .then(response => {
             this.showSpinner = false
             this.isButtonDisabled = false

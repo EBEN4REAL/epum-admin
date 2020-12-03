@@ -26,7 +26,7 @@ export default {
             this.axios
             .delete(
                 `${configObject.apiBaseUrl}/Admin/DeleteRole?id=${id}`,
-                configObject.authConfig
+                configObject.authConfig()
             )
             .then((res) => {
                 this.$toast("Successfully Deleted Role", {

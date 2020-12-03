@@ -204,7 +204,7 @@ export default {
             // this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/GetUsers?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/GetUsers?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig())
                 .then(res => {
                     // let index = 0;
                     let index = 0 + ((this.currentPage - 1) * this.pageSize);

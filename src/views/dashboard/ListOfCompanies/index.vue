@@ -210,7 +210,7 @@ export default {
                 this.axios
                 .delete(
                     `${configObject.apiBaseUrl}/Company/DeleteCompany/${id}`,
-                    configObject.authConfig
+                    configObject.authConfig()
                 )
                 .then((res) => {
                     this.$toast("Company Deleted Successfully", {
@@ -259,7 +259,7 @@ export default {
         getCompanies() {
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company?PageNumber=${this.currentPage}&PageSize=${this.pageSize}&Search=${this.searchValue}&Order=${this.sortType}&SortName=${this.sortColumn}`, configObject.authConfig())
                 .then(res => {
                     // let index = 0 + ((this.currentPage - 1) * this.pageSize);
                     let index = 0;

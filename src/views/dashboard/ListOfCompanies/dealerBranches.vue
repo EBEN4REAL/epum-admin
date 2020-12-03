@@ -176,7 +176,7 @@ export default {
             this.showLoader = true;
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Company/DealerBranches/${this.$route.query.dealerId}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Company/DealerBranches/${this.$route.query.dealerId}`, configObject.authConfig())
                 .then(res => {
                     let index = 0
                     res.data.sort((a, b) => {

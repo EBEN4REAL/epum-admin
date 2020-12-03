@@ -184,7 +184,7 @@ export default {
       this.axios({
           url: `${configObject.apiBaseUrl}/Audit/BranchPumpAudit?branchId=${this.$route.query.companyBranchId}&startDate=${this.dateRange.start}&endDate=${this.dateRange.end}`,
           method: 'GET',
-          headers: configObject.authConfig.headers,
+          headers: configObject.authConfig().headers,
           responseType: 'blob',
       }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));

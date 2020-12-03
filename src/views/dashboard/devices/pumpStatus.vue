@@ -302,7 +302,7 @@ export default {
             // this.showLoader = true
             this.axios
             .get(
-                `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig)
+                `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig())
                 .then(res => {
                     let index = 0;
                     res.data.sort((a, b) => {

@@ -258,7 +258,7 @@ export default {
       this.axios
         .get(
           `${configObject.apiBaseUrl}/Branch/PumpTransactions?pumpId=${this.$route.query.id}&strtDate=${this.startDate}&endDate=${this.endDate}`,
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(response => {
           this.showLoader = false;

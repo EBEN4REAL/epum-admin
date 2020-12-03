@@ -118,7 +118,7 @@ export default {
         "recordPumpTransactionFromEp1": this.recordPumpTransactionFromEp1
       }
       this.axios
-        .post(`${configObject.apiBaseUrl}/Devices/RecordFromEp1`, data ,  configObject.authConfig)
+        .post(`${configObject.apiBaseUrl}/Devices/RecordFromEp1`, data ,  configObject.authConfig())
         .then(response => {
           this.showSpinner = false
            this.isButtonDisabled = false

@@ -237,7 +237,7 @@ export default {
     getDealers() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Company/Dealers/${this.$route.query.companyId}`, configObject.authConfig())
             .then(res => {
               this.companyDealers = res.data
             })
@@ -249,7 +249,7 @@ export default {
       this.axios
         .get(
          `https://api.epump.com.ng/Branch/States`, 
-          configObject.authConfig
+          configObject.authConfig()
         )
         .then(res => {
           this.states = res.data
@@ -363,7 +363,7 @@ export default {
       }
       this.isButtonDisabled = true
       $('.loader').show();
-       this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig)
+       this.axios.post(`${configObject.apiBaseUrl}/Branch/PostBranch`,data, configObject.authConfig())
           .then(res => {
                 this.$toast("Branch created successfully", {
                     type: "success",

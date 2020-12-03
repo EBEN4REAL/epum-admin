@@ -250,7 +250,7 @@ export default {
         this.showLoader = true;
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Tank/TankDip/${this.$route.query.branchId}/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig)
+            `${configObject.apiBaseUrl}/Tank/TankDip/${this.$route.query.branchId}/${this.$route.query.tankId}?startDate=${this.startDate}&endDate=${this.endDate}`, configObject.authConfig())
             .then(res => {
                 let index = 0
                 res.data.sort((a, b) => {
@@ -296,7 +296,7 @@ export default {
       this.isButtonDisabled = true;
 
       $('.loader').show();
-      this.axios.post(`${configObject.apiBaseUrl}/Tank/TankDip`,data, configObject.authConfig)
+      this.axios.post(`${configObject.apiBaseUrl}/Tank/TankDip`,data, configObject.authConfig())
           .then(res => {
               this.$toast("Tank Dip Added successfully", {
                   type: "success",
