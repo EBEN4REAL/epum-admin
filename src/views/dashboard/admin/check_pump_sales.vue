@@ -306,7 +306,7 @@ export default {
     getCompanies() {
         this.axios
         .get(
-            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig(()))
+            `${configObject.apiBaseUrl}/Company?PageNumber=1&PageSize=1000`, configObject.authConfig())
             .then(res => {
                 this.companies = res.data.data
         })
