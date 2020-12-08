@@ -1,10 +1,13 @@
 <template>
   <div class="">
-    <button class="text-center var_btn" @click="edit()">
-         Edit  <i class="fa fa-edit-o ml-2" aria-hidden="true" style="color: red"></i>
+    <button class="btn details_btn mr-3" @click="addStatus()">
+         Add Status 
     </button>
-    <button class="text-center var_btn" @click="deleteRow()">
-         Delete  <i class="fa fa-trash-o ml-2" aria-hidden="true" style="color: red"></i>
+    <button class="btn dealers_btn mr-3" @click="edit()">
+         Edit 
+    </button>
+    <button  class="btn delete_btn mr-3" @click="deleteRow()">
+      Delete 
     </button>
   </div>
 </template>
@@ -22,11 +25,14 @@ export default {
   },
   methods: {
     edit() {
-        this.$eventHub.$emit('editCheckPumpSale', this.data)
+      this.$eventHub.$emit('editCheckPumpSale', this.data)
     },
     deleteRow() {
-          this.$eventHub.$emit('deleteCheckPumpSale', this.data.id)
-      }
+      this.$eventHub.$emit('deleteCheckPumpSale', this.data.id)
+    },
+    addStatus() {
+      this.$eventHub.$emit('addStatus', this.data.pumpId)
+    }
   },
 };
 

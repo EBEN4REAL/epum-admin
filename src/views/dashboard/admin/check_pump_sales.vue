@@ -1,6 +1,7 @@
 <template>
   <div>
       <EditCheckPumpSales :pumpSale="pumpSale" />
+      <AddPumpStatus :pumpId="pumpId" />
       <masterLayout>
         <div class="new_row_section mt-3">
         <div class="buttons_section">
@@ -18,7 +19,7 @@
                     />
             </div>
         <div class="">
-            <button  class="btn details_btn px-5 ml-4" @click="checkPumpSales">Check Sales</button>
+            <button class="btn details_btn px-5 ml-4" @click="checkPumpSales">Check Sales</button>
         </div>
        </div>
         </div>
@@ -80,7 +81,7 @@
                                         <label>Company </label>
                                         <div class="input__block">
                                             <select v-model="companyId" class="form-control" >
-                                                <option disabled selected value="select company">select company</option>
+                                                <option disabled value="select company">Select company</option>
                                                 <option :value="cp.id" v-for="(cp,i) in companies" :key='i'>{{cp.name}}</option>
                                             </select>
                                         </div>
@@ -150,15 +151,15 @@
                 <e-column width="200" field="dateOpened" headerText="Date Opened"></e-column>
                 <e-column width="150" field="branchName" headerText="Branch Name"></e-column>
                 <e-column width="150" field="volumeSold" headerText="Volume Sold(Ltrs)"></e-column>
-                <e-column width="150" field="openingReading" headerText="Opening Reading"></e-column>
-                <e-column width="150" field="lastReading" headerText="Last Reading"></e-column>
+                <e-column width="150" field="openingReadingFormatted" headerText="Opening Reading"></e-column>
+                <e-column width="150" field="lastReadingFormatted" headerText="Last Reading"></e-column>
                 <e-column width="150" field="deviceId" headerText="DeviceID"></e-column>
                 <e-column width="150" field="price" headerText="Price"></e-column>
                 <e-column width="150" field="pumpName" headerText="Pump Name"></e-column>
                 <e-column width="150" field="totalMultiplier" headerText="Total Multiplier"></e-column>
                 <e-column width="150" field="recordOpen" headerText="Record Open"></e-column>
                 <e-column width="150" field="sync" headerText="Sync"></e-column>
-                <e-column width="350"  headerText="Action" :template="CheckPumpSales"></e-column>
+                <e-column width="450"  headerText="Action" :template="CheckPumpSales"></e-column>
 
                 
                 
@@ -177,6 +178,7 @@ import CheckPumpSalesTemplate from "@/components/Templates/check_pump_sales_temp
 import TableLoader from "@/components/tableLoader/index";
 import {Page,Sort,Toolbar,Search,ExcelExport,PdfExport} from "@syncfusion/ej2-vue-grids";
 import EditCheckPumpSales from '@/components/modals/checkPumpSales/editCheckPumpSales';
+import AddPumpStatus from '@/components/modals/checkPumpSales/addPumpStatus';
 
 
 import configObject from "@/config";
@@ -187,7 +189,8 @@ export default {
   components: {
     masterLayout,
     TableLoader,
-    EditCheckPumpSales
+    EditCheckPumpSales,
+    AddPumpStatus
   },
    data() {
     return {
@@ -204,6 +207,7 @@ export default {
         dealers: [],
         pumps: [],
         pump: 'select pump',
+        pumpId: '',
         userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : "",
         rolesCount: 0,
         tableProps: {
@@ -247,6 +251,11 @@ export default {
     this.$eventHub.$on('deleteCheckPumpSale', (id) => { 
         this.deletePumpSaleCheck(id)
     })
+
+    this.$eventHub.$on('addStatus', (id) => { 
+        this.pumpId = id
+        this.$modal.show('addPumpStatus')
+    })
     
       
   },
@@ -257,12 +266,16 @@ export default {
             this.endDate = this.$moment(newRange.end, "DD-MM-YYYY").format("MMMM D, YYYY");
         }
     },
-    companyId: function () {
-        this.getBranches();
-        this.getDealers();
+    companyId: function (newId, oldId) {
+        if (newId && (newId !== oldId)) {
+            this.getBranches();
+            this.getDealers();
+        }
     },
-    branchId: function () {
-        this.getPumps();
+    branchId: function (newId) {
+        if (newId && (newId !== 'select branch')) {
+            this.getPumps();
+        }
     }
 },
   mounted() {
@@ -300,7 +313,6 @@ export default {
                 this.pumps = response.data;
             })
             .catch(error => {
-               
             });
     },
     getCompanies() {
@@ -394,12 +406,13 @@ export default {
         .get(
             `${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`, configObject.authConfig())
             .then(res => {
+                console.log(res.data);
                 res.data.forEach(el => {
                     el.price = this.convertThousand(el.price)
                     el.dateOpened = this.$moment(el.dateOpened).format('YYYY-MM-DD HH:mm:ss')
                     el.dateModified = this.$moment(el.dateModified).format('YYYY-MM-DD HH:mm:ss')
-                    el.openingReading = this.convertThousand(el.openingReading)
-                    el.lastReading = this.convertThousand(el.lastReading)
+                    el.openingReadingFormatted = this.convertThousand(el.openingReading)
+                    el.lastReadingFormatted = this.convertThousand(el.lastReading)
                 })
                 this.$refs.dataGrid.ej2Instances.setProperties({
                     dataSource: res.data
@@ -410,6 +423,8 @@ export default {
             })
             .catch(error => {
                 this.showLoader = false;
+                console.log(error)
+                console.log(error.response)
             });
     },
     refreshGrid() {
@@ -432,3 +447,16 @@ export default {
   }
 };
 </script>
+
+<style>
+@media screen and (max-width: 602px) {
+  .editPumpStat .v--modal-box.v--modal {
+      top: 68px !important;
+      margin: 0 auto !important;
+      width: 90% !important;
+      height: 550px !important;
+      left: 0 !important;
+      overflow-y: auto;
+  }
+}
+</style>
