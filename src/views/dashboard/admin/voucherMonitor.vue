@@ -68,10 +68,25 @@
                   <div class="col-md-8">
                     <div class="input__block">
                       <input
-                        type="number"
+                        type="text"
                         class=""
                         readonly
                         v-model="voucherDetails.amount"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center mt-3" v-if="usedVoucher && !unUsed">
+                  <div class="col-md-4">
+                    <label>Amount Spent</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input
+                        type="text"
+                        class=""
+                        readonly
+                        v-model="voucherDetails.amountSpent"
                       />
                     </div>
                   </div>
@@ -106,6 +121,21 @@
                     </div>
                   </div>
                 </div>
+                <div class="row align-items-center mt-3" v-if="showExpiry">
+                  <div class="col-md-4">
+                    <label>Expiry Date</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input
+                        type="text"
+                        class=""
+                        readonly
+                        v-model="voucherDetails.expiry"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="row align-items-center mt-3">
                   <div class="col-md-4">
                     <label>Deleted</label>
@@ -136,6 +166,36 @@
                     </div>
                   </div>
                 </div>
+                <div class="row align-items-center mt-3" v-if="usedVoucher">
+                  <div class="col-md-4">
+                    <label>Station</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input
+                        type="text"
+                        class=""
+                        readonly
+                        v-model="voucherDetails.branchName"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center mt-3" v-if="usedVoucher && !unUsed">
+                  <div class="col-md-4">
+                    <label>Transaction Date</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input__block">
+                      <input
+                        type="text"
+                        class=""
+                        readonly
+                        v-model="voucherDetails.transactionDate"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="mt-3" v-show="showExtras">
                     <div class="text-center mt-3">
                       <router-link :to="{name: 'extendVoucher'}" class="btn btn-success mr-2">Extend Voucher<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></router-link>                     
@@ -154,7 +214,6 @@
                           class="ml-3 loader"
                         />
                       </button>
-                      <!-- <button class="btn btn-info"><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Make Expired</button> -->
                       <button class="btn btn-info" @click="expireVoucher"
                         :disabled="isButtonDisabled2 ? true : null"
                         :style="[
@@ -171,6 +230,23 @@
                         />
                       </button>
                     </div>
+                </div>
+                <div class="mt-3" v-show="unUsed">
+                  <button class="btn btn-info" @click="unUseVoucher"
+                        :disabled="isButtonDisabled2 ? true : null"
+                        :style="[
+                          isButtonDisabled2
+                            ? { cursor: 'not-allowed' }
+                            : { cursor: 'pointer' }
+                        ]"
+                      ><i class="fa fa-repeat mr-1" aria-hidden="true"></i>Un-Use
+                        <img
+                          src="@/assets/img/git_loader.gif"
+                          style="display:none"
+                          width="25px"
+                          class="ml-3 loader2"
+                        />
+                      </button>
                 </div>
         </div>
       </div>
@@ -192,13 +268,16 @@ export default {
   data() {
     return {
       backImg,
-      voucherPin: "",
+      voucherPin: null,
       isButtonDisabled: false,
       voucherVerified: false,
       voucherDetails: {},
       isButtonDisabled: false,
       isButtonDisabled2: false,
-      showExtras: false
+      showExtras: false,
+      usedVoucher: false,
+      unUsed: false,
+      showExpiry: false
     };
   },
   methods: {
@@ -224,6 +303,7 @@ export default {
           configObject.authConfig()
         )
         .then((res) => {
+          console.log(res.data)
           if (res.data.deleted == true || res.data.isUsed == true) {
             this.showExtras = false
           } else {
@@ -233,7 +313,36 @@ export default {
               timeout: 3000,
             });
           }
-          const data = { ...res.data, dateGenerated: this.$moment(res.data.dateGenerated).format("MM/DD/YYYY hh:mm A"), isUsed: res.data.isUsed == true ? 'Yes': 'No', deleted: res.data.deleted == true ? 'Yes' : 'No' }
+          if (res.data.isUsed == true) {
+            this.usedVoucher = true
+            this.unUsed = false
+            if (!res.data.amountSpent) {
+              this.unUsed = true
+            }
+            if (!res.data.branchName) {
+              this.unUsed = true
+            }
+            if (!res.data.transactionDate) {
+              this.unUsed = true
+            }
+          } else {
+            this.usedVoucher = false
+            this.unUsed = false
+          }
+          if (res.data.transactionDate) {
+            res.data.transactionDate = this.$moment(res.data.transactionDate).format('DD/MM/YYYY HH:mm:ss')
+          }
+          if (res.data.amountSpent) {
+            res.data.amountSpent = this.convertThousand(res.data.amountSpent)
+          }
+          if (res.data.expiry) {
+            this.showExpiry = true
+            res.data.expiry = this.$moment(res.data.expiry).format('DD/MM/YYYY HH:mm:ss')
+          } else {
+            this.showExpiry = false
+          }
+          const data = { ...res.data, amount: this.convertThousand(res.data.amount), dateGenerated: this.$moment(res.data.dateGenerated).format("DD/MM/YYYY hh:mm A"), isUsed: res.data.isUsed == true ? 'Yes': 'No', deleted: res.data.deleted == true ? 'Yes' : 'No' }
+          this.voucherPin = null
           this.voucherDetails = data
           this.voucherVerified = true
           this.isButtonDisabled = false;
@@ -270,6 +379,32 @@ export default {
               });
           });
     },
+    unUseVoucher() {
+      $('.loader').show();
+      this.isButtonDisabled = true;
+
+      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherAvailable?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
+          .then(res => {
+                this.$toast("Successfully Un-Used Voucher", {
+                    type: "success",
+                    timeout: 3000
+                });
+                this.isButtonDisabled = false;
+                $('.loader').hide();
+                this.voucherVerified = false
+                this.voucherPin = null
+          })
+          .catch(error => {
+            console.log(error)
+            console.log(error.resposne)
+              this.isButtonDisabled = false;
+              $('.loader').hide();
+              this.$toast(error.response.data.message, {
+                  type: "error",
+                  timeout: 3000
+              });
+          });
+    },
     expireVoucher() {
       $('.loader2').show();
       this.isButtonDisabled2 = true;
@@ -291,7 +426,13 @@ export default {
                   timeout: 3000
               });
           });
-    }
+    },
+    convertThousand(request) {
+        if (!isFinite(request)) {
+            return "0.00";
+        }
+        return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
 };
 </script>
