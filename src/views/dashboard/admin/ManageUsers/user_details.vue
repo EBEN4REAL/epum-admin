@@ -1,7 +1,9 @@
 <template>
-  <masterLayout>
+  <div>
+    <EditCreditLimit :creditLimit="userObject2.creditLimit" />
+    <masterLayout>
       <div class="user_details">
-          <div class="new_row_section mb-3">
+        <div class="new_row_section mb-3">
           <div class="small_card product_details_card mt-3">
             <div class="row">
               <div class="col-lg-4 col-md-2 user_contact border-right">
@@ -16,7 +18,7 @@
                     </div>
                 </div>
               </div>
-               <div class="col-lg-3 col-md-2 credit_limit border-right">
+              <div class="col-lg-3 col-md-2 credit_limit border-right">
                 <div class="text-center">
                 <button class="btn create_btn primary_btn">Credit limit</button>
                 <h6 class="mt-2">{{userObject2.creditLimit}}</h6>
@@ -29,78 +31,83 @@
               </div>
               </div>
               <div class="col-lg-2 col-md-2">
-               <div class="mt-4 mx-auto text-center">
-              <router-link :to="{ name: 'usersEdit', query: {id: this.$route.query.id} }" class="p-2 btn btn_theme">Map User</router-link>
-            </div>
+                <div class="mx-auto text-center">
+                  <router-link :to="{ name: 'usersEdit', query: {id: this.$route.query.id} }" class="p-2 btn btn_theme">Map User</router-link>
+                </div>
+                <div class="mt-4 mx-auto text-center">
+                  <button class="p-2 btn btn_theme btn_theme_second" @click="showEditCreditModal">Edit Credit Limit</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
- <div class="new_row_section pb-5">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card border-0">
-          <div class="card-body roles">
-            <div  class="card-title">
-              <h5>List of roles for this user</h5>
-            </div>
-            <div class="users_loader" v-if="loading">
-              <clip-loader :color="color" size="55px"></clip-loader>
-            </div>
-            <div class="row" style="margin-left: 0; margin-right: 0" v-if="roles.length && !loading">
-                <div :class="column(roles, index)" class="card-text card-text-center border-bottom card-text-border-left" v-for="(role, index) in roles" :key="index">
-                    <h6 class="ml-2">{{role}}</h6>
+        <div class="new_row_section pb-5">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card border-0">
+                  <div class="card-body roles">
+                    <div  class="card-title">
+                      <h5>List of roles for this user</h5>
+                    </div>
+                    <div class="users_loader" v-if="loading">
+                      <clip-loader :color="color" size="55px"></clip-loader>
+                    </div>
+                    <div class="row" style="margin-left: 0; margin-right: 0" v-if="roles.length && !loading">
+                        <div :class="column(roles, index)" class="card-text card-text-center border-bottom card-text-border-left" v-for="(role, index) in roles" :key="index">
+                            <h6 class="ml-2">{{role}}</h6>
 
-                    <button class="btn red-btn" @click="removeUser(role)"
-                      :disabled="isButtonDisabled ? true : null"
-                      :style="[
-                        isButtonDisabled
-                          ? { cursor: 'not-allowed' }
-                          : { cursor: 'pointer' }
-                      ]"
-                    >Remove
-                    </button>
+                            <button class="btn red-btn" @click="removeUser(role)"
+                              :disabled="isButtonDisabled ? true : null"
+                              :style="[
+                                isButtonDisabled
+                                  ? { cursor: 'not-allowed' }
+                                  : { cursor: 'pointer' }
+                              ]"
+                            >Remove
+                            </button>
+                        </div>
+                    </div>
+                    <div v-if="!roles.length && !loading" class="no_managing">
+                      <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
+                      <h5>No Role for this user</h5>
+                    </div>
+                  </div>
                 </div>
-            </div>
-            <div v-if="!roles.length && !loading" class="no_managing">
-              <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
-              <h5>No Role for this user</h5>
-            </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card border-0">
+                  <div class="card-body branch">
+                      <div class="card-title">
+                        <h5>{{managingName}} Managed</h5>
+                      </div>
+                      <div class="users_loader" v-if="loading">
+                        <clip-loader :color="color" size="55px"></clip-loader>
+                      </div>
+                      <div v-if="managing.length && !loading">
+                        <div class="card-text card-text-center p-2 pl-4 pr-4 d-flex border-bottom" v-for="(manage, index) in managing" :key="index">
+                          <h6>{{getName(manage)}}:</h6>
+                          <p>{{managingObject[manage]}}</p>
+                        </div>
+                    </div>
+                    <div v-if="!managing.length && !loading" class="no_managing">
+                      <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
+                      <h5>No Company or Branch Managed</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card border-0">
-          <div class="card-body branch">
-              <div class="card-title">
-                <h5>{{managingName}} Managed</h5>
-              </div>
-              <div class="users_loader" v-if="loading">
-                <clip-loader :color="color" size="55px"></clip-loader>
-              </div>
-              <div v-if="managing.length && !loading">
-                <div class="card-text card-text-center p-2 pl-4 pr-4 d-flex border-bottom" v-for="(manage, index) in managing" :key="index">
-                  <h6>{{getName(manage)}}:</h6>
-                  <p>{{managingObject[manage]}}</p>
-                </div>
-            </div>
-            <div v-if="!managing.length && !loading" class="no_managing">
-              <img src="@/assets/img/XMLID_1_.svg" width='150px;' class="mt-5 mb-4">
-              <h5>No Company or Branch Managed</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
       </div>    
-  </masterLayout>
+    </masterLayout>
+  </div>
 </template>
 
 <script>
 import Vue from "vue";
 import masterLayout from "@/views/dashboard/masterLayout";
+import EditCreditLimit from '@/components/modals/editCreditLimit';
 import configObject from "@/config";
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 import Jquery from 'jquery';
@@ -109,9 +116,17 @@ let $ = Jquery;
 export default {
   components: {
     masterLayout,
-    ClipLoader
+    ClipLoader,
+    EditCreditLimit
   },
-
+  created() {
+    this.$eventHub.$on('refreshUserDetails', () => { 
+        this.getUserDetails()
+    })
+  },
+  beforeDestroy() { 
+    this.$eventHub.$off('refreshUserDetails');
+  },
   mounted(){
       this.id = this.$route.query.id;
       let ml = sessionStorage.getItem(this.id);
@@ -146,6 +161,9 @@ export default {
   },
   
   methods: {
+      showEditCreditModal() {
+        this.$modal.show('editCreditLimit')
+      },
       column(roles, index) {
         if (index == ((roles.length) - 1) && (roles.length % 2) !== 0) {
           return 'col-md-12'
@@ -153,6 +171,7 @@ export default {
         return 'col-md-6'
       },
       getUserDetails() {
+          this.loading = true
           this.axios
           .get(
               `${configObject.apiBaseUrl}/Admin/GetUserDetails/${this.$route.query.id}`, configObject.authConfig())

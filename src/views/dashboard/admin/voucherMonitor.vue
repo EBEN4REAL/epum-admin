@@ -231,7 +231,7 @@
                       </button>
                     </div>
                 </div>
-                <div class="mt-3" v-show="unUsed">
+                <div class="mt-3 text-center" v-show="unUsed">
                   <button class="btn btn-info" @click="unUseVoucher"
                         :disabled="isButtonDisabled2 ? true : null"
                         :style="[
@@ -357,72 +357,81 @@ export default {
         });
     },
     cancelVoucher() {
-      $('.loader').show();
-      this.isButtonDisabled = true;
+      let resp = confirm("Are you sure want to return this voucher to wallet?");
+      if (resp) {
+        $('.loader').show();
+        this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
-          .then(res => {
-                this.$toast("Successfully Cancelled Voucher", {
-                    type: "success",
-                    timeout: 3000
-                });
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/CancelVoucher?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
+            .then(res => {
+                  this.$toast("Successfully returned voucher to wallet", {
+                      type: "success",
+                      timeout: 3000
+                  });
+                  this.isButtonDisabled = false;
+                  $('.loader').hide();
+            })
+            .catch(error => {
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-          })
-          .catch(error => {
-              this.isButtonDisabled = false;
-              $('.loader').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
-          });
+                this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000
+                });
+            });
+      }
     },
     unUseVoucher() {
-      $('.loader').show();
-      this.isButtonDisabled = true;
+      let resp = confirm("Are you sure want to make this voucher un-used?");
+      if (resp) {
+        $('.loader').show();
+        this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherAvailable?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
-          .then(res => {
-                this.$toast("Successfully Un-Used Voucher", {
-                    type: "success",
-                    timeout: 3000
-                });
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherAvailable?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
+            .then(res => {
+                  this.$toast("Successfully made voucher un-used", {
+                      type: "success",
+                      timeout: 3000
+                  });
+                  this.isButtonDisabled = false;
+                  $('.loader').hide();
+                  this.voucherVerified = false
+                  this.voucherPin = null
+            })
+            .catch(error => {
                 this.isButtonDisabled = false;
                 $('.loader').hide();
-                this.voucherVerified = false
-                this.voucherPin = null
-          })
-          .catch(error => {
-              this.isButtonDisabled = false;
-              $('.loader').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
-          });
-    },
-    expireVoucher() {
-      $('.loader2').show();
-      this.isButtonDisabled2 = true;
-
-      this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
-          .then(res => {
-                this.$toast("Successfully Cancelled Voucher", {
-                    type: "success",
+                this.$toast(error.response.data.message, {
+                    type: "error",
                     timeout: 3000
                 });
+            });
+      }
+    },
+    expireVoucher() {
+      let resp = confirm("Are you sure want to make this voucher expired?");
+      if (resp) {
+        $('.loader2').show();
+        this.isButtonDisabled2 = true;
+
+        this.axios.post(`${configObject.apiBaseUrl}/Admin/MakeVoucherExpired?id=${this.voucherDetails.id}`, {}, configObject.authConfig())
+            .then(res => {
+                  this.$toast("Successfully made voucher expired", {
+                      type: "success",
+                      timeout: 3000
+                  });
+                  this.isButtonDisabled2 = false;
+                  $('.loader2').hide();
+            })
+            .catch(error => {
                 this.isButtonDisabled2 = false;
                 $('.loader2').hide();
-          })
-          .catch(error => {
-              this.isButtonDisabled2 = false;
-              $('.loader2').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
-          });
+                this.$toast(error.response.data.message, {
+                    type: "error",
+                    timeout: 3000
+                });
+            });
+      }
     },
     convertThousand(request) {
         if (!isFinite(request)) {

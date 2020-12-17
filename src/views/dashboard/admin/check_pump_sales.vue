@@ -256,8 +256,6 @@ export default {
         this.pumpId = id
         this.$modal.show('addPumpStatus')
     })
-    
-      
   },
   watch: {
     dateRange: function (newRange, oldRange) {
