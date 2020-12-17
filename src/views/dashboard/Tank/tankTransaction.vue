@@ -150,7 +150,7 @@ export default {
         return {
             transactionCount: 0,
             tableProps: {
-                pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
+                pageSettings: { pageSizes: [50, 100, 200], pageCount: 4, pageSize: 50 },
                 toolbar: ["ExcelExport", "PdfExport", "Search"],
                 search: { operator: "contains", ignoreCase: true }
             },

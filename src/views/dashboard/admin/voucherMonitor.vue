@@ -136,7 +136,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-3" v-show="showExtras">
                     <div class="text-center mt-3">
                       <router-link :to="{name: 'extendVoucher'}" class="btn btn-success mr-2">Extend Voucher<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></router-link>                     
                       <button class="btn btn-primary mr-2" @click="cancelVoucher"
@@ -198,6 +198,7 @@ export default {
       voucherDetails: {},
       isButtonDisabled: false,
       isButtonDisabled2: false,
+      showExtras: false
     };
   },
   methods: {
@@ -224,14 +225,14 @@ export default {
         )
         .then((res) => {
           if (res.data.deleted == true || res.data.isUsed == true) {
-            this.isButtonDisabled = false;
-            $(".loader").hide();
-            return
+            this.showExtras = false
+          } else {
+            this.showExtras = true
+            this.$toast("Successfully verified voucher", {
+              type: "success",
+              timeout: 3000,
+            });
           }
-          this.$toast("Successfully verified voucher", {
-            type: "success",
-            timeout: 3000,
-          });
           const data = { ...res.data, dateGenerated: this.$moment(res.data.dateGenerated).format("MM/DD/YYYY hh:mm A"), isUsed: res.data.isUsed == true ? 'Yes': 'No', deleted: res.data.deleted == true ? 'Yes' : 'No' }
           this.voucherDetails = data
           this.voucherVerified = true
