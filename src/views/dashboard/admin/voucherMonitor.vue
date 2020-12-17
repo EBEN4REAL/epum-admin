@@ -303,7 +303,6 @@ export default {
           configObject.authConfig()
         )
         .then((res) => {
-          console.log(res.data)
           if (res.data.deleted == true || res.data.isUsed == true) {
             this.showExtras = false
           } else {
@@ -395,8 +394,6 @@ export default {
                 this.voucherPin = null
           })
           .catch(error => {
-            console.log(error)
-            console.log(error.resposne)
               this.isButtonDisabled = false;
               $('.loader').hide();
               this.$toast(error.response.data.message, {

@@ -117,8 +117,6 @@ export default {
         closing: parseFloat(this.pumpSaleValues.lastReading),
         close: this.close
       }
-
-      console.log(data)
        
       this.showSpinner = true
       this.isButtonDisabled = true
@@ -136,8 +134,6 @@ export default {
           this.$eventHub.$emit('refreshCheckPumpSales')
       })
       .catch(error => {
-        console.log(error)
-        console.log(error.response)
           this.showSpinner = false
           this.isButtonDisabled = false
           this.$toast(error.response.data.message, {

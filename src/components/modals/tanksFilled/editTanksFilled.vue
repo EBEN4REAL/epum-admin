@@ -106,7 +106,6 @@ export default {
         "closingDeep": parseFloat(this.tankFillInfo.closingDeep),
         "openingDeep": parseFloat(this.tankFillInfo.openingDeep),
       }
-      console.log(data)
       this.axios
         .put(`${configObject.apiBaseUrl}​/Audit/UpdateTankFills`, data ,  configObject.authConfig())
         .then(response => {

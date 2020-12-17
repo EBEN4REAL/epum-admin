@@ -406,7 +406,6 @@ export default {
         .get(
             `${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`, configObject.authConfig())
             .then(res => {
-                console.log(res.data);
                 res.data.forEach(el => {
                     el.price = this.convertThousand(el.price)
                     el.dateOpened = this.$moment(el.dateOpened).format('YYYY-MM-DD HH:mm:ss')
@@ -419,12 +418,9 @@ export default {
                 });
                 this.refreshGrid();
                 this.showLoader = false;
-                console.log(res.data)
             })
             .catch(error => {
                 this.showLoader = false;
-                console.log(error)
-                console.log(error.response)
             });
     },
     refreshGrid() {
