@@ -194,7 +194,6 @@ export default {
     methods: {
         _editTankFill(data) {
             this.tankFillInfo = data;
-            console.log(this.tankFillInfo)
             this.$modal.show('editTankFill');
         },
         refreshGrid() {
@@ -222,7 +221,6 @@ export default {
                 configObject.authConfig()
                 )
                 .then(response => {
-                    console.log(response.data)
                     this.showLoader = false;
                     let index = 0;
                     response.data
