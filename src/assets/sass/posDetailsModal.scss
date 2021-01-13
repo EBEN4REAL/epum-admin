@@ -1,0 +1,39 @@
+
+
+.POSModal .v--modal-box.v--modal {
+    background-color: white;
+    border-radius: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 17px;
+
+    .pos_modal {
+        .row {
+            flex-wrap: nowrap !important;
+        }
+        label {
+            font-size: 15px;
+            font-weight: 600;        
+        }
+        .details_input {
+            label {
+                width: 100%;
+                color: #290C53;
+                text-align: right;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 602px) {
+    .POSModal .v--modal-box.v--modal {
+        padding-left: 17px;
+        padding-right: 17px;
+        margin: 0 auto;
+        top: 198px !important;
+        width: 90% !important;
+        height: 400px !important;
+        left: 0 !important;
+        overflow: auto;
+    }
+}
