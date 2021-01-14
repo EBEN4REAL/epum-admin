@@ -90,23 +90,35 @@
           </div>
       </div>
     </div>
-    <!-- <div class="toggler-button ml-3">
-      <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="">
-              Show all P1
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="">
-              Show all P2
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="">
-              Show ep 9
-            </div>
-          <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
-            Toggle All Data
-      </button>
-    </div> -->
+    <div class="toggler-button ml-3">
+            <div class="justify-content-between d-flex mt-4">
+               <div class="">
+                  <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="" v-model="ep1Show" @click="changeView('ep1')">
+                  Show all ep1
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="" v-model="ep2Show" @click="changeView('ep2')">
+                  Show all P2
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="" v-model="ep9Show" @click="changeView('ep9')">
+                  Show ep 9
+                  <!-- {{ep9Show}} -->
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="" v-model="showAll" @click="changeView('')">
+                  Show All
+                </div>
+               </div>
+                <div class="mr-4">
+                  <button class="mt-4 btn btn-success text-white ml-3" @click="toggleAll"> 
+                      Toggle All Data
+                </button>
+              </div>
+          </div>
+    
+    </div>
     <div class="new_row_section mt-3">
           <ejs-grid
             v-show="!showLoader"
@@ -155,6 +167,15 @@ export default {
   },
   data() {
     return {
+      dumpData: [],
+      view: '',
+      ep1Show: false,
+      ep2Show: false,
+      ep9Show: false,
+      showAll: false,
+      ep1ParsedArray: [],
+      ep2ParsedArray: [],
+      ep9ParsedArray: [],
       userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
       maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
       tableProps: {
@@ -223,6 +244,82 @@ export default {
     }
   },
   methods: {
+    changeView(view) {
+      if (view == '') {
+        if (this.showAll == true) {
+          return
+        }
+        this.ep1Show = false
+        this.ep2Show = false
+        this.ep9Show = false
+        const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
+        this.$refs.dataGrid.ej2Instances.setProperties({
+          // dataSource: this.dumpDataInfo
+          dataSource: dumpDataInfo
+        });
+        this.refreshGrid();
+      }
+      if (view == 'ep1') {
+        if (this.ep1Show == true) {
+          const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
+          this.$refs.dataGrid.ej2Instances.setProperties({
+            // dataSource: this.dumpDataInfo
+            dataSource: dumpDataInfo
+          });
+          this.refreshGrid();
+          return
+        }
+        this.ep2Show = false
+        this.ep9Show = false
+        this.showAll = false
+        const ep1ParsedArray = JSON.parse(localStorage.getItem('ep1ParsedArray'))
+        this.$refs.dataGrid.ej2Instances.setProperties({
+          // dataSource: this.ep1ParsedArray
+          dataSource: ep1ParsedArray
+        });
+        this.refreshGrid();
+      }
+      if (view == 'ep2') {
+        if (this.ep2Show == true) {
+          const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
+          this.$refs.dataGrid.ej2Instances.setProperties({
+            // dataSource: this.dumpDataInfo
+            dataSource: dumpDataInfo
+          });
+          this.refreshGrid();
+          return
+        }
+        this.ep1Show = false
+        this.ep9Show = false
+        this.showAll = false
+        const ep2ParsedArray = JSON.parse(localStorage.getItem('ep2ParsedArray'))
+        this.$refs.dataGrid.ej2Instances.setProperties({
+          // dataSource: this.ep2ParsedArray
+          dataSource: ep2ParsedArray
+        });
+        this.refreshGrid();
+      }
+      if (view == 'ep9') {
+        if (this.ep9Show == true) {
+          const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
+          this.$refs.dataGrid.ej2Instances.setProperties({
+            // dataSource: this.dumpDataInfo
+            dataSource: dumpDataInfo
+          });
+          this.refreshGrid();
+          return
+        }
+        this.ep1Show = false
+        this.ep2Show = false
+        this.showAll = false
+        const ep9ParsedArray = JSON.parse(localStorage.getItem('ep9ParsedArray'))
+        this.$refs.dataGrid.ej2Instances.setProperties({
+          // dataSource: this.ep9ParsedArray
+          dataSource: ep9ParsedArray
+        });
+        this.refreshGrid();
+      }
+    },
     refreshGrid() {
       this.$refs.dataGrid.refresh();
     },
@@ -232,11 +329,21 @@ export default {
       this.refreshGrid();
     },
     rowDataBound(arging){
+       if(arging.row.children[1].innerHTML == 'Tank is online and pushing 0') {
+          arging.row.style.backgroundColor = "red";
+        }
+        if(arging.row.children[1].innerHTML == 'Configuration Check') {
+          arging.row.style.backgroundColor = "green";
+        }
       arging.row.addEventListener("click", args => {
         if (!(args.target.classList.contains('fa-plus') || args.target.classList.contains('fa-minus') || args.target.classList.contains('eye_holder'))) {
           return
         }
+       
         if(arging.row.children[1].innerHTML == arging.data.dData) {
+          // arging.row.children[0].style.color = 'black'
+          // arging.row.children[1].style.color = 'black'
+          // arging.row.children[2].style.color = 'black'
           arging.row.children[1].innerHTML = arging.data.string
           arging.row.children[2].innerHTML = arging.data.dData
           arging.row.children[3].innerHTML = '<div><button class="text-center var_btn eye_holder"><!----><i class="fa fa-plus"></i></button></div>'
@@ -248,6 +355,18 @@ export default {
       });
   },
     search() {
+      setTimeout(() => {
+        if (localStorage.getItem('dumpDataInfo')) {
+          const dumpData = JSON.parse(localStorage.getItem('dumpDataInfo'))
+          this.$refs.dataGrid.ej2Instances.setProperties({
+            dataSource: dumpData
+          });
+          this.showLoader = false
+          this.refreshGrid();
+          this.dumpData = dumpData
+          return
+        }
+      }, 1000);
     
 
       if(!this.deviceId1) {
@@ -285,9 +404,28 @@ export default {
                 let pumpInfo = parseDData.pumps.map(el => {
                   if(parseDData.ep == 1) {
                     if(el.st && el.st == 255) {
-                      return `${el.nm} is online but disconnected `
+                      return `${el.nm} is Online but disconnected `
+                    }
+                    if(el.st && el.st == 0) {
+                      return `${el.nm} is Online but not active `
+                       return `Online but not active `
+                    }
+                    if(el.st && el.st == 2) {
+                      return `${el.nm} is Online but Nozzle down `
+                    }
+                    if(el.st && el.st == 3) {
+                      return `${el.nm} is Online and Nozzle up `
+                    }
+                    if(el.st && el.st == 5) {
+                      return `${el.nm} is Online (Nozzle up and Authorized) `
+                    }
+                    if(el.st && el.st == 6) {
+                      return `${el.nm} is Online but filling `
+                    }
+                    if(el.st && el.st == 8) {
+                      return `${el.nm} is Online (filling complete nozzle down) `
                     }else {
-                      return `${el.nm} is online`
+                      return `${el.nm} is Online`
                     }
                   }
                   if(parseDData.ep == 0) {
@@ -303,27 +441,65 @@ export default {
                 let pumpsArr = parseDData.pumps.map(el => {
                   return el.nm
                 })
+                if (parseDData.pumps.length < 1) {
+                  pumpInfo = `There are no pumps recorded`
+                } 
                 el.string = pumpInfo
               } else if(parseDData.pm) {
                 if(parseDData.ep == 0) {
-                 el.string = `${parseDData.pm} is online`
+                 el.string = `${parseDData.pm} is Online`
                 }
                 if(parseDData.ep == 1) {
                   el.string =  `${parseDData.pm} is booting`
                 }
                 if(parseDData.ep == 2) {
-                  el.string =  `${parseDData.pm} just processed a transaction`
+                  el.string =  `${parseDData.pr} pump ${parseDData.pm} just processed a transaction`
                 }
                 if(parseDData.ep == 4) {
                   el.string =  `${parseDData.pm} just got restarted`
                 }
               }
+              if(parseDData.ep == 3) {
+                el.string =  `Unavailable`
+                //  arging.row.children[3].style.backgroundColor = "red";
+              }
               if(parseDData.ep == 9) {
                 el.string =  'Configuration Check'
+                //  arging.row.children[3].style.backgroundColor = "red";
               }
+              if(parseDData.at == 1) {
+                el.string =  'Tank is online'
+              }
+              if(parseDData.pl == 0) {
+                el.string =  'Tank is online and pushing 0'
+              }
+              if(parseDData.at == 3) {
+                el.string = `${parseDData.pr} tank is Unavailable`
+                //  arging.row.children[3].style.backgroundColor = "red";
+              }
+              if(parseDData.at == 7) {
+                el.string = `${parseDData.pr} tank just processed a transaction`
+              }
+
+              if (parseDData.ep) {
+                if (parseDData.ep == 1) {
+                  this.ep1ParsedArray.push(el)
+                }
+                if (parseDData.ep == 2) {
+                  this.ep2ParsedArray.push(el)
+                }
+                if (parseDData.ep == 9) {
+                  this.ep9ParsedArray.push(el)
+                }
+              } 
             })
+
+            localStorage.setItem('ep1ParsedArray', JSON.stringify(this.ep1ParsedArray))
+            localStorage.setItem('ep2ParsedArray', JSON.stringify(this.ep2ParsedArray))
+            localStorage.setItem('ep9ParsedArray', JSON.stringify(this.ep9ParsedArray))
             
             this.dumpData = res.data
+            localStorage.setItem('dumpDataInfo', JSON.stringify(res.data))
             this.isButtonDisabled = false;
             $('.loader').hide();
             this.$refs.dataGrid.ej2Instances.setProperties({
@@ -336,10 +512,10 @@ export default {
             this.showLoader = false
             this.isButtonDisabled = false;
             $('.loader').hide();
-            this.$toast(error.response.data.message, {
-                type: "error",
-                timeout: 3000
-            });
+            // this.$toast(error.response.data.message, {
+            //     type: "error",
+            //     timeout: 3000
+            // });
           });
     },
     convert() {
@@ -372,10 +548,10 @@ export default {
           .catch(error => {
               this.isButtonDisabled2 = false;
               $('.loader2').hide();
-              this.$toast(error.response.data.message, {
-                  type: "error",
-                  timeout: 3000
-              });
+              // this.$toast(error.response.data.message, {
+              //     type: "error",
+              //     timeout: 3000
+              // });
           });
     },
   },
