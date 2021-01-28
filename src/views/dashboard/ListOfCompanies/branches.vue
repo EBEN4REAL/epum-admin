@@ -108,7 +108,7 @@ export default {
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
             details: {
                 queryStrings: { companyBranchId: '', companyId: this.$route.query.companyId }, 
-                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }, { name: 'Pump Audit', link: 'branchAuditSales' }], 
+                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }, { name: 'Pump Audit', link: 'branchAuditSales' }, { name: 'POS Terminal', link: 'pos_terminals' }], 
                 delete: { hasDelete: false, deleteName: ''}
             },
             tableProps: {

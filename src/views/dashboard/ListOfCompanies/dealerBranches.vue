@@ -139,7 +139,7 @@ export default {
             },
             details: {
                 queryStrings: { companyBranchId: '', companyId: this.$route.query.companyId }, 
-                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }], 
+                info: [{ name: 'Mail Receipient', link: 'branchMail_recipent' }, { name: 'POS Terminal', link: 'pos_terminals' }], 
                 delete: { hasDelete: false, deleteName: ''}
             },
             branchesTemplate: function() {

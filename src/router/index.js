@@ -20,6 +20,8 @@ import MailRecipient from "../views/dashboard/ListOfCompanies/mail_recipient";
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
+import PosTerminals from "../views/dashboard/ListOfCompanies/posTerminals";
+import CreateTerminal from "../views/dashboard/ListOfCompanies/createTerminal";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
 import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
@@ -319,6 +321,24 @@ let routes = [
     path: "/dealer_branches",
     name: "dealer_branches",
     component: DealerBranches,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/pos-terminals",
+    name: "pos_terminals",
+    component: PosTerminals,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/create-terminal",
+    name: "create_terminal",
+    component: CreateTerminal,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
