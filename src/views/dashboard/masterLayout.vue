@@ -283,6 +283,11 @@
                                     </router-link>
                                 </li>
                                 <li>
+                                    <router-link :to="{ name: 'devices' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
+                                       All Devices
+                                    </router-link>
+                                </li>
+                                <li>
                                     <router-link :to="{ name: 'devices_offline' }" class="vue_router_link" :class="activeRoute === 'devices_offline' ? 'active' : ''">
                                         Devices Offline
                                     </router-link>
@@ -330,11 +335,6 @@
                                 <li>
                                     <router-link :to="{ name: 'manageRoles' }" class="vue_router_link" :class="activeRoute === 'manageRoles' ? 'active' : ''">
                                         Manage Roles
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link :to="{ name: 'devices' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
-                                        Devices
                                     </router-link>
                                 </li>
                                  <li>

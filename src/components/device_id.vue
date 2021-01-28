@@ -1,6 +1,10 @@
 <template>
    <div class="">
-    <a :href="`/dump-data?id=${data.deviceId}`"  target="_blank" class="remove_underline" style="text-decoration: none !important"> 
+     
+    <a :href="`/tanks-dump-data?id=${data.deviceId}&status=${data.nozzles ? 'pump' : 'tank'}`"  target="_blank" class="remove_underline" style="text-decoration: none !important" v-if="data.status === 'tank'"> 
+      {{data.deviceId}}
+    </a>
+    <a :href="`/pumps-dump-data?id=${data.deviceId}&status=${data.nozzles ? 'pump' : 'tank'}`"  target="_blank" class="remove_underline" style="text-decoration: none !important" v-if="data.status === 'pump'"> 
       {{data.deviceId}}
     </a>
     <!-- <p style="display: none" class="nozzles_text">{{data.nozzles}}</p> -->
