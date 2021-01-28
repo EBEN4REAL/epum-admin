@@ -243,7 +243,9 @@ table.no-style, .no-style table{
 }
 
 // END OF TABLE LOADER
-
+.table-bg {
+    background: white !important;
+}
 table {
     border-collapse: separate !important;
     border-spacing: 0 1em !important;
@@ -251,7 +253,7 @@ table {
         // color: $primaryColor;
     }
     tr {
-        background: white!important;
+        background: white;
         border-left: lightgrey !important;
         border-right: lightgrey !important;
         border-top: none !important;

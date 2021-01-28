@@ -94,17 +94,16 @@
             <div class="justify-content-between d-flex mt-4">
                <div class="">
                   <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="" v-model="ep1Show" @click="changeView('ep1')">
-                  Show all ep1
+                  <input class="form-check-input" type="checkbox" id="" v-model="tank1Show" @click="changeView('tank1')">
+                  at 1 only
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="" v-model="ep2Show" @click="changeView('ep2')">
-                  Show all ep2
+                  <input class="form-check-input" type="checkbox" id="" v-model="plShow" @click="changeView('pl')">
+                  pl 0 only
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="" v-model="ep9Show" @click="changeView('ep9')">
-                  Show ep 9
-                  <!-- {{ep9Show}} -->
+                  <input class="form-check-input" type="checkbox" id="" v-model="tank3Show" @click="changeView('tank3')">
+                  at 3 only
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="" v-model="showAll" @click="changeView('')">
@@ -126,7 +125,7 @@
             :created="refreshGrid"
             :allowPaging="false"
             :allowSorting="true"
-            :pageSettings="tableProps.pageSettings"
+            :pageSettings="tablatrops.pageSettings"
             :allowTextWrap='true'
             :rowDataBound='rowDataBound'
             >
@@ -169,16 +168,16 @@ export default {
     return {
       dumpData: [],
       view: '',
-      ep1Show: false,
-      ep2Show: false,
-      ep9Show: false,
+      tank1Show: false,
+      plShow: false,
+      tank3Show: false,
       showAll: false,
-      ep1ParsedArray: [],
-      ep2ParsedArray: [],
-      ep9ParsedArray: [],
+      at1ParsedArray: [],
+      pl0ParsedArray: [],
+      at3ParsedArray: [],
       userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,
       maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),
-      tableProps: {
+      tablatrops: {
           pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
       },
       customShortcuts: [
@@ -249,9 +248,9 @@ export default {
         if (this.showAll == true) {
           return
         }
-        this.ep1Show = false
-        this.ep2Show = false
-        this.ep9Show = false
+        this.tank1Show = false
+        this.plShow = false
+        this.tank3Show = false
         // const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
         this.$refs.dataGrid.ej2Instances.setProperties({
           dataSource: this.dumpDataInfo
@@ -259,8 +258,8 @@ export default {
         });
         this.refreshGrid();
       }
-      if (view == 'ep1') {
-        if (this.ep1Show == true) {
+      if (view == 'tank1') {
+        if (this.tank1Show == true) {
           // const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
           this.$refs.dataGrid.ej2Instances.setProperties({
             dataSource: this.dumpDataInfo
@@ -269,18 +268,18 @@ export default {
           this.refreshGrid();
           return
         }
-        this.ep2Show = false
-        this.ep9Show = false
+        this.plShow = false
+        this.tank3Show = false
         this.showAll = false
-        // const ep1ParsedArray = JSON.parse(localStorage.getItem('ep1ParsedArray'))
+        // const at1ParsedArray = JSON.parse(localStorage.getItem('at1ParsedArray'))
         this.$refs.dataGrid.ej2Instances.setProperties({
-          dataSource: this.ep1ParsedArray
-          // dataSource: ep1ParsedArray
+          dataSource: this.at1ParsedArray
+          // dataSource: at1ParsedArray
         });
         this.refreshGrid();
       }
-      if (view == 'ep2') {
-        if (this.ep2Show == true) {
+      if (view == 'pl') {
+        if (this.plShow == true) {
           // const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
           this.$refs.dataGrid.ej2Instances.setProperties({
             dataSource: this.dumpDataInfo
@@ -289,18 +288,18 @@ export default {
           this.refreshGrid();
           return
         }
-        this.ep1Show = false
-        this.ep9Show = false
+        this.tank1Show = false
+        this.tank3Show = false
         this.showAll = false
-        // const ep2ParsedArray = JSON.parse(localStorage.getItem('ep2ParsedArray'))
+        // const pl0ParsedArray = JSON.parse(localStorage.getItem('pl0ParsedArray'))
         this.$refs.dataGrid.ej2Instances.setProperties({
-          dataSource: this.ep2ParsedArray
-          // dataSource: ep2ParsedArray
+          dataSource: this.pl0ParsedArray
+          // dataSource: pl0ParsedArray
         });
         this.refreshGrid();
       }
-      if (view == 'ep9') {
-        if (this.ep9Show == true) {
+      if (view == 'tank3') {
+        if (this.tank3Show == true) {
           // const dumpDataInfo = JSON.parse(localStorage.getItem('dumpDataInfo'))
           this.$refs.dataGrid.ej2Instances.setProperties({
             dataSource: this.dumpDataInfo
@@ -309,13 +308,13 @@ export default {
           this.refreshGrid();
           return
         }
-        this.ep1Show = false
-        this.ep2Show = false
+        this.tank1Show = false
+        this.plShow = false
         this.showAll = false
-        // const ep9ParsedArray = JSON.parse(localStorage.getItem('ep9ParsedArray'))
+        // const at3ParsedArray = JSON.parse(localStorage.getItem('at3ParsedArray'))
         this.$refs.dataGrid.ej2Instances.setProperties({
-          dataSource: this.ep9ParsedArray
-          // dataSource: ep9ParsedArray
+          dataSource: this.at3ParsedArray
+          // dataSource: at3ParsedArray
         });
         this.refreshGrid();
       }
@@ -329,33 +328,20 @@ export default {
       this.refreshGrid();
     },
     rowDataBound(arging){
-        if(arging.row.children[1].innerHTML == 'Configuration Check') {
-          arging.row.style.backgroundColor = "green";
+       if(arging.row.children[1].innerHTML.includes('and pushing 0')) {
+          arging.row.style.backgroundColor = "blue";
         }
-        if(arging.row.children[1].innerHTML.includes('disconnected')) {
-          const text = arging.row.children[1].innerHTML.replace("disconnected", `<span style="color: red; display: inline">disconnected</span>`);
-          arging.row.children[1].innerHTML = text;
-        }
-        if(arging.row.children[1].innerHTML.toLowerCase().includes('is online')) {
-          arging.row.style.backgroundColor = "#ADD8E6";
-        }
-        if(arging.row.children[1].innerHTML.toLowerCase().includes('filling complete nozzle down')) {
-          arging.row.style.backgroundColor = "#808080";
-        }
-        if(arging.row.children[1].innerHTML.toLowerCase().includes('Online and Nozzle down')) {
-          arging.row.style.backgroundColor = "orange";
-        }
-        if(arging.row.children[1].innerHTML.includes('is booting')) {
+        if(arging.row.children[1].innerHTML == 'Tank is booting') {
           arging.row.style.backgroundColor = "gold";
-        }
-        if(arging.row.children[1].innerHTML.includes('total transaction')) {
-          arging.row.style.backgroundColor = "#6AA121";
         }
         if(arging.row.children[1].innerHTML == 'Device checking for update') {
           arging.row.style.backgroundColor = "#FF7E00";
         }
         if(arging.row.children[1].innerHTML == 'Device checking for download') {
           arging.row.style.backgroundColor = "Alloy orange";
+        }
+        if(arging.row.children[1].innerHTML.includes('is online')) {
+          arging.row.style.backgroundColor = "#ADD8E6";
         }
       arging.row.addEventListener("click", args => {
         if (!(args.target.classList.contains('fa-plus') || args.target.classList.contains('fa-minus') || args.target.classList.contains('eye_holder'))) {
@@ -374,20 +360,6 @@ export default {
       });
   },
     search() {
-      // setTimeout(() => {
-      //   if (localStorage.getItem('dumpDataInfo')) {
-      //     const dumpData = JSON.parse(localStorage.getItem('dumpDataInfo'))
-      //     this.$refs.dataGrid.ej2Instances.setProperties({
-      //       dataSource: dumpData
-      //     });
-      //     this.showLoader = false
-      //     this.refreshGrid();
-      //     this.dumpData = dumpData
-      //     // return
-      //   }
-      // }, 1000);
-    
-
       if(!this.deviceId1) {
           this.$toast("Please input a device ID", {
               type: "error", 
@@ -410,123 +382,60 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig())
           .then(res => {
+              console.log(res.data)
             res.data.forEach(el => {
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
               el.dData = el.dData.includes("}{") ? el.dData.split("}{")[0] + "}" : el.dData
               
               el.dData = el.dData.replace(/'/g, '"')
               const parseDData = JSON.parse(el.dData)
-              let info
-              let pumpLabel
-              let pumps
-              if(parseDData.pumps) {
-                let pumpInfo = parseDData.pumps.map(el => {
-                  if(parseDData.ep == 1) {
-                    if(el.st && el.st == 255) {
-                      return `Pump ${el.nm} is Online but disconnected `
-                    }
-                    if(el.st && el.st == 0) {
-                      return `Pump ${el.nm} is Online but not active `
-                    }
-                    if(el.st && el.st == 2) {
-                      return `Pump ${el.nm} is Online and Nozzle down `
-                    }
-                    if(el.st && el.st == 3) {
-                      return `Pump ${el.nm} is Online and Nozzle up `
-                    }
-                    if(el.st && el.st == 5) {
-                      return `Pump ${el.nm} is Online (Nozzle up and Authorized) `
-                    } 
-                    if(el.st && el.st == 6) {
-                      return `Pump ${el.nm} is Online but filling `
-                    }
-                    if(el.st && el.st == 8) {
-                      return `Pump ${el.nm} is Online (filling complete nozzle down) `
-                    }else {
-                      return `${el.nm} is Online`
-                    }
-                  }
-                  if(parseDData.ep == 0) {
-                    return `Pump ${el.nm} is booting`
-                  }
-                  if(parseDData.ep == 2) {
-                    return `${parseDData.nm} dispensed ${parseDData.tv} at ${parseDData.pl}, total transaction is ${parseDData.ta}`
-                  }
-                  if(parseDData.ep == 4) {
-                    return `Pump ${el.nm} just got restarted`
-                  }
-                  if(parseDData.ep == 5) {
-                    el.string = `Pump ${parseDData.pn} is Online (Nozzle up and Authorized)`
-                  }
-                }).join(', ')
-                let pumpsArr = parseDData.pumps.map(el => {
-                  return el.nm
-                })
-                if (parseDData.pumps.length < 1) {
-                  pumpInfo = 'There are no pumps recorded'
-                } 
-                el.string = pumpInfo
-              } 
-              if(parseDData.pm) {
-                if(parseDData.ep == 0) {
-                 el.string = `${parseDData.pm} is Online`
-                }
-                if (parseDData.ep == 0 && el.st == 255) {
-                  el.string =  `${parseDData.pm} is booting and disconnected`
-                }
-                if(parseDData.ep == 1) {
-                  el.string =  `${parseDData.pm} is booting`
-                }
-                if(parseDData.ep == 2) {
-                  el.string =  `Pump ${parseDData.pm} dispensed ${parseDData.tv} at ${parseDData.pl}, total transaction is ${parseDData.ta}`
-                  // return `${parseDData.pm} just processed a transaction`
-                }
-                if(parseDData.ep == 4) {
-                  el.string =  `${parseDData.pm} just got restarted`
-                }
-                if(parseDData.ep == 3) {
-                  el.string =  `Pump ${parseDData.pm} is filling`
-                }
+              console.log(parseDData)
+            //   let info
+            //   let pumpLabel
+            //   let pumps
+             
+
+              if(parseDData.at == 1) {
+                el.string =  `Tank ${parseDData.nm} is online`
               }
-              if (parseDData.FT) {
-                  let pumpInfo = parseDData.FT.map(el => {
-                     if(parseDData.ep == 5) {
-                         return `Pump ${el.pn} is Online (Nozzle up and Authorized)`
-                      } 
-                  }).join(', ')
-                  el.string = pumpInfo
+              if(parseDData.pl == 0) {
+                 el.string =  `Tank ${parseDData.nm} is online and pushing 0`
               }
-              if(parseDData.ep == 9) {
-                el.string =  'Configuration Check'
+              if(parseDData.at == 0) {
+                    el.string = `Tank is booting`
+                  }
+              if(parseDData.at == 3) {
+                el.string = `${parseDData.pr} Tank ${parseDData.nm} is filling`
+              }
+              if(parseDData.at == 7) {
+                el.string = `${parseDData.pr} Tank just processed a transaction`
               }
               if(parseDData.type == "checkUpdate") {
                 el.string = 'Device checking for update'
               }
               if(parseDData.type == "downloadUpdate") {
-                el.string = `${parseDData.id} Device checking for download`
-              }  el.string = `Pump ${parseDData.pn} is Online (Nozzle up and Authorized)`
-              
-              
-              if (parseDData.ep) {
-                if (parseDData.ep == 1) {
-                  this.ep1ParsedArray.push(el)
+                el.string = `Device checking for download`
+              }
+
+
+
+              if (parseDData.at) {
+                if (parseDData.at == 1) {
+                  this.at1ParsedArray.push(el)
                 }
-                if (parseDData.ep == 2) {
-                  this.ep2ParsedArray.push(el)
+                if (parseDData.pl == 0) {
+                  this.pl0ParsedArray.push(el)
                 }
-                if (parseDData.ep == 9) {
-                  this.ep9ParsedArray.push(el)
+                if (parseDData.at == 3) {
+                  this.at3ParsedArray.push(el)
                 }
               } 
-              
+
             })
 
-            // localStorage.setItem('ep1ParsedArray', JSON.stringify(this.ep1ParsedArray))
-            // localStorage.setItem('ep2ParsedArray', JSON.stringify(this.ep2ParsedArray))
-            // localStorage.setItem('ep9ParsedArray', JSON.stringify(this.ep9ParsedArray))
+          
             
             this.dumpData = res.data
-            this.dumpDataInfo = res.data
             console.log(res.data);
             localStorage.setItem('dumpDataInfo', JSON.stringify(res.data))
             this.isButtonDisabled = false;

@@ -57,6 +57,7 @@ import PumpStatus from "../views/dashboard/devices/pumpStatus";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
 import DumpData from "../views/dashboard/devices/dumpData";
+import DumpDataTanks from "../views/dashboard/devices/dumpDataTanks";
 import EditDevices from "../views/dashboard/devices/editDevices";
 import DeviceConsole from "../views/dashboard/devices/deviceConsole";
 import DeviceDetails from "../views/dashboard/devices/deviceDetails";
@@ -198,9 +199,18 @@ let routes = [
     },
   },
   {
-    path: "/dump-data",
+    path: "/pumps-dump-data",
     name: "dumpData",
     component: DumpData,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/tanks-dump-data",
+    name: "dumpDataTanks",
+    component: DumpDataTanks,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
