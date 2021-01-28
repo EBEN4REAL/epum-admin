@@ -4,7 +4,7 @@
     name="POSModal"
     transition="pop-out"
     :width="modalWidth"
-    :height="400"
+    :height="500"
     @opened="opened"
   >
     <div class="pos_modal">
@@ -15,6 +15,26 @@
             <div class="col-md-6 col-sm-3">
                 <div class="details_input">
                     <label for="">{{modalDataValues.vendor}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center p-2">
+            <div class="col-md-6">
+                <label>Terminal Id:</label >
+            </div>
+            <div class="col-md-6">
+                <div class="details_input">
+                    <label for="">{{modalDataValues.terminalId}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center p-2">
+            <div class="col-md-6">
+                <label>Serial No.:</label >
+            </div>
+            <div class="col-md-6">
+                <div class="details_input">
+                    <label for="">{{modalDataValues.serialNo}}</label>
                 </div>
             </div>
         </div>
@@ -40,31 +60,11 @@
         </div>
         <div class="row align-items-center p-2">
             <div class="col-md-6">
-                <label>Terminal Id:</label >
-            </div>
-            <div class="col-md-6">
-                <div class="details_input">
-                    <label for="">{{modalDataValues.terminalId}}</label>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center p-2">
-            <div class="col-md-6">
                 <label>Service Type:</label >
             </div>
             <div class="col-md-6">
                 <div class="details_input">
                     <label for="">{{modalDataValues.serviceType}}</label>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center p-2">
-            <div class="col-md-6">
-                <label>Serial No.:</label >
-            </div>
-            <div class="col-md-6">
-                <div class="details_input">
-                    <label for="">{{modalDataValues.serialNo}}</label>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
             </div>
             <div class="col-md-6">
                 <div class="details_input">
-                    <label for="">{{modalDataValues.dateAdded}}</label>
+                    <label for="">{{$moment(modalDataValues.dateAdded).format('DD-MM-YYYY HH:mm:ss')}}</label>
                 </div>
             </div>
         </div>

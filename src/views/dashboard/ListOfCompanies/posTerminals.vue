@@ -1,7 +1,7 @@
 <template>
     <div>
         <POSDetailsModal :modalData="modalData" />
-        <masterLayout>
+        <masterLayout :branchName="comapanyBranchObj.name">
             <section class=" mt-3 full__row_section">
                 <div class="banner">
                 <div class="row">
@@ -51,9 +51,9 @@
                     >
                     <e-columns>
                         <e-column width="80" field="index" headerText="#"></e-column>
-    \                    <e-column width="200" field="vendor" headerText="Vendor"></e-column>
-                        <e-column width="200" field="transactionLimit" headerText="Transaction Limit"></e-column>
-                        <e-column width="200" field="fee" headerText="Fee"></e-column>
+                        <e-column width="200" field="vendor" headerText="Vendor"></e-column>
+                        <e-column width="200" field="terminalId" headerText="Terminal Id"></e-column>
+                        <e-column width="200" field="serialNo" headerText="Serial No."></e-column>
                         <e-column width="200" field="serviceType" headerText="Service Type"></e-column>
                         <e-column :template="terminalTemplate" headerText="Action" width="350"></e-column>
                     </e-columns>
@@ -107,10 +107,26 @@ export default {
             this.searchValue = value
             grid.search(value);
         }
+
+        const companyBranchId = this.$route.query.companyBranchId;
+        let ml = sessionStorage.getItem(companyBranchId);
+        if (!ml) {
+        let allData = localStorage.getItem("branchesList");
+        let dt = JSON.parse(allData);
+        dt.forEach((my, index) => {
+            if (my.id === companyBranchId) {
+            ml = JSON.stringify(my);
+            sessionStorage.setItem(companyBranchId, ml);
+            }
+        });
+        }
+        let companyBranchDetails = JSON.parse(ml);
+        this.comapanyBranchObj = companyBranchDetails;
     },
     data() {
         return {
             modalData: {},
+            comapanyBranchObj: {},
             showLoader: false,
             terminalCount: 0,
             userDetails: localStorage.getItem("adminUserDetails") ? JSON.parse(localStorage.getItem("adminUserDetails")) : null,

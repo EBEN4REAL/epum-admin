@@ -111,7 +111,8 @@
                     <!-- <e-column width="80" field="index" headerText="#"></e-column> -->
                     <e-column width="200" field="station" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
-                    <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
+                    <e-column width="150" :template="device_id" headerText="Device Id"></e-column>
+                    <e-column field="deviceId" :visible="false"></e-column>
                      <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
                     <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
                     <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
@@ -135,6 +136,7 @@ import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/pump_status_template.vue';
 import TableLoader from "@/components/tableLoader/index";
+import DeviceId from '@/components/device_id.vue';
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
 import pumpTempStatus from '@/components/Templates/pump_status_template';
@@ -212,8 +214,12 @@ export default {
                 return {
                     template: pumpTempStatus
                 };
-            }
-            
+            },
+            device_id: function() {
+                return {
+                    template: DeviceId
+                };
+            },
         }
     },
     watch: {
