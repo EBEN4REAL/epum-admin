@@ -51,26 +51,9 @@
             </div>
          </div>
         </section>
-         <div class="new_row_section mt-3">
-          <ejs-grid
-            v-show="!showLoader"
-            ref="dataGrid"
-            :created="refreshGrid"
-            :allowPaging="false"
-            :allowSorting="true"
-            :pageSettings="tableProps.pageSettings"
-            :allowTextWrap='true'
-            :rowDataBound='rowDataBound'
-            >
-            <e-columns>
-                <e-column width="100" field="date" headerText="FW 101" text-align="left"></e-column>
-                <e-column width="100" field="string" headerText="FW 102" text-align="left"></e-column>
-                <e-column width="100" field="dData" headerText="FW 102" :visible="false" text-align="left"></e-column>
-                <e-column width="200" field="dData" headerText="FW 2040" :visible="false" text-align="left"></e-column>
-            </e-columns>
-        </ejs-grid>
-        <TableLoader :showLoader="showLoader"/>
-    </div>
+        <div class="new_row_section mt-3">
+            <p v-for="(value, key, index) in versions" :key="index">FW{{key}}: {{value}}</p>
+        </div>
         <div class="new_row_section mt-3">
                 <ejs-grid
                     v-show="!showLoader"
@@ -140,6 +123,7 @@ export default {
     data() {
         return {
             searchValue: '',
+            versions: {},
             nonReportingCount: 0,
             reportingCount: 0,
             devicesData: [],
@@ -330,6 +314,7 @@ export default {
                     let index = 0;
                     let reportingCount = 0; 
                     let nonReportingCount = 0;
+                    let versions = {}
                     res.data.sort((a, b) => {
                         if (a.companyName && b.companyName) {
                             return a.companyName.toLowerCase() > b.companyName.toLowerCase() ? 1 : b.companyName.toLowerCase() > a.companyName.toLowerCase() ? -1 : 0;
@@ -340,6 +325,9 @@ export default {
                         }
                     });
                     res.data.forEach(el => {
+                        if (el.firmWareVersion !== null) {
+                            versions[el.firmWareVersion] = (versions[el.firmWareVersion] || 0) + 1
+                        }
                         el.formatedDate = this.$moment(el.lastDate).format("llll");
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
@@ -356,6 +344,7 @@ export default {
                     })
                     sessionStorage.clear()
                     localStorage.setItem("devicesList", JSON.stringify(res.data))
+                    this.versions = versions
                     this.devicesCount = res.data.length
                     this.nonReportingCount = nonReportingCount
                     this.reportingCount = reportingCount

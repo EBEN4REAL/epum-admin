@@ -288,11 +288,6 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link :to="{ name: 'devices' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
-                                       All Devices
-                                    </router-link>
-                                </li>
-                                <li>
                                     <router-link :to="{ name: 'devices_offline' }" class="vue_router_link" :class="activeRoute === 'devices_offline' ? 'active' : ''">
                                         Devices Offline
                                     </router-link>
