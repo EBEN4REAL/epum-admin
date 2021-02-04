@@ -527,7 +527,6 @@ export default {
             
             this.dumpData = res.data
             this.dumpDataInfo = res.data
-            console.log(res.data);
             localStorage.setItem('dumpDataInfo', JSON.stringify(res.data))
             this.isButtonDisabled = false;
             $('.loader').hide();
@@ -540,8 +539,6 @@ export default {
           .catch(error => {
             this.showLoader = false
             this.isButtonDisabled = false;
-            console.log(error.response);
-            console.log(error);
             $('.loader').hide();
             // this.$toast(error.response.data.message, {
             //     type: "error",

@@ -382,14 +382,12 @@ export default {
 
        this.axios.get(`${configObject.apiBaseUrl}/Devices/DumpData?id=${this.deviceId1}&startDate=${this.dateRange.start}&endData=${this.dateRange.end}`, configObject.authConfig())
           .then(res => {
-              console.log(res.data)
             res.data.forEach(el => {
               el.date = this.$moment(el.date).format("MM/DD/YYYY hh:mm A");
               el.dData = el.dData.includes("}{") ? el.dData.split("}{")[0] + "}" : el.dData
               
               el.dData = el.dData.replace(/'/g, '"')
               const parseDData = JSON.parse(el.dData)
-              console.log(parseDData)
             //   let info
             //   let pumpLabel
             //   let pumps
@@ -436,7 +434,6 @@ export default {
           
             
             this.dumpData = res.data
-            console.log(res.data);
             localStorage.setItem('dumpDataInfo', JSON.stringify(res.data))
             this.isButtonDisabled = false;
             $('.loader').hide();
@@ -449,8 +446,6 @@ export default {
           .catch(error => {
             this.showLoader = false
             this.isButtonDisabled = false;
-            console.log(error.response);
-            console.log(error);
             $('.loader').hide();
             // this.$toast(error.response.data.message, {
             //     type: "error",
