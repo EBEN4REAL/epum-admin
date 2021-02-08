@@ -12,7 +12,7 @@
                             <button class="rounded-button transparent mr-3" @click="togglePageStatus">{{pageStatus === 'edit' ? 'Preview' : 'Edit'}}</button>
                             <button class="rounded-button colored text-white">Save and contiue</button>
                         </div>
-                        <div class="dropdown-slide mt-3" @click="showSummary" v-if="pageStatus === 'edit' ">
+                        <div class="dropdown-slide mt-3" v-b-toggle.collapse-2 @click="showSummary"  v-if="pageStatus === 'edit' ">
                             <div class="row align-items-center ">
                                 <div class="col-md-9">
                                     <span class="primary-color bold-span">Invoice title and summary</span>
@@ -24,35 +24,38 @@
                               
                             </div>
                        </div>
-                        <div class="dropdown-summary" v-if="summary && pageStatus === 'edit' ">
-                            <div class="row align-items-center ">
-                                <div class="col-md-7 ">
-                                    <img src="@/assets/img/fuelmetrics-png-transparent.png" width="350  " class="pl-3" />
+                        <b-collapse id="collapse-2" class="" style="width: 100%">
+                             <div class="dropdown-summary" v-if="pageStatus === 'edit' ">
+                                <div class="row align-items-center ">
+                                    <div class="col-md-7 ">
+                                        <img src="@/assets/img/fuelmetrics-png-transparent.png" width="350  " class="pl-3" />
+                                    </div>
+                                    <div class="col-md-5 text-right py-5">
+                                        <div class="row align-items-enter">
+                                            <div class="col-md-11">
+                                                <div class="summary-title">
+                                                <input type="text"  class="form-control" v-model="invoiceTitle" placeholder="Invoice Title" />
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="row align-items-center mt-2">
+                                            <div class="col-md-11">
+                                                <div class="">
+                                                <input type="text"  class="form-control" v-model="invoiceSummary"  placeholder="Summary(e.g prject name, description of invoice)" />
+                                                </div>
+                                                <div class="e-heading--subtitle text-right mt-3">
+                                                    <h5 class="bold-span">Fuelmetrics</h5>
+                                                </div>
+                                                <div class="e-heading--para mt-2  text-right">
+                                                    <p class="bold-span">Nigeria</p>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
-                                <div class="col-md-5 text-right py-5">
-                                    <div class="row align-items-enter">
-                                        <div class="col-md-11">
-                                            <div class="summary-title">
-                                               <input type="text"  class="form-control" v-model="invoiceTitle" placeholder="Invoice Title" />
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="row align-items-center mt-2">
-                                        <div class="col-md-11">
-                                            <div class="">
-                                               <input type="text"  class="form-control" v-model="invoiceSummary"  placeholder="Summary(e.g prject name, description of invoice)" />
-                                            </div>
-                                            <div class="e-heading--subtitle text-right mt-3">
-                                                <h5 class="bold-span">Fuelmetrics</h5>
-                                            </div>
-                                            <div class="e-heading--para mt-2  text-right">
-                                                <p class="bold-span">Nigeria</p>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-                            </div>
-                       </div>
+                        </div>
+                        </b-collapse>
+                       
                         <div class="invoice-container mt-3"  v-if="pageStatus === 'edit'">
                             <div class="add_customer_conainer">
                                 <div class="invoice_customer p-3" v-if="view ==='customer'">
@@ -282,24 +285,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="dropdown-slide mt-3" v-b-toggle.collapse-1  v-if="pageStatus === 'edit' ">
+                        <div class="dropdown-slide mt-3" v-b-toggle.collapse-1  v-if="pageStatus === 'edit' "  @click="showFooter">
                             <div class="row ">
                                 <div class="col-md-9">
                                     <span class="primary-color bold-span">Footer</span>
                                 </div>
                                 <div class="col-md-3 text-right">
-                                    <i class="fa fa-chevron-down primary color" aria-hidden="true" v-if="!summary"></i>
-                                    <i class="fa fa-chevron-up primary color" aria-hidden="true" v-if="summary"></i>
+                                    <i class="fa fa-chevron-down primary color" aria-hidden="true" v-if="!footer"></i>
+                                    <i class="fa fa-chevron-up primary color" aria-hidden="true" v-if="footer"></i>
                                 </div>
                               
                             </div>
                         </div>
-                        <b-collapse id="collapse-1" class="invoice-footer">
+                        <b-collapse id="collapse-1" class="invoice-footer"  v-if="pageStatus === 'edit'">
                             <b-card style="width: 98.5%">
-                                <input type='text' class="form-control" placeholder="Enter a footer for this invoice (e.g tax information, thank you note)" style="box-shadow: none !important" />
+                                <input type='text' class="form-control" placeholder="Enter a footer for this invoice (e.g tax information, thank you note)" style="box-shadow: none !important" v-model="invoiceFooter" />
                             </b-card>
                         </b-collapse>
-                        <div class="preview-container mt-3"  v-if="pageStatus === 'preview'">
+                        <div class="preview-container mt-3 position-relative"  v-if="pageStatus === 'preview'" >
                             <div class="row  ivoice-preview-header-wrapper pb-4 align-items-center">
                                 <div class="col-md-4">
                                     <img src="@/assets/img/fuelmetrics-png-transparent.png" width="150"  />
@@ -419,6 +422,9 @@
                                 <span class="primary-color mr-3 bold-span">Amount Due (NGN): </span>
                                 <span class="primary-color bold-span">&#8358; {{totalAmount}}.00</span>
                             </div>
+                            <div class="text-center  invoice_footer" style="position: absolute; bottom: 15px; left: 45%">
+                                {{invoiceFooter}}
+                            </div>
                         </div>  
                     </div>
                 </div>
@@ -461,6 +467,7 @@ export default {
             paymentDue: 'Payment due',
             showDropdown: false,
             showTaxes: false,
+            invoiceFooter: '',
             selectedTax: {
                 name: 'Tax 1',
                 value: 'tax1'
@@ -581,6 +588,7 @@ export default {
                 value: '',
                 text: ''
             },
+            footer: false,
             productSearch: '',
             options: [
                 { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
@@ -668,6 +676,9 @@ export default {
         },
         showSummary() {
             this.summary = !this.summary
+        },
+        showFooter() {
+            this.footer = !this.footer
         },
         togglePageStatus() {
             this.pageStatus === 'edit' ?  this.pageStatus = 'preview' : this.pageStatus = 'edit'
