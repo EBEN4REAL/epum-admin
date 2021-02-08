@@ -11,6 +11,12 @@
   padding: 11px;
 }
 
+button {
+  
+  &:focus {
+    outline: none !important;
+  }
+}
 .create_btn {
   margin-top: 36px !important;
 }
@@ -189,4 +195,66 @@
   background: $primaryColor;
   color: $whiteColor;
   border: none;
+}
+.rounded-button {
+  border: 1px solid $primaryColor;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 20px 5px 20px;
+  &.transparent {
+    color: $primaryColor;
+    background: transparent;
+  }
+  &.colored {
+    color: $goldColor;
+    background: $primaryColor;
+  }
+}
+.invoice-edit-button {
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 15px 5px 15px;
+  background: #f0f4fa;
+  border: none !important;
+  cursor: text;
+}
+
+.rem-btn {
+  // width: 174px;
+  height: 45px;
+  border-radius: 5px !important;
+  opacity: 1;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  &.gold_color {
+    color: $goldColor !important;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &.mobile-btn-height {
+    height: 45px !important;
+  }
+  &.main {
+    background: $primaryColor 0 0 no-repeat padding-box !important;
+    width: 174px;
+    height: 45px;
+    border: 1px solid $primaryColor !important;
+    padding: 10px !important;
+    &:hover {
+      background-color: #152952 !important;
+    }
+  }
+  &.aux {
+    padding: 12px !important;
+    text-decoration: none;
+    border: none !important;
+    color: $primaryColor !important;
+    background: $secondaryButtonColor 0 0 no-repeat padding-box !important;
+    &:hover {
+      background-color: #FFD668 !important;
+    }
+  }
 }
