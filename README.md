@@ -1,6 +1,6 @@
 # epump-admin
 
-## Project setup
+## Project Setup
 ```
 yarn install
 ```

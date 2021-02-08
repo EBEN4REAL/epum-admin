@@ -141,7 +141,6 @@ export default {
             "closingDeep": this.tankObj.closingDip
         }
         this.isButtonDisabled = true
-        console.log(data)
         this.axios
           .put(`${configObject.apiBaseUrl}/Audit/UpdateTankStatus`,data, configObject.authConfig())
           .then(response => {

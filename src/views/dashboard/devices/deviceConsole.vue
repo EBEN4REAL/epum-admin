@@ -7,7 +7,7 @@
                     <p :class="darkClass">Memory Usage: {{this.$route.query.usage}}</p>
                     <p :class="darkClass">Firmware Version: {{this.$route.query.version}}</p>
                 </div>
-                <div class="custom-control custom-switch toggler-button">
+                <div class="toggler-button">
                     <p style="margin-right:8px;" :class="darkClass">Light</p>
                     <input type="checkbox" value="isChecked" v-model="mode" style="display: none;" />
                     <div class="dark_check" :class="!mode ? 'light_check' : null" @click="toggleCheck">
@@ -20,10 +20,9 @@
           <div class="console-content">
               <div class="console_height">
                   <div class="icons px-2 console_info_holder" v-for="(command, i) in info" :key="i">
-                    <p><i class="fa fa-angle-double-left fa-2x info_icon" :class="darkClass"></i></p>
+                    <p><i class="fa fa-2x info_icon" :class="[command.type === 'receive' ?  'fa-angle-double-left' : 'fa-angle-right', darkClass]"></i></p>
                     <p class="console_info" :class="darkClass"> 
-                    <!-- <span><i class="fa fa-angle-left fa-1x"></i>.<i class="fa fa-angle-right fa-1x"></i></span> -->
-                    {{command}}
+                    {{command.data}}
                     </p>
                   </div>
               </div>
@@ -69,13 +68,19 @@ export default {
  
     $.connection.hub.url = 'https://app.epump.com.ng:1000/signalr';
     var chat = $.connection.myHub;
-    this.chat = chat
+    // this.chat = chat
 
     chat.client.onEpOneSent = (deviceId, data) => {
         if (deviceId === this.deviceId) {
-            this.info.push(data)
+            this.info.push({data, type: 'receive'})
             $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
         }
+    };
+
+    chat.client.onRecievedMessage = (data) => {
+      this.info.push({data, type: 'receive'})
+      $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
+
     };
 
 
@@ -94,7 +99,7 @@ export default {
                     $('textarea').val('');
                     $('textarea').text('');
                     memIndex = 0;	// Reset index to 0
-                    this.info.push(entry)
+                    this.info.push({data: entry, type: 'command'})
                     $('.console_height').scrollTop($('.console_height')[0].scrollHeight);
 
                     this.pushToSignalR(this.deviceId, entry);
@@ -130,7 +135,12 @@ export default {
         this.darkClass = this.darkClass == 'white_text_ev' ? '' : 'white_text_ev'
     },
     pushToSignalR(deviceId, value) {
-        this.chat.server.webConsoleSent(deviceId, value);
+        // this.chat.server.webConsoleSent(deviceId, value);
+
+        $.connection.hub.url = 'https://app.epump.com.ng:1000/signalr';
+        var chat = $.connection.myHub;
+
+        chat.server.webConsoleSent(deviceId, value);
     }
   }
 };

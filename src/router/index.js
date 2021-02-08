@@ -20,6 +20,8 @@ import MailRecipient from "../views/dashboard/ListOfCompanies/mail_recipient";
 import MapUserToSalesRep from "../views/dashboard/admin/ManageUsers/mapUserToSalesRep";
 import Branches from "../views/dashboard/ListOfCompanies/branches";
 import DealerBranches from "../views/dashboard/ListOfCompanies/dealerBranches";
+import PosTerminals from "../views/dashboard/ListOfCompanies/posTerminals";
+import CreateTerminal from "../views/dashboard/ListOfCompanies/createTerminal";
 import CreateDealerBranch from "../views/dashboard/ListOfCompanies/createDealerBranch";
 import CreateBranch from "../views/dashboard/ListOfCompanies/create_branch";
 import EditBranch from "../views/dashboard/ListOfCompanies/editBranch";
@@ -55,6 +57,7 @@ import PumpStatus from "../views/dashboard/devices/pumpStatus";
 import EditPumpStatus from "../views/dashboard/devices/editPumpStatus";
 import Devices from "../views/dashboard/devices/devices";
 import DumpData from "../views/dashboard/devices/dumpData";
+import DumpDataTanks from "../views/dashboard/devices/dumpDataTanks";
 import EditDevices from "../views/dashboard/devices/editDevices";
 import DeviceConsole from "../views/dashboard/devices/deviceConsole";
 import DeviceDetails from "../views/dashboard/devices/deviceDetails";
@@ -265,9 +268,18 @@ let routes = [
     },
   },
   {
-    path: "/dump-data",
+    path: "/pumps-dump-data",
     name: "dumpData",
     component: DumpData,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/tanks-dump-data",
+    name: "dumpDataTanks",
+    component: DumpDataTanks,
     meta: {
       authorize: true,
       authRoles: ["Admin"],
@@ -378,6 +390,24 @@ let routes = [
     path: "/dealer_branches",
     name: "dealer_branches",
     component: DealerBranches,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/pos-terminals",
+    name: "pos_terminals",
+    component: PosTerminals,
+    meta: {
+      authorize: true,
+      authRoles: ["Admin"],
+    },
+  },
+  {
+    path: "/create-terminal",
+    name: "create_terminal",
+    component: CreateTerminal,
     meta: {
       authorize: true,
       authRoles: ["Admin"],

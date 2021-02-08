@@ -4,27 +4,35 @@
     <masterLayout>
         <section>
             <div class="row mt-3 ml-1">
-                 <div class="col-lg-2 col-md-3 remove_padding-right">
-                 <div class="new_row_section">
-                <div
-                  class="small__card_content_wrapper small_card pump-status "
-                >
-                  <p class="dashboard__card__header mb-0">Refresh In</p>
-                  <div
-                    class="icon_wrapper centralize icon_div_big empty_bg text-center"
-                  >
-                    <img src="@/assets/img/clock (3).svg" width="40px" />
-                  </div>
-                  <div class="mt-1">
-                    <small id="countDown"
-                      class="dashboard__card__header_bottom font-weight-bold"
-                    >
+                <div class="col-lg-2 col-md-3 remove_padding-right">
+                    <div class="new_row_section">
+                        <div
+                        class="small__card_content_wrapper small_card pump-status refresh_holder"
+                        >
+                            <p class="dashboard__card__header mb-0">{{autoRefresh ? 'Refresh In' : 'Auto-Refresh'}}</p>
+                            <div
+                                class="centralize icon_div_big empty_bg text-center"
+                            >
+                                <img src="@/assets/img/clock (3).svg" width="40px" />
+                            </div>
+                            <div class="mt-1" v-show="autoRefresh">
+                                <small id="countDown"
+                                class="dashboard__card__header_bottom font-weight-bold"
+                                >
 
-                    </small>
-                  </div>
+                                </small>
+                            </div>
+                            <div class="toggler-button refresh_toggler">
+                                <!-- <p style="margin-right:8px;" :class="darkClass">Light</p> -->
+                                <input type="checkbox" v-model="autoRefresh" />
+                                <div class="dark_check refresh_dark_check" :class="!mode ? 'light_check' : null" @click="toggleCheck">
+                                    <div class="dark_check_inner" :style="[mode ? {left: '21px'} : null]"></div>
+                                </div>
+                                <!-- <p style="margin-left:8px;" :class="darkClass">Dark</p> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
              <div class="col-lg-2 col-md-3 remove_padding-right">
                  <div class="new_row_section">
                 <div
@@ -111,7 +119,8 @@
                     <!-- <e-column width="80" field="index" headerText="#"></e-column> -->
                     <e-column width="200" field="station" headerText="Station Name"></e-column>
                     <e-column width="200" field="pumpName" headerText="Pump Name"></e-column>
-                    <e-column width="200" field="deviceId" headerText="Device Id"></e-column>
+                    <e-column width="150" :template="device_id" headerText="Device Id"></e-column>
+                    <e-column field="deviceId" :visible="false"></e-column>
                      <e-column width="200" field="yesterdayClosing" headerText="Yesterday Closing"></e-column>
                     <e-column width="200" field="todayOpening" headerText="Today Opening"></e-column>
                     <e-column width="200" field="todayClosing" headerText="Today Closing"></e-column>
@@ -135,6 +144,7 @@ import Vue from 'vue';
 import masterLayout from '@/views/dashboard/masterLayout'
 import Temp from '@/components/pump_status_template.vue';
 import TableLoader from "@/components/tableLoader/index";
+import DeviceId from '@/components/device_id.vue';
 import configObject from "@/config";
 import backgroundUrl from "@/assets/img/Tankimage.png";
 import pumpTempStatus from '@/components/Templates/pump_status_template';
@@ -157,12 +167,8 @@ export default {
     },
     mounted() {
         this.getPumpStatus('notOkay')
-        this.$nextTick(function () {
-            window.setInterval(() => {
-                this.getPumpStatus('notOkay');
-                this.selected = "notOkay"
-            },60000);
-        })
+        this.getPumpStatus('notOkay');
+        this.selected = "notOkay"
         $(".e-input").keyup(function(e) {
             searchFun(e);
         });
@@ -171,9 +177,6 @@ export default {
             var value = event.target.value;
             grid.search(value);
         }
-        const mins = 60 * 1,
-        display = document.querySelector('#countDown');
-        this.startTimer(mins, display);
        
     },
     created() {
@@ -187,6 +190,10 @@ export default {
     data() {
         return {
             selected: 'notOkay',
+            mode: false,
+            darkClass: '',
+            refreshInterval: null,
+            autoRefresh: false,
             options: [
                 { text: 'Not Okay', value: 'notOkay' },
                 { text: 'show All', value: 'showAll' }
@@ -212,16 +219,34 @@ export default {
                 return {
                     template: pumpTempStatus
                 };
-            }
-            
+            },
+            device_id: function() {
+                return {
+                    template: DeviceId
+                };
+            },
         }
     },
     watch: {
         selected(status) {
             this.getPumpStatus(status)
+        },
+        autoRefresh(obj) {
+            if (obj) {
+                const mins = 60 * 1,
+                display = document.querySelector('#countDown');
+                this.startTimer(mins, display);
+            } else {
+                clearInterval(this.refreshInterval)
+            }
         }
     },
     methods: {
+        toggleCheck() {
+            this.mode = !this.mode
+            this.autoRefresh = !this.autoRefresh
+            this.darkClass = this.darkClass == 'white_text_ev' ? '' : 'white_text_ev'
+        },
         searchChange($e) {
             $e.target.value
             this.getPumpStatus(this.selected, $e.target.value)
@@ -278,7 +303,7 @@ export default {
         },
         startTimer(duration, display) {
             var start = Date.now(),diff, minutes,seconds;
-            function timer() {
+            const timer = () => {
                 /***** get the number of seconds that have elapsed since startTimer() was called ***/
                 diff = duration - (((Date.now() - start) / 1000) | 0);
                 /***** does the same job as parseInt truncates the float ***/
@@ -293,13 +318,16 @@ export default {
                      /***** add one second so that the count down starts at the full duration example 05:00 not 04:59 ***/
                     start = Date.now() + 1000;
                 }
+                if (seconds == 0 && parseInt(minutes) == 0) {
+                    this.getPumpStatus(this.status)
+                }
             };
             /***** we don't want to wait a full second before the timer starts ***/
             timer();
-            setInterval(timer, 1000);
+            this.refreshInterval = setInterval(timer, 1000);
         },
         getPumpStatus(status, searchText ='') {
-            // this.showLoader = true
+            this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Admin/PumpStatus?query=${searchText}`, configObject.authConfig())

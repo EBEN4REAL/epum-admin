@@ -206,7 +206,6 @@ export default {
                 configObject.authConfig()
                 )
                 .then(response => {
-                console.log(response.data)
                 this.showLoader = false;
                 let index = 0;
                 response.data.forEach(element => {

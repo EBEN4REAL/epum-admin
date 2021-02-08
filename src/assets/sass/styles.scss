@@ -11,6 +11,7 @@
 @import "invoice";
 @import "modal";
 @import "utils";
+@import "posDetailsModal.scss";
 
 * {
   box-sizing: border-box;
@@ -1121,46 +1122,54 @@ h6.dashboard__card__header {
         font-size: 13px;
       }
     }
-    .toggler-button {
-      width: 50%;
-      margin-right: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      p {
-        margin-bottom: 0;
-      }
-      input {
-        position: absolute;
-        width: 46px;
-        height: 25px;
-        z-index: -10;
-      }
-      .dark_check {
-        background-color: $greyTextColor;
-        &.light_check {
-          background-color: gainsboro;
-          border: 1px solid gainsboro;
-        }
-        border-radius: 15px;
-        border: 1px solid $greyTextColor;
-        height: 25px;
-        width: 46px;
-        padding: 3px 2px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        .dark_check_inner {
-          transition: 0.2s all;
-          background-color: white;
-          height: 19px;
-          width: 19px;
-          border-radius: 50%;
-          position: relative;
-          left: 0;
-        }
-      }
+  }
+}
+.toggler-button {
+  width: 50%;
+  margin-right: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  p {
+    margin-bottom: 0;
+  }
+  input {
+    position: absolute;
+    width: 46px;
+    height: 25px;
+    z-index: -10;
+  }
+  .dark_check {
+    background-color: $greyTextColor;
+    &.refresh_dark_check {
+      background-color: #290C53;
     }
+    &.light_check {
+      background-color: gainsboro;
+      border: 1px solid gainsboro;
+    }
+    border-radius: 15px;
+    border: 1px solid $greyTextColor;
+    height: 25px;
+    width: 46px;
+    padding: 3px 2px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .dark_check_inner {
+      transition: 0.2s all;
+      background-color: white;
+      height: 19px;
+      width: 19px;
+      border-radius: 50%;
+      position: relative;
+      left: 0;
+    }
+  }
+  &.refresh_toggler {
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    justify-content: center;
   }
 }
 .dark-mode {
@@ -1176,8 +1185,11 @@ h6.dashboard__card__header {
 }
 
 .pump-status {
+  &.refresh_holder {
+    justify-content: space-evenly;
+  }
   cursor: pointer;
-  height: 135px;
+  height: 170px;
   p,
   small {
     color: $primaryColor;

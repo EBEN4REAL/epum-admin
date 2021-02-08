@@ -277,6 +277,11 @@
                         </a>
                         <div>
                             <ul class="treeview-menu">
+                                <li>
+                                    <router-link :to="{ name: 'devices' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
+                                        All Devices
+                                    </router-link>
+                                </li>
                                  <li>
                                     <router-link :to="{ name: 'pump_status' }" class="vue_router_link" :class="activeRoute === 'pump_status' ? 'active' : ''">
                                         Pump Status
@@ -332,13 +337,8 @@
                                         Manage Roles
                                     </router-link>
                                 </li>
-                                <li>
-                                    <router-link :to="{ name: 'devices' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
-                                        Devices
-                                    </router-link>
-                                </li>
                                  <li>
-                                    <router-link :to="{ name: 'check_pump_sales' }" class="vue_router_link" :class="activeRoute === 'devices' ? 'active' : ''">
+                                    <router-link :to="{ name: 'check_pump_sales' }" class="vue_router_link" :class="activeRoute === 'check_pump_sales' ? 'active' : ''">
                                         Audit Pump Sales
                                     </router-link>
                                 </li>

@@ -2,22 +2,39 @@
     <div>
         <EditDeviceModal :deviceObj="deviceObj" />
         <UpdateFTModal :fTDeviceId="fTDeviceId" />
+        <FirmwareModal :versions="versions" />
         <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
             <div class="row">
-                <div class="col-lg-8 remove-padding-left padding_div pr-0">
-                    <div class="dashboard__card small_card align-center">
-                        <div class="row">
-                        <div class="col-md-8 card_inner_wrapper">
-                            <h3>Hi, {{userName}}</h3>
-                            <p>Get started with epump company admin platform by managing your devices here</p>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
+                <div class="col-lg-4">
+                    <div class="dashboard__card large_card">
+                        <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                            <p class="dashboard__card__header text-white">Total number of reporting Devices</p>
+                                <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                <img src="@/assets/img/company.png" width="40px" />
+                                </div>
+                                <div class="">
+                                <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                >{{reportingCount}}</small>
+                                </div>
                         </div>
                     </div>
-                </div>
-             </div>
+              </div>
+                    <div class="col-lg-4">
+                        <div class="dashboard__card large_card">
+                            <div class="small__card_content_wrapper align-items-center justify-content-center" >
+                                <p class="dashboard__card__header text-white">Total number of non-reporting Devices</p>
+                                    <div class="icon_wrapper centralize text-center" style="margin-top: -12px;">
+                                    <img src="@/assets/img/company.png" width="40px" />
+                                    </div>
+                                    <div class="">
+                                    <small class="dashboard__card__header_bottom text-white font-weight-bold"
+                                    >{{nonReportingCount}}</small>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                  <div class="col-lg-4">
                     <div class="dashboard__card large_card">
                         <div class="small__card_content_wrapper align-items-center justify-content-center" >
@@ -34,6 +51,9 @@
               </div>
             </div>
          </div>
+         <button class="btn btn_theme mt-4" @click="showFirmawareModal" v-show="versions"
+         style="cursor: pointer;">View Firmwares
+        </button>
         </section>
         <div class="new_row_section mt-3">
                 <ejs-grid
@@ -84,6 +104,7 @@ import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import EditDeviceModal from '@/components/modals/Devices/editDevice.vue';
 import UpdateFTModal from '@/components/modals/Devices/updateFt.vue';
+import FirmwareModal from '@/components/modals/Devices/firmwareVersions.vue';
 
 
 import Jquery from 'jquery';
@@ -96,7 +117,8 @@ export default {
         TableLoader,
         DropDown,
         EditDeviceModal,
-        UpdateFTModal
+        UpdateFTModal,
+        FirmwareModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -104,6 +126,9 @@ export default {
     data() {
         return {
             searchValue: '',
+            versions: null,
+            nonReportingCount: 0,
+            reportingCount: 0,
             devicesData: [],
             devicesCount: 0,
             deviceObj: {},
@@ -197,6 +222,9 @@ export default {
         }
     },
     methods: {
+        showFirmawareModal() {
+            this.$modal.show('firmwareModal')
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -273,13 +301,14 @@ export default {
                 if(arging.data.nozzles) {
                     arging.row.children[1].children[0].children[0].innerHTML = arging.data.nozzles
                 }
+                arging.row.children[4].innerHTML = arging.data.formatedDate
             });
             
             arging.row.addEventListener("mouseleave", args => {
                 if(arging.data.nozzles) {
                     arging.row.children[1].children[0].children[0].innerHTML = arging.data.deviceId
                 }
-              
+                arging.row.children[4].innerHTML = arging.data.lastDate
             });
         },
         getDevices() {
@@ -289,6 +318,9 @@ export default {
                 `${configObject.apiBaseUrl}/Devices`, configObject.authConfig())
                 .then(res => {
                     let index = 0;
+                    let reportingCount = 0; 
+                    let nonReportingCount = 0;
+                    let versions = {}
                     res.data.sort((a, b) => {
                         if (a.companyName && b.companyName) {
                             return a.companyName.toLowerCase() > b.companyName.toLowerCase() ? 1 : b.companyName.toLowerCase() > a.companyName.toLowerCase() ? -1 : 0;
@@ -299,13 +331,31 @@ export default {
                         }
                     });
                     res.data.forEach(el => {
+                        if (el.firmWareVersion !== null) {
+                            versions[el.firmWareVersion] = (versions[el.firmWareVersion] || 0) + 1
+                        } else {
+                            versions['Nil'] = (versions['Nil'] || 0) + 1
+                        }
+                        el.formatedDate = this.$moment(el.lastDate).format("llll");
                         el.index = ++index;
                         el.name = `${el.companyName} (${el.branchName} - ${el.phone ? el.phone : ''}): ${el.city}`
+                        var seconds = Math.floor((new Date() - new Date(el.lastDate)) / 1000);
+
+                        var interval = seconds / 86400;
+                        if (interval < 1) {
+                            reportingCount++  
+                        } else {
+                            nonReportingCount++
+                        }
                         el.lastDate = this.timeSince(new Date(el.lastDate))
+                        el.status = el.nozzles ? 'pump' : 'tank'
                     })
                     sessionStorage.clear()
                     localStorage.setItem("devicesList", JSON.stringify(res.data))
+                    this.versions = versions
                     this.devicesCount = res.data.length
+                    this.nonReportingCount = nonReportingCount
+                    this.reportingCount = reportingCount
                     this.tableCount = res.data.length
                     this.devicesData = res.data;
                     this.showLoader = false;

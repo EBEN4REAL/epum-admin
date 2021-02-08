@@ -230,7 +230,6 @@ export default {
                             }
                     })
                     response.data.forEach(element => {
-                        console.log(response.data);
                         element.index = ++index;
                         element.date = this.$moment(element.date).format(
                             "MM/DD/YYYY hh:mm A"

@@ -1,6 +1,6 @@
 <template>
     <masterLayout>
-        <div class="center_div mt-3">
+        <div class="center_div mt-3 pb-2">
           <div class="pad_div">
             <div class="mt-3 tabs__lists">
                 <h5>Extend Voucher</h5>
@@ -21,7 +21,7 @@
                       id="DateTimePicker"
                       v-model="expiry"
                       color="#290C53"
-                      format="YYYY-MM-DDTHH:mm:ss.sssZ"
+                      format="YYYY-MM-DDTHH:mm:ss"
                       formatted="DD/MM/YYYY h:mm a"
                       label="Select date and time"
                       :min-date="minDate"
@@ -48,17 +48,6 @@
                  
             </form>
           </div>
-          <div
-            class="pattern_sec"
-            :style="[
-                  {
-                      backgroundPosition: 'center',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover',
-                      backgroundImage: `linear-gradient(rgb(55, 15, 112 , 0.001), rgb(55, 15, 112 ,0.001)), url(${backImg})`,
-                  }
-                  ]"
-          ></div>
       </div>
     </masterLayout>
 </template>
