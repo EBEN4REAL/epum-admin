@@ -294,7 +294,7 @@
                               
                             </div>
                         </div>
-                        <b-collapse id="collapse-1" class=" invoice-footer">
+                        <b-collapse id="collapse-1" class="invoice-footer">
                             <b-card style="width: 98.5%">
                                 <input type='text' class="form-control" placeholder="Enter a footer for this invoice (e.g tax information, thank you note)" style="box-shadow: none !important" />
                             </b-card>
