@@ -328,11 +328,14 @@ export default {
       this.refreshGrid();
     },
     rowDataBound(arging){
-       if(arging.row.children[1].innerHTML.includes('and pushing 0')) {
-          arging.row.style.backgroundColor = "blue";
+       if(arging.row.children[1].innerHTML.includes('and Pushing 0')) {
+          arging.row.style.backgroundColor = "red";
         }
         if(arging.row.children[1].innerHTML == 'Tank is booting') {
           arging.row.style.backgroundColor = "gold";
+        }
+        if(arging.row.children[1].innerHTML.includes('is filling')) {
+          arging.row.style.backgroundColor = "#666362";
         }
         if(arging.row.children[1].innerHTML == 'Device checking for update') {
           arging.row.style.backgroundColor = "#FF7E00";
@@ -399,11 +402,14 @@ export default {
                 el.string =  `Tank ${parseDData.nm} is online`
               }
               if(parseDData.pl == 0) {
-                 el.string =  `Tank ${parseDData.nm} is online and pushing 0`
+                 el.string =  `Tank ${parseDData.nm} is Online and Pushing 0`
+              }
+              if(parseDData.at == 3 && parseDData.pl == 0) {
+                 el.string =  `Tank ${parseDData.nm} is filling and Pushing 0`
               }
               if(parseDData.at == 0) {
                     el.string = `Tank is booting`
-                  }
+               }
               if(parseDData.at == 3) {
                 el.string = `${parseDData.pr} Tank ${parseDData.nm} is filling`
               }
