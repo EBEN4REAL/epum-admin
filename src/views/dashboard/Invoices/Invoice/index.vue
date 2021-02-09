@@ -175,10 +175,10 @@
                                     <div class="invoice_items pr-2">
                                         <div class="row textareaSection">
                                             <div class="col-md-4 padding-right-none">
-                                                <input type="text"  class="form-control ":disabled="invoice.status === 'auto'"  v-model="invoice.item" placeholder="Item name" @focus="focusElement(invoiceIndex)" />
+                                                <input type="text"  class="form-control " :disabled="invoice.status === 'auto'"  v-model="invoice.item" placeholder="Item name" @focus="focusElement(invoiceIndex)" />
                                             </div>
                                             <div class="col-md-8">
-                                                <textarea @keyup="processTextarea($event, invoiceIndex)"  class=""  v-model="invoice.description" placeholder="Enter item description" id="descTxa"  /></textarea>
+                                                <textarea @keyup="processTextarea($event, invoiceIndex)"  class=""  v-model="invoice.description" placeholder="Enter item description" id="descTxa"  />
                                             </div>
                                         </div>
                                     </div>
@@ -390,19 +390,21 @@
                                     <span class="text-white">Amount</span>
                                 </div>
                             </div>
-                            <div class="mt-2" v-for="(prod,i) in invoiceItems" :key="i" v-if="invoiceItems.length > 0">
-                                <div class="preview-table  p-2 pl-3 pr-3 ">
-                                    <div class="">
-                                        <span class="primary-color">{{prod.item}}</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="primary-color">{{prod.quantity}}</span>
-                                    </div> 
-                                    <div class="">
-                                        <span class="">₦</span>{{prod.price}}.00</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="">₦</span>{{prod.price *  prod.quantity}}.00</span>
+                            <div v-if="invoiceItems.length > 0">
+                                <div class="mt-2" v-for="(prod,i) in invoiceItems" :key="i">
+                                    <div class="preview-table  p-2 pl-3 pr-3 ">
+                                        <div class="">
+                                            <span class="primary-color">{{prod.item}}</span>
+                                        </div>
+                                        <div class="">
+                                            <span class="primary-color">{{prod.quantity}}</span>
+                                        </div> 
+                                        <div class="">
+                                            <span class="">₦{{prod.price}}.00</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="">₦{{prod.price *  prod.quantity}}.00</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -417,7 +419,7 @@
                                 <span class="primary-color mr-3 ">Total: </span>
                                 <span class="primary-color">&#8358; {{totalAmount}}.00</span>
                             </div>
-                            <hr></hr>
+                            <hr>
                              <div class="text-right mt-2 pr-3">
                                 <span class="primary-color mr-3 bold-span">Amount Due (NGN): </span>
                                 <span class="primary-color bold-span">&#8358; {{totalAmount}}.00</span>
@@ -698,7 +700,6 @@ export default {
                 `${configObject.apiBaseUrl}/Invoices/products`, configObject.authConfig())
                 .then(res => {
                     this.invoiceProducts = res.data
-                    console.log(res.data)
             })
             .catch(error => {
 
@@ -732,8 +733,6 @@ export default {
                             taxPrice: 0,
                         }
                     })
-                    console.log(res.data)
-
             })
             .catch(error => {
 

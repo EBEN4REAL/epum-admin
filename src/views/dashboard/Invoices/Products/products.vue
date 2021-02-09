@@ -114,6 +114,7 @@ export default {
             this.$refs.dataGrid.refresh();
         },
         getProducts() {
+            this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Invoices/products`, configObject.authConfig())
@@ -125,10 +126,10 @@ export default {
                     })
                     this.products = res.data
                     this.refreshGrid();
-                    console.log(res.data)
+                    this.showLoader = false
             })
             .catch(error => {
-
+                this.showLoader = false 
             });
         },
         toolbarClick(args) {

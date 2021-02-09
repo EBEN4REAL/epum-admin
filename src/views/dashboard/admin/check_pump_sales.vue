@@ -400,7 +400,6 @@ export default {
         if(this.pump == 'select pump') {
             this.pump = ''
         }
-        console.log(`${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`)
         this.axios
         .get(
             `${configObject.apiBaseUrl}/Audit/CheckPumpSales?StartDate=${this.startDate}&EndDate=${this.endDate}&Lower=${this.lower}&Higher=${this.higher}&DealerId=${this.dealer}&PumpId=${this.pump}&BranchId=${this.branchId}&CompanyId=${this.companyId}&BranchName=${this.branchName}&DeviceId=${this.deviceId}`, configObject.authConfig())

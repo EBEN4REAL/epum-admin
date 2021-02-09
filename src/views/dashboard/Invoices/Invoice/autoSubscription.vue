@@ -668,7 +668,6 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Company`, configObject.authConfig())
                 .then(res => {
-                    console.log(res.data.data)
                     this.companies = res.data.data
             })
             .catch(error => {

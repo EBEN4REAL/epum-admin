@@ -106,7 +106,7 @@ let routes = [
     }
   },
   {
-    path: "invoice-details",
+    path: "/invoice-details",
     name: "invoice_details",
     component: InvoiceDetails,
     meta: {

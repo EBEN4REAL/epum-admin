@@ -91,7 +91,7 @@ export default {
         required: true
       },
       perPage: {
-        type: Number,
+        type: String,
         required: true
       },
       currentPage: {
