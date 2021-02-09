@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 let token;
 
 let configObject = {
-  apiBaseUrl: "https://api.epump.com.ng",
-  // apiBaseUrl: "https://testapi.epump.com.ng",
+  // apiBaseUrl: "https://api.epump.com.ng",
+  apiBaseUrl: "https://testapi.epump.com.ng", 
   // apiBaseUrl: "https://oh.epump.com.ng",
   authConfig: configObjectFunc,
   authConfigForUpload: configObjectForUploadFunc

@@ -343,7 +343,38 @@
                                     </router-link>
                                 </li>
                             </ul>
-                            
+                            <li class="list-group-item treeview">
+                                <a href="#" class="vue_router_link has-submenu">
+                                    <span class="mr-2 icon">
+                                        <img alt="" src="@/assets/img/debt.svg" width="20px" />
+                                    </span>
+                                    <span class="sidenav_list_title">
+                                        Manage Invoices
+                                    </span>
+                                
+                                    <i class="fa fa-angle-right sidenav_arrow"></i>
+                                </a>
+                                <div>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            <router-link :to="{ name: 'invoices' }" class="vue_router_link" :class="activeRoute === 'pump_status' ? 'active' : ''">
+                                               invoices
+                                            </router-link>
+                                        </li>
+                                        <li>
+                                            <router-link :to="{ name: 'products' }" class="vue_router_link" :class="activeRoute === 'products' ? 'active' : ''">
+                                                Product & Servicces
+                                            </router-link>
+                                        </li>
+                                         <li>
+                                            <router-link :to="{ name: 'taxes' }" class="vue_router_link" :class="activeRoute === 'products' ? 'active' : ''">
+                                                Taxes
+                                            </router-link>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
                             <li>
                                 <router-link :to="{ name: 'outstandingPayments' }" class="vue_router_link">
                                     <span class="mr-2"><img alt="" src="@/assets/img/debt.svg" width="20px" /></span>

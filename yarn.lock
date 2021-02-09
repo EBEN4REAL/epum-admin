@@ -8372,6 +8372,11 @@ vue-router@^3.4.3:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.4.3.tgz#fa93768616ee338aa174f160ac965167fa572ffa"
   integrity sha512-BADg1mjGWX18Dpmy6bOGzGNnk7B/ZA0RxuA6qedY/YJwirMfKXIDzcccmHbQI0A6k5PzMdMloc0ElHfyOoX35A==
 
+vue-search-select@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/vue-search-select/-/vue-search-select-2.9.3.tgz#39ee37da95179b7fdd8e1cb7636e5c0aaee39be2"
+  integrity sha512-JQBTSKKX3nAoeeEaSqg2iQDtR1YBs0qZ08os/QDOqFocGPSvAffNb4VajSnlFWJlKQDJcev3iQuBLcWM2pxr0Q==
+
 vue-spinner@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vue-spinner/-/vue-spinner-1.0.4.tgz#0e794d9d93acb23b5b6564042157a531e7ce413b"
@@ -8407,6 +8412,11 @@ vue@^2.6.11, vue@^2.6.9:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vuejs-datepicker@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/vuejs-datepicker/-/vuejs-datepicker-1.6.2.tgz#83c1e8fd4108e7f1d01c061a7e344918f25e47ae"
+  integrity sha512-PkC4vxzFBo7i6FSCUAJfnaWOx6VkKbOqxijSGHHlWxh8FIUKEZVtFychkonVWtK3iwWfhmYtqHcwsmgxefLpLQ==
 
 vueperslides@^2.10.8:
   version "2.10.8"

@@ -7,7 +7,7 @@
                     <p :class="darkClass">Memory Usage: {{this.$route.query.usage}}</p>
                     <p :class="darkClass">Firmware Version: {{this.$route.query.version}}</p>
                 </div>
-                <div class="custom-control custom-switch toggler-button">
+                <div class="toggler-button">
                     <p style="margin-right:8px;" :class="darkClass">Light</p>
                     <input type="checkbox" value="isChecked" v-model="mode" style="display: none;" />
                     <div class="dark_check" :class="!mode ? 'light_check' : null" @click="toggleCheck">

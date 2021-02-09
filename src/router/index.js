@@ -69,6 +69,22 @@ import PumpVariance from "../views/dashboard/admin/Pumps/pump_variance_report";
 import TankSales from "../views/dashboard/admin/tankSales";
 import ExtendVoucher from "../views/dashboard/admin/extendVoucher";
 
+// Inovoice management
+// import Products from "../views/Invoices/Products/products";
+// import AddProduct from "../views/Invoices/Products/addProducts";
+// import Invoice from "../views/Invoices/Invoice/index";
+// import Invoices from "../views/Invoices/Invoice/invoices";
+// import AutoSubscription from "../views/Invoices/Invoice/autoSubscription";
+// import InvoiceDetails from "../views/Invoices/Invoice/invoiceDetails";
+
+const Products = () => import('../views/dashboard/Invoices/Products/products.vue')
+const Taxes = () => import('../views/dashboard/Invoices/Products/taxes.vue')
+const AddProduct = () => import('../views/dashboard/Invoices/Products/addProducts.vue')
+const Invoice = () => import('../views/dashboard/Invoices/Invoice/index.vue')
+const Invoices = () => import('../views/dashboard/Invoices/Invoice/invoices.vue')
+const AutoSubscription = () => import('../views/dashboard/Invoices/Invoice/autoSubscription.vue')
+const InvoiceDetails = () => import('../views/dashboard/Invoices/Invoice/invoiceDetails.vue')
+
 Vue.use(VueRouter);
 
 let routes = [
@@ -79,6 +95,69 @@ let routes = [
     meta: {
       guest: true,
     },
+  },
+  {
+    path: "/auto-subscription",
+    name: "auto_subscription",
+    component: AutoSubscription,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "invoice-details",
+    name: "invoice_details",
+    component: InvoiceDetails,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/invoices",
+    name: "invoices",
+    component: Invoices,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/invoice",
+    name: "invoice",
+    component: Invoice,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/add-product",
+    name: "add_product",
+    component: AddProduct,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/taxes",
+    name: "taxes",
+    component: Taxes,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/products",
+    name: "products",
+    component: Products,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
   },
   {
     path: "/tank-sales",

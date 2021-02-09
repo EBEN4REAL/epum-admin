@@ -8,11 +8,18 @@
 @import "product_slider.scss";
 @import "tank.scss";
 @import "editDetailsModal";
+@import "invoice";
+@import "modal";
+@import "utils";
 @import "posDetailsModal.scss";
 
 * {
   box-sizing: border-box;
 }
+body {
+  font-family: "Nunito", sans-serif !important;
+}
+
 .pumps_diagnostics {
   background: white;
   border-radius: 10px;
@@ -57,11 +64,6 @@ body {
   height: 100vh;
   overflow-x: hidden;
   font-family: "Nunito", sans-serif;
-}
-.dropdown-toggle::after {
-  border-right: none !important;
-  border-bottom: none !important;
-  border-left: none !important;
 }
 
 * {
@@ -571,11 +573,7 @@ h6.dashboard__card__header {
   margin-top: -17px;
 }
 
-.top_section_row {
-  background: $whiteColor;
-  margin: 0 auto;
-  width: 98%;
-}
+
 .max-lines {
   display: block;
   text-overflow: ellipsis;
@@ -1124,46 +1122,54 @@ h6.dashboard__card__header {
         font-size: 13px;
       }
     }
-    .toggler-button {
-      width: 50%;
-      margin-right: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      p {
-        margin-bottom: 0;
-      }
-      input {
-        position: absolute;
-        width: 46px;
-        height: 25px;
-        z-index: -10;
-      }
-      .dark_check {
-        background-color: $greyTextColor;
-        &.light_check {
-          background-color: gainsboro;
-          border: 1px solid gainsboro;
-        }
-        border-radius: 15px;
-        border: 1px solid $greyTextColor;
-        height: 25px;
-        width: 46px;
-        padding: 3px 2px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        .dark_check_inner {
-          transition: 0.2s all;
-          background-color: white;
-          height: 19px;
-          width: 19px;
-          border-radius: 50%;
-          position: relative;
-          left: 0;
-        }
-      }
+  }
+}
+.toggler-button {
+  width: 50%;
+  margin-right: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  p {
+    margin-bottom: 0;
+  }
+  input {
+    position: absolute;
+    width: 46px;
+    height: 25px;
+    z-index: -10;
+  }
+  .dark_check {
+    background-color: $greyTextColor;
+    &.refresh_dark_check {
+      background-color: #290C53;
     }
+    &.light_check {
+      background-color: gainsboro;
+      border: 1px solid gainsboro;
+    }
+    border-radius: 15px;
+    border: 1px solid $greyTextColor;
+    height: 25px;
+    width: 46px;
+    padding: 3px 2px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .dark_check_inner {
+      transition: 0.2s all;
+      background-color: white;
+      height: 19px;
+      width: 19px;
+      border-radius: 50%;
+      position: relative;
+      left: 0;
+    }
+  }
+  &.refresh_toggler {
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    justify-content: center;
   }
 }
 .dark-mode {
@@ -1179,8 +1185,11 @@ h6.dashboard__card__header {
 }
 
 .pump-status {
+  &.refresh_holder {
+    justify-content: space-evenly;
+  }
   cursor: pointer;
-  height: 135px;
+  height: 170px;
   p,
   small {
     color: $primaryColor;
@@ -1887,3 +1896,87 @@ h6.dashboard__card__header {
 }
 
 
+@mixin pointer($height, $left, $top) {
+  height: $height;
+  left: $left;
+  top: $top;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// INVOICES STYLES
+.form-wrapper{
+  margin: 0 auto;
+  margin-top: 20px;
+  &.login {
+    width: 30%;
+  }
+  &.add_product {
+    width: 50%;
+  }
+}
+input {
+  height: 45px;
+}
+.form_input {
+  input {
+    height: 45px;
+  }
+}
+label{
+  font-weight: 600;
+  margin-bottom: 0px !important;
+  font-size: 13px;
+}
+.v--modal {
+  overflow: auto !important;
+}
+.modal-form-wrapper {
+  width: 70%;
+  margin: 0 auto;
+}
+.v--modal-overlay {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+.dialog-container {
+  width: 100%;
+  margin: 0 auto;
+  .dropdown-search {
+    background: transparent !important;
+    border: none;
+  }
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.logout_container{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+.filter-menu {
+  display: flex;
+  border-bottom: 1px solid #b2c2cd;
+  .filter-item {
+    padding-bottom: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+      border-bottom: 4px solid lightgray;
+    }
+    &.activeFilter {
+      border-bottom: 4px solid $primaryColor;
+    }
+    span:first-child {
+      font-size: 13px;
+      &.activeFilter {
+        font-weight: 800;
+      }
+    }
+  }
+}

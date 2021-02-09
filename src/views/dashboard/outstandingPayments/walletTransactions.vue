@@ -129,6 +129,7 @@ export default {
   },
   data() {
     return {
+      
         transactionCount: 0,
         branchName: this.$route.query.branchName,
         maxDate: this.$moment(new Date()).format("YYYY-MM-DD"),

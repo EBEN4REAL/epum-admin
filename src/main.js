@@ -11,6 +11,8 @@ import VueMoment from 'vue-moment';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 import "vue-toastification/dist/index.css";
+import 'vue-search-select/dist/VueSearchSelect.css'
+
 
 
 import BootstrapVue from "bootstrap-vue";

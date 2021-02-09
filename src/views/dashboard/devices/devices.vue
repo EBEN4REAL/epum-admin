@@ -2,6 +2,7 @@
     <div>
         <EditDeviceModal :deviceObj="deviceObj" />
         <UpdateFTModal :fTDeviceId="fTDeviceId" />
+        <FirmwareModal :versions="versions" />
         <masterLayout>
         <section class=" mt-3 full__row_section">
             <div class="banner">
@@ -50,10 +51,10 @@
               </div>
             </div>
          </div>
+         <button class="btn btn_theme mt-4" @click="showFirmawareModal" v-show="versions"
+         style="cursor: pointer;">View Firmwares
+        </button>
         </section>
-        <div class="new_row_section mt-3">
-            <p v-for="(value, key, index) in versions" :key="index">FW{{key}}: {{value}}</p>
-        </div>
         <div class="new_row_section mt-3">
                 <ejs-grid
                     v-show="!showLoader"
@@ -103,6 +104,7 @@ import TableLoader from "@/components/tableLoader/index";
 import configObject from "@/config";
 import EditDeviceModal from '@/components/modals/Devices/editDevice.vue';
 import UpdateFTModal from '@/components/modals/Devices/updateFt.vue';
+import FirmwareModal from '@/components/modals/Devices/firmwareVersions.vue';
 
 
 import Jquery from 'jquery';
@@ -115,7 +117,8 @@ export default {
         TableLoader,
         DropDown,
         EditDeviceModal,
-        UpdateFTModal
+        UpdateFTModal,
+        FirmwareModal
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search, ExcelExport, PdfExport]
@@ -123,7 +126,7 @@ export default {
     data() {
         return {
             searchValue: '',
-            versions: {},
+            versions: null,
             nonReportingCount: 0,
             reportingCount: 0,
             devicesData: [],
@@ -219,6 +222,9 @@ export default {
         }
     },
     methods: {
+        showFirmawareModal() {
+            this.$modal.show('firmwareModal')
+        },
         refreshGrid() {
             this.$refs.dataGrid.refresh();
         },
@@ -327,6 +333,8 @@ export default {
                     res.data.forEach(el => {
                         if (el.firmWareVersion !== null) {
                             versions[el.firmWareVersion] = (versions[el.firmWareVersion] || 0) + 1
+                        } else {
+                            versions['Nil'] = (versions['Nil'] || 0) + 1
                         }
                         el.formatedDate = this.$moment(el.lastDate).format("llll");
                         el.index = ++index;
