@@ -1,48 +1,48 @@
 <template>
-<modal class="editPumpStat pb-3" name="addTax" transition="pop-out" :width="500" :height="500" >
+<modal class="editPumpStat pb-3" name="editTax" transition="pop-out" :width="500" :height="500" >
   <div class="modal__header">
-    <h5 class="text-center text-white p-3">Add Tax</h5>
+    <h5 class="text-center text-white p-3">Edit Tax</h5>
   </div>
   <div class="modal-form-wrapper">
     <form class="pb-4">
         <div class="mt-3">
             <label>Tax Name</label>
             <div class="form_input">
-                <input type="text"  class="form-control" v-model="taxName"  />
+                <input type="text"  class="form-control" v-model="tax.taxName"  />
             </div>
         </div>
         <div class="mt-3">
             <label>Abreviation</label>
             <div class="form_input">
-                <input type="text"  class="form-control"  v-model="taxAbbrevation" />
+                <input type="text"  class="form-control"  v-model="tax.taxAbbrevation" />
             </div>
         </div>
         <div class="mt-3">
             <label>Tax Rate(%)</label>
             <div class="form_input">
-              <input type="text"  class="form-control" v-model="rate"  />
+              <input type="text"  class="form-control" v-model="tax.rate" disabled />
             </div>
         </div>
         <div class="mt-3">
               <label>Description</label>
               <div class="form_input">
-                <textarea rows="4"  class="form-control"  v-model="description" ></textarea>
+                <textarea rows="4"  class="form-control"  v-model="tax.description" ></textarea>
               </div>
         </div>
         <div class="mt-3">
             <label>Your Tax Number</label>
             <div class="form_input">
-                <input type="text"  class="form-control" v-model="taxNumber" />
+                <input type="text"  class="form-control" v-model="tax.taxNumber" />
             </div>
         </div>
         <button class="rem-btn w-100 main mobile-btn-height gold_color mt-4 " 
-            @click="addTax"
+            @click="editTax"
             :disabled="isButtonDisabled ? true : null"
             :style="[
                 isButtonDisabled
                 ? { cursor: 'not-allowed' }
                 : { cursor: 'pointer' }
-            ]">Add
+            ]">Save
             <img
                 src="@/assets/img/git_loader.gif"
                 style="display:none"
@@ -59,14 +59,15 @@ const MODAL_WIDTH = 850;
 import configObject from "@/config";
 
 export default {
-  name: 'addTax',
+  name: 'editTax',
+  props: ['tax'],
   data () {
     return {
       isButtonDisabled:  false,
       showLoader: false,
       showSpinner: false,
       taxName: '',
-      taxAbbrevation: '',
+      taxAbbreviation: '',
       description: '',
       rate: '',
       taxNumber: ''
@@ -81,37 +82,37 @@ export default {
       : MODAL_WIDTH
   },
   methods: {
-    addTax(event) {
+    editTax(event) {
       event.preventDefault()
-      if(!this.taxName) {
+      if(!this.tax.taxName) {
           this.$toast("Please input a tax name", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.taxAbbrevation) {
+      if(!this.tax.taxAbbrevation) {
           this.$toast("Please input a tax abbreviation", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.rate) {
+      if(!this.tax.rate) {
           this.$toast("Please input a tax rate", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.description) {
+      if(!this.tax.description) {
           this.$toast("Please input a description", {
               type: "error", 
               timeout: 3000
           });
           return;
       }
-      if(!this.taxNumber) {
+      if(!this.tax.taxNumber) {
           this.$toast("Please input a tax number", {
               type: "error", 
               timeout: 3000
@@ -120,30 +121,30 @@ export default {
       }
       
       const data = {
-          "taxName": this.taxName,
-          "taxAbbreviation": this.taxAbbrevation,
-          "description": this.description,
-          "rate": parseFloat(this.rate),
-          "taxNumber": this.taxNumber
+          "taxName": this.tax.taxName,
+          "taxAbbreviation": this.tax.taxAbbrevation,
+          "description": this.tax.description,
+          "rate": parseFloat(this.tax.rate),
+          "taxNumber": this.tax.taxNumber
       }
       $('.loader').show();
       this.isButtonDisabled = true;
 
-      this.axios.post(`${configObject.apiBaseUrl}/Invoices/taxes`, data, configObject.authConfig())
+      this.axios.put(`${configObject.apiBaseUrl}/Invoices/taxes/${this.tax.id}`, data, configObject.authConfig())
           .then(res => {
-                this.$toast("Successfully added tax", {
+                this.$toast("Successfully updated tax", {
                     type: "success",
                     timeout: 3000
                 });
                 $('.loader').hide();
                 this.isButtonDisabled = false;
-                this.$modal.hide('addTax')
+                this.$modal.hide('editTax')
                 this.$eventHub.$emit("refreshTaxes");
           })
           .catch(error => {
               this.isButtonDisabled = false;
               $('.loader').hide();
-              this.$toast(error.response.data.message, {
+              this.$toast('Failed to update tax', {
                   type: "error",
                   timeout: 3000
               });

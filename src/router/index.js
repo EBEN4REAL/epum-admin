@@ -78,6 +78,7 @@ import ExtendVoucher from "../views/dashboard/admin/extendVoucher";
 // import InvoiceDetails from "../views/Invoices/Invoice/invoiceDetails";
 
 const Products = () => import('../views/dashboard/Invoices/Products/products.vue')
+const Taxes = () => import('../views/dashboard/Invoices/Products/taxes.vue')
 const AddProduct = () => import('../views/dashboard/Invoices/Products/addProducts.vue')
 const Invoice = () => import('../views/dashboard/Invoices/Invoice/index.vue')
 const Invoices = () => import('../views/dashboard/Invoices/Invoice/invoices.vue')
@@ -135,6 +136,15 @@ let routes = [
     path: "/add-product",
     name: "add_product",
     component: AddProduct,
+    meta: {
+        authorize: true,
+        authRoles: ['Admin']
+    }
+  },
+  {
+    path: "/taxes",
+    name: "taxes",
+    component: Taxes,
     meta: {
         authorize: true,
         authRoles: ['Admin']

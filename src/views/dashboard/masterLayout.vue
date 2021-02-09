@@ -366,6 +366,12 @@
                                                 Product & Servicces
                                             </router-link>
                                         </li>
+                                         <li>
+                                            <router-link :to="{ name: 'taxes' }" class="vue_router_link" :class="activeRoute === 'products' ? 'active' : ''">
+                                                Taxes
+                                            </router-link>
+                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </li>
