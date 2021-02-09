@@ -709,7 +709,7 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Invoices/taxes`, configObject.authConfig())
                 .then(res => {
-                    this.invoiceTaxes = res.data
+                    // this.invoiceTaxes = res.data
                     //  {
                     //     dateCreated: "2021-02-08T22:13:50.0612797",
                     //     description: "desc",
@@ -733,6 +733,7 @@ export default {
                         }
                     })
                     console.log(res.data)
+
             })
             .catch(error => {
 
