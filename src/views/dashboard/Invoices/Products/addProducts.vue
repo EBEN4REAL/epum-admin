@@ -35,7 +35,7 @@
                                     name="flavour-1"
                                 ></b-form-checkbox-group>
                             </b-form-group>
-                            <button class="rounded-button" @click="addProduct">Add Tax <i class="fa fa-plus primary-color cursor-pointer ml-2" title="Add Tax" aria-hidden="true"></i></button>
+                            <button class="rounded-button" @click="addTaxModal">Add Tax <i class="fa fa-plus primary-color cursor-pointer ml-2" title="Add Tax" aria-hidden="true"></i></button>
                         </div>
                         <button class="rem-btn w-100 main mobile-btn-height gold_color mt-5" 
                             @click="addProduct"

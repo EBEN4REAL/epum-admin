@@ -139,6 +139,11 @@ export default {
                 this.isButtonDisabled = false;
                 this.$modal.hide('addTax')
                 this.$eventHub.$emit("refreshTaxes");
+                this.taxName = '',
+                this.taxAbbrevation = '',
+                this.description = '',
+                this.rate = '',
+                this.taxNumber = ''
           })
           .catch(error => {
               this.isButtonDisabled = false;

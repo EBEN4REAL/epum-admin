@@ -10,7 +10,22 @@
                         </div>
                         <div class="col-md-5 text-right">
                             <button class="rounded-button transparent mr-3" @click="togglePageStatus">{{pageStatus === 'edit' ? 'Preview' : 'Edit'}}</button>
-                            <button class="rounded-button colored text-white">Save and contiue</button>
+                            <button class="rounded-button colored text-white"  @click="createInvoice" 
+                                :disabled="isButtonDisabled ? true : null"
+                                :style="[
+                                    isButtonDisabled
+                                    ? { cursor: 'not-allowed' }
+                                    : { cursor: 'pointer' }
+                                ]">
+                                
+                            Save and contiue
+                            <img
+                                src="@/assets/img/git_loader.gif"
+                                style="display:none"
+                                width="22px"
+                                class="ml-3 loader"
+                            />
+                            </button>
                         </div>
                         <div class="dropdown-slide mt-3" v-b-toggle.collapse-2 @click="showSummary"  v-if="pageStatus === 'edit' ">
                             <div class="row align-items-center ">
@@ -122,7 +137,7 @@
                                                     id="DateTimePicker"
                                                     v-model="invoiceDate"
                                                     color="#370F70"
-                                                    format="YYYY-MM-DD"
+                                                    format="YYYY-MM-DDTHH:mm:ss"
                                                     formatted="DD/MM/YYYY"
                                                     position="bottom"
                                                     :onlyDate="true"
@@ -143,7 +158,7 @@
                                                     id="DateTimePicker"
                                                     v-model="paymentDueDate"
                                                     color="#370F70"
-                                                    format="YYYY-MM-DD"
+                                                    format="YYYY-MM-DDTHH:mm:ss"
                                                     formatted="DD/MM/YYYY"
                                                     position="bottom"
                                                     :onlyDate="true"
@@ -201,7 +216,7 @@
                                                 <span class="primary-color bold-span">Edit income account</span>
                                             </div>
                                             <div class="col-md-7">
-                                                <div class="row align-items-center mb-2"  v-for="(tax,taxIndex) in invoice.invoiceTaxes" :key="taxIndex">
+                                                <div class="row align-items-center mb-2"  v-for="(tax,taxIndex) in invoice.taxesArr" :key="taxIndex">
                                                     <div class="col-md-1 text-right">
                                                         <span class="primary-color mr-2 bold-span">Tax</span>
                                                     </div>
@@ -209,18 +224,17 @@
                                                         <div class="row" >
                                                             <div class="col-md-8">
                                                                 <div class="row align-items-center">
-                                                                    <div class="col-md-10">
-                                                                        <model-select :options="options" v-model="tax.selectedTax"  placeholder="select tax" @click="focusElement(invoiceIndex)"   />
+                                                                    <div class="col-md-11">
+                                                                        <model-select :options="taxes" v-model="tax.selectedTax"  placeholder="select tax" @click="focusElement(invoiceIndex)"   />
                                                                     </div>
-                                                                    <div class="col-md-2">
+                                                                     <!--<div class="col-md-2">
                                                                         <i class="fa fa-plus primary-color cursor-pointer" title="Add Tax" aria-hidden="true" @click="createTax(invoiceIndex,taxIndex)" v-if="taxIndex === (invoice.taxesArr.length) - 1"></i>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
-                                                               
                                                             </div>
                                                             <div class="col-md-4 text-right primary-color">
                                                                 <i class="fa fa-minus primary-color" aria-hidden="true" v-if="tax.selectedTax === 'select item'"></i>
-                                                                <span class="primary-color bold-span mr-2"  v-if="tax.selectedTax !== 'select item'">₦ {{tax.taxes.filter(el => el.value == tax.selectedTax).length > 0 ? tax.taxes.filter(el => el.value == tax.selectedTax)[0].taxPrice : 0}}.00</span>
+                                                                <span class="primary-color bold-span mr-2"  v-if="tax.selectedTax !== 'select item'">₦ {{tax.taxRate}} </span>
                                                                 <span @click="removeTax(invoiceIndex,taxIndex)"  v-if="invoice.taxesArr.length > 1">
                                                                     <i class="fa fa-trash table-icon" aria-hidden="true" style="color: red" ></i>
                                                                 </span> 
@@ -402,7 +416,7 @@
                                         <span class="">₦</span>{{prod.price}}.00</span>
                                     </div>
                                     <div class="text-right">
-                                        <span class="">₦</span>{{prod.price *  prod.quantity}}.00</span>
+                                        <span class="">₦</span><span>{{prod.price *  prod.quantity}}.00</span>
                                     </div>
                                 </div>
                             </div>
@@ -417,7 +431,7 @@
                                 <span class="primary-color mr-3 ">Total: </span>
                                 <span class="primary-color">&#8358; {{totalAmount}}.00</span>
                             </div>
-                            <hr></hr>
+                            <hr>
                              <div class="text-right mt-2 pr-3">
                                 <span class="primary-color mr-3 bold-span">Amount Due (NGN): </span>
                                 <span class="primary-color bold-span">&#8358; {{totalAmount}}.00</span>
@@ -473,12 +487,8 @@ export default {
                 value: 'tax1'
             },
             summary: false,
-            options: [
-                { value: '1', text: 'aa' + ' - ' + '1' },
-                { value: '2', text: 'ab' + ' - ' + '2' },
-                { value: '3', text: 'bc' + ' - ' + '3' },
-            ],
             pageStatus: 'edit',
+            purchaseOrderNumber: '',
             companySearch: "",
             rate: 1,
             view: 'selectCompany',
@@ -496,101 +506,14 @@ export default {
                 search: { operator: "contains", ignoreCase: true },
             },
             invoiceNumber: "",
-            poNumber: 1,
+            poNumber: '',
             companies: [],
             selectedCompany: {},
             showCompanies: false,
             companyId:"select company",
-            invoiceTaxes:[
-                {
-                    dateCreated: "2021-02-08T22:13:50.0612797",
-                    description: "desc",
-                    id: "16f10266-ee3e-4379-ce25-08d8cc766ee2",
-                    rate: 7,
-                    taxAbbrevation: "TAX",
-                    taxName: "Taaax 1",
-                    taxNumber: "1234567"
-                }
-            ],
-            taxes: [
-                {
-                    name: 'VAT 1',
-                    percentage: '7.5%',
-                    value: 'vat',
-                    taxAmount: '20,000.00',
-                    taxPrice: 500,
-                },
-                {
-                    name: 'VAT 2',
-                    percentage: '5%',
-                    value: 'vat',
-                    taxAmount: '20,000.00',
-                    taxPrice: 500,
-                },
-                {
-                    name: 'VAT 3',
-                    percentage: '15%',
-                    value: 'vat',
-                    taxAmount: '20,000.00',
-                    taxPrice: 500,
-                },
-            ],
-            products: [
-                {
-                    item: 'Epump Go',
-                    description: '',
-                    quantity: 1,
-                    price: 100000,
-                    amount: 0,
-                    status:'auto',
-                    taxesArr: [
-                        {
-                            selectedTax: '',
-                            // taxes: [
-                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                            // ]
-                        },
-                    ],
-                },
-                {
-                    item: 'ATG',
-                    description: '',
-                    quantity: 1,
-                    price: 500000,
-                    amount: 0,
-                    status:'auto',
-                    taxesArr: [
-                        {
-                            selectedTax: '',
-                            // taxes: [
-                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                            // ]
-                        },
-                    ],
-                },
-                {
-                    item: 'Deployment',
-                    description: '',
-                    quantity: 1,
-                    price: 500000,
-                    amount: 0,
-                    status:'auto',
-                    taxesArr: [
-                        {
-                            selectedTax: '',
-                            // taxes: [
-                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                            // ]
-                        },
-                    ],
-                }
-            ],
+            taxes: [],
+            
+            products: [],
             invoiceProducts: [],
           
             invoiceItems: [ ],
@@ -603,11 +526,6 @@ export default {
             },
             footer: false,
             productSearch: '',
-            // options: [
-            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-            // ]
         }
     },
     mounted() {
@@ -633,18 +551,14 @@ export default {
             return this.companies.filter(company => company.name.toLowerCase().includes(this.companySearch.toLowerCase()))
         },
         totalAmount() {
+            console.log(this.invoiceItems)
             return this.invoiceItems.reduce((acc,cur) => {
-                let taxList = []
-                let tax = cur.taxesArr.forEach((_tx, i) => {
-                    const item = this.options.filter(el => el.value === _tx.selectedTax)
-                    if(item.length > 0) {
-                        taxList.push(item[0])
-                    }
-                })
-                const taxesAmount = taxList.reduce((amount, tax) => {
-                    return amount += tax.taxPrice
+                const taxesAmount = cur.taxesArr.reduce((amount, tax) => {
+                    console.log(tax)
+                    return amount += tax.taxRate
                 },0)
-                return acc += ((cur.quantity * cur.price))  + taxesAmount
+                console.log(taxesAmount)
+                return acc += ((cur.quantity * cur.price))   + taxesAmount
             }, 0)
         },
         subTotal() {
@@ -657,6 +571,20 @@ export default {
 
     },
     watch: {
+        invoiceItems: {
+            handler(items) {
+                items.forEach((invoice, index) => {
+                    invoice.taxesArr.forEach((inv,i) => {
+                        const tx = this.taxes.filter(el => el.value === inv.selectedTax)
+                        if(tx.length > 0) {
+                            const price = invoice.price * invoice.quantity
+                            inv.taxRate = (tx[0].rate * price) / 100
+                        }
+                    })
+                })
+            },
+            deep: true
+        },
         rate(val) {
             this.invoiceItems.forEach(el => {
                 el.quantity = val
@@ -672,8 +600,89 @@ export default {
                 this.paymentDueStartDate = this.$moment(newDate, "DD-MM-YYYY").format("MMMM D, YYYY")
             }
         },
+       
     },
     methods: {
+        createInvoice(event) {
+            event.preventDefault()
+            if(!this.invoiceTitle) {
+                this.$toast("Please input an invoice tile", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.invoiceSummary) {
+                this.$toast("Please input invoice summary", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            const invoiceItems = this.invoiceItems.map(invoice => {
+                const taxes = invoice.taxesArr.map(tax => {
+                    return {
+                        "taxId": tax.selectedTax
+                    }
+                })
+                return {
+                    itemName: invoice.item,
+                    itemDescription: invoice.description,
+                    itemQuantity: invoice.quantity,
+                    itemPrice: invoice.price,
+                    productId: invoice.productId,
+                    invoiceTaxes: taxes
+                }
+            })
+            this.invoiceItems.forEach(el => {
+                if(el.item === '') {
+                    this.$toast("Product item name is required", {
+                        type: "error",
+                        timeout: 3000
+                    }); 
+                    return
+                }
+                if(el.quantity < 1) {
+                    this.$toast("Quantity should be less than 1", {
+                        type: "error",
+                        timeout: 3000
+                    }); 
+                    return
+                }
+            })
+            const data = {
+                "invoiceNumber":  this.invoiceNumber,
+                "invoiceTitle": this.invoiceTitle,
+                "invoiceDescription": this.invoiceSummary,
+                "customerId": this.selectedCompany.id ,
+                "customerName":  this.selectedCompany.name,
+                "customerMail": this.selectedCompany.email,
+                "invoiceDate":   this.invoiceDate,
+                "purchaseOrderNumber": this.poNumber,
+                "invoiceDueDate": this.paymentDueDate,
+                "invoiceItems": invoiceItems,
+            }
+            console.log(data)
+            $('.loader').show();
+            this.isButtonDisabled = true;
+            this.axios.post(`${configObject.apiBaseUrl}/Invoices`, data, configObject.authConfig())
+                .then(res => {
+                        this.$toast("Successfully added invoice", {
+                            type: "success",
+                            timeout: 3000
+                        });
+                        $('.loader').hide();
+                        this.isButtonDisabled = false;
+                })
+                .catch(error => {
+                    this.isButtonDisabled = false;
+                    $('.loader').hide();
+                    this.$toast("Failed to add Invoice", {
+                        type: "error",
+                        timeout: 3000
+                    });
+                });
+        },
         async checkInvoiceNumber(e) {
             this.axios.get(`${configObject.apiBaseUrl}/Invoices/invoicenumbercheck?invoiceNumber=${e.target.value}`, configObject.authConfig())
                 .then(res => {
@@ -697,8 +706,25 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Invoices/products`, configObject.authConfig())
                 .then(res => {
-                    this.invoiceProducts = res.data
-                    console.log(res.data)
+                    
+                    const products = res.data.map(product => {
+                        return {
+                            item: product.productName,
+                            description: product.productDescription,
+                            quantity: 1,
+                            price: product.productPrice,
+                            productId: product.id,
+                            status:'auto',
+                            taxesArr: [
+                                {
+                                    taxRate: 0,
+                                    selectedTax: '',
+                                    taxes: this.taxes
+                                },
+                            ],
+                        }
+                    })
+                    this.products = products
             })
             .catch(error => {
 
@@ -709,31 +735,15 @@ export default {
             .get(
                 `${configObject.apiBaseUrl}/Invoices/taxes`, configObject.authConfig())
                 .then(res => {
-                    // this.invoiceTaxes = res.data
-                    //  {
-                    //     dateCreated: "2021-02-08T22:13:50.0612797",
-                    //     description: "desc",
-                    //     id: "16f10266-ee3e-4379-ce25-08d8cc766ee2",
-                    //     rate: 7,
-                    //     taxAbbrevation: "TAX",
-                    //     taxName: "Taaax 1",
-                    //     taxNumber: "1234567"
-                    // }
-
-                    // taxes: [
-                    //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                    //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                    //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                    // ]
-                    res.data.map(tax => {
+                    const taxes = res.data.map(tax => {
                         return {
-                            text: tax.taxName,
-                            value: `${taxAbbrevation} (${tax.rate})%`,
+                            text: `${tax.taxName} (${tax.rate}%)`,
+                            value: tax.id,
                             taxPrice: 0,
+                            rate: tax.rate
                         }
                     })
-                    console.log(res.data)
-
+                    this.taxes = taxes
             })
             .catch(error => {
 
@@ -782,7 +792,6 @@ export default {
             this.view = 'customer'
         },
         selectItem(product) {
-            product.quantity = this.rate
             this.invoiceItems.push(product)
             this.showDropdown = !this.showDropdown
             this.productSearch = ''
@@ -824,11 +833,7 @@ export default {
                 if(i === invoiceIndex) {
                     invoice.taxesArr.push({
                         selectedTax: '',
-                        taxes: [
-                            { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                            { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                            { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                        ]
+                        taxes: this
                     })
                 }
             })
@@ -839,16 +844,13 @@ export default {
                 description: '',
                 quantity: 1,
                 price: 0,
-                amount: '',
                 status:'manual',
+                productId: "00000000-0000-0000-0000-000000000000",
                 taxesArr: [
                     {
                         selectedTax: '',
-                        taxes: [
-                            { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                            { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                            { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                        ]
+                        taxRate: 0,
+                        taxes: this.taxes
                     },
                 ],
             })
