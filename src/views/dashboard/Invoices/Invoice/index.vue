@@ -97,7 +97,7 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="">
-                                               <input type="text"  class="form-control" v-model="invoiceNumber"  />
+                                               <input type="number"  class="form-control" v-model="invoiceNumber" @blur="checkInvoiceNumber" placeholder="Invoice number"  />
                                               
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                                 <span class="primary-color bold-span">Edit income account</span>
                                             </div>
                                             <div class="col-md-7">
-                                                <div class="row align-items-center mb-2"  v-for="(tax,taxIndex) in invoice.taxesArr" :key="taxIndex">
+                                                <div class="row align-items-center mb-2"  v-for="(tax,taxIndex) in invoice.invoiceTaxes" :key="taxIndex">
                                                     <div class="col-md-1 text-right">
                                                         <span class="primary-color mr-2 bold-span">Tax</span>
                                                     </div>
@@ -495,12 +495,23 @@ export default {
                 toolbar: [],
                 search: { operator: "contains", ignoreCase: true },
             },
-            invoiceNumber: 1,
+            invoiceNumber: "",
             poNumber: 1,
             companies: [],
             selectedCompany: {},
             showCompanies: false,
             companyId:"select company",
+            invoiceTaxes:[
+                {
+                    dateCreated: "2021-02-08T22:13:50.0612797",
+                    description: "desc",
+                    id: "16f10266-ee3e-4379-ce25-08d8cc766ee2",
+                    rate: 7,
+                    taxAbbrevation: "TAX",
+                    taxName: "Taaax 1",
+                    taxNumber: "1234567"
+                }
+            ],
             taxes: [
                 {
                     name: 'VAT 1',
@@ -535,11 +546,11 @@ export default {
                     taxesArr: [
                         {
                             selectedTax: '',
-                            taxes: [
-                                { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                                { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                                { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                                            ]
+                            // taxes: [
+                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
+                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
+                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
+                            // ]
                         },
                     ],
                 },
@@ -553,11 +564,11 @@ export default {
                     taxesArr: [
                         {
                             selectedTax: '',
-                            taxes: [
-                                { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                                { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                                { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                                            ]
+                            // taxes: [
+                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
+                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
+                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
+                            // ]
                         },
                     ],
                 },
@@ -571,15 +582,17 @@ export default {
                     taxesArr: [
                         {
                             selectedTax: '',
-                            taxes: [
-                                { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                                { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                                { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-                                            ]
+                            // taxes: [
+                            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
+                            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
+                            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
+                            // ]
                         },
                     ],
                 }
             ],
+            invoiceProducts: [],
+          
             invoiceItems: [ ],
             invoiceIndex: 0,
             dropdownIndex: 0,
@@ -590,15 +603,16 @@ export default {
             },
             footer: false,
             productSearch: '',
-            options: [
-                { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
-                { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
-                { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
-            ]
+            // options: [
+            //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
+            //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
+            //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
+            // ]
         }
     },
     mounted() {
-       
+        this.getProducts()
+        this.getTaxes()
         if(localStorage.getItem('invoiceCustomers')) {
             this.companies = JSON.parse(localStorage.getItem('invoiceCustomers'))
         }else {
@@ -660,6 +674,71 @@ export default {
         },
     },
     methods: {
+        async checkInvoiceNumber(e) {
+            this.axios.get(`${configObject.apiBaseUrl}/Invoices/invoicenumbercheck?invoiceNumber=${e.target.value}`, configObject.authConfig())
+                .then(res => {
+                    if(res.data) {
+                        this.$toast("This Invoice number has been used", {
+                            type: "error", 
+                            timeout: 3000
+                        });
+                        return;
+                    }
+                })
+                .catch(error => {
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000,
+                    });
+                });
+        },
+        async getProducts() {
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Invoices/products`, configObject.authConfig())
+                .then(res => {
+                    this.invoiceProducts = res.data
+                    console.log(res.data)
+            })
+            .catch(error => {
+
+            });
+        },
+        async getTaxes() {
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Invoices/taxes`, configObject.authConfig())
+                .then(res => {
+                    // this.invoiceTaxes = res.data
+                    //  {
+                    //     dateCreated: "2021-02-08T22:13:50.0612797",
+                    //     description: "desc",
+                    //     id: "16f10266-ee3e-4379-ce25-08d8cc766ee2",
+                    //     rate: 7,
+                    //     taxAbbrevation: "TAX",
+                    //     taxName: "Taaax 1",
+                    //     taxNumber: "1234567"
+                    // }
+
+                    // taxes: [
+                    //     { value: 'vat', text: 'VAT (5%)',  taxAmount: '0.00', taxPrice: 500, },
+                    //     { value: 'vat1', text: 'VAT (7.5%)',taxAmount: '0.00', taxPrice: 1000, },
+                    //     { value: 'vat2', text: 'VAT (10.5%)' ,taxAmount: '0.00', taxPrice: 1500,},
+                    // ]
+                    res.data.map(tax => {
+                        return {
+                            text: tax.taxName,
+                            value: `${taxAbbrevation} (${tax.rate})%`,
+                            taxPrice: 0,
+                        }
+                    })
+                    console.log(res.data)
+
+            })
+            .catch(error => {
+
+            });
+        },
         focusElement(elementIndex) {
             Array.from(document.querySelectorAll('.invoice__details')).forEach((el,i) => {
                 if(elementIndex === i) {
