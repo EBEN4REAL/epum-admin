@@ -1,5 +1,6 @@
 <template>
     <div>
+        <SendInvoice :id="details.queryStrings.id"></SendInvoice>
         <MasterLayout>
             <div class="p-4">
                 <div class="dialog-container">
@@ -28,7 +29,7 @@
                                 <span class="deep-grey bold-span invoice-header">Overdue</span>
                             </div>
                             <div class="">
-                                <span><span class="currency">₦</span><span class="amount-figures">1,641.22</span><span class="grey-text bold-span">NGN</span></span>
+                                <span><span class="currency">₦</span><span class="amount-figures">{{overDueAmount}}</span><span class="grey-text bold-span">NGN</span></span>
                             </div>
                             <div class="grey-text">
                                 <span>Last updated 11 minutes ago.</span>
@@ -39,7 +40,7 @@
                                 <span class="deep-grey bold-span invoice-header">Due within next 30 days</span>
                             </div>
                             <div>
-                                 <span><span class="currency">₦</span><span class="amount-figures">0.00</span><span class="grey-text bold-span">NGN</span></span></span>
+                                 <span class="currency">₦</span><span class="amount-figures">{{dueInThirtyDays}}</span><span class="grey-text bold-span">NGN</span>
                             </div>
                         </div>
                          <div>
@@ -47,7 +48,7 @@
                                 <span class="deep-grey bold-span invoice-header">Average time to get paid</span>
                             </div>
                             <div>
-                                <span><span class="amount-figures">0</span><span class="grey-text bold-span">days</span></span></span>
+                                <span class="amount-figures">{{averageTimeToGetPaid}}</span><span class="grey-text bold-span">days</span>
                             </div>
                         </div>
                     </div>
@@ -91,10 +92,10 @@
                                 </div>
                                 <div class="col-md-2 padding-right-none">
                                      <vue-ctk-date-time-picker
-                                            id="DateTimePicker"
+                                            id="DateTimePicker1"
                                             v-model="fromDate"
                                             color="#370F70"
-                                            format="YYYY-MM-DD"
+                                            format="YYYY-MM-DDTHH:mm:ss"
                                             formatted="DD/MM/YYYY"
                                             position="bottom"
                                             :onlyDate="true"
@@ -111,7 +112,7 @@
                                                 id="DateTimePicker"
                                                 v-model="toDate"
                                                 color="#370F70"
-                                                format="YYYY-MM-DD"
+                                                format="YYYY-MM-DDTHH:mm:ss"
                                                 formatted="DD/MM/YYYY"
                                                 position="bottom"
                                                 :onlyDate="true"
@@ -120,34 +121,37 @@
                                             />  
                                         </div>
                                         <div class="col-md-6">
-                                            <select class="form-control" >
-                                                <option disabled selected value="select company">All statuses</option>
-                                                <option >Draft</option>
-                                                <option >Paid</option>
-                                                <option >Overdue</option>
+                                            <select class="form-control" v-model="status">
+                                                <option selected value="allStatus">All status</option>
+                                                <option value="0">Draft</option>
+                                                <option value="1">Sent</option>
+                                                <option value="2">Unsent</option>
+                                                <option value="3">OverDue</option>
+                                                <option value="4">Paid</option>
+                                                <option value="5">PartPaid</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" autofocus  class="form-control" placeholder="Enter invoice #"    />
+                                    <input type="text" autofocus  class="form-control" placeholder="Enter invoice #" v-model="invoiceNumber"/>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="mt-3">
                         <div class="filter-menu">
-                            <div class="filter-item mr-3 text-center" @click="changeStatus('unpaid')" :class="[activeStatus === 'unpaid' ? 'activeFilter' : null]">
-                                <span class="mr-2" :class="[activeStatus === 'unpaid' ? 'activeFilter' : null]">Unpaid</span>
-                                <span class="counter mr-2">{{unpaidCount}}</span>
-                            </div>
                             <div class="filter-item mr-3  text-center" @click="changeStatus('draft')" :class="[activeStatus === 'draft' ? 'activeFilter' : null]">
                                 <span class="mr-2 " :class="[activeStatus === 'draft' ? 'activeFilter' : null]">Draft</span>
                                 <span class="counter mr-2">{{draftCount}}</span>
                             </div>
+                            <div class="filter-item mr-3  text-center" @click="changeStatus('sent')" :class="[activeStatus === 'sent' ? 'activeFilter' : null]">
+                                <span class="mr-2 " :class="[activeStatus === 'sent' ? 'activeFilter' : null]">Sent</span>
+                                <span class="counter mr-2">{{unpaidCount}}</span>
+                            </div>
                             <div class="filter-item text-center" @click="changeStatus('all')" :class="[activeStatus === 'all' ? 'activeFilter' : null]">
                                 <span class="mr-2" :class="[activeStatus === 'all' ? 'activeFilter' : null]">All invoices</span>
-                                <span class="counter mr-2">{{copiedData.length}}</span>
+                                <span class="counter mr-2">{{tableCount}}</span>
                             </div>
                         </div>
                     </div>
@@ -157,25 +161,34 @@
                         v-show="!showLoader"
                         ref="dataGrid"
                         :created="refreshGrid"
-                        :allowPaging="true"
+                        :allowPaging="false"
+                        :actionBegin='actionHandler'
                         :allowSorting="true"
-                        :pageSettings="tableProps.pageSettings"
-                        :toolbar="tableProps.toolbar"
-                        :searchSettings="tableProps.search"
                         :allowExcelExport="false"
                         :allowPdfExport="false"
                         :toolbarClick="toolbarClick"
                         :allowTextWrap='true'
-                        :dataSource="data"
                         >
                         <e-columns>
                             <e-column width="100" :template="invoiceTemplate" headerText="Status"></e-column>
-                            <e-column width="200" field="due" headerText="Due Date" ></e-column>
-                            <e-column width="200" field="customer" headerText="Customer" ></e-column>
-                            <e-column width="200" field="amountDue" headerText="Amount Due" ></e-column>
+                            <e-column width="200" field="invoiceDueDateFormatted" headerText="Due Date" ></e-column>
+                            <e-column width="200" field="customerName" headerText="Customer" ></e-column>
+                            <e-column width="180" field="amountDue" headerText="Amount Due (₦)" textAlign="right"></e-column>
                             <e-column :template="list_of_invoices_templates" headerText="Action" width="200"></e-column>
                         </e-columns>
                     </ejs-grid>
+                    <TableLoader :showLoader="showLoader"/>
+                    <div class="mt-3" style="margin:  0 auto">
+                        <Paginator 
+                            v-show="!showLoader"
+                            :total-pages="totalPages"
+                            :per-page="pageSize"
+                            :current-page="currentPage"
+                            @pagechanged="onPageChange"
+                            @getPageSize="getPageSize"
+                            :pageSize="pageSize"
+                        />
+                    </div>
                     <DropDown :details="details"/>
                 </div>
             </div>
@@ -189,8 +202,10 @@ import TableLoader from "@/components/tableLoader/index";
 import Datepicker from 'vuejs-datepicker';
 import {Page,Sort,Toolbar,Search, groupAggregates} from "@syncfusion/ej2-vue-grids";
 import Temp from '@/components/Templates/invoices';
-import DropDown from '@/components/Templates/Dropdown/dropdown.vue';
+import DropDown from '@/components/Templates/Dropdown/invoiceDropDown.vue';
+import Paginator from '@/components/Paginator.vue';
 import invoiceTemp from '@/components/Templates/list_of_invoices_template.vue';
+import SendInvoice from "@/components/modals/Invoices/sendInvoice"
 
 
 import Jquery from 'jquery';
@@ -202,7 +217,9 @@ export default {
         MasterLayout,
         Datepicker,
         TableLoader,
+        Paginator,
         DropDown,
+        SendInvoice
     },
     provide: {
         grid: [Page, Sort, Toolbar, Search]
@@ -211,7 +228,16 @@ export default {
         return {
             from: '',
             to: '',
+            pageSize: '10',
+            tableCount: 0, 
+            totalPages: 1,
+            currentPage: 1,
+            first: true,
+            sortType: '',
+            sortColumn: '',
+            status: 'allStatus',
             activeStatus: 'all',
+            companyName: '',
             unpaidCount: 0,
             draftCount: 0,
             allCount:0,
@@ -229,106 +255,31 @@ export default {
                 };
             },
             toLabel: 'To',
-            selectedCompany: {name: 'All Customers'},
+            selectedCompany: {name: 'All Companies'},
             isButtonDisabled: false,
             scheduleDateTime: null,
             showLoader: false,
-            fromDate: this.fromStartDate,
-            toDate: this.toStartDate,
-            toStartDate: this.$moment().format("MMMM D, YYYY"),
-            fromStartDate: this.$moment().format("MMMM D, YYYY"),
-            pluginStartDate: this.$moment().format("D-M-YYYY"),
-            tableProps: {
-                pageSettings: { pageSizes: [12, 50, 100, 200], pageCount: 4 },
-                toolbar: ['Search'],
-                search: { operator: "contains", ignoreCase: true },
-            },
-            invoiceNumber: 1,
+            fromDate: '',
+            toDate: '',
+            invoiceNumber: '',
             showCompanies: false,
-            companies: [],
             companySearch: '',
             companyId:"select company",
             showDropdown: false,
+            overDueAmount: 0,
+            dueInThirtyDays: 0,
+            averageTimeToGetPaid: 0,
             companies: [],
             details: {
-                queryStrings: { invoiceId: '' }, 
-                info: [ { name: 'Edit', link: '' }], 
-                delete: { hasDelete: true, deleteName: 'deleteInvoice', name: 'Delete', query: '' }
+                queryStrings: { id: '' }, 
+                info: [ { name: 'Send Invoice', emitName: 'sendInvoice' }, { name: 'Record Payment', emitName: 'recordPayment' }, { name: 'Edit', emitName: 'editInvoice' }], 
+                delete: { hasDelete: true, deleteName: 'deleteInvoice', name: 'Delete', query: 'id' }
             }, 
             list_of_invoices_templates: function() {
                 return {
                     template: invoiceTemp
                 };
             },
-            data: [
-                {
-                    customer: 'Eben Oluwasegun',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00',
-                    index: 1,
-                },
-                 {
-                    customer: 'Omoruyi Isaac',
-                    due: '21-01-25',
-                    status: 'draft',
-                    amountDue: '₦ 3,284.00',
-                    index: 2,
-                },
-                {
-                    customer: 'Olaitan Akinromade',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00',
-                    index: 3,
-                },
-                {
-                    customer: 'Favour chi',
-                    due: '21-01-25',
-                    status: 'draft',
-                    amountDue: '₦ 3,284.00',
-                    index: 4,
-                },
-                {
-                    customer: 'Tunde Ednut',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00',
-                    index: 5,
-                },
-            ],
-            copiedData: [
-                {
-                    customer: 'Eben Oluwasegun',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00'
-                },
-                 {
-                    customer: 'Omoruyi Isaac',
-                    due: '21-01-25',
-                    status: 'draft',
-                    amountDue: '₦ 3,284.00'
-                },
-                {
-                    customer: 'Olaitan Akinromade',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00'
-                },
-                {
-                    customer: 'Favour chi',
-                    due: '21-01-25',
-                    status: 'draft',
-                    amountDue: '₦ 3,284.00'
-                },
-                {
-                    customer: 'Tunde Ednut',
-                    due: '21-01-25',
-                    status: 'overdue',
-                    amountDue: '₦ 3,284.00'
-                },
-            ],
         }
     },
     mounted() {
@@ -343,6 +294,8 @@ export default {
             }
         })
         this.getCompanies()
+        this.getInvoices()
+        this.getInvoiceSummary()
         Array.from(document.getElementsByTagName('input')).forEach(input => {
             if(!Array.from(input.classList).includes('form-control')) {
                 input.classList.add('form-control')
@@ -353,18 +306,27 @@ export default {
     watch: {
         fromDate: function (newDate) {
             if (newDate) {
-                this.fromStartDate = this.$moment(newDate, "DD-MM-YYYY").format("MMMM D, YYYY")
+                this.getInvoices()
             }
         },
+
         toDate: function (newDate) {
             if (newDate) {
-                this.toStartDate = this.$moment(newDate, "DD-MM-YYYY").format("MMMM D, YYYY")
+                this.getInvoices()
             }
         },
+        invoiceNumber: function (newNumber) {
+            this.getInvoices()
+        },
+        status: function (newStatus) {
+            this.getInvoices()
+        }
     },
     computed: {
         filteredCompanies() {
-            return this.companies.filter(company => company.name.toLowerCase().includes(this.companySearch.toLowerCase()))
+            let companies =  this.companies.filter(company => company.name.toLowerCase().includes(this.companySearch.toLowerCase()))
+            companies.unshift({ name: 'All Companies' })
+            return companies
         },
         totalAmount() {
             return this.invoiceItems.reduce((acc,cur) => {
@@ -374,17 +336,138 @@ export default {
     },
     created() {
         this.$eventHub.$on('showInvoicesDropdown', (data) => {
+            this.details.queryStrings.id = data.id
             const option = document.getElementById('myDropdown')
             option.classList.add("show")
-            if ((data.index == this.copiedData.length &&  this.copiedData.length > 1) ) {
-                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
-
-            } else {
-                option.style.top = `${((62 * data.index) + (100 - (data.index * 2))).toString()}px`
-            }
+            option.style.top = `${((59 * data.index) + (85 - (data.index * 2))).toString()}px`
         })
+
+        this.$eventHub.$on(this.details.info[0].emitName, (id) => { 
+            this.sendInvoice(id)
+        })
+
+        this.$eventHub.$on(this.details.info[1].emitName, (id) => { 
+            this.recordPayment(id)
+        })
+
+        this.$eventHub.$on(this.details.info[2].emitName, (id) => { 
+            this.edit(id)
+        })
+
+        this.$eventHub.$on(this.details.delete.deleteName, (id) => { 
+            this.deleteInvoice(id)
+        })
+
+        this.$eventHub.$on("refreshInvoicesList", () => {
+            this.currentPage = 1
+            this.getInvoices()
+            this.getInvoiceSummary()
+        });
     },
     methods: {
+        actionHandler: function(args) {
+            if (args.requestType == 'sorting') {
+                if (args.direction) {
+                    this.sortType = args.direction
+                    this.sortColumn = args.columnName
+                } else {
+                    this.sortType = ''
+                    this.sortColumn = ''
+                }
+                
+                this.getInvoices()
+            }
+        },
+        getPageSize(pageSize) {
+            this.pageSize = pageSize;
+            this.currentPage = 1
+            this.totalPages = Math.ceil(this.getInvoices.totalNumber / pageSize)
+            this.getInvoices();
+        },
+        onPageChange(page) {
+            this.currentPage = page;
+            this.getInvoices();
+        },
+        getInvoiceSummary() {
+            this.axios
+                .get(
+                    `${configObject.apiBaseUrl}/Invoices/invoices-summary`, configObject.authConfig())
+                    .then(res => {
+                        this.overDueAmount = this.convertThousand(res.data.overDue)
+                        this.dueInThirtyDays = this.convertThousand(res.data.dueInThirtyDays)
+                        this.averageTimeToGetPaid = res.data.averageTimeToGetPaid
+                    })
+                    .catch(error => {
+                        this.showLoader = false
+                    });
+        },
+        getInvoices() {
+            this.first ? this.showLoader = true : this.showLoader = false
+            this.first = false
+            const status = this.status == 'allStatus' ? '' : parseInt(this.status)
+            const companyName = this.selectedCompany.name == 'All Companies' ? '' : this.selectedCompany.name
+            const applyPaging = true
+            this.axios
+            .get(
+                // `${configObject.apiBaseUrl}/Invoices?PageIndex=${this.currentPage}&PageSize=${this.pageSize}&Sort=${this.sortColumn}&StartDate=${this.fromDate}&EndDate=${this.toDate}&Status=${status}&ApplyPaging=${applyPaging}&Customer=${companyName}&InvoiceNumber=${this.invoiceNumber}`,  configObject.authConfig())
+                `${configObject.apiBaseUrl}/Invoices?PageIndex=${this.currentPage}&PageSize=${this.pageSize}&Sort=${this.sortColumn}&StartDate=${this.fromDate}&EndDate=${this.toDate}&Status=${status}&ApplyPaging=${applyPaging}`, configObject.authConfig())
+                .then(res => {
+                    this.totalPages = Math.ceil(res.data.count / this.pageSize)
+                    this.tableCount = res.data.count
+                    this.unpaidCount = res.data.unpaidCount
+                    this.draftCount = res.data.draftCount
+
+                    res.data.data.forEach((cur, index) => {
+                        cur.amountDue = this.convertThousand(cur.amountDue)
+                        cur.status = cur.status == 0 ? 'Draft' : cur.status == 1 ? 'Sent' : cur.status == 2 ? 'Unsent' : cur.status == 3 ? 'OverDue' : cur.status == 4 ? 'Paid' : cur.status == 5 ? 'PartPaid' : 'Not available'
+                        cur.invoiceDueDateFormatted = this.$moment(cur.invoiceDueDate).format('DD-MM-YYYY HH:mm:ss');
+                        cur.index = index
+                    })
+
+                    this.$refs.dataGrid.ej2Instances.setProperties({
+                        dataSource: res.data.data
+                    });
+                    this.refreshGrid();
+                    this.showLoader = false
+                })
+                .catch(error => {
+                    this.showLoader = false
+                });
+        },
+        sendInvoice(id) {
+            this.$modal.show('sendInvoice')
+        },
+        recordPayment(id) {
+        },
+        edit(id) {
+            this.$router.push({path: '/invoice', query: {id}})
+        },
+        deleteInvoice(id) {
+            let resp = confirm("Are you sure want to delete this invoice?");
+            if (resp) {
+                $(".loader").show();
+                this.axios
+                .delete(
+                    `${configObject.apiBaseUrl}/Invoice/${id}`,
+                    configObject.authConfig()
+                )
+                .then((res) => {
+                    this.$toast("Invoice Deleted Successfully", {
+                        type: "success",
+                        timeout: 3000,
+                    });
+                    $(".loader").hide();
+                    this.$eventHub.$emit("refreshInvoicesList");
+                })
+                .catch((error) => {
+                    $(".loader").hide();
+                    this.$toast(error.response.data.message, {
+                        type: "error",
+                        timeout: 3000,
+                    });
+                });
+            }
+        },
         getCompanies() {
             this.axios
             .get(
@@ -400,39 +483,23 @@ export default {
         selectCompany(company) {
             this.selectedCompany = company
             this.showDropdown = !this.showDropdown
+            this.getInvoices()
         },
         changeStatus(status) {
             this.activeStatus = status
             if(status === 'draft') {
-                const data = this.copiedData.filter(el => el.status === 'draft')
-                this.draftCount = data.length
-                this.data = data
+                this.status = 0
             }
-             if(status === 'unpaid') {
-                const data = this.copiedData.filter(el => el.status === 'overdue')
-                this.unpaidCount = data.length
-                this.data = data
+             if(status === 'sent') {
+                this.status = 1
             }
             if(status === 'all') {
-                this.allCount = this.copiedData.length
-                this.data = this.copiedData
+                this.status = 'allStatus'
             }
         },
         
         toggleDropdown() {
           this.showDropdown = !this.showDropdown
-        },
-        getCompanies() {
-            this.axios
-            .get(
-                `${configObject.apiBaseUrl}/Company`, configObject.authConfig())
-                .then(res => {
-                    this.companies = res.data.data
-                    console.log(this.companies.data.data)
-            })
-            .catch(error => {
-
-            });
         },
         toggleCompaniesDropdown(){
             this.showCompanies = !this.showCompanies
@@ -469,6 +536,12 @@ export default {
                     this.$refs.dataGrid.excelExport();
                 break;
             }
+        },
+        convertThousand(request) {
+            if (!isFinite(request)) {
+                return "0.00";
+            }
+            return request.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
     },
 }

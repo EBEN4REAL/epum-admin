@@ -10,7 +10,7 @@
                         </div>
                         <div class="col-md-5 text-right">
                             <button class="rounded-button transparent mr-3" @click="togglePageStatus">{{pageStatus === 'edit' ? 'Preview' : 'Edit'}}</button>
-                            <button class="rounded-button colored text-white"  @click="createInvoice" 
+                            <button class="rounded-button colored text-white"  @click="saveInvoice" 
                                 :disabled="isButtonDisabled ? true : null"
                                 :style="[
                                     isButtonDisabled
@@ -71,15 +71,15 @@
                         </div>
                         </b-collapse>
                        
-                        <div class="invoice-container mt-3"  v-if="pageStatus === 'edit'">
+                        <div class="invoice-container mt-3"  v-if="pageStatus === 'edit' ">
                             <div class="add_customer_conainer">
-                                <div class="invoice_customer p-3" v-if="view ==='customer'">
+                                <div class="invoice_customer p-3" v-if="view ==='customer' || invoiceId  !== null">
                                     <div class="bold-span grey-text">Bill to</div>
                                     <div class="bold-span mt-1">{{selectedCompany.name}}</div>
                                     <div class="bold-span mt-1">{{selectedCompany.email}}</div>
-                                    <div class="bold-span primary-color mt-1 cursor-pointer" @click="changeView('showCompanies')">choose a different customer</div>
+                                    <div class="bold-span primary-color mt-1 cursor-pointer" @click="changeView('showCompanies')" v-if="invoiceId  == null">choose a different customer</div>
                                 </div>
-                                <div class="add_customer" v-show="view === 'showCompanies' || view === 'selectCompany'">
+                                <div class="add_customer" v-show="view === 'showCompanies' || view === 'selectCompany' || invoiceId  == null">
                                     <div class="row align-items-center  ml-3" v-if="view === 'showCompanies'">
                                         <div class="col-md-9">
                                             <div class="dropdown__content" style="width: 91.1%;left: 2px;top: 27pxx;top: 17px;border-radius: 15px;height: 175px;">
@@ -98,12 +98,12 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="add_custoemr_card mt-3 ml-3" @click="changeView('showCompanies')" v-if="selectCompany">
+                                     </div>
+                                    <!--<div class="add_custoemr_card mt-3 ml-3" @click="changeView('showCompanies')" v-if="selectCompany ">
                                         <span>
                                             <i class="fa fa-building-o mr-2 primary-color" aria-hidden="true"></i> <span class="primary-color" >Select company</span>
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="invoice_details pr-3 pt-3">
                                     <div class="row align-items-center ">
@@ -190,10 +190,10 @@
                                     <div class="invoice_items pr-2">
                                         <div class="row textareaSection">
                                             <div class="col-md-4 padding-right-none">
-                                                <input type="text"  class="form-control ":disabled="invoice.status === 'auto'"  v-model="invoice.item" placeholder="Item name" @focus="focusElement(invoiceIndex)" />
+                                                <input type="text"  class="form-control " :disabled="invoice.status === 'auto'"  v-model="invoice.item" placeholder="Item name" @focus="focusElement(invoiceIndex)" />
                                             </div>
                                             <div class="col-md-8">
-                                                <textarea @keyup="processTextarea($event, invoiceIndex)"  class=""  v-model="invoice.description" placeholder="Enter item description" id="descTxa"  /></textarea>
+                                                <textarea @keyup="processTextarea($event, invoiceIndex)"  class=""  v-model="invoice.description" placeholder="Enter item description" id="descTxa"  />
                                             </div>
                                         </div>
                                     </div>
@@ -404,19 +404,21 @@
                                     <span class="text-white">Amount</span>
                                 </div>
                             </div>
-                            <div class="mt-2" v-for="(prod,i) in invoiceItems" :key="i" v-if="invoiceItems.length > 0">
-                                <div class="preview-table  p-2 pl-3 pr-3 ">
-                                    <div class="">
-                                        <span class="primary-color">{{prod.item}}</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="primary-color">{{prod.quantity}}</span>
-                                    </div> 
-                                    <div class="">
-                                        <span class="">₦</span>{{prod.price}}.00</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="">₦</span><span>{{prod.price *  prod.quantity}}.00</span>
+                            <div v-if="invoiceItems.length > 0">
+                                <div class="mt-2" v-for="(prod,i) in invoiceItems" :key="i">
+                                    <div class="preview-table  p-2 pl-3 pr-3 ">
+                                        <div class="">
+                                            <span class="primary-color">{{prod.item}}</span>
+                                        </div>
+                                        <div class="">
+                                            <span class="primary-color">{{prod.quantity}}</span>
+                                        </div> 
+                                        <div class="">
+                                            <span class="">₦{{prod.price}}.00</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="">₦{{prod.price *  prod.quantity}}.00</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -526,11 +528,17 @@ export default {
             },
             footer: false,
             productSearch: '',
+            invoiceId: null
         }
     },
     mounted() {
         this.getProducts()
         this.getTaxes()
+        if(this.$route.query.id) {
+            this.selectCompany = false
+            this.invoiceId = this.$route.query.id
+            this.getInvoice()
+        }
         if(localStorage.getItem('invoiceCustomers')) {
             this.companies = JSON.parse(localStorage.getItem('invoiceCustomers'))
         }else {
@@ -557,7 +565,7 @@ export default {
                     console.log(tax)
                     return amount += tax.taxRate
                 },0)
-                console.log(taxesAmount)
+                console.log(typeof(taxesAmount))
                 return acc += ((cur.quantity * cur.price))   + taxesAmount
             }, 0)
         },
@@ -573,6 +581,7 @@ export default {
     watch: {
         invoiceItems: {
             handler(items) {
+                console.log(items)
                 items.forEach((invoice, index) => {
                     invoice.taxesArr.forEach((inv,i) => {
                         const tx = this.taxes.filter(el => el.value === inv.selectedTax)
@@ -603,8 +612,15 @@ export default {
        
     },
     methods: {
-        createInvoice(event) {
-            event.preventDefault()
+        saveInvoice(e) {
+            e.preventDefault();
+            if(!this.invoiceId) {
+                this.createInvoice()
+            }else {
+                this.editInvoice()
+            }
+        },
+        createInvoice() {
             if(!this.invoiceTitle) {
                 this.$toast("Please input an invoice tile", {
                     type: "error", 
@@ -683,6 +699,90 @@ export default {
                     });
                 });
         },
+        editInvoice() {
+            if(!this.invoiceTitle) {
+                this.$toast("Please input an invoice tile", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            if(!this.invoiceSummary) {
+                this.$toast("Please input invoice summary", {
+                    type: "error", 
+                    timeout: 3000
+                });
+                return;
+            }
+            const invoiceItems = this.invoiceItems.map(invoice => {
+                const taxes = invoice.taxesArr.map(tax => {
+                    return {
+                        "taxId": tax.selectedTax
+                    }
+                })
+                return {
+                    itemName: invoice.item,
+                    itemDescription: invoice.description,
+                    itemQuantity: invoice.quantity,
+                    itemPrice: invoice.price,
+                    productId: invoice.productId,
+                    invoiceTaxes: taxes
+                }
+            })
+            this.invoiceItems.forEach(el => {
+                if(el.item === '') {
+                    return this.$toast("Product item name is required", {
+                        type: "error",
+                        timeout: 3000
+                    }); 
+                }
+                if(el.quantity < 1) {
+                    return this.$toast("Quantity should be less than 1", {
+                        type: "error",
+                        timeout: 3000
+                    }); 
+                }
+                if(!el.description) {
+                    return this.$toast("Product description is required", {
+                        type: "error",
+                        timeout: 3000
+                    }); 
+                }
+            })
+
+            const data = {
+                "invoiceNumber":  this.invoiceNumber,
+                "invoiceTitle": this.invoiceTitle,
+                "invoiceDescription": this.invoiceSummary,
+                "customerId": this.selectedCompany.id ,
+                "customerName":  this.selectedCompany.name,
+                "customerMail": this.selectedCompany.email,
+                "invoiceDate":   this.invoiceDate,
+                "purchaseOrderNumber": this.poNumber,
+                "invoiceDueDate": this.paymentDueDate,
+                "invoiceItems": invoiceItems,
+            }
+            console.log(data)
+            $('.loader').show();
+            this.isButtonDisabled = true;
+            this.axios.put(`${configObject.apiBaseUrl}/Invoices`, data, configObject.authConfig())
+                .then(res => {
+                        this.$toast("Invoice saved successfully", {
+                            type: "success",
+                            timeout: 3000
+                        });
+                        $('.loader').hide();
+                        this.isButtonDisabled = false;
+                })
+                .catch(error => {
+                    this.isButtonDisabled = false;
+                    $('.loader').hide();
+                    this.$toast("Failed to update Invoice", {
+                        type: "error",
+                        timeout: 3000
+                    });
+                });
+        },
         async checkInvoiceNumber(e) {
             this.axios.get(`${configObject.apiBaseUrl}/Invoices/invoicenumbercheck?invoiceNumber=${e.target.value}`, configObject.authConfig())
                 .then(res => {
@@ -725,6 +825,45 @@ export default {
                         }
                     })
                     this.products = products
+            })
+            .catch(error => {
+
+            });
+        },
+        async getInvoice() {
+            this.axios
+            .get(
+                `${configObject.apiBaseUrl}/Invoices/${this.$route.query.id}`, configObject.authConfig())
+                .then(res => {
+                    this.selectedCompany.id = res.data.customerId
+                    this.selectedCompany.email = res.data.customerMail
+                    this.selectedCompany.name = res.data.customerName
+                    this.invoiceDate = res.data.invoiceDate
+                    this.paymentDueDate = res.data.invoiceDueDate
+                    this.invoiceTitle = res.data.invoiceTitle
+                    this.invoiceNumber = res.data.invoiceNumber
+                    this.poNumber = res.data.purchaseOrderNumber
+                    this.invoiceSummary = res.data.invoiceDescription
+                    
+                    res.data.invoiceItems.forEach(inv => {
+                        const taxesArr = inv.invoiceTaxes.map(invTax => {
+                            return {
+                                selectedTax: invTax.taxId,
+                                taxRate: invTax.rate,
+                                taxes: this.taxes
+                            }
+                        })
+                        const invoice =  {
+                            item: '',
+                            description: inv.itemDescription,
+                            price: inv.itemPrice,
+                            quantity: inv.itemQuantity,
+                            productId: inv.productId,
+                            status:'auto',
+                            taxesArr
+                        }
+                        this.invoiceItems.push(invoice)
+                    })
             })
             .catch(error => {
 
@@ -775,15 +914,6 @@ export default {
         addTax() {
             this.$modal.show('addTax')
         },
-        hideDropDown(e) {
-            const classes = Array.from(e.target.classList)
-            if (classes.includes('dropdown__content') || classes.includes('add_custoemr_card')) {
-                return
-            } else {
-                this.view = 'selectCompany'
-                this.selectCompany = true
-            }
-        },
         changeView(view) {
             this.view = view
         },
@@ -811,6 +941,7 @@ export default {
 
             });
         },
+
         toggleCompaniesDropdown(){
             this.showCompanies = !this.showCompanies
         },

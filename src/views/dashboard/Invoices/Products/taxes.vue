@@ -34,7 +34,7 @@
                         <e-columns>
                             <e-column width="300" field="taxName" headerText="Tax Name"></e-column>
                             <e-column width="200" field="taxAbbrevation" headerText="Tax Abbreviation"></e-column>
-                            <e-column width="200" field="description" headerText="Description" </e-column>
+                            <e-column width="200" field="description" headerText="Description"> </e-column>
                             <e-column width="200" field="rate" headerText="Rate(%)" ></e-column>
                             <e-column width="100" :template="taxesTemplate" headerText="Action" ></e-column>
                         </e-columns>
@@ -114,6 +114,7 @@ export default {
             this.$modal.show('addTax')
         },
         getTaxes() {
+            this.showLoader = true
             this.axios
             .get(
                 `${configObject.apiBaseUrl}/Invoices/taxes`, configObject.authConfig())
@@ -124,10 +125,10 @@ export default {
                     })
                     this.taxes = res.data
                     this.refreshGrid();
-                    console.log(res.data)
+                    this.showLoader = false
             })
             .catch(error => {
-
+                this.showLoader = false
             });
         },
         convertThousand(request) {

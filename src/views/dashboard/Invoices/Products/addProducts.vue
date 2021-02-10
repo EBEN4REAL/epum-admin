@@ -96,7 +96,6 @@ export default {
     },
     watch: {
         selected() {
-            console.log(this.selected)
         }
     },
     methods: {
@@ -141,7 +140,6 @@ export default {
                 "productPrice": this.productPrice,
                 "productTaxes": taxes
             }
-            console.log(data)
             $('.loader').show();
             this.isButtonDisabled = true;
 

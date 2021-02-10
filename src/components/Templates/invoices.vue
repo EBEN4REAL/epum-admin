@@ -1,7 +1,7 @@
 <template>
     <div>
-       <div class="invoice-status success bold-span" :class="[data.status === 'overdue' ? 'danger' : 'success']">
-            {{data.status === 'overdue' ? 'Overdue' : 'Draft'}}
+       <div class="invoice-status success bold-span" :class="[data.status === 'OverDue' ? 'danger' : data.status === 'Paid' ? 'success' : 'danger']">
+            {{data.status}}
        </div>
     </div>
 </template>
