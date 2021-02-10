@@ -751,6 +751,7 @@ export default {
             })
 
             const data = {
+                
                 "invoiceNumber":  this.invoiceNumber,
                 "invoiceTitle": this.invoiceTitle,
                 "invoiceDescription": this.invoiceSummary,
@@ -846,6 +847,11 @@ export default {
                     this.invoiceSummary = res.data.invoiceDescription
                     
                     res.data.invoiceItems.forEach(inv => {
+                        console.log(this.products)
+                        const product = this.products.filter(prod => {
+                            return prod.productId == inv.productId
+                        })[0]
+                        console.log(product)
                         const taxesArr = inv.invoiceTaxes.map(invTax => {
                             return {
                                 selectedTax: invTax.taxId,
@@ -854,7 +860,7 @@ export default {
                             }
                         })
                         const invoice =  {
-                            item: '',
+                            item: product.item,
                             description: inv.itemDescription,
                             price: inv.itemPrice,
                             quantity: inv.itemQuantity,
